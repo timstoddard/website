@@ -1,0 +1,294 @@
+@import url(https://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+@import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:300);
+/* from time @import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300); */
+/* from ng2 demo @import url(https://fonts.googleapis.com/css?family=Roboto); */
+
+/* GENERAL ELEMENTS */
+
+body {
+  height: 100vh;
+  width: 100vw;
+}
+
+/* HOME */
+
+.home {
+  background: #e91e63;
+  background: -moz-linear-gradient(45deg, #e91e63 0%, #ff6f00 100%);
+  background: -o-linear-gradient(45deg, #e91e63 0%, #ff6f00 100%);
+  background: -webkit-linear-gradient(45deg, #e91e63 0%, #ff6f00 100%);
+  background: linear-gradient(45deg, #e91e63 0%, #ff6f00 100%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  height: 100vh;
+  padding-top: calc(20px + 2vw);
+  padding-right: 3vw;
+}
+
+.home__header--name {
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+    font-size: 10vw;
+    margin: 0;
+    text-transform: capitalize;
+    white-space: nowrap;
+}
+
+.home__header--info {
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+  font-size: 4vw;
+  letter-spacing: 0.16rem;
+  margin: 1rem 0;
+  text-transform: uppercase;
+}
+
+.home__header--phrase {
+  white-space: nowrap;
+}
+
+.home__link {
+  color: black;
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+  text-decoration: underline;
+  text-transform: uppercase;
+}
+
+.home__icons {
+    line-height: 0;
+    max-width: 600px;
+    padding: 0;
+    width: 80vw;
+}
+
+.home__icon {
+    height: auto;
+    margin: 1rem auto;
+    max-width: 3rem;
+    min-width: 2rem;
+    opacity: 0.4;
+    transition: opacity .35s ease-out;
+    -moz-transition: opacity .35s ease-out;
+    -o-transition: opacity .35s ease-out;
+    -webkit-transition: opacity .35s ease-out;
+}
+
+.home__icon:hover {
+    animation: shake 0.25s linear both;
+    -moz-animation: shake 0.25s linear both;
+    -o-animation: shake 0.25s linear both;
+    -webkit-animation: shake 0.25s linear both;
+    opacity: 1;
+}
+
+@keyframes shake {
+    25% { transform: rotate(8deg); }
+    75% { transform: rotate(-8deg); }
+}
+
+/* START PAGE */
+
+html {
+    font-size: 18px;
+}
+
+.start {
+  margin-bottom: 0;
+}
+
+.mainContent, .infoBar {
+  font-family: 'PT Sans Narrow', sans-serif !important;
+}
+
+.infoBar {
+  margin: 0;
+  margin-bottom: 0.8rem;
+  padding: 0;
+}
+
+.infoBar__text {
+  font-size: calc(1rem + 0.8vw);
+}
+
+.infoBar__text--start {
+  letter-spacing: 0.4rem;
+  text-transform: uppercase;
+}
+
+.collection {
+    margin: 0;
+    padding: 0.5rem !important;
+}
+
+.collection-item {
+    cursor: pointer;
+    padding: 0.4rem !important;
+}
+
+.collection .collection-item.active {
+    background-color: initial;
+    color: initial;
+}
+
+.card-content p {
+    font-size: 1.2rem !important;
+    margin: 0;
+}
+
+.card-content p:first-child {
+    margin-top: 0.25rem;
+}
+
+.weatherForecastHeader {
+  display: inline-block;
+  margin-top: 1rem;
+}
+
+.weatherForecastHeader__city {
+  display: inline-block;
+  font-size: calc(1.5rem + 1vw);
+  margin-left: 0.5rem;
+  vertical-align: top;
+}
+
+.weatherForecastHeader__loading {
+  display: inline-block;
+  font-size: calc(1.5rem + 1vw);
+}
+
+.weatherForecastHeader__feelsLike {
+  white-space: nowrap;
+}
+
+.weatherForecastHeader__iconWrapper {
+  display: inline-block;
+  max-width: calc((1.5rem + 1vw) * 1.35);
+  min-width: calc((1.5rem + 1vw) * 1.35);
+  vertical-align: middle;
+}
+
+.weatherForecastHeader__icon--reload {
+  filter: FlipH;
+  -ms-filter: "FlipH";
+  opacity: 0.2;
+  transform: scaleX(-1);
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transition: opacity .25s;
+}
+
+.weatherForecastHeader__icon--reload:hover {
+  opacity: 0.5;
+}
+
+.weatherForecastHeader__icon--reload::selection {
+  opacity: 100;
+}
+
+.loading__icon {
+  margin-left: 0.8rem;
+  margin-top: 0.3rem;
+}
+
+.icon__wrapper {
+  max-width: 5rem;
+  margin: 0 auto;
+}
+
+.quote {
+    font-size: calc(1rem + 0.8vw);
+    padding: 1.8rem;
+}
+
+.quote p {
+    margin: 0;
+}
+
+/* RESUME */
+
+.resume__wrapper {
+  height: 100vh;
+}
+
+.resume__content {
+  border: 0;
+  display: block;
+  position: absolute;
+  top: 5%;
+}
+
+@media (max-width: 889px) {
+  .resume__content {
+    height: 90vh;
+    left: 5%;
+    width: 90vw;
+  }
+}
+
+@media (min-width: 889px) {
+  .resume__content {
+    height: 90vh;
+    left: calc(50% - 400px);
+    width: 800px;
+  }
+}
+
+/* PROJECTS */
+
+.projects__title {
+  text-transform: uppercase;
+}
+
+/* PROJECTS NAVBAR */
+
+nav {
+  height: 2.5rem;
+  line-height: 2.5rem;
+  overflow: hidden;
+}
+
+.nav__link--active {
+  background-color: rgba(0,0,0,0.05);
+  color: black;
+}
+
+/* PROJECTS DEFAULT PAGE */
+
+/* PROJECT: BINGO */
+
+.bingo__video {
+  height: auto;
+  width: 100%;
+}
+
+.board__cell {
+  border: 1px solid #e0e0e0; /* grey lighten-2 */
+  cursor: pointer;
+  width: 20%;
+}
+
+.board__controls {
+  background-color: #e0e0e0; /* grey lighten-2 */
+  margin: 0.25rem;
+  padding: 0.5rem;
+}
+
+.selected {
+  background-color: red !important;
+}
+
+.board__cell:hover {
+  background-color: #e0e0e0; /* grey lighten-2 */
+}
+
+/* PROJECT: IMPORT FIXER */
+
+.import__textarea {
+  height: 32vh;
+  max-width: 1000px;
+  vertical-align: top;
+  width: 80vw;
+}
+
+.import__button {
+  margin: 1rem;
+}

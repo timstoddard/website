@@ -66,12 +66,19 @@ export default React.createClass({
           name: 'CPE 225',
           id: 869,
           otherLinks: [
-            { name: 'Schedule', href: 'https://users.csc.calpoly.edu/~jplanck/225/225-F2016Schedule.html' }
+            { name: 'Schedule', href: 'https://users.csc.calpoly.edu/~jplanck/225/225-F2016Schedule.html' },
+            { name: 'LC 3 Reference', href: 'https://drive.google.com/file/d/0B9dz0Ddcl3ESRUdQX1lQczBwblk/view?usp=sharing' }
           ]
         },
-        { name: 'POLS 112', id: 0 },
-        { name: 'STAT 312', id: 0 },
-        { name: 'ENGL 149', id: 0 }
+        {
+          name: 'POLS 112',
+          id: 0,
+          otherLinks: [
+            { name: 'Globalyceum', href: 'https://www.globalyceum.com/student/student_home' }
+          ]
+        },
+        { name: 'STAT 312', id: 2541 },
+        { name: 'ENGL 149', id: 6518 }
       ],
       links: [
         { name: 'Portal', href: 'https://my.calpoly.edu' },

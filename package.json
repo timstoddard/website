@@ -1,16 +1,16 @@
 {
-  "name": "tutorial",
+  "name": "tim-stoddard's-website",
   "version": "1.0.0",
-  "description": "",
+  "description": "Tim Stoddard's Website",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --inline --content-base --history-api-fallback"
+    "start": "webpack-dev-server --inline --content-base --history-api-fallback",
+    "prod": "NODE_ENV=production node server.js"
   },
-  "author": "",
+  "author": "Tim Stoddard",
   "license": "ISC",
   "dependencies": {
     "react": "^0.14.8",
-    "react-document-title": "^2.0.2",
     "react-dom": "^0.14.8",
     "react-router": "^2.0.0",
     "babel": "^6.5.2",
@@ -19,7 +19,10 @@
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-react": "^6.11.1",
     "http-server": "^0.8.5",
-    "webpack": "^1.13.2",
+    "webpack": "^1.12.9",
+    "express": "^4.13.3"
+  },
+  "devDependencies": {
     "webpack-dev-server": "^1.14.1"
   }
 }

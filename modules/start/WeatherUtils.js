@@ -44,6 +44,7 @@ function getZipCode() {
 }
 
 function getWeatherData(locationData) {
+  locationData = 'autoip'; // TODO: add ability to switch to navigator.geolocation instead
   getWeatherDataAjax(`https://api.wunderground.com/api/8d7d14e295f9150a/conditions/forecast10day/astronomy/q/${locationData}.json`);
   reloadWeatherTimer = setInterval(() => {
     getWeatherDataAjax(`https://api.wunderground.com/api/8d7d14e295f9150a/conditions/forecast10day/astronomy/q/${locationData}.json`);
@@ -62,7 +63,7 @@ function getWeatherDataAjax(url) {
 
 export let showWeather = (success) => {
   successFn = success;
-  if (hasLocationDataInLocalStorage()) {
+  // if (hasLocationDataInLocalStorage()) {
     if (hasWeatherDataInLocalStorage()) {
       if (!needNewWeatherData()) {
         successFn(get('weatherData'));
@@ -72,9 +73,9 @@ export let showWeather = (success) => {
     } else {
       getWeatherData(get('locationData'));
     }
-  } else {
-    getLocation();
-  }
+  // } else {
+  //   getLocation();
+  // }
 };
 
 export let reloadWeatherData = () => {

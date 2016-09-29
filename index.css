@@ -292,3 +292,14 @@ nav {
 .import__button {
   margin: 1rem;
 }
+
+/* 404 NOT FOUND */
+
+.notFound {
+  padding: 20px;
+  text-align: center;
+}
+
+.notFound__link {
+  text-decoration: underline;
+}

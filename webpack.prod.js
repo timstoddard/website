@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 
 module.exports = {
-  devtool: 'eval',
+  devtool: 'cheap-module-source-map',
   entry: './index.js',
   output: {
     filename: 'bundle.js',
@@ -16,7 +16,14 @@ module.exports = {
       }
     ]
   },
-  devServer: {
-    historyApiFallback: true,
-  }
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      },
+      comments: false
+    }),
+    new webpack.optimize.AggressiveMergingPlugin(),
+    new webpack.optimize.DedupePlugin()
+  ]
 };

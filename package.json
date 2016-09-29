@@ -4,8 +4,8 @@
   "description": "Tim Stoddard's Website",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --inline --content-base --history-api-fallback",
-    "prod": "NODE_ENV=production node server.js"
+    "start": "webpack-dev-server --inline --content-base",
+    "prod": "NODE_ENV=production webpack -p --config ./webpack.prod.js && node server.js"
   },
   "author": "Tim Stoddard",
   "license": "ISC",

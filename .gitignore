@@ -1,3 +1,10 @@
+# node stuff
 node_modules
-.DS_Store
 npm-debug.log
+
+# apple files
+.DS_Store
+
+# webpack bundle
+bundle.js
+bundle.js.map

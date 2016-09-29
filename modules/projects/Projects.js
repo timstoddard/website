@@ -8,7 +8,6 @@ export default React.createClass({
     return null;
   },
   render() {
-    document.title = 'Projects';
     return <div>
       <nav>
         <div className="nav-wrapper light-blue">
@@ -19,7 +18,6 @@ export default React.createClass({
             <li><NavLink to="/projects/imports">Imports</NavLink></li>
             <li><NavLink to="/projects/strobe">Strobe</NavLink></li>
             <li><NavLink to="/projects/time">Time</NavLink></li>
-            <li><NavLink to="/projects/weather">Weather</NavLink></li>
             <li><NavLink to="/projects/zen">Zen</NavLink></li>
           </ul>
         </div>

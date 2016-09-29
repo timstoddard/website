@@ -74,10 +74,10 @@ let BingoVideo = React.createClass({
     return { __html: this.state.currentVideoHtml };
   },
   render() {
-    return (<div className={this.props.className}>
+    return <div className={this.props.className}>
       <h4>{this.state.currentVideoTitle}</h4>
       <div dangerouslySetInnerHTML={this.videoHtml()} />
-    </div>);
+    </div>;
   }
 });
 
@@ -264,7 +264,7 @@ let BingoBoard = React.createClass({
       }
       tableRows.push(<tr key={'r' + i}>{tableRow}</tr>);
     }
-    return (<div className={this.props.className}>
+    return <div className={this.props.className}>
       <table className="centered">
         <tbody>{tableRows}</tbody>
       </table>
@@ -273,13 +273,13 @@ let BingoBoard = React.createClass({
         selectedCells={this.state.selectedCells}
         buttonText={this.state.buttonText}
         onSubmit={this.onSubmit} />
-    </div>);
+    </div>;
   }
 })
 
 let BingoControlPanel = React.createClass({
   render() {
-    return (<div className="board__controls row">
+    return <div className="board__controls row">
       <div className="col s6">
         <div>{'Moves: ' + this.props.moveCount}</div>
         <div>{'Selected cells: ' + this.props.selectedCells}</div>
@@ -291,7 +291,7 @@ let BingoControlPanel = React.createClass({
             {this.props.buttonText}
         </a>
       </div>
-    </div>);
+    </div>;
   }
 });
 
@@ -300,7 +300,8 @@ export default React.createClass({
     this.videoPlayer.loadNewVideo();
   },
   render() {
-    return (<div className="center-align row">
+    document.title = 'Bingo';
+    return <div className="center-align row">
       <h3>Car Crash Bingo</h3>
       <BingoVideo
         className="video col s12 m12 l6"
@@ -308,6 +309,6 @@ export default React.createClass({
       <BingoBoard
         className="board col s12 m12 l6"
         onSubmit={this.loadNewVideo} />
-    </div>)
+    </div>
   }
 });

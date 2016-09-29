@@ -15,7 +15,6 @@ import Projects from './modules/projects/Projects';
 import ProjectsHome from './modules/projects/ProjectsHome';
 import Strobe from './modules/projects/Strobe';
 import Time from './modules/projects/Time';
-import Weather from './modules/projects/Weather';
 import Zen from './modules/projects/Zen';
 
 import Start from './modules/start/Start';
@@ -33,7 +32,6 @@ render((
       <Route path="/projects/imports" component={Imports} />
       <Route path="/projects/strobe" component={Strobe} />
       <Route path="/projects/time" component={Time} />
-      <Route path="/projects/weather" component={Weather} />
       <Route path="/projects/zen" component={Zen} />
     </Route>
     <Route path="*" component={NotFound} />

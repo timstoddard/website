@@ -36,22 +36,22 @@ let Dropdown = React.createClass({
 
 let DropdownActivator = React.createClass({
   render() {
-    return (<a
+    return <a
       className="collection-item dropdown-button black-text"
       data-activates={`dropdown${this.props.index}`}>
         {this.props.courseName}
-    </a>);
+    </a>;
   }
 });
 
 let SidebarLink = React.createClass({
   render() {
-    return (<a
+    return <a
       className="collection-item black-text"
       href={this.props.href}
       target="_blank">
         {this.props.name}
-    </a>);
+    </a>;
   }
 });
 
@@ -104,11 +104,11 @@ export default React.createClass({
     this.state.links.forEach((link, index) => {
       links.push(<SidebarLink key={index} name={link.name} href={link.href} />);
     });
-    return (<div className={this.props.className}>
+    return <div className={this.props.className}>
       {dropdowns}
       {dropdownActivators}
       <div className="divider" />
       {links}
-    </div>);
+    </div>;
   }
 });

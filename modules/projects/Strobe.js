@@ -5,7 +5,7 @@ var StrobeOptions = React.createClass({
     this.props.ms = event.target.value;
   },
   render() {
-    return (<div>
+    return <div>
       <p>Adjust strobe speed</p>
       5
       <input
@@ -17,7 +17,7 @@ var StrobeOptions = React.createClass({
         step="5" />
       500
       <div>Milliseconds between strobes: {this.props.ms}</div>
-    </div>);
+    </div>;
   }
 });
 
@@ -26,6 +26,7 @@ export default React.createClass({
     return { ms: 45 };
   },
   render() {
+    document.title = 'Strobe';
     return <div className={this.getCurrentStyle}>
       <StrobeOptions ms={this.state.ms} />
     </div>

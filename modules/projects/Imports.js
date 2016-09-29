@@ -257,34 +257,34 @@ import 'code';`});
     return str;
   },
   render() {
+    document.title = 'Import Fixer';
     // TODO: use `ref`s to interact with textareas
-    return (
-      <div className="center-align">
-        <h3>Import Fixer</h3>
-        <textarea
-          id="input"
-          className="import__textarea"
-          value={this.state.rawValue}
-          onChange={this.onChange}
-          onKeyDown={this.checkKeyDown}
-          onKeyUp={this.checkKeyUp}
-          onPaste={this.replaceText} />
-        <div>
-          <a
-            className="import__button waves-effect waves-light btn light-blue accent-2"
-            onClick={this.loadMockImports}>
-            load sample
-          </a>
-          <a
-            className="import__button waves-effect waves-light btn light-blue accent-2"
-            onClick={this.fixImports}>
-            fix imports
-          </a>
-        </div>
-        <textarea
-          id="output"
-          value={this.state.formattedValue}
-          className="import__textarea" />
-      </div>)
+    return <div className="center-align">
+      <h3>Import Fixer</h3>
+      <textarea
+        id="input"
+        className="import__textarea"
+        value={this.state.rawValue}
+        onChange={this.onChange}
+        onKeyDown={this.checkKeyDown}
+        onKeyUp={this.checkKeyUp}
+        onPaste={this.replaceText} />
+      <div>
+        <a
+          className="import__button waves-effect waves-light btn light-blue accent-2"
+          onClick={this.loadMockImports}>
+          load sample
+        </a>
+        <a
+          className="import__button waves-effect waves-light btn light-blue accent-2"
+          onClick={this.fixImports}>
+          fix imports
+        </a>
+      </div>
+      <textarea
+        id="output"
+        value={this.state.formattedValue}
+        className="import__textarea" />
+    </div>
   }
 });

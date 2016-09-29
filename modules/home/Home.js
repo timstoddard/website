@@ -32,6 +32,7 @@ let IconLinks = React.createClass({
 
 export default React.createClass({
   render() {
+    document.title = 'Tim Stoddard';
     return <div className="home right-align">
       <h1 className="home__header--name">
         <span className="home__header--phrase">tim stoddard</span>

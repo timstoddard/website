@@ -43,7 +43,6 @@ export default React.createClass({
         <span className="home__header--phrase">software engineering intern</span> @ socreate
       </h2>
       <ul>
-        <li><NavLink className="home__link flow-text" to="/start">Start Page (todo: remove this link)</NavLink></li>
         <li><NavLink className="home__link flow-text" to="/about">About Me</NavLink></li>
         <li><NavLink className="home__link flow-text" to="/projects">Projects</NavLink></li>
         <li><NavLink className="home__link flow-text" to="/resume">Resume</NavLink></li>

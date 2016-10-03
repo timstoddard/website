@@ -1,6 +1,7 @@
 import React from 'react';
 
 import * as Utils from  './WeatherUtils';
+import './MainContent.scss';
 
 let LoadingAnimation = React.createClass({
   getInitialState() {
@@ -79,10 +80,10 @@ let WeatherForecastDay = React.createClass({
         </div>
         <div className="divider" />
           <div className="card-content">
-                <p>{day.date.weekday}</p>
-                <p>{day.date.month}/{day.date.day}</p>
-                <p>{day.low.fahrenheit}-{day.high.fahrenheit}&deg;F</p>
-            </div>
+            <p className="card-content__line">{day.date.weekday}</p>
+            <p className="card-content__line">{day.date.month}/{day.date.day}</p>
+            <p className="card-content__line">{day.low.fahrenheit}-{day.high.fahrenheit}&deg;F</p>
+          </div>
         </div>
     </div>;
   }
@@ -149,7 +150,7 @@ let RandomQuote = React.createClass({
         let html = '';
         let separators = ['-', '~', '-', '–', '—', '―'];
         for (let i = 0; i < separators.length; i++) {
-          let separator = separators[i]
+          let separator = separators[i];
           if (new RegExp(separator).test(rawQuote)) {
             let parts = rawQuote.split(separator);
             this.setState({ quote: parts[0].trim(), author: parts[1].trim() });
@@ -171,8 +172,8 @@ let RandomQuote = React.createClass({
   },
   render() {
     return <div className="quote center-align blue-grey lighten-3">
-      <p>{this.state.quote}</p>
-      <p className="grey-text text-darken-1"><em>--{this.state.author}</em></p>
+      <p className="quote__text">{this.state.quote}</p>
+      <p className="quote__text" className="grey-text text-darken-1"><em>--{this.state.author}</em></p>
     </div>;
   }
 });

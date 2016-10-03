@@ -5,6 +5,5 @@ npm-debug.log
 # apple files
 .DS_Store
 
-# webpack bundle
-bundle.js
-bundle.js.map
+# bundle files in dist folder
+dist/*

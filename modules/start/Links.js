@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router';
 
+import './Links.scss';
+
 let DropdownItem = React.createClass({
   render() {
     return <li>
@@ -104,7 +106,7 @@ export default React.createClass({
     this.state.links.forEach((link, index) => {
       links.push(<SidebarLink key={index} name={link.name} href={link.href} />);
     });
-    return <div className={this.props.className}>
+    return <div className={`collection ${this.props.className}`}>
       {dropdowns}
       {dropdownActivators}
       <div className="divider" />

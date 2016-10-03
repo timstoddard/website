@@ -1,0 +1,26 @@
+.resume__wrapper {
+  height: 100vh;
+}
+
+.resume__content {
+  border: 0;
+  display: block;
+  position: absolute;
+  top: 5%;
+}
+
+@media (max-width: 889px) {
+  .resume__content {
+    height: 90vh;
+    left: 5%;
+    width: 90vw;
+  }
+}
+
+@media (min-width: 889px) {
+  .resume__content {
+    height: 90vh;
+    left: calc(50% - 400px);
+    width: 800px;
+  }
+}

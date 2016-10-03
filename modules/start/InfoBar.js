@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router';
 
+import './InfoBar.scss';
+
 let WelcomeText = React.createClass({
   getInitialState() {
     return { name: localStorage.getItem('name') || '' };
@@ -18,7 +20,6 @@ let WelcomeText = React.createClass({
       this.setState({ name: name });
       localStorage.setItem('name', name);
     } catch(e) {}
-    
   },
   formatTimeOfDay() {
     let hours = this.props.now.getHours();

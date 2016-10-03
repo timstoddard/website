@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './Imports.scss';
+
 export default React.createClass({
   getInitialState() {
     return { rawValue: '', formattedValue: '', shiftKeyDown: false };

@@ -1,0 +1,17 @@
+@import url(https://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
+
+.infoBar {
+  font-family: 'PT Sans Narrow', sans-serif !important;
+  margin: 0;
+  margin-bottom: 0.8rem;
+  padding: 0;
+}
+
+.infoBar__text {
+  font-size: calc(1rem + 0.8vw);
+}
+
+.infoBar__text--start {
+  letter-spacing: 0.4rem;
+  text-transform: uppercase;
+}

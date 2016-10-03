@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './About.scss';
+
 export default React.createClass({
   render() {
     document.title = 'About';

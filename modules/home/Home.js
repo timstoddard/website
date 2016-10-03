@@ -1,6 +1,7 @@
 import React from 'react';
 
 import NavLink from '../NavLink';
+import './Home.scss';
 
 let IconLinks = React.createClass({
   getInitialState() {

@@ -2,10 +2,11 @@ import React from 'react';
 import { Link } from 'react-router';
 
 import NavLink from '../NavLink';
+import './Projects.scss';
 
 export default React.createClass({
   getInitialState() {
-    return null;
+    return {};
   },
   render() {
     return <div>

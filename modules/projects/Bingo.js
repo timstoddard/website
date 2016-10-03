@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './Bingo.scss';
+
 class BingoCellState {
   static get UNSELECTED() { return 0; }
   static get SELECTED() { return 1; }

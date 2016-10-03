@@ -173,7 +173,7 @@ let RandomQuote = React.createClass({
   render() {
     return <div className="quote center-align blue-grey lighten-3">
       <p className="quote__text">{this.state.quote}</p>
-      <p className="quote__text" className="grey-text text-darken-1"><em>--{this.state.author}</em></p>
+      <p className="quote__text grey-text text-darken-1"><em>--{this.state.author}</em></p>
     </div>;
   }
 });

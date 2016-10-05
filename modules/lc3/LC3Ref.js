@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Data from './Data';
+import { instructions } from './Data';
 import './LC3Ref.scss';
 
 export default React.createClass({

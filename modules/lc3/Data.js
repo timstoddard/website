@@ -5,10 +5,7 @@ export const instructions = [
     modifiesConditionCodes: true,
     formats: [
       {
-        assemblerFormat: {
-          name: 'ADD',
-          args: 'DR, SR1, SR2'
-        },
+        assemblerFormat: { name: 'ADD', args: 'DR, SR1, SR2' },
         encoding: [
           '0001',
           { value: 'DR', bits: 3 },
@@ -23,10 +20,7 @@ export const instructions = [
         }]
       },
       {
-        assemblerFormat: {
-          name: 'ADD',
-          args: 'DR, SR1, imm5'
-        },
+        assemblerFormat: { name: 'ADD', args: 'DR, SR1, imm5' },
         encoding: [
           '0001',
           { value: 'DR', bits: 3 },
@@ -55,10 +49,7 @@ export const instructions = [
     modifiesConditionCodes: true,
     formats: [
       {
-        assemblerFormat: {
-          name: 'AND',
-          args: 'DR, SR1, SR2'
-        },
+        assemblerFormat: { name: 'AND', args: 'DR, SR1, SR2' },
         encoding: [
           '0101',
           { value: 'DR', bits: 3 },
@@ -73,10 +64,7 @@ export const instructions = [
         }]
       },
       {
-        assemblerFormat: {
-          name: 'AND',
-          args: 'DR, SR1, imm5'
-        },
+        assemblerFormat: { name: 'AND', args: 'DR, SR1, imm5' },
         encoding: [
           '0101',
           { value: 'DR', bits: 3 },
@@ -103,31 +91,26 @@ export const instructions = [
     name: 'BR',
     function: 'Conditional Branch',
     modifiesConditionCodes: false,
-    formats: [
-      {
-        assemblerFormat: {
-          name: 'BRn?z?p?',
-          args: 'PCOffset9'
+    formats: [{
+      assemblerFormat: { name: 'BRn?z?p?', args: 'PCOffset9' },
+      encoding: [
+        '0000',
+        { value: 'n', bits: 1 },
+        { value: 'z', bits: 1 },
+        { value: 'p', bits: 1 },
+        { value: 'PCOffset9', bits: 9 },
+      ],
+      examples: [
+        {
+          text: 'BRzp #-7',
+          description: 'Set the PC to 7 instructions before the incremented PC if the last result was zero or positive.'
         },
-        encoding: [
-          '0000',
-          { value: 'n', bits: 1 },
-          { value: 'z', bits: 1 },
-          { value: 'p', bits: 1 },
-          { value: 'PCOffset9', bits: 9 },
-        ],
-        examples: [
-          {
-            text: 'BRzp #-7',
-            description: 'Set the PC to 7 instructions before the incremented PC if the last result was zero or positive.'
-          },
-          {
-            text: 'BR #5',
-            description: 'Unconditionally move to the next instruction. The assembly language opcode BR is interpreted the same as BRnzp; that is, always branch to the target address.'
-          }
-        ]
-      }
-    ],
+        {
+          text: 'BR #5',
+          description: 'Unconditionally move to the next instruction. The assembly language opcode BR is interpreted the same as BRnzp; that is, always branch to the target address.'
+        }
+      ]
+    }],
     operation: [
       { text: 'if ((n AND N) OR (z AND Z) OR (p AND P))', indentationLevel: 0 },
       { text: 'PC = PC* + SEXT(PCOffset9);', indentationLevel: 1 },
@@ -139,24 +122,19 @@ export const instructions = [
     name: 'JMP',
     function: 'Jump',
     modifiesConditionCodes: false,
-    formats: [
-      {
-        assemblerFormat: {
-          name: 'JMP',
-          args: 'BaseR'
-        },
-        encoding: [
-          '1100',
-          '000',
-          { value: 'BaseR', bits: 3 },
-          '000000'
-        ],
-        examples: [{
-          text: 'JMP R2',
-          description: 'The PC is loaded with the contents of R2.'
-        }]
-      }
-    ],
+    formats: [{
+      assemblerFormat: { name: 'JMP', args: 'BaseR' },
+      encoding: [
+        '1100',
+        '000',
+        { value: 'BaseR', bits: 3 },
+        '000000'
+      ],
+      examples: [{
+        text: 'JMP R2',
+        description: 'The PC is loaded with the contents of R2.'
+      }]
+    }],
     operation: [
       { text: 'PC = BaseR;', indentationLevel: 0 }
     ],
@@ -168,10 +146,7 @@ export const instructions = [
     modifiesConditionCodes: false,
     formats: [
       {
-        assemblerFormat: {
-          name: 'JSR',
-          args: 'PCOffset11'
-        },
+        assemblerFormat: { name: 'JSR', args: 'PCOffset11' },
         encoding: [
           '0100',
           '1',
@@ -183,10 +158,7 @@ export const instructions = [
         }]
       },
       {
-        assemblerFormat: {
-          name: 'JSRR',
-          args: 'BaseR'
-        },
+        assemblerFormat: { name: 'JSRR', args: 'BaseR' },
         encoding: [
           '0100',
           '0',
@@ -214,23 +186,18 @@ export const instructions = [
     name: 'LD',
     function: 'Load',
     modifiesConditionCodes: true,
-    formats: [
-      {
-        assemblerFormat: {
-          name: 'LD',
-          args: 'DR, PCOffset9'
-        },
-        encoding: [
-          '0010',
-          { value: 'DR', bits: 3 },
-          { value: 'PCOffset9', bits: 9 }
-        ],
-        examples: [{
-          text: 'LD R2, #100',
-          description: 'R2 is loaded with mem[PC + 100].'
-        }]
-      }
-    ],
+    formats: [{
+      assemblerFormat: { name: 'LD', args: 'DR, PCOffset9' },
+      encoding: [
+        '0010',
+        { value: 'DR', bits: 3 },
+        { value: 'PCOffset9', bits: 9 }
+      ],
+      examples: [{
+        text: 'LD R2, #100',
+        description: 'R2 is loaded with mem[PC + 100].'
+      }]
+    }],
     operation: [
       { text: 'DR = mem[PC* + SEXT(PCOffset9)];', indentationLevel: 0 },
       { text: 'setcc();', indentationLevel: 0 },
@@ -242,23 +209,18 @@ export const instructions = [
     name: 'LDI',
     function: 'Load Indirect',
     modifiesConditionCodes: true,
-    formats: [
-      {
-        assemblerFormat: {
-          name: 'LDI',
-          args: 'DR, PCOffset9'
-        },
-        encoding: [
-          '1010',
-          { value: 'DR', bits: 3 },
-          { value: 'PCOffset9', bits: 9 }
-        ],
-        examples: [{
-          text: 'LDI R2, #7',
-          description: 'R2 is loaded with mem[mem[PC + 7]].'
-        }]
-      }
-    ],
+    formats: [{
+      assemblerFormat: { name: 'LDI', args: 'DR, PCOffset9' },
+      encoding: [
+        '1010',
+        { value: 'DR', bits: 3 },
+        { value: 'PCOffset9', bits: 9 }
+      ],
+      examples: [{
+        text: 'LDI R2, #7',
+        description: 'R2 is loaded with mem[mem[PC + 7]].'
+      }]
+    }],
     operation: [
       { text: 'DR = mem[mem[PC* + SEXT(PCOffset9)]];', indentationLevel: 0 },
       { text: 'setcc();', indentationLevel: 0 },
@@ -270,24 +232,19 @@ export const instructions = [
     name: 'LDR',
     function: 'Load Base+Offset',
     modifiesConditionCodes: true,
-    formats: [
-      {
-        assemblerFormat: {
-          name: 'LDR',
-          args: 'DR, BaseR, offset6'
-        },
-        encoding: [
-          '0110',
-          { value: 'DR', bits: 3 },
-          { value: 'BaseR', bits: 3 },
-          { value: 'offset6', bits: 6 }
-        ],
-        examples: [{
-          text: 'LDR R2, R1, #-4',
-          description: 'R2 is loaded with mem[BaseR - 4].'
-        }]
-      }
-    ],
+    formats: [{
+      assemblerFormat: { name: 'LDR', args: 'DR, BaseR, offset6' },
+      encoding: [
+        '0110',
+        { value: 'DR', bits: 3 },
+        { value: 'BaseR', bits: 3 },
+        { value: 'offset6', bits: 6 }
+      ],
+      examples: [{
+        text: 'LDR R2, R1, #-4',
+        description: 'R2 is loaded with mem[BaseR - 4].'
+      }]
+    }],
     operation: [
       { text: 'DR = mem[BaseR + SEXT(offset6)];', indentationLevel: 0 },
       { text: 'setcc();', indentationLevel: 0 }
@@ -298,23 +255,18 @@ export const instructions = [
     name: 'LEA',
     function: 'Load Effective Address',
     modifiesConditionCodes: true,
-    formats: [
-      {
-        assemblerFormat: {
-          name: 'LEA',
-          args: 'DR, PCOffset9'
-        },
-        encoding: [
-          '1110',
-          { value: 'DR', bits: 3 },
-          { value: 'PCOffset9', bits: 9 }
-        ],
-        examples: [{
-          text: 'LEA R3, #6',
-          description: 'Loads the result of PC + 6 into R3.'
-        }]
-      }
-    ],
+    formats: [{
+      assemblerFormat: { name: 'LEA', args: 'DR, PCOffset9' },
+      encoding: [
+        '1110',
+        { value: 'DR', bits: 3 },
+        { value: 'PCOffset9', bits: 9 }
+      ],
+      examples: [{
+        text: 'LEA R3, #6',
+        description: 'Loads the result of PC + 6 into R3.'
+      }]
+    }],
     operation: [
       { text: 'DR = PC* + SEXT(PCOffset9);', indentationLevel: 0 },
       { text: 'setcc();', indentationLevel: 0 },
@@ -326,25 +278,20 @@ export const instructions = [
     name: 'NOT',
     function: 'Bitwise Complement',
     modifiesConditionCodes: true,
-    formats: [
-      {
-        assemblerFormat: {
-          name: 'NOT',
-          args: 'DR, SR'
-        },
-        encoding: [
-          '1001',
-          { value: 'DR', bits: 3 },
-          { value: 'SR', bits: 3 },
-          '1',
-          '11111'
-        ],
-        examples: [{
-          text: 'NOT R2, R1',
-          description: 'R2 is loaded with the bitwise complement of R1.'
-        }]
-      }
-    ],
+    formats: [{
+      assemblerFormat: { name: 'NOT', args: 'DR, SR' },
+      encoding: [
+        '1001',
+        { value: 'DR', bits: 3 },
+        { value: 'SR', bits: 3 },
+        '1',
+        '11111'
+      ],
+      examples: [{
+        text: 'NOT R2, R1',
+        description: 'R2 is loaded with the bitwise complement of R1.'
+      }]
+    }],
     operation: [
       { text: 'DR = NOT(SR);', indentationLevel: 0 },
       { text: 'setcc();', indentationLevel: 0 }
@@ -355,24 +302,19 @@ export const instructions = [
     name: 'RET',
     function: 'Return From Subroutine',
     modifiesConditionCodes: false,
-    formats: [
-      {
-        assemblerFormat: {
-          name: 'RET',
-          args: ''
-        },
-        encoding: [
-          '1100',
-          '000',
-          '111',
-          '000000'
-        ],
-        examples: [{
-          text: 'RET',
-          description: 'The PC is loaded with the contents of R7.'
-        }]
-      }
-    ],
+    formats: [{
+      assemblerFormat: { name: 'RET', args: '' },
+      encoding: [
+        '1100',
+        '000',
+        '111',
+        '000000'
+      ],
+      examples: [{
+        text: 'RET',
+        description: 'The PC is loaded with the contents of R7.'
+      }]
+    }],
     operation: [
       { text: 'PC = R7;', indentationLevel: 0 }
     ],
@@ -382,22 +324,17 @@ export const instructions = [
     name: 'RTI',
     function: 'Return From Interrupt',
     modifiesConditionCodes: false,
-    formats: [
-      {
-        assemblerFormat: {
-          name: 'RTI',
-          args: ''
-        },
-        encoding: [
-          '1000',
-          '000000000000'
-        ],
-        examples: [{
-          text: 'RTI',
-          description: 'PC and PSR contain the top 2 values popped off the stack.'
-        }]
-      }
-    ],
+    formats: [{
+      assemblerFormat: { name: 'RTI', args: '' },
+      encoding: [
+        '1000',
+        '000000000000'
+      ],
+      examples: [{
+        text: 'RTI',
+        description: 'PC and PSR contain the top 2 values popped off the stack.'
+      }]
+    }],
     operation: [
       { text: 'if (PSR[15] == 0)', indentationLevel: 0 },
       { text: 'PC = mem[R6]; // R6 is the SSP', indentationLevel: 1 },
@@ -414,23 +351,18 @@ export const instructions = [
     name: 'ST',
     function: 'Store',
     modifiesConditionCodes: false,
-    formats: [
-      {
-        assemblerFormat: {
-          name: 'ST',
-          args: 'SR, PCOffset9'
-        },
-        encoding: [
-          '0011',
-          { value: 'SR', bits: 3 },
-          { value: 'PCOffset9', bits: 9 }
-        ],
-        examples: [{
-          text: 'ST R5, #3',
-          description: 'mem[PC + 3] is loaded with the contents of R5.'
-        }]
-      }
-    ],
+    formats: [{
+      assemblerFormat: { name: 'ST', args: 'SR, PCOffset9' },
+      encoding: [
+        '0011',
+        { value: 'SR', bits: 3 },
+        { value: 'PCOffset9', bits: 9 }
+      ],
+      examples: [{
+        text: 'ST R5, #3',
+        description: 'mem[PC + 3] is loaded with the contents of R5.'
+      }]
+    }],
     operation: [
       { text: 'mem[PC* + SEXT(PCOffset9)] = SR;', indentationLevel: 0 },
       { text: '*This is the incremented PC', tooltip: true },
@@ -441,23 +373,18 @@ export const instructions = [
     name: 'STI',
     function: 'Store Indirect',
     modifiesConditionCodes: false,
-    formats: [
-      {
-        assemblerFormat: {
-          name: 'STI',
-          args: 'SR, PCOffset9'
-        },
-        encoding: [
-          '1011',
-          { value: 'SR', bits: 3 },
-          { value: 'PCOffset9', bits: 9 }
-        ],
-        examples: [{
-          text: 'STI R4, #-5',
-          description: 'The contents of R4 are loaded into mem[mem[PC - 5]].'
-        }]
-      }
-    ],
+    formats: [{
+      assemblerFormat: { name: 'STI', args: 'SR, PCOffset9' },
+      encoding: [
+        '1011',
+        { value: 'SR', bits: 3 },
+        { value: 'PCOffset9', bits: 9 }
+      ],
+      examples: [{
+        text: 'STI R4, #-5',
+        description: 'The contents of R4 are loaded into mem[mem[PC - 5]].'
+      }]
+    }],
     operation: [
       { text: 'mem[mem[PC* + SEXT(PCOffset9)]] = SR;', indentationLevel: 0 },
       { text: '*This is the incremented PC', tooltip: true }
@@ -468,24 +395,19 @@ export const instructions = [
     name: 'STR',
     function: 'Store Base+Offset',
     modifiesConditionCodes: false,
-    formats: [
-      {
-        assemblerFormat: {
-          name: 'STR',
-          args: 'SR, BaseR, offset6'
-        },
-        encoding: [
-          '0111',
-          { value: 'SR', bits: 3 },
-          { value: 'BaseR', bits: 3 },
-          { value: 'offset6', bits: 6 },
-        ],
-        examples: [{
-          text: 'STR R4, R5, #9',
-          description: 'The contents of R4 are loaded into mem[R5 + 5].'
-        }]
-      }
-    ],
+    formats: [{
+      assemblerFormat: { name: 'STR', args: 'SR, BaseR, offset6' },
+      encoding: [
+        '0111',
+        { value: 'SR', bits: 3 },
+        { value: 'BaseR', bits: 3 },
+        { value: 'offset6', bits: 6 },
+      ],
+      examples: [{
+        text: 'STR R4, R5, #9',
+        description: 'The contents of R4 are loaded into mem[R5 + 5].'
+      }]
+    }],
     operation: [
       { text: 'mem[BaseR + SEXT(offset6)] = SR;', indentationLevel: 0 }
     ],
@@ -495,23 +417,18 @@ export const instructions = [
     name: 'TRAP',
     function: 'System Call',
     modifiesConditionCodes: false,
-    formats: [
-      {
-        assemblerFormat: {
-          name: 'TRAP',
-          args: 'trapvector8'
-        },
-        encoding: [
-          '1111',
-          '0000',
-          { value: 'trapvector8', bits: 8 }
-        ],
-        examples: [{
-          text: 'TRAP x23',
-          description: 'Directs the operating system to execute the IN system call. The starting address of this system call is contained in memory location x0023.'
-        }]
-      }
-    ],
+    formats: [{
+      assemblerFormat: { name: 'TRAP', args: 'trapvector8' },
+      encoding: [
+        '1111',
+        '0000',
+        { value: 'trapvector8', bits: 8 }
+      ],
+      examples: [{
+        text: 'TRAP x23',
+        description: 'Directs the operating system to execute the IN system call. The starting address of this system call is contained in memory location x0023.'
+      }]
+    }],
     operation: [
       { text: 'R7 = PC*;', indentationLevel: 0 },
       { text: 'PC = mem[ZEXT(trapvect8)];', indentationLevel: 0 },
@@ -523,22 +440,17 @@ export const instructions = [
     name: 'reserved',
     function: 'Unused Opcode',
     modifiesConditionCodes: false,
-    formats: [
-      {
-        assemblerFormat: {
-          name: '',
-          args: ''
-        },
-        encoding: [
-          '1101',
-          { value: '', bits: 12 }
-        ],
-        examples: [{
-          text: 'n/a',
-          description: ''
-        }]
-      }
-    ],
+    formats: [{
+      assemblerFormat: { name: '', args: '' },
+      encoding: [
+        '1101',
+        { value: '', bits: 12 }
+      ],
+      examples: [{
+        text: 'n/a',
+        description: ''
+      }]
+    }],
     operation: [
       { text: 'Initiate an illegal opcode exception.', indentationLevel: 0 }
     ],

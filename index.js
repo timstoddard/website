@@ -13,7 +13,10 @@ import About from './modules/home/About';
 import Resume from './modules/home/Resume';
 
 // LC3 reference
-import LC3Ref from './modules/lc3/LC3Ref';
+import LC3 from './modules/lc3/LC3';
+import LC3Home from './modules/lc3/LC3Home';
+import LC3Ref from './modules/lc3/ref/LC3Ref';
+import LC3Sim from './modules/lc3/sim/LC3Sim';
 
 // projects
 import Bingo from './modules/projects/Bingo';
@@ -33,7 +36,11 @@ render(<Router history={browserHistory}>
   <Route path="/about" component={About} />
   <Route path="/resume" component={Resume} />
   <Route path="/start" component={Start} />
-  <Route path="/lc3" component={LC3Ref} />
+  <Route path="/lc3" component={LC3}>
+    <IndexRoute component={LC3Home} />
+    <Route path="/lc3/ref" component={LC3Ref} />
+    <Route path="/lc3/sim" component={LC3Sim} />
+  </Route>
   <Route path="/projects" component={Projects}>
     <IndexRoute component={ProjectsHome} />
     <Route path="/projects/bingo" component={Bingo} />

@@ -1,0 +1,23 @@
+$grey-lighten-1: #bdbdbd;
+$grey-lighten-3: #eeeeee;
+
+.LC3Sim__sectionTitle {
+  text-decoration: underline;
+}
+
+.LC3Sim__sectionSubTitle {
+  font-style: italic;
+  font-weight: bold;
+}
+
+.LC3Sim__codeSample {
+  font-family: monospace;
+}
+
+.LC3Sim__container {
+  margin-bottom: 3rem;
+}
+
+.LC3Sim__row {
+  border-bottom: 1px solid black;
+}

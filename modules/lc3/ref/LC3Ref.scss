@@ -1,5 +1,5 @@
 // colors for instruction rows
-$grey-darken-1: #607d8b;
+$blue-grey: #607d8b;
 $grey-lighten-1: #bdbdbd;
 $grey-lighten-2: #e0e0e0;
 $grey-lighten-3: #eeeeee;
@@ -25,8 +25,11 @@ $green-darken-1: #43a047;
 .instruction {
   background-color: $grey-lighten-2;
   border: 1px solid $grey-lighten-1;
+  cursor: pointer;
   margin-bottom: 0;
   padding: 0.8rem;
+  user-select: none;
+  -webkit-touch-callout: none;
 }
 
 .instruction__wrapper {
@@ -100,7 +103,7 @@ $green-darken-1: #43a047;
 .detailOperation,
 .detailExample {
   &:before {
-    color: $grey-darken-1;
+    color: $blue-grey;
     display: block;
     text-transform: uppercase;
   }

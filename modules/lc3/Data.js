@@ -526,7 +526,7 @@ export const instructions = [
     formats: [
       {
         assemblerFormat: {
-          name: 'none',
+          name: '',
           args: ''
         },
         encoding: [

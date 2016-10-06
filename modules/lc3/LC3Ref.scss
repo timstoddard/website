@@ -1,0 +1,139 @@
+// colors for instruction rows
+$grey-darken-1: #607d8b;
+$grey-lighten-1: #bdbdbd;
+$grey-lighten-2: #e0e0e0;
+$grey-lighten-3: #eeeeee;
+
+// colors for modifiesCC indicator
+$red: #f44336;
+$red-darken-1: #e53935;
+$green: #4caf50;
+$green-darken-1: #43a047;
+
+.isa__header {
+  text-transform: uppercase;
+
+  &.isa__header--name {
+    text-align: right;
+  }
+
+  &.isa__header--encoding {
+    text-align: center;
+  }
+}
+
+.instruction {
+  background-color: $grey-lighten-2;
+  border: 1px solid $grey-lighten-1;
+  margin-bottom: 0;
+  padding: 0.8rem;
+}
+
+.instruction__wrapper {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.instruction__name {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-right: 8px;
+}
+
+.instruction__detail {
+  background-color: $grey-lighten-3;
+  border: 1px solid $grey-lighten-2;
+  display: block;
+  height: 100%;
+  padding: 0.8rem;
+  transition: all 0.4s ease;
+
+  &.instruction__detail--expanded {
+    margin-bottom: 0.8rem;
+  }
+
+  &.instruction__detail--hidden {
+    border: none;
+    font-size: 0;
+    margin: 0;
+    height: 0; // need to find a fix for this!
+    opacity: 0;
+    overflow: hidden;
+    padding: 0;
+  }
+}
+
+.instruction__modifiesCC {
+  &.instruction__modifiesCC--true:after,
+  &.instruction__modifiesCC--false:after {
+    border-radius: 50%;
+    content: '';
+    display: inline-block;
+    height: 12px;
+    width: 12px;
+  }
+  &.instruction__modifiesCC--true:after {
+    background-image: linear-gradient(45deg, $green 0%, $green-darken-1 100%);
+  }
+
+  &.instruction__modifiesCC--false:after {
+    background-image: linear-gradient(45deg, $red 0%, $red-darken-1 100%);
+  }
+}
+
+.detailHeader,
+.detailDescription,
+.detailOperation,
+.detailExample:not(:last-of-type) {
+  margin-bottom: 0.8rem;
+}
+
+.detailHeader__text {
+  padding: 0.4rem 0.8rem;
+}
+
+.detailHeader__text--opcode,
+.detailHeader__text--args,
+.detailHeader__text--function,
+.detailDescription,
+.detailOperation,
+.detailExample {
+  &:before {
+    color: $grey-darken-1;
+    display: block;
+    text-transform: uppercase;
+  }
+}
+
+$detailHeaderList: opcode args function;
+@each $item in $detailHeaderList {
+  .detailHeader__text--#{$item}:before {
+    content: '#{$item}'
+  }
+}
+
+$detailOthersList: Description Operation Example;
+@each $item in $detailOthersList {
+  .detail#{$item}:before {
+    content: '#{$item}'
+  }
+}
+
+.detailOperation__text {
+  font-family: monospace;
+}
+
+@for $i from 0 through 1 {
+  .detailOperation__text--#{$i} {
+    margin-left: 25px * $i;
+  }
+}
+
+.refList__title {
+  text-align: center;
+}
+
+.refList__content {
+  margin: 3rem auto;
+}

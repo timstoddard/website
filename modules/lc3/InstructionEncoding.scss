@@ -1,0 +1,14 @@
+@for $i from 1 through 16 {
+  .bit--#{$i} {
+    display: inline-block;
+    text-align: center;
+    width: 25px * $i;
+  }
+}
+
+.bit__divider {
+  background-color: black;
+  display: inline-block;
+  height: 20px;
+  width: 1px;
+}

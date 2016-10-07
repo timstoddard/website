@@ -63,14 +63,16 @@ let InstructionRow = React.createClass({
       <div
         onClick={this.onClick}
         className="instruction row">
-        <div className="col s2">
+        <div className="col s3">
           <div className="instruction__wrapper">
-            <div className="instruction__name">{this.props.instruction.name}</div>
+            <div className="instruction__name">
+              {this.props.instruction.name}
+            </div>
             <div className={`instruction__modifiesCC instruction__modifiesCC--${this.props.modifiesCC}`} />
           </div>
         </div>
         <InstructionEncoding
-          className="col s10"
+          className="col s9"
           encoding={this.props.format.encoding} />
       </div>
       <div className={`instruction__detail instruction__detail--${this.state.expanded ? 'expanded' : 'hidden'}`}>

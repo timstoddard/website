@@ -1,32 +1,34 @@
 $bitWidth: 25px;
 
 @for $i from 1 through 16 {
-  .bit--#{$i} {
+  .encoding__bit--#{$i} {
     border-bottom: 1px solid black;
     border-top: 1px solid black;
     display: inline-block;
     text-align: center;
     width: $bitWidth * $i;
+
+    &.encoding__bit--first {
+      border-left: 1px solid black;
+    }
+
+    &.encoding__bit--lastInSection {
+      border-right: 1px solid black;
+    }
   }
 }
 
-.bit__divider {
-  background-color: black;
+.encoding__wrapper {
   display: inline-block;
-  height: 21px;
-  width: 1px;
 }
 
-.encoding__text {
+.encoding__bitNumberWrapper {
+  line-height: 1rem !important;
+}
+
+.encoding__bitNumber {
+  display: inline-block;
   font-family: monospace;
-}
-
-.encoding__bit--wrapper {
-  display: inline-block;
-}
-
-.encoding__bit {
-  display: inline-block;
   font-size: 0.6rem;
   width: $bitWidth;
 }

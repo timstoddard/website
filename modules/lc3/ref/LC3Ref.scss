@@ -27,7 +27,7 @@ $green-darken-1: #43a047;
   border: 1px solid $grey-lighten-1;
   cursor: pointer;
   margin-bottom: 0;
-  padding: 0.8rem;
+  padding: 0.2rem 0 0.8rem 0;
   user-select: none;
   -webkit-touch-callout: none;
 }
@@ -52,15 +52,15 @@ $green-darken-1: #43a047;
   height: 100%;
   padding: 0.8rem;
   transition: all 0.4s ease;
+    margin-bottom: 0.8rem;
 
   &.instruction__detail--expanded {
-    margin-bottom: 0.8rem;
   }
 
   &.instruction__detail--hidden {
     border: none;
     font-size: 0;
-    margin: 0;
+    // margin: 0;
     height: 0; // need to find a fix for this!
     opacity: 0;
     overflow: hidden;

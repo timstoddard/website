@@ -5,25 +5,26 @@ import './InstructionEncoding.scss';
 let BitEncoding = React.createClass({
   render() {
     let bitNumbers = [];
+    let classes = '';
+    if (this.props.isFirstBit) {
+      classes += ' encoding__bit--first';
+    }
+    if (this.props.isLastBitInSection) {
+      classes += ' encoding__bit--lastInSection';
+    }
     for (let i = this.props.max; i >= this.props.min; i--) {
-      bitNumbers.push(<div key={i} className="encoding__bit">
+      bitNumbers.push(<div key={i} className="encoding__bitNumber">
         {i}
       </div>);
     }
-    return <div className="encoding__bit--wrapper">
-      <div className="encoding__bits">
+    return <div className="encoding__wrapper">
+      <div className="encoding__bitNumberWrapper">
         {bitNumbers}
       </div>
-      <div className={`bit--${this.props.width}`}>
+      <div className={`encoding__bit--${this.props.width} ${classes}`}>
         {this.props.value || '*'}
       </div>
     </div>;
-  }
-});
-
-let BitDivider = React.createClass({
-  render() {
-    return <div className="bit__divider" />;
   }
 });
 
@@ -39,25 +40,24 @@ export default React.createClass({
           key={index}
           value={code.value}
           width={code.bits}
+          isFirstBit={max === 15}
+          isLastBitInSection={true}
           min={min}
           max={max} />
       } else {
-        return code.split('').map((bit, index) =>
+        return code.split('').map((bit, index, arr) =>
           <BitEncoding
             key={index}
             value={bit}
             width={1}
+            isFirstBit={bitNumber === 15}
+            isLastBitInSection={index === arr.length - 1}
             min={bitNumber}
             max={bitNumber--} />);
       }
     });
-    let instructionsWithDividers = [<BitDivider key={'div-0'} />];
-    for (let i = 0; i < instructions.length; i++) {
-      instructionsWithDividers.push(instructions[i]);
-      instructionsWithDividers.push(<BitDivider key={`div-${i + 1}`} />);
-    }
     return <div className={`encoding__text center-align ${this.props.className}`}>
-      {instructionsWithDividers}
+      {instructions}
     </div>;
   }
 });

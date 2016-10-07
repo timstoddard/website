@@ -109,12 +109,10 @@ export default React.createClass({
       <div className="refList__content">
         {instructions}
         <p className="refList__note--title">Notes</p>
-        <p>
-          <ul>
-            <li className="refList__note--text">Click on an instruction to see more information about it.</li>
-            <li className="refList__note--text">The dot next to an instruction's name refers to whether or not the instruction modifies condition codes. <span className="instruction__modifiesCC--true" /> means it modifies condition codes, and <span className="instruction__modifiesCC--false" /> means it does not.</li>
-          </ul>
-        </p>
+        <ul>
+          <li className="refList__note--text">Click on an instruction to see more information about it.</li>
+          <li className="refList__note--text">The dot next to an instruction's name refers to whether or not the instruction modifies condition codes. <span className="instruction__modifiesCC--true" /> means it modifies condition codes, and <span className="instruction__modifiesCC--false" /> means it does not.</li>
+        </ul>
       </div>
     </div>
   }

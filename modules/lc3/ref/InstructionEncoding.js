@@ -21,7 +21,7 @@ let BitEncoding = React.createClass({
       <div className="encoding__bitNumberWrapper">
         {bitNumbers}
       </div>
-      <div className={`encoding__bit--${this.props.width} ${classes}`}>
+      <div className={`encoding__bit encoding__bit--${this.props.width} ${classes}`}>
         {this.props.value || '*'}
       </div>
     </div>;

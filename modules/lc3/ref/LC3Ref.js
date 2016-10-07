@@ -68,14 +68,14 @@ let InstructionRow = React.createClass({
             <div className="instruction__name">
               {this.props.instruction.name}
             </div>
-            <div className={`instruction__modifiesCC instruction__modifiesCC--${this.props.modifiesCC}`} />
+            <div className={`instruction__modifiesCC--${this.props.modifiesCC}`} />
           </div>
         </div>
         <InstructionEncoding
           className="col s9"
           encoding={this.props.format.encoding} />
       </div>
-      <div className={`instruction__detail instruction__detail--${this.state.expanded ? 'expanded' : 'hidden'}`}>
+      <div className={`instruction__detail ${this.state.expanded ? '' : 'instruction__detail--hidden'}`}>
         <DetailHeader
           assemblerFormat={this.props.format.assemblerFormat}
           function={this.props.instruction.function} />
@@ -108,6 +108,13 @@ export default React.createClass({
       </h5>
       <div className="refList__content">
         {instructions}
+        <p className="refList__note--title">Notes</p>
+        <p>
+          <ul>
+            <li className="refList__note--text">Click on an instruction to see more information about it.</li>
+            <li className="refList__note--text">The dot next to an instruction's name refers to whether or not the instruction modifies condition codes. <span className="instruction__modifiesCC--true" /> means it modifies condition codes, and <span className="instruction__modifiesCC--false" /> means it does not.</li>
+          </ul>
+        </p>
       </div>
     </div>
   }

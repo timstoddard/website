@@ -50,17 +50,13 @@ $green-darken-1: #43a047;
   border: 1px solid $grey-lighten-2;
   display: block;
   height: 100%;
+  margin-bottom: 0.8rem;
   padding: 0.8rem;
   transition: all 0.4s ease;
-    margin-bottom: 0.8rem;
-
-  &.instruction__detail--expanded {
-  }
 
   &.instruction__detail--hidden {
     border: none;
     font-size: 0;
-    // margin: 0;
     height: 0; // need to find a fix for this!
     opacity: 0;
     overflow: hidden;
@@ -68,22 +64,21 @@ $green-darken-1: #43a047;
   }
 }
 
-.instruction__modifiesCC {
-  &.instruction__modifiesCC--true:after,
-  &.instruction__modifiesCC--false:after {
-    border-radius: 50%;
-    content: '';
-    display: inline-block;
-    height: 12px;
-    width: 12px;
-  }
-  &.instruction__modifiesCC--true:after {
-    background-image: linear-gradient(45deg, $green 0%, $green-darken-1 100%);
-  }
+.instruction__modifiesCC--true:after,
+.instruction__modifiesCC--false:after {
+  border-radius: 50%;
+  content: '';
+  display: inline-block;
+  height: 12px;
+  width: 12px;
+}
 
-  &.instruction__modifiesCC--false:after {
-    background-image: linear-gradient(45deg, $red 0%, $red-darken-1 100%);
-  }
+.instruction__modifiesCC--true:after {
+  background-image: linear-gradient(45deg, $green 0%, $green-darken-1 100%);
+}
+
+.instruction__modifiesCC--false:after {
+  background-image: linear-gradient(45deg, $red 0%, $red-darken-1 100%);
 }
 
 .detailHeader,
@@ -144,4 +139,12 @@ $detailOthersList: Description Operation Example;
 
 .refList__content {
   margin: 3rem auto;
+}
+
+.refList__note--title {
+  text-decoration: underline;
+}
+
+.refList__note--text {
+  list-style-type: initial;
 }

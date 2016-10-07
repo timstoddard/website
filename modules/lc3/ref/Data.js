@@ -107,7 +107,7 @@ export const instructions = [
         },
         {
           text: 'BR #5',
-          description: 'Unconditionally move to the next instruction. The assembly language opcode BR is interpreted the same as BRnzp; that is, always branch to the target address.'
+          description: 'Unconditionally move to the instruction 5 lines after the incremented PC. The assembly language opcode BR is interpreted the same as BRnzp; that is, always branch to the target address.'
         }
       ]
     }],

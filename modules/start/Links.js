@@ -74,7 +74,7 @@ export default React.createClass({
         },
         {
           name: 'POLS 112',
-          id: 0,
+          id: 4854,
           otherLinks: [
             { name: 'Globalyceum', href: 'https://www.globalyceum.com/student/student_home' }
           ]

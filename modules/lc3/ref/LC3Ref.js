@@ -32,8 +32,8 @@ let DetailOperation = React.createClass({
   render() {
     let operations = this.props.operation.map((line, index) =>
       line.tooltip
-        ? <div key={index} className="detailOperation--tooltip"><em>{line.text}</em></div>
-        : <div key={index} className={`detailOperation__text detailOperation__text--${line.indentationLevel}`}>{line.text}</div>)
+        ? <div key={index} className="detailOperation__tooltip"><em>{line.text}</em></div>
+        : <div key={index} className={`detail__text--code detailOperation__text--${line.indentationLevel}`}>{line.text}</div>)
     return <div className="detailOperation">
       {operations}
     </div>;
@@ -43,7 +43,7 @@ let DetailOperation = React.createClass({
 let DetailExample = React.createClass({
   render() {
     return <div className="detailExample">
-      <div>{this.props.example.text}</div>
+      <div className="detail__text--code">{this.props.example.text}</div>
       <div>{this.props.example.description}</div>
     </div>;
   }

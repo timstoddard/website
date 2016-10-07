@@ -123,7 +123,11 @@ $detailOthersList: Description Operation Example;
   }
 }
 
-.detailOperation__text {
+.detailOperation__tooltip {
+  font-style: italic;
+}
+
+.detail__text--code {
   font-family: monospace;
 }
 

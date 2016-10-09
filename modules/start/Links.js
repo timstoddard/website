@@ -69,7 +69,7 @@ export default React.createClass({
       courses: [
         {
           name: 'CPE 225',
-          id: 869,
+          id: 1160,
           otherLinks: [
             { name: 'Schedule', href: 'https://users.csc.calpoly.edu/~jplanck/225/225-F2016Schedule.html' },
             { name: 'LC 3 Reference', href: 'https://drive.google.com/file/d/0B9dz0Ddcl3ESRUdQX1lQczBwblk/view?usp=sharing' }

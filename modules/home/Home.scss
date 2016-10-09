@@ -15,30 +15,47 @@
   flex-direction: column;
   height: 100%;
   width: 50%;
+  vertical-align: top;
 }
 
-.home__header--name {
+.home__header--name a,
+.home__link--text {
+  color: black;
   font-family: 'Montserrat Subrayada', sans-serif;
-  font-size: calc(12px + 8vw);
-  margin: 0;
-  text-transform: capitalize;
+  text-transform: uppercase;
+  transition: all .35s ease;
   white-space: nowrap;
 }
 
-.home__link {
+.home__header--name {
+  font-size: calc(12px + 8vw);
+  margin: 0;
+}
+
+.home__link:not(:last-of-type) {
   padding-bottom: 1.5rem;
 }
 
 .home__link--text {
-  color: black;
-  font-family: 'Montserrat Subrayada', sans-serif;
   font-size: calc(10px + 3vw);
-  opacity: 0.6;
-  text-transform: uppercase;
-  transition: opacity .35s ease;
-  white-space: nowrap;
 
   &:hover {
-    opacity: 1;
+    .home__link--letter {
+      color: #1e1a1b;
+      transform: rotate3d(0,1,0,360deg);
+      transition: all 0.5s ease;
+    }
+  }
+
+  .home__link--letter {
+    display: inline-block;
+    transform: rotate3d(0,1,0,0deg);
+    transition: none;
+  }
+
+  @for $i from 0 to 10 {
+    .home__link--letter:nth-child(#{$i}) {
+      transition-delay: 0.1s * $i;
+    }
   }
 }

@@ -5,13 +5,13 @@ import './Links.scss';
 
 let SidebarLink = React.createClass({
   propTypes: {
-    'collectionItem': React.PropTypes.bool,
+    'inDropdown': React.PropTypes.bool,
     'href': React.PropTypes.string,
     'name': React.PropTypes.string
   },
   render() {
     return <a
-      className={`black-text ${this.props.collectionItem ? ' collection-item' : ''}`}
+      className={`black-text${this.props.inDropdown ? '' : ' links__collectionItem collection-item'}`}
       href={this.props.href}
       target="_blank">
       {this.props.name}
@@ -37,7 +37,7 @@ let Dropdown = React.createClass({
     }
     dropdownItems = dropdownItems.map((dropdownItem, index) => {
       return <li key={index}>
-        <SidebarLink name={dropdownItem.name} href={dropdownItem.href} />
+        <SidebarLink name={dropdownItem.name} href={dropdownItem.href} inDropdown={true} />
       </li>;
     });
     return <ul id={`dropdown${this.props.index}`} className="dropdown-content">
@@ -53,7 +53,7 @@ let DropdownActivator = React.createClass({
   },
   render() {
     return <a
-      className="collection-item dropdown-button black-text"
+      className="links__collectionItem collection-item dropdown-button black-text"
       data-activates={`dropdown${this.props.index}`}>
       {this.props.courseName}
     </a>;
@@ -104,7 +104,7 @@ export default React.createClass({
   render() {
     let dropdowns = [];
     let dropdownActivators = [];
-    let links = [<Link className="collection-item black-text" to="" key="home">Home</Link>];
+    let links = [<Link className="links__collectionItem collection-item black-text" to="" key="home">Home</Link>];
     this.state.courses.forEach((course, index) => {
       dropdowns.push(<Dropdown key={index} index={index} courseId={course.id} otherLinks={course.otherLinks} />);
       dropdownActivators.push(<DropdownActivator key={index} index={index} courseName={course.name} />);
@@ -112,7 +112,7 @@ export default React.createClass({
     this.state.links.forEach((link, index) => {
       links.push(<SidebarLink key={index} name={link.name} href={link.href} />);
     });
-    return <div className={`collection ${this.props.className}`}>
+    return <div className={`links__collection collection ${this.props.className}`}>
       {dropdowns}
       {dropdownActivators}
       <div className="divider" />

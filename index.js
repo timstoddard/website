@@ -4,7 +4,7 @@ import { render } from 'react-dom';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 
 // general stuff
-import NotFound from './modules/NotFound';
+import { NotFoundWithProps } from './modules/NotFound';
 import './index.scss';
 
 // homepage
@@ -35,7 +35,8 @@ import Zen from './modules/projects/Zen';
 // start page
 import Start from './modules/start/Start';
 
-render(<Router history={browserHistory}>
+let App =
+<Router history={browserHistory}>
   <Route path="/" component={Home} />
   <Route path="/about" component={About} />
   <Route path="/resume" component={Resume} />
@@ -45,10 +46,11 @@ render(<Router history={browserHistory}>
     <Route path="/lc3/ref" component={LC3Ref} />
     <Route path="/lc3/sim" component={LC3Sim} />
     <Route path="/lc3/tables" component={LC3Tables}>
-      <Route path="/lc3/tables/trap-service-routines" component={TrapServiceRoutines} />Î
-      <Route path="/lc3/tables/device-register-assignments" component={DeviceRegisterAssignments} />Î
-      <Route path="/lc3/tables/memory-map" component={MemoryMap} />Î
+      <Route path="/lc3/tables/trap-service-routines" component={TrapServiceRoutines} />
+      <Route path="/lc3/tables/device-register-assignments" component={DeviceRegisterAssignments} />
+      <Route path="/lc3/tables/memory-map" component={MemoryMap} />
     </Route>
+    <Route path="/lc3/*" component={NotFoundWithProps('/lc3', 'the LC3 homepage')} />
   </Route>
   <Route path="/projects" component={Projects}>
     <IndexRoute component={ProjectsHome} />
@@ -58,6 +60,9 @@ render(<Router history={browserHistory}>
     <Route path="/projects/strobe" component={Strobe} />
     <Route path="/projects/time" component={Time} />
     <Route path="/projects/zen" component={Zen} />
+    <Route path="/projects/*" component={NotFoundWithProps('/projects', 'the projects homepage')} />
   </Route>
-  <Route path="*" component={NotFound} />
-</Router>, document.getElementById('app'));
+  <Route path="*" component={NotFoundWithProps('', 'the homepage')} />
+</Router>;
+
+render(App, document.getElementById('app'));

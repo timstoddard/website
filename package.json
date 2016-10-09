@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --inline --content-base",
-    "prod": "rimraf dist && NODE_ENV=production webpack -p --config ./webpack.prod.js && node server.js"
+    "prod": "rimraf dist && NODE_ENV=production webpack -p --config ./webpack.prod.js && node server.js",
+    "lint": "eslint modules/**/*.js"
   },
   "author": "Tim Stoddard",
   "license": "ISC",
@@ -32,6 +33,8 @@
     "webpack": "^1.13.2"
   },
   "devDependencies": {
+    "eslint": "^3.7.1",
+    "eslint-plugin-react": "^6.3.0",
     "webpack-dev-server": "^1.14.1"
   }
 }

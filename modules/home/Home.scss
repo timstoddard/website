@@ -1,64 +1,44 @@
-@import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:300);
+@import url(https://fonts.googleapis.com/css?family=Montserrat+Subrayada);
+
+@import '../scss/mixins/background';
 
 .home {
-  background: #e91e63;
-  background: linear-gradient(45deg, #e91e63 0%, #ff6f00 100%);
-  background-attachment: fixed;
-  background-repeat: no-repeat;
+  @include background();
   height: 100vh;
-  padding-top: calc(20px + 2vw);
-  padding-right: 3vw;
+  margin: 0;
+}
+
+.home__verticalAlignWrapper {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  width: 50%;
 }
 
 .home__header--name {
-    font-family: 'Yanone Kaffeesatz', sans-serif;
-    font-size: 10vw;
-    margin: 0;
-    text-transform: capitalize;
-    white-space: nowrap;
-}
-
-.home__header--info {
-  font-family: 'Yanone Kaffeesatz', sans-serif;
-  font-size: 4vw;
-  letter-spacing: 0.16rem;
-  margin: 1rem 0;
-  text-transform: uppercase;
-}
-
-.home__header--phrase {
+  font-family: 'Montserrat Subrayada', sans-serif;
+  font-size: calc(12px + 8vw);
+  margin: 0;
+  text-transform: capitalize;
   white-space: nowrap;
 }
 
 .home__link {
+  padding-bottom: 1.5rem;
+}
+
+.home__link--text {
   color: black;
-  font-family: 'Yanone Kaffeesatz', sans-serif;
-  text-decoration: underline;
+  font-family: 'Montserrat Subrayada', sans-serif;
+  font-size: calc(10px + 3vw);
+  opacity: 0.6;
   text-transform: uppercase;
-}
+  transition: opacity .35s ease;
+  white-space: nowrap;
 
-.home__icons {
-    line-height: 0;
-    max-width: 600px;
-    padding: 0;
-    width: 80vw;
-}
-
-.home__icon {
-    height: auto;
-    margin: 1rem auto;
-    max-width: 3rem;
-    min-width: 2rem;
-    opacity: 0.4;
-    transition: opacity .35s ease-out;
-}
-
-.home__icon:hover {
-    animation: shake 0.25s linear both;
+  &:hover {
     opacity: 1;
-}
-
-@keyframes shake {
-    25% { transform: rotate(8deg); }
-    75% { transform: rotate(-8deg); }
+  }
 }

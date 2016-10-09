@@ -9,8 +9,8 @@ export default React.createClass({
     'children': React.PropTypes.node
   },
   render() {
-    return <div>
-      <nav>
+    return <div className="projects__wrapper">
+      <nav className="projects__nav">
         <div className="nav-wrapper light-blue">
           <ul id="nav-mobile">
             <li><Link to="/projects" className="projects__title">projects</Link></li>

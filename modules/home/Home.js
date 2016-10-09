@@ -1,55 +1,30 @@
 import React from 'react';
+import { Link } from 'react-router';
 
-import NavLink from '../NavLink';
 import './Home.scss';
-
-let IconLinks = React.createClass({
-  getInitialState() {
-    return {
-      icons: [
-        { name: 'Github', href: 'https://github.com/timstoddard' },
-        { name: 'LinkedIn', href: 'https://linkedin.com/in/timstoddard200' },
-        { name: 'Portfolium', href: 'https://portfolium.com/timstoddard' },
-        { name: 'Facebook', href: 'https://facebook.com/timstoddard200' }
-      ]
-    };
-  },
-  render() {
-    let iconLinks = this.state.icons.map((icon, index) => {
-      return <div key={index} className="col s3">
-        <a href={icon.href} target="_blank">
-          <img
-            className="home__icon"
-            src={`../../media/logos/${icon.name.toLowerCase()}.png`}
-            alt={icon.name} />
-        </a>
-      </div>;
-    });
-    return <div className="home__icons row right">
-      {iconLinks}
-    </div>;
-  }
-});
 
 export default React.createClass({
   render() {
     document.title = 'Tim Stoddard';
-    return <div className="home right-align">
-      <h1 className="home__header--name">
-        <span className="home__header--phrase">tim stoddard</span>
-      </h1>
-      <h2 className="home__header--info">
-        <span className="home__header--phrase">computer science</span> @ <span className="home__header--phrase">cal poly slo</span>
-      </h2>
-      <h2 className="home__header--info">
-        <span className="home__header--phrase">software engineering intern</span> @ socreate
-      </h2>
-      <ul>
-        <li><NavLink className="home__link flow-text" to="/about">About Me</NavLink></li>
-        <li><NavLink className="home__link flow-text" to="/projects">Projects</NavLink></li>
-        <li><NavLink className="home__link flow-text" to="/resume">Resume</NavLink></li>
-      </ul>
-      <IconLinks />
+    return <div className="home">
+      <div className="home__verticalAlignWrapper">
+        <h1 className="home__header--name">tim</h1>
+        <h1 className="home__header--name">stod</h1>
+        <h1 className="home__header--name">dard</h1>
+      </div>
+      <div className="home__verticalAlignWrapper">
+        <ul className="home__links center-align">
+          <li className="home__link">
+            <Link className="home__link--text flow-text" to="/about">About Me</Link>
+          </li>
+          <li className="home__link">
+            <Link className="home__link--text flow-text" to="/projects">Projects</Link>
+          </li>
+          <li className="home__link">
+            <Link className="home__link--text flow-text" to="/resume">Resume</Link>
+          </li>
+        </ul>
+      </div>
     </div>;
   }
 });

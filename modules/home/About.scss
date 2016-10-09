@@ -1,0 +1,51 @@
+@import '../scss/mixins/background';
+
+// used for wiggle animation
+$deg: 8deg;
+
+.about {
+  @include background();
+  height: 100vh;
+}
+
+.about__title {
+  margin-top: 0;
+  padding-top: 2rem;
+}
+
+.about__text {
+  line-height: 160%;
+  margin-bottom: 2rem;
+}
+
+.about__link {
+  color: black;
+  text-decoration: underline;
+}
+
+.about__icons {
+  align-content: center;
+  display: inline-flex;
+  justify-content: center;
+  padding: 0;
+  width: 100%;
+}
+
+.about__icon {
+  height: auto;
+  margin: 0 1rem;
+  max-width: 3.5rem;
+  min-width: 2.5rem;
+  opacity: 0.6;
+  transition: opacity .35s ease;
+
+  &:hover {
+    animation: shake 0.25s linear both;
+    opacity: 1;
+  }
+}
+
+@keyframes shake {
+  25% { transform: rotate($deg); }
+  75% { transform: rotate(-$deg); }
+}

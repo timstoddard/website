@@ -1,4 +1,10 @@
-nav {
+@import '../scss/mixins/background';
+
+.projects__wrapper {
+  height: 100vh;
+}
+
+.projects__nav {
   height: 2.5rem;
   line-height: 2.5rem;
   overflow: hidden;

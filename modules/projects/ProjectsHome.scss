@@ -1,0 +1,34 @@
+.projectsHome__background {
+  height: 100%;
+}
+
+.projectsHome__title {
+  margin-top: 0;
+  padding-top: 2rem;
+}
+
+.projectsHome__link {
+  display: inline-block;
+}
+
+.projectsHome__link--works,
+.projectsHome__link--home {
+  color: black;
+  text-decoration: underline;
+}
+
+.projectsHome__link--broken {
+  color: gray;
+  text-decoration: line-through;
+
+  &:after {
+    content: ' (under construction)';
+  }
+}
+
+.projectsHome__divider  {
+  padding: 0;
+  border: none;
+  border-top: medium double black;
+  text-align: center;
+}

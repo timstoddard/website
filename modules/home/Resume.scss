@@ -1,4 +1,7 @@
+@import '../scss/mixins/background';
+
 .resume__wrapper {
+  @include background();
   height: 100vh;
 }
 

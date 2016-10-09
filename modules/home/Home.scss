@@ -1,6 +1,8 @@
-@import url(https://fonts.googleapis.com/css?family=Montserrat+Subrayada);
+@import url(https://fonts.googleapis.com/css?family=Montserrat|Montserrat+Subrayada);
 
 @import '../scss/mixins/background';
+
+$blue-grey: #607d8b;
 
 .home {
   @include background();
@@ -18,10 +20,9 @@
   vertical-align: top;
 }
 
-.home__header--name a,
+.home__header--name,
 .home__link--text {
   color: black;
-  font-family: 'Montserrat Subrayada', sans-serif;
   text-transform: uppercase;
   transition: all .35s ease;
   white-space: nowrap;
@@ -29,33 +30,20 @@
 
 .home__header--name {
   font-size: calc(12px + 8vw);
+  font-family: 'Montserrat', sans-serif;
   margin: 0;
 }
 
 .home__link:not(:last-of-type) {
-  padding-bottom: 1.5rem;
+  padding-bottom: 1rem;
 }
 
 .home__link--text {
+  font-family: 'Montserrat Subrayada', sans-serif;
   font-size: calc(10px + 3vw);
+  transition: all 0.3s ease;
 
   &:hover {
-    .home__link--letter {
-      color: #1e1a1b;
-      transform: rotate3d(0,1,0,360deg);
-      transition: all 0.5s ease;
-    }
-  }
-
-  .home__link--letter {
-    display: inline-block;
-    transform: rotate3d(0,1,0,0deg);
-    transition: none;
-  }
-
-  @for $i from 0 to 10 {
-    .home__link--letter:nth-child(#{$i}) {
-      transition-delay: 0.1s * $i;
-    }
+    color: $blue-grey;
   }
 }

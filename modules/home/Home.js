@@ -19,30 +19,24 @@ export default React.createClass({
     document.title = 'Tim Stoddard';
     return <div className="home">
       <div className="home__verticalAlignWrapper">
-        <h1 className="home__header--name">
-          <Link to="">tim</Link>
-        </h1>
-        <h1 className="home__header--name">
-          <Link to="">stod</Link>
-        </h1>
-        <h1 className="home__header--name">
-          <Link to="">dard</Link>
-        </h1>
+        <h1 className="home__header--name">tim</h1>
+        <h1 className="home__header--name">stod</h1>
+        <h1 className="home__header--name">dard</h1>
       </div>
       <div className="home__verticalAlignWrapper">
         <ul className="home__links center-align">
           <li className="home__link">
-            <Link className="home__link--text flow-text" to="/about">
+            <Link className="home__link--text" to="/about">
               <SplitLetters text="about" />
             </Link>
           </li>
           <li className="home__link">
-            <Link className="home__link--text flow-text" to="/projects">
+            <Link className="home__link--text" to="/projects">
               <SplitLetters text="projects" />
             </Link>
           </li>
           <li className="home__link">
-            <Link className="home__link--text flow-text" to="/resume">
+            <Link className="home__link--text" to="/resume">
               <SplitLetters text="resume" />
             </Link>
           </li>

@@ -102,9 +102,8 @@ export default React.createClass({
     });
     return <div className="container">
       <h1 className="refList__title">LC3 Reference Guide</h1>
-      <h3 className="refList__title">by Tim Stoddard</h3>
       <h5 className="refList__title">
-        Adapted from <a href="https://drive.google.com/file/d/0B9dz0Ddcl3ESRUdQX1lQczBwblk/view" target="_blank">this pdf</a>.
+        Adapted from <a href="https://drive.google.com/file/d/0B9dz0Ddcl3ESRUdQX1lQczBwblk/view" target="_blank">this pdf</a> by Tim Stoddard.
       </h5>
       <div className="refList__content">
         {instructions}

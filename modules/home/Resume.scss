@@ -2,7 +2,8 @@
 
 .resume__wrapper {
   @include background();
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
 }
 
 .resume__content {

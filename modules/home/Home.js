@@ -50,6 +50,6 @@ export default React.createClass({
         <li><NavLink className="home__link flow-text" to="/resume">Resume</NavLink></li>
       </ul>
       <IconLinks />
-    </div>
+    </div>;
   }
 });

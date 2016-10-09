@@ -25,8 +25,8 @@ export default React.createClass({
   },
   replaceText(event) {
     event.preventDefault();
-    var clipboardData = event.clipboardData || window.clipboardData;
-    var pastedData = clipboardData.getData('Text');
+    let clipboardData = event.clipboardData || window.clipboardData;
+    let pastedData = clipboardData.getData('Text');
     this.setState({ rawValue: pastedData });
     document.getElementById('input').value = this.state.rawValue;
   },
@@ -54,27 +54,27 @@ import 'code';`});
   getData(str) {
 
     // module data
-    var moduleName = '';
+    let moduleName = '';
     if (str.indexOf('\'') > -1) { // single quotes
       moduleName = str.substring(str.indexOf('\'') + 1, str.lastIndexOf('\''));
     } else { // double quotes
       moduleName = str.substring(str.indexOf('"') + 1, str.lastIndexOf('"'));
     }
-    var firstModuleNameChar = moduleName.search(/[^\.\/]/);
+    let firstModuleNameChar = moduleName.search(/[^\.\/]/);
     if (firstModuleNameChar === -1) { // only a relative path, no folder/file names
       firstModuleNameChar = moduleName.length;
     }
-    var prefixLength = moduleName.substr(0, firstModuleNameChar).length;
-    var moduleNameStripped = moduleName.substr(firstModuleNameChar).trim();
+    let prefixLength = moduleName.substr(0, firstModuleNameChar).length;
+    let moduleNameStripped = moduleName.substr(firstModuleNameChar).trim();
 
     // import data
-    var aliases = [];
+    let aliases = [];
     if (str.indexOf('{') > -1 && str.indexOf('}') > -1) {
       var brackets = true;
-      var imports = str.substring(str.indexOf('{') + 1, str.indexOf('}')).split(',');
+      let imports = str.substring(str.indexOf('{') + 1, str.indexOf('}')).split(',');
       imports.forEach(function(value) {
         if (value.indexOf(' as ') > -1) {
-          var data = value.split(' as ');
+          let data = value.split(' as ');
           aliases.push({ importName: data[0].trim(), alias: data[1].trim() });
         } else {
           aliases.push({ importName: value.trim() });
@@ -83,9 +83,9 @@ import 'code';`});
     } else {
       brackets = false;
       if (str.indexOf('from') > -1) {
-        var importStr = str.substring(str.indexOf('import') + 6, str.indexOf('from'));
+        let importStr = str.substring(str.indexOf('import') + 6, str.indexOf('from'));
         if (importStr.indexOf(' as ') > -1) { // case: import thing as idk from './foo';
-          var data = importStr.split(' as ');
+          let data = importStr.split(' as ');
           aliases.push({ importName: data[0].trim(), alias: data[1].trim() });
         } else { // case: import thing from './foo';
           aliases.push({ importName: importStr.trim() });
@@ -100,20 +100,20 @@ import 'code';`});
       imports: aliases,
       thirdParty: !/[./]/.test(moduleName[0]),
       brackets: brackets
-    }
+    };
   },
   fixImports() {
 
     // read in the data and format it
-    var rawLines = document.getElementById('input').value
+    let rawLines = document.getElementById('input').value
       .replace(/;;+/g, ';') // remove duplicate semicolons
       .split('\n'); // split over the newlines
-    var lines = [];
-    var lastLineWasComplete = true;
+    let lines = [];
+    let lastLineWasComplete = true;
     rawLines.forEach(function(value) {
       // get rid of leading/trailing whitespace
       value = value.trim();
-      var lastChar = value.charAt(value.length - 1);
+      let lastChar = value.charAt(value.length - 1);
       // line ends with a semicolon -- awesome!
       if (lastChar === ';') {
         if (!lastLineWasComplete) {
@@ -127,7 +127,7 @@ import 'code';`});
         // line is complete but missing a semicolon; add it and move on
         if (lastChar === '\'' || lastChar === '"') {
           if (!lastLineWasComplete) {
-            var lastLine = lines[lines.length - 1];
+            lastLine = lines[lines.length - 1];
             lines[lines.length - 1] = lastLine + ' ' + value + ';';
           } else {
             lines.push(value + ';');
@@ -136,7 +136,7 @@ import 'code';`});
           // line is incomplete, add what is there and flag it for the next loop
         } else {
           if (!lastLineWasComplete) {
-            var lastLine = lines[lines.length - 1];
+            lastLine = lines[lines.length - 1];
             lines[lines.length - 1] = lastLine + ' ' + value;
           } else {
             lines.push(value);
@@ -147,21 +147,21 @@ import 'code';`});
     });
 
     // create an object to hold of the module objects
-    var modules = {};
+    let modules = {};
     lines.forEach(function(value) {
       // don't want any blank imports
       if (value.trim().length > 0) {
         // need module name, as well as data about import
-        var data = this.getData(value);
+        let data = this.getData(value);
         if (!modules[data.path]) {
           modules[data.path] = data; // create new module object
         } else {
           // add data to existing module object
-          var newImports = data.imports;
+          let newImports = data.imports;
           // loop over all the new imports
           newImports.forEach(function(value) {
             // check if module already contains this import
-            var alreadyContained = false;
+            let alreadyContained = false;
             modules[data.path].imports.forEach(function(existingValue) {
               if (existingValue.importName === value.importName) {
                 alreadyContained = true;
@@ -177,10 +177,10 @@ import 'code';`});
     }.bind(this));
 
     // sort imports and split into third party and internal imports
-    var thirdPartyImports = [];
-    var internalImports = [];
-    for (var prop in modules) {
-      var currentModule = modules[prop];
+    let thirdPartyImports = [];
+    let internalImports = [];
+    for (let prop in modules) {
+      let currentModule = modules[prop];
       currentModule.imports.sort(function(a, b) {
         return a.importName.toLowerCase().localeCompare(b.importName.toLowerCase());
       });
@@ -192,11 +192,11 @@ import 'code';`});
     }
 
     // sort modules by name
-    var sorter = function(a, b) {
+    let sorter = function(a, b) {
       if (a.imports.length === 0) {
         if (b.imports.length === 0) {
           // a and b both have no imports, so sort by module name
-          var result = a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+          let result = a.name.toLowerCase().localeCompare(b.name.toLowerCase());
           if (result === 0) {
             return a.pathLength < b.pathLength ? -1 : 1;
           }
@@ -210,7 +210,7 @@ import 'code';`});
         return -1;
       }
       // a and b both have imports, so sort by module name
-      var result = a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+      let result = a.name.toLowerCase().localeCompare(b.name.toLowerCase());
       if (result === 0) {
         return a.pathLength < b.pathLength ? -1 : 1;
       }
@@ -220,17 +220,17 @@ import 'code';`});
     internalImports.sort(sorter);
 
     // generate the final string
-    var result = '';
+    let result = '';
     if (thirdPartyImports) {
       thirdPartyImports.forEach(function(value, index) {
-        var importStr = this.generateImportString(value.imports, value.path, value.brackets);
+        let importStr = this.generateImportString(value.imports, value.path, value.brackets);
         result += importStr + (index < thirdPartyImports.length - 1 ? '\n' : '');
       }.bind(this));
       result += internalImports ? '\n\n' : '';
     }
     if (internalImports) {
       internalImports.forEach(function(value, index) {
-        var importStr = this.generateImportString(value.imports, value.path, value.brackets);
+        let importStr = this.generateImportString(value.imports, value.path, value.brackets);
         result += importStr + (index < internalImports.length - 1 ? '\n' : '');
       }.bind(this));
     }
@@ -241,7 +241,7 @@ import 'code';`});
     document.getElementById('output').focus();
   },
   generateImportString(imports, moduleName, useBrackets) {
-    var importStr = 'import ' + (useBrackets ? '{ ' : '');
+    let importStr = 'import ' + (useBrackets ? '{ ' : '');
     if (imports.length > 0) {
       imports.forEach(function(importValue, index) {
         importStr += importValue.importName + (importValue.alias ? ' as ' + importValue.alias : '') + (index < imports.length - 1 ? ', ' : '');
@@ -287,6 +287,6 @@ import 'code';`});
         id="output"
         value={this.state.formattedValue}
         className="import__textarea" />
-    </div>
+    </div>;
   }
 });

@@ -3,20 +3,28 @@ import { Link } from 'react-router';
 
 import './Links.scss';
 
-let DropdownItem = React.createClass({
+let SidebarLink = React.createClass({
+  propTypes: {
+    'collectionItem': React.PropTypes.bool,
+    'href': React.PropTypes.string,
+    'name': React.PropTypes.string
+  },
   render() {
-    return <li>
-      <a
-        className="black-text"
-        href={this.props.href}
-        target="_blank">
-          {this.props.name}
-      </a>
-    </li>;
+    return <a
+      className={`black-text ${this.props.collectionItem ? ' collection-item' : ''}`}
+      href={this.props.href}
+      target="_blank">
+      {this.props.name}
+    </a>;
   }
 });
 
 let Dropdown = React.createClass({
+  propTypes: {
+    'courseId': React.PropTypes.number,
+    'index': React.PropTypes.number,
+    'otherLinks': React.PropTypes.array
+  },
   render() {
     let dropdownItems = [
       { name: 'Home', href: `https://polylearn.calpoly.edu/AY_2016-2017/course/view.php?id=${this.props.courseId}` },
@@ -28,7 +36,9 @@ let Dropdown = React.createClass({
       });
     }
     dropdownItems = dropdownItems.map((dropdownItem, index) => {
-      return <DropdownItem name={dropdownItem.name} href={dropdownItem.href} key={index} />
+      return <li key={index}>
+        <SidebarLink name={dropdownItem.name} href={dropdownItem.href} />
+      </li>;
     });
     return <ul id={`dropdown${this.props.index}`} className="dropdown-content">
       {dropdownItems}
@@ -37,29 +47,22 @@ let Dropdown = React.createClass({
 });
 
 let DropdownActivator = React.createClass({
+  propTypes: {
+    'courseName': React.PropTypes.string,
+    'index': React.PropTypes.number
+  },
   render() {
     return <a
       className="collection-item dropdown-button black-text"
       data-activates={`dropdown${this.props.index}`}>
-        {this.props.courseName}
-    </a>;
-  }
-});
-
-let SidebarLink = React.createClass({
-  render() {
-    return <a
-      className="collection-item black-text"
-      href={this.props.href}
-      target="_blank">
-        {this.props.name}
+      {this.props.courseName}
     </a>;
   }
 });
 
 export default React.createClass({
-  componentDidMount() {
-    $('.dropdown-button').dropdown();
+  propTypes: {
+    'className': React.PropTypes.string
   },
   getInitialState() {
     return {
@@ -93,7 +96,10 @@ export default React.createClass({
         { name: 'Cal Poly Links', href: 'https://my.calpoly.edu/cas/limitedLayout' },
         { name: '16-17 Calendar', href: 'http://registrar.calpoly.edu/2016-17-academic-calendar' }
       ]
-    }
+    };
+  },
+  componentDidMount() {
+    $('.dropdown-button').dropdown();
   },
   render() {
     let dropdowns = [];

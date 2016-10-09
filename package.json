@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --inline --content-base",
     "prod": "rimraf dist && NODE_ENV=production webpack -p --config ./webpack.prod.js && node server.js",
-    "lint": "eslint modules/**/*.js"
+    "lint": "eslint ./index.js && eslint modules/**/*.js"
   },
   "author": "Tim Stoddard",
   "license": "ISC",

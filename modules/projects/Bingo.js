@@ -9,6 +9,9 @@ class BingoCellState {
 }
 
 let BingoVideo = React.createClass({
+  propTypes: {
+    'className': React.PropTypes.string
+  },
   getInitialState() {
     return {
       videos: [],
@@ -19,19 +22,21 @@ let BingoVideo = React.createClass({
   },
   componentDidMount() {
     $.ajax({
-      url: "https://www.reddit.com/r/Roadcam.json",
-      type: "GET",
-      dataType : "json",
+      url: 'https://www.reddit.com/r/Roadcam.json',
+      type: 'GET',
+      dataType: 'json',
       cache: false,
       success: function(response) {
         this.setState({ videos: response.data.children });
         this.loadNewVideo();
       }.bind(this),
       error: function(xhr, status, errorThrown) {
-        alert("Sorry, there was a problem loading the data!\nTry refreshing the page.");
+        alert('Sorry, there was a problem loading the data!\nTry refreshing the page.');
+        /* eslint-disable no-console */
         console.log(`Error: ${errorThrown}`);
         console.log(`Status: ${status}`);
         console.dir(xhr);
+        /* eslint-enable no-console */
       }.bind(this)
     });
     $(function() {
@@ -61,7 +66,7 @@ let BingoVideo = React.createClass({
       .replace(/&lt;/g, '<') // fix opening tags
       .replace(/&gt;/g, '>') // fix closing tags
       .replace(/width="\d+"/, 'class="bingo__video"') // remove fixed width
-      .replace(/height="\d+"/, '') // remove fixed height
+      .replace(/height="\d+"/, ''); // remove fixed height
     this.setState({
       currentVideoTitle: video.title,
       currentVideoHtml: videoHtml,
@@ -78,17 +83,26 @@ let BingoVideo = React.createClass({
   render() {
     return <div className={this.props.className}>
       <h4>{this.state.currentVideoTitle}</h4>
-      <div dangerouslySetInnerHTML={this.videoHtml()} />
+      <div dangerouslySetInnerHTML={this.videoHtml() } />
     </div>;
   }
 });
 
 let BingoCell = React.createClass({
+  propTypes: {
+    'onClick': React.PropTypes.func,
+    'status': React.PropTypes.oneOf([
+      BingoCellState.UNSELECTED,
+      BingoCellState.SELECTED,
+      BingoCellState.SUBMITTED
+    ]),
+    'title': React.PropTypes.string,
+  },
   onClick() {
     this.props.onClick();
   },
   getModifierClassName() {
-    switch(this.props.status) {
+    switch (this.props.status) {
       case BingoCellState.SUBMITTED:
         return ' green accent-3';
       case BingoCellState.SELECTED:
@@ -99,14 +113,18 @@ let BingoCell = React.createClass({
   },
   render() {
     return <td
-      className={'board__cell' + this.getModifierClassName()}
+      className={'board__cell' + this.getModifierClassName() }
       onClick={this.onClick}>
-        {this.props.title}
-      </td>
+      {this.props.title}
+    </td>;
   }
 });
 
 let BingoBoard = React.createClass({
+  propTypes: {
+    'className': React.PropTypes.string,
+    'onSubmit': React.PropTypes.func
+  },
   getInitialState() {
     return this.init();
   },
@@ -237,7 +255,7 @@ let BingoBoard = React.createClass({
     this.shuffle(items);
     // middle square is a freebie
     items.splice(12, 0, 'FREE (Blame the cammer)');
-    while(items.length > 25) {
+    while (items.length > 25) {
       items.pop();
     }
     return items;
@@ -262,7 +280,7 @@ let BingoBoard = React.createClass({
           key={index}
           title={this.state.items[index]}
           status={this.state.board[index]}
-          onClick={this.onClick.bind(this, index)} />);
+          onClick={this.onClick.bind(this, index) } />);
       }
       tableRows.push(<tr key={'r' + i}>{tableRow}</tr>);
     }
@@ -270,27 +288,33 @@ let BingoBoard = React.createClass({
       <table className="centered">
         <tbody>{tableRows}</tbody>
       </table>
-      <BingoControlPanel 
+      <BingoControlPanel
         moveCount={this.state.moveCount}
         selectedCells={this.state.selectedCells}
         buttonText={this.state.buttonText}
         onSubmit={this.onSubmit} />
     </div>;
   }
-})
+});
 
 let BingoControlPanel = React.createClass({
+  propTypes: {
+    'buttonText': React.PropTypes.string,
+    'moveCount': React.PropTypes.number,
+    'selectedCells': React.PropTypes.number,
+    'onSubmit': React.PropTypes.func
+  },
   render() {
     return <div className="board__controls row">
       <div className="col s6">
-        <div>{'Moves: ' + this.props.moveCount}</div>
-        <div>{'Selected cells: ' + this.props.selectedCells}</div>
+        <div>{`Moves: ${this.props.moveCount}`}</div>
+        <div>{`Selected cells: ${this.props.selectedCells}`}</div>
       </div>
       <div className="col s6">
         <a
           className="waves-effect waves-light btn light-blue accent-2"
           onClick={this.props.onSubmit}>
-            {this.props.buttonText}
+          {this.props.buttonText}
         </a>
       </div>
     </div>;
@@ -311,6 +335,6 @@ export default React.createClass({
       <BingoBoard
         className="board col s12 m12 l6"
         onSubmit={this.loadNewVideo} />
-    </div>
+    </div>;
   }
 });

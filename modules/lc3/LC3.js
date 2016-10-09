@@ -5,6 +5,9 @@ import NavLink from '../NavLink';
 import './LC3.scss';
 
 export default React.createClass({
+  propTypes: {
+    'children': React.PropTypes.node
+  },
   render() {
     document.title = 'LC3 Info';
     return <div>
@@ -19,6 +22,6 @@ export default React.createClass({
         </div>
       </nav>
       {this.props.children}
-    </div>
+    </div>;
   }
 });

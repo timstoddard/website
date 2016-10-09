@@ -28,6 +28,11 @@ let LoadingAnimation = React.createClass({
 });
 
 let WeatherForecastHeader = React.createClass({
+  propTypes: {
+    'currentObservation': React.PropTypes.object,
+    'reloading': React.PropTypes.bool,
+    'setReloading': React.PropTypes.func
+  },
   reloadWeatherData() {
     Utils.reloadWeatherData();
     this.props.setReloading(true);
@@ -68,6 +73,9 @@ let WeatherForecastHeader = React.createClass({
 });
 
 let WeatherForecastDay = React.createClass({
+  propTypes: {
+    'day': React.PropTypes.object,
+  },
   render() {
     if (!this.props.day) {
       return <div />;
@@ -95,7 +103,6 @@ let WeatherForecast = React.createClass({
   },
   componentDidMount() {
     let success = function(response) {
-      // console.log(response);
       this.setState({
         currentObservation: response.current_observation,
         forecast: response.forecast.simpleforecast.forecastday,
@@ -115,7 +122,7 @@ let WeatherForecast = React.createClass({
   render() {
     let weatherForecastDays = [];
     for (let i = 0; i < 6; i++) {
-      weatherForecastDays.push(<WeatherForecastDay key={i} day={this.state.forecast[i]} />)
+      weatherForecastDays.push(<WeatherForecastDay key={i} day={this.state.forecast[i]} />);
     }
     return <div className="row light-blue accent-2">
       <div className="weatherForecastHeader card-panel">
@@ -147,7 +154,6 @@ let RandomQuote = React.createClass({
           .replace(/\[\d+x\d+\]/g, '') // remove image data
           .replace(/\s+/g, ' ') // normalize spaces
           .trim();
-        let html = '';
         let separators = ['-', '~', '-', '–', '—', '―'];
         for (let i = 0; i < separators.length; i++) {
           let separator = separators[i];
@@ -165,7 +171,9 @@ let RandomQuote = React.createClass({
         }
       }.bind(this),
       error: function(error) {
+        /* eslint-disable no-console */
         console.error(error);
+        /* eslint-enable no-console */
       },
       timeout: 10000
     });
@@ -179,6 +187,9 @@ let RandomQuote = React.createClass({
 });
 
 export default React.createClass({
+  propTypes: {
+    'className': React.PropTypes.string
+  },
   render() {
     return <div className={`mainContent center-align ${this.props.className}`}>
       <WeatherForecast />

@@ -8,6 +8,6 @@ export default React.createClass({
     return <div>
       <h3>Check out some of the cool things I've made!</h3>
       <NavLink to="">Home</NavLink>
-    </div>
+    </div>;
   }
 });

@@ -1,9 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router';
 
 import './InfoBar.scss';
 
 let WelcomeText = React.createClass({
+  propTypes: {
+    'className': React.PropTypes.node,
+    'now': React.PropTypes.instanceOf(Date)
+  },
   getInitialState() {
     return { name: localStorage.getItem('name') || '' };
   },
@@ -19,7 +22,10 @@ let WelcomeText = React.createClass({
       name = decodeURIComponent(name);
       this.setState({ name: name });
       localStorage.setItem('name', name);
-    } catch(e) {}
+    }
+    /* eslint-disable no-empty */
+    catch(e) {}
+    /* eslint-enable no-empty */
   },
   formatTimeOfDay() {
     let hours = this.props.now.getHours();
@@ -40,6 +46,10 @@ let WelcomeText = React.createClass({
 });
 
 let DateText = React.createClass({
+  propTypes: {
+    'className': React.PropTypes.node,
+    'now': React.PropTypes.instanceOf(Date)
+  },
   formatDay() {
     let dayOfWeek = this.props.now.getDay();
     let month = this.props.now.getMonth();
@@ -58,6 +68,10 @@ let DateText = React.createClass({
 });
 
 let TimeText = React.createClass({
+  propTypes: {
+    'className': React.PropTypes.node,
+    'now': React.PropTypes.instanceOf(Date)
+  },
   formatTime() {
     let hours = this.props.now.getHours();
     let h = hours > 12 ? hours - 12 : (hours > 0 ? hours : 12);
@@ -90,7 +104,7 @@ export default React.createClass({
     this.nowTimer = setTimeout(this.updateTime, 1000 - millis);
   },
   clearTimeout() {
-    clearTimeout(this.nowTimer)
+    clearTimeout(this.nowTimer);
   },
   render() {
     return <div className="infoBar center-align row cyan accent-3 black-text">

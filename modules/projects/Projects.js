@@ -5,8 +5,8 @@ import NavLink from '../NavLink';
 import './Projects.scss';
 
 export default React.createClass({
-  getInitialState() {
-    return {};
+  propTypes: {
+    'children': React.PropTypes.node
   },
   render() {
     return <div>
@@ -24,6 +24,6 @@ export default React.createClass({
         </div>
       </nav>
       {this.props.children}
-    </div>
+    </div>;
   }
 });

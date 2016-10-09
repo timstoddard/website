@@ -9,6 +9,6 @@ export default React.createClass({
       <iframe
         src="https://docs.google.com/document/d/1OHDLVDrQRgwoitqV8NFHhp8YYwjKVDqJMC7DFEuMFJk/pub?embedded=true"
         className="resume__content z-depth-2" />
-    </div>
+    </div>;
   }
 });

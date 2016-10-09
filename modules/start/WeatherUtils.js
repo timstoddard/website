@@ -2,7 +2,9 @@ let successFn = () => { };
 let reloadWeatherTimer = null;
 
 // Lat/long data currently stays until manually reset
+/* eslint-disable no-unused-vars */
 let hasLocationDataInLocalStorage = () => get('locationData') !== null;
+/* eslint-enable no-unused-vars */
 let hasWeatherDataInLocalStorage = () => get('weatherData') !== null && get('weatherDataTimestamp') !== null;
 
 /**
@@ -56,7 +58,9 @@ function getWeatherDataAjax(url) {
     url: url,
     type: 'GET',
     success: successFn,
+    /* eslint-disable no-console */
     error: () => console.log('weather data failed to load'),
+    /* eslint-enable no-console */
     timeout: 30000
   });
 }
@@ -64,15 +68,15 @@ function getWeatherDataAjax(url) {
 export let showWeather = (success) => {
   successFn = success;
   // if (hasLocationDataInLocalStorage()) {
-    if (hasWeatherDataInLocalStorage()) {
-      if (!needNewWeatherData()) {
-        successFn(get('weatherData'));
-      } else {
-        getWeatherData(get('locationData'));
-      }
+  if (hasWeatherDataInLocalStorage()) {
+    if (!needNewWeatherData()) {
+      successFn(get('weatherData'));
     } else {
       getWeatherData(get('locationData'));
     }
+  } else {
+    getWeatherData(get('locationData'));
+  }
   // } else {
   //   getLocation();
   // }
@@ -83,7 +87,7 @@ export let reloadWeatherData = () => {
   localStorage.removeItem('weatherData');
   localStorage.removeItem('weatherDataTimestamp');
   getLocation();
-}
+};
 
 export let get = (key) => JSON.parse(localStorage.getItem(key));
 export let set = (key, item) => localStorage.setItem(key, JSON.stringify(item));

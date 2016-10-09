@@ -1,6 +1,9 @@
 import React from 'react';
 
 var StrobeOptions = React.createClass({
+  propTypes: {
+    'ms': React.PropTypes.number
+  },
   onChange(event) {
     this.props.ms = event.target.value;
   },
@@ -29,6 +32,6 @@ export default React.createClass({
     document.title = 'Strobe';
     return <div className={this.getCurrentStyle}>
       <StrobeOptions ms={this.state.ms} />
-    </div>
+    </div>;
   }
 });

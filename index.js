@@ -17,6 +17,10 @@ import LC3 from './modules/lc3/LC3';
 import LC3Home from './modules/lc3/LC3Home';
 import LC3Ref from './modules/lc3/ref/LC3Ref';
 import LC3Sim from './modules/lc3/sim/LC3Sim';
+import LC3Tables from './modules/lc3/tables/LC3Tables';
+import TrapServiceRoutines from './modules/lc3/tables/TrapServiceRoutines';
+import DeviceRegisterAssignments from './modules/lc3/tables/DeviceRegisterAssignments';
+import MemoryMap from './modules/lc3/tables/MemoryMap';
 
 // projects
 import Bingo from './modules/projects/Bingo';
@@ -40,6 +44,11 @@ render(<Router history={browserHistory}>
     <IndexRoute component={LC3Home} />
     <Route path="/lc3/ref" component={LC3Ref} />
     <Route path="/lc3/sim" component={LC3Sim} />
+    <Route path="/lc3/tables" component={LC3Tables}>
+      <Route path="/lc3/tables/trap-service-routines" component={TrapServiceRoutines} />Î
+      <Route path="/lc3/tables/device-register-assignments" component={DeviceRegisterAssignments} />Î
+      <Route path="/lc3/tables/memory-map" component={MemoryMap} />Î
+    </Route>
   </Route>
   <Route path="/projects" component={Projects}>
     <IndexRoute component={ProjectsHome} />

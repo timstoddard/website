@@ -12,8 +12,9 @@ export default React.createClass({
         <div className="nav-wrapper light-blue">
           <ul id="nav-mobile">
             <li><Link to="/lc3">LC3 Home</Link></li>
-            <li><NavLink to="/lc3/ref">LC3 Reference</NavLink></li>
-            <li><NavLink to="/lc3/sim">LC3 Simulator Info</NavLink></li>
+            <li><NavLink to="/lc3/ref">ISA Reference</NavLink></li>
+            <li><NavLink to="/lc3/sim">Simulator Info</NavLink></li>
+            <li><NavLink to="/lc3/tables">Helpful Tables</NavLink></li>
           </ul>
         </div>
       </nav>

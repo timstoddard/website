@@ -18,6 +18,7 @@ import LC3Home from './modules/lc3/LC3Home';
 import LC3Ref from './modules/lc3/ref/LC3Ref';
 import LC3Sim from './modules/lc3/sim/LC3Sim';
 import LC3Tables from './modules/lc3/tables/LC3Tables';
+import AssemblerDirectives from './modules/lc3/tables/AssemblerDirectives';
 import TrapServiceRoutines from './modules/lc3/tables/TrapServiceRoutines';
 import DeviceRegisterAssignments from './modules/lc3/tables/DeviceRegisterAssignments';
 import MemoryMap from './modules/lc3/tables/MemoryMap';
@@ -46,6 +47,7 @@ let App =
     <Route path="/lc3/ref" component={LC3Ref} />
     <Route path="/lc3/sim" component={LC3Sim} />
     <Route path="/lc3/tables" component={LC3Tables}>
+      <Route path="/lc3/tables/assembler-directives" component={AssemblerDirectives} />
       <Route path="/lc3/tables/trap-service-routines" component={TrapServiceRoutines} />
       <Route path="/lc3/tables/device-register-assignments" component={DeviceRegisterAssignments} />
       <Route path="/lc3/tables/memory-map" component={MemoryMap} />

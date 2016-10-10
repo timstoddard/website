@@ -8,6 +8,9 @@ export default React.createClass({
     return <div className="container">
       <ul className="center-align">
         <li className="LC3Tables__navLink">
+          <NavLink to="/lc3/tables/assembler-directives">Assembler Directives</NavLink>
+        </li>
+        <li className="LC3Tables__navLink">
           <NavLink to="/lc3/tables/trap-service-routines">Trap Service Routines</NavLink>
         </li>
         <li className="LC3Tables__navLink">

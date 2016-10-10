@@ -93,7 +93,7 @@ $green-darken-1: #43a047;
 }
 
 .detailHeader__text--opcode,
-.detailHeader__text--args,
+.detailHeader__text--operands,
 .detailHeader__text--function,
 .detailDescription,
 .detailOperation,
@@ -105,7 +105,7 @@ $green-darken-1: #43a047;
   }
 }
 
-$detailHeaderList: opcode args function;
+$detailHeaderList: opcode operands function;
 @each $item in $detailHeaderList {
   .detailHeader__text--#{$item}:before {
     content: '#{$item}'

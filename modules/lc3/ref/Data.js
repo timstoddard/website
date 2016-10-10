@@ -5,7 +5,7 @@ export const instructions = [
     modifiesConditionCodes: true,
     formats: [
       {
-        assemblerFormat: { name: 'ADD', args: 'DR, SR1, SR2' },
+        assemblerFormat: { name: 'ADD', operands: 'DR, SR1, SR2' },
         encoding: [
           '0001',
           { value: 'DR', bits: 3 },
@@ -20,7 +20,7 @@ export const instructions = [
         }]
       },
       {
-        assemblerFormat: { name: 'ADD', args: 'DR, SR1, imm5' },
+        assemblerFormat: { name: 'ADD', operands: 'DR, SR1, imm5' },
         encoding: [
           '0001',
           { value: 'DR', bits: 3 },
@@ -49,7 +49,7 @@ export const instructions = [
     modifiesConditionCodes: true,
     formats: [
       {
-        assemblerFormat: { name: 'AND', args: 'DR, SR1, SR2' },
+        assemblerFormat: { name: 'AND', operands: 'DR, SR1, SR2' },
         encoding: [
           '0101',
           { value: 'DR', bits: 3 },
@@ -64,7 +64,7 @@ export const instructions = [
         }]
       },
       {
-        assemblerFormat: { name: 'AND', args: 'DR, SR1, imm5' },
+        assemblerFormat: { name: 'AND', operands: 'DR, SR1, imm5' },
         encoding: [
           '0101',
           { value: 'DR', bits: 3 },
@@ -92,7 +92,7 @@ export const instructions = [
     function: 'Conditional Branch',
     modifiesConditionCodes: false,
     formats: [{
-      assemblerFormat: { name: 'BRn?z?p?', args: 'PCOffset9' },
+      assemblerFormat: { name: 'BRn?z?p?', operands: 'PCOffset9' },
       encoding: [
         '0000',
         { value: 'n', bits: 1 },
@@ -123,7 +123,7 @@ export const instructions = [
     function: 'Jump',
     modifiesConditionCodes: false,
     formats: [{
-      assemblerFormat: { name: 'JMP', args: 'BaseR' },
+      assemblerFormat: { name: 'JMP', operands: 'BaseR' },
       encoding: [
         '1100',
         '000',
@@ -146,7 +146,7 @@ export const instructions = [
     modifiesConditionCodes: false,
     formats: [
       {
-        assemblerFormat: { name: 'JSR', args: 'PCOffset11' },
+        assemblerFormat: { name: 'JSR', operands: 'PCOffset11' },
         encoding: [
           '0100',
           '1',
@@ -158,7 +158,7 @@ export const instructions = [
         }]
       },
       {
-        assemblerFormat: { name: 'JSRR', args: 'BaseR' },
+        assemblerFormat: { name: 'JSRR', operands: 'BaseR' },
         encoding: [
           '0100',
           '0',
@@ -187,7 +187,7 @@ export const instructions = [
     function: 'Load',
     modifiesConditionCodes: true,
     formats: [{
-      assemblerFormat: { name: 'LD', args: 'DR, PCOffset9' },
+      assemblerFormat: { name: 'LD', operands: 'DR, PCOffset9' },
       encoding: [
         '0010',
         { value: 'DR', bits: 3 },
@@ -210,7 +210,7 @@ export const instructions = [
     function: 'Load Indirect',
     modifiesConditionCodes: true,
     formats: [{
-      assemblerFormat: { name: 'LDI', args: 'DR, PCOffset9' },
+      assemblerFormat: { name: 'LDI', operands: 'DR, PCOffset9' },
       encoding: [
         '1010',
         { value: 'DR', bits: 3 },
@@ -233,7 +233,7 @@ export const instructions = [
     function: 'Load Base+Offset',
     modifiesConditionCodes: true,
     formats: [{
-      assemblerFormat: { name: 'LDR', args: 'DR, BaseR, offset6' },
+      assemblerFormat: { name: 'LDR', operands: 'DR, BaseR, offset6' },
       encoding: [
         '0110',
         { value: 'DR', bits: 3 },
@@ -256,7 +256,7 @@ export const instructions = [
     function: 'Load Effective Address',
     modifiesConditionCodes: true,
     formats: [{
-      assemblerFormat: { name: 'LEA', args: 'DR, PCOffset9' },
+      assemblerFormat: { name: 'LEA', operands: 'DR, PCOffset9' },
       encoding: [
         '1110',
         { value: 'DR', bits: 3 },
@@ -279,7 +279,7 @@ export const instructions = [
     function: 'Bitwise Complement',
     modifiesConditionCodes: true,
     formats: [{
-      assemblerFormat: { name: 'NOT', args: 'DR, SR' },
+      assemblerFormat: { name: 'NOT', operands: 'DR, SR' },
       encoding: [
         '1001',
         { value: 'DR', bits: 3 },
@@ -303,7 +303,7 @@ export const instructions = [
     function: 'Return From Subroutine',
     modifiesConditionCodes: false,
     formats: [{
-      assemblerFormat: { name: 'RET', args: '' },
+      assemblerFormat: { name: 'RET', operands: '' },
       encoding: [
         '1100',
         '000',
@@ -325,7 +325,7 @@ export const instructions = [
     function: 'Return From Interrupt',
     modifiesConditionCodes: false,
     formats: [{
-      assemblerFormat: { name: 'RTI', args: '' },
+      assemblerFormat: { name: 'RTI', operands: '' },
       encoding: [
         '1000',
         '000000000000'
@@ -352,7 +352,7 @@ export const instructions = [
     function: 'Store',
     modifiesConditionCodes: false,
     formats: [{
-      assemblerFormat: { name: 'ST', args: 'SR, PCOffset9' },
+      assemblerFormat: { name: 'ST', operands: 'SR, PCOffset9' },
       encoding: [
         '0011',
         { value: 'SR', bits: 3 },
@@ -374,7 +374,7 @@ export const instructions = [
     function: 'Store Indirect',
     modifiesConditionCodes: false,
     formats: [{
-      assemblerFormat: { name: 'STI', args: 'SR, PCOffset9' },
+      assemblerFormat: { name: 'STI', operands: 'SR, PCOffset9' },
       encoding: [
         '1011',
         { value: 'SR', bits: 3 },
@@ -396,7 +396,7 @@ export const instructions = [
     function: 'Store Base+Offset',
     modifiesConditionCodes: false,
     formats: [{
-      assemblerFormat: { name: 'STR', args: 'SR, BaseR, offset6' },
+      assemblerFormat: { name: 'STR', operands: 'SR, BaseR, offset6' },
       encoding: [
         '0111',
         { value: 'SR', bits: 3 },
@@ -418,7 +418,7 @@ export const instructions = [
     function: 'System Call',
     modifiesConditionCodes: false,
     formats: [{
-      assemblerFormat: { name: 'TRAP', args: 'trapvector8' },
+      assemblerFormat: { name: 'TRAP', operands: 'trapvector8' },
       encoding: [
         '1111',
         '0000',
@@ -441,7 +441,7 @@ export const instructions = [
     function: 'Unused Opcode',
     modifiesConditionCodes: false,
     formats: [{
-      assemblerFormat: { name: '', args: '' },
+      assemblerFormat: { name: '', operands: '' },
       encoding: [
         '1101',
         { value: '', bits: 12 }

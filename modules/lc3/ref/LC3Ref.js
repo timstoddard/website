@@ -10,8 +10,8 @@ let DetailHeader = React.createClass({
       <div className="detailHeader__text detailHeader__text--opcode col s3">
         {this.props.assemblerFormat.name || 'none'}
       </div>
-      <div className="detailHeader__text detailHeader__text--args col s4">
-        {this.props.assemblerFormat.args || 'none'}
+      <div className="detailHeader__text detailHeader__text--operands col s4">
+        {this.props.assemblerFormat.operands || 'none'}
       </div>
       <div className="detailHeader__text detailHeader__text--function col s5">
         {this.props.function}

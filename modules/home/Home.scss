@@ -24,7 +24,6 @@ $blue-grey: #607d8b;
 .home__link--text {
   color: black;
   text-transform: uppercase;
-  transition: all .35s ease;
   white-space: nowrap;
 }
 
@@ -44,6 +43,6 @@ $blue-grey: #607d8b;
   transition: all 0.3s ease;
 
   &:hover {
-    color: $blue-grey;
+    text-shadow: 0 3px 4px $blue-grey;
   }
 }

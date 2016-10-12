@@ -26,19 +26,13 @@ export default React.createClass({
       <div className="home__verticalAlignWrapper">
         <ul className="home__links center-align">
           <li className="home__link">
-            <Link className="home__link--text" to="/about">
-              <SplitLetters text="about" />
-            </Link>
+            <Link className="home__link--text" to="/about">about</Link>
           </li>
           <li className="home__link">
-            <Link className="home__link--text" to="/projects">
-              <SplitLetters text="projects" />
-            </Link>
+            <Link className="home__link--text" to="/projects">projects</Link>
           </li>
           <li className="home__link">
-            <Link className="home__link--text" to="/resume">
-              <SplitLetters text="resume" />
-            </Link>
+            <Link className="home__link--text" to="/resume">resume</Link>
           </li>
         </ul>
       </div>

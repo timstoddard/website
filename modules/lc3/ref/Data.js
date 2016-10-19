@@ -156,7 +156,20 @@ export const instructions = [
           text: 'JSR #4',
           description: 'Put the address of the instruction following JSR into R7, then add 4 to the incremented PC.'
         }]
-      },
+      }
+    ],
+    operation: [
+      { text: 'R7 = PC*;', indentationLevel: 0 },
+      { text: 'PC = PC* + SEXT(PCOffset11);', indentationLevel: 1 },
+      { text: '*This is the incremented PC', tooltip: true }
+    ],
+    description: 'First, the incremented PC is saved in R7. This is the linkage back to the calling routine. Then the PC is loaded with the address of the first instruction of the subroutine, causing an unconditional jump to that address. The address of the subroutine is computed by sign-extending bits [10:0] and adding this value to the incremented PC.'
+  },
+  {
+    name: 'JSRR',
+    function: 'Jump to Subroutine',
+    modifiesConditionCodes: false,
+    formats: [
       {
         assemblerFormat: { name: 'JSRR', operands: 'BaseR' },
         encoding: [
@@ -174,13 +187,10 @@ export const instructions = [
     ],
     operation: [
       { text: 'R7 = PC*;', indentationLevel: 0 },
-      { text: 'if (bit[11] == 0)', indentationLevel: 0 },
       { text: 'PC = BaseR;', indentationLevel: 1 },
-      { text: 'else', indentationLevel: 0 },
-      { text: 'PC = PC* + SEXT(PCOffset11);', indentationLevel: 1 },
       { text: '*This is the incremented PC', tooltip: true }
     ],
-    description: 'First, the incremented PC is saved in R7. This is the linkage back to the calling routine. Then the PC is loaded with the address of the first instruction of the subroutine, causing an unconditional jump to that address. The address of the subroutine is obtained from the base register (if bit [11] is 0), or the address is computed by sign-extending bits [10:0] and adding this value to the incremented PC (if bit [11] is 1).'
+    description: 'First, the incremented PC is saved in R7. This is the linkage back to the calling routine. Then the PC is loaded with the address of the first instruction of the subroutine, causing an unconditional jump to that address. The address of the subroutine is obtained from the base register.'
   },
   {
     name: 'LD',

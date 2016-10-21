@@ -160,7 +160,7 @@ export const instructions = [
     ],
     operation: [
       { text: 'R7 = PC*;', indentationLevel: 0 },
-      { text: 'PC = PC* + SEXT(PCOffset11);', indentationLevel: 1 },
+      { text: 'PC = PC* + SEXT(PCOffset11);', indentationLevel: 0 },
       { text: '*This is the incremented PC', tooltip: true }
     ],
     description: 'First, the incremented PC is saved in R7. This is the linkage back to the calling routine. Then the PC is loaded with the address of the first instruction of the subroutine, causing an unconditional jump to that address. The address of the subroutine is computed by sign-extending bits [10:0] and adding this value to the incremented PC.'
@@ -187,7 +187,7 @@ export const instructions = [
     ],
     operation: [
       { text: 'R7 = PC*;', indentationLevel: 0 },
-      { text: 'PC = BaseR;', indentationLevel: 1 },
+      { text: 'PC = BaseR;', indentationLevel: 0 },
       { text: '*This is the incremented PC', tooltip: true }
     ],
     description: 'First, the incremented PC is saved in R7. This is the linkage back to the calling routine. Then the PC is loaded with the address of the first instruction of the subroutine, causing an unconditional jump to that address. The address of the subroutine is obtained from the base register.'

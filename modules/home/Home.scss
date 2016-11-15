@@ -5,7 +5,7 @@
 $blue-grey: #607d8b;
 
 .home {
-  @include background();
+  @include background;
   height: 100vh;
   margin: 0;
 }

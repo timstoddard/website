@@ -4,7 +4,7 @@
 $deg: 8deg;
 
 .about {
-  @include background();
+  @include background;
   min-height: 100vh;
   height: 100%;
 }

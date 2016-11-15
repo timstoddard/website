@@ -32,7 +32,7 @@ export default React.createClass({
             <Link className="home__link--text" to="/projects">projects</Link>
           </li>
           <li className="home__link">
-            <Link className="home__link--text" to="/resume">resume</Link>
+            <Link className="home__link--text" to="https://drive.google.com/file/d/0B9dz0Ddcl3ESbEhUVU1ubDdmTmc/view?usp=sharing" target="_blank">resume</Link>
           </li>
         </ul>
       </div>

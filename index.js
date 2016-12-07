@@ -45,6 +45,7 @@ let App =
   <Route path="/about" component={About} />
   <Route path="/resume" component={Resume} />
   <Route path="/start" component={Start} />
+  <Route path="/countdown" component={Countdown} />
   <Route path="/lc3" component={LC3}>
     <IndexRoute component={LC3Home} />
     <Route path="/lc3/ref" component={LC3Ref} />

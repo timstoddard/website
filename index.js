@@ -12,6 +12,9 @@ import Home from './modules/home/Home';
 import About from './modules/home/About';
 import Resume from './modules/home/Resume';
 
+// countdown for Lucas
+import Countdown from './modules/countdown/Countdown';
+
 // LC3 reference
 import LC3 from './modules/lc3/LC3';
 import LC3Home from './modules/lc3/LC3Home';

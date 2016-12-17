@@ -28,7 +28,7 @@ import MemoryMap from './modules/lc3/tables/MemoryMap';
 
 // projects
 import Bingo from './modules/projects/Bingo';
-import Heap from './modules/projects/Heap';
+import Heap from './modules/projects/heap/Heap';
 import Imports from './modules/projects/Imports';
 import Projects from './modules/projects/Projects';
 import ProjectsHome from './modules/projects/ProjectsHome';

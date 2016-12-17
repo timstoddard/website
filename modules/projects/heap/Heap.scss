@@ -1,0 +1,19 @@
+.heap {
+  &__input {
+    display: inline-block !important;
+  }
+
+  &__btn {
+    cursor: pointer;
+  }
+
+  &__value {
+    background: #00ff66;
+    border-radius: 2px;
+	  font-weight: bold;
+  }
+
+  &__tree {
+    font-family: monospace;
+  }
+}

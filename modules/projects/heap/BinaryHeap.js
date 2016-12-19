@@ -73,6 +73,10 @@ export default class {
     return this.size;
   }
 
+  treeHeight() {
+    return Math.floor(Math.log2(this.arr.length - 1) + 1) || 0;
+  }
+
   driftDown(hole) {
     let temp = this.arr[hole];
     while (Math.floor(hole * 2) <= this.size) {
@@ -105,6 +109,6 @@ export default class {
   }
 
   toString() {
-    return this.arr.join(', ');
+    return this.arr.slice(1).join(', ');
   }
 }

@@ -8,7 +8,7 @@ export default React.createClass({
     return {
       data: [
         { name: 'Car Crash Bingo', href: '/projects/bingo', works: true },
-        { name: 'Heap Visualization', href: '/projects/heap', works: false },
+        { name: 'Max-Heap Visualizer', href: '/projects/heap', works: true },
         { name: 'Angular 2 Import Fixer', href: '/projects/imports', works: true },
         { name: 'Turn your screen into a strobe light!', href: '/projects/strobe', works: false },
         { name: 'Javascript Clock', href: '/projects/time', works: false },
@@ -30,13 +30,15 @@ export default React.createClass({
     });
     return <div className="projectsHome__background">
       <div className="container">
-        <h3 className="projectsHome__title">Check out some of the cool things I've made!*</h3>
-        <h5>*I'm still in the process of porting some of these projects from vanilla javascript into React. See the list below for which ones currently work.</h5>
+        <h5 className="projectsHome__title">Check out some of the cool things I've made!*</h5>
+        <p>*I'm still in the process of porting some of these projects from vanilla javascript into React. See the list below for which ones currently work.</p>
         <ul>
           {links}
         </ul>
         <hr className="projectsHome__divider" />
-        <Link to=""><h5 className="projectsHome__link--home center-align">Home</h5></Link>
+        <div className="center-align">
+          <Link to="" className="projectsHome__link--home">Home</Link>
+        </div>
       </div>
     </div>;
   }

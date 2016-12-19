@@ -17,6 +17,8 @@ export default React.createClass({
         this.props.generateHeaps(ints);
       } else {
         window.location.hash = '';
+        this.input.value = '';
+        this.props.generateHeaps([]);
       }
     } catch (e) {
       window.location.hash = '';
@@ -57,7 +59,8 @@ export default React.createClass({
         <p>Paste your heap contents here:</p>
         <input
           ref={(input) => this.input = input}
-          type="text" />
+          type="text"
+           className="heapInput__form--textbox" />
         <a
           onClick={this.processInput}
           className="btn">

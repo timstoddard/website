@@ -21,18 +21,21 @@ export default React.createClass({
     return { __html: treeString };
   },
   render() {
-    return <div className="heapDetail">
+    return <div className="heapDetail blue-grey lighten-4">
       <hr />
       <a
-        onClick={this.showInputHeap}>
-        show your input heap ({this.props.inputHeap.toString()})
+        onClick={this.showInputHeap}
+        className="btn heapDetail__button">
+        show your input heap 
       </a>
       <a
-        onClick={this.showSortedHeap}>
-        show sorted heap ({this.props.sortedHeap.toString()})
+        onClick={this.showSortedHeap}
+        className="btn heapDetail__button">
+        show sorted heap
       </a>
       <p>Number of elements: {this.props.inputHeap.heapSize()}</p>
       <p>Number of levels: {this.props.inputHeap.treeHeight()}</p>
+      <p>Heap in array form: {this.props[this.state.showSorted ? 'sortedHeap' : 'inputHeap'].toString()}</p>
       <div
         dangerouslySetInnerHTML={this.getTreeString()}
         className="heapDetail__tree" />

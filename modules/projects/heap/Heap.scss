@@ -1,4 +1,12 @@
 .heap {
+  padding-bottom: 20px;
+  text-align: center;
+
+  p {
+    line-height: 1em;
+    margin: 0.5em;
+  }
+
   &__input {
     display: inline-block !important;
   }

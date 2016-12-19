@@ -1,0 +1,20 @@
+.heapInput {
+  &__form{
+    align-items: baseline;
+    display: flex;
+    justify-content: space-around;
+
+    &--textbox {
+      margin-bottom: 0.5em !important;
+      width: 40% !important;
+    }
+  }
+
+  &__sample {
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

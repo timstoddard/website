@@ -30,7 +30,7 @@ import Imports from './modules/projects/Imports';
 import Projects from './modules/projects/Projects';
 import ProjectsHome from './modules/projects/ProjectsHome';
 import Strobe from './modules/projects/Strobe';
-import Time from './modules/projects/Time';
+import Time from './modules/projects/time/Time';
 import Zen from './modules/projects/Zen';
 
 // start page

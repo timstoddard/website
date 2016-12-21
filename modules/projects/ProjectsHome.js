@@ -11,7 +11,7 @@ export default React.createClass({
         { name: 'Max-Heap Visualizer', href: '/projects/heap', works: true },
         { name: 'Angular 2 Import Fixer', href: '/projects/imports', works: true },
         { name: 'Turn your screen into a strobe light!', href: '/projects/strobe', works: false },
-        { name: 'Javascript Clock', href: '/projects/time', works: false },
+        { name: 'Javascript Clock', href: '/projects/time', works: true },
         { name: 'Zen Mode - Peaceful Animation', href: '/zen', works: false }
       ]
     }

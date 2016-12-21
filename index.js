@@ -24,14 +24,7 @@ import DeviceRegisterAssignments from './modules/lc3/tables/DeviceRegisterAssign
 import MemoryMap from './modules/lc3/tables/MemoryMap';
 
 // projects
-import Bingo from './modules/projects/Bingo';
-import Heap from './modules/projects/heap/Heap';
-import Imports from './modules/projects/Imports';
-import Projects from './modules/projects/Projects';
-import ProjectsHome from './modules/projects/ProjectsHome';
-import Strobe from './modules/projects/Strobe';
-import Time from './modules/projects/time/Time';
-import Zen from './modules/projects/Zen';
+import { Bingo, Heap, Imports, Projects, ProjectsHome, Strobe, Time, Zen } from './modules/projects';
 
 // start page
 import Start from './modules/start/Start';

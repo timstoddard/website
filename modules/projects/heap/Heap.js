@@ -20,7 +20,6 @@ export default React.createClass({
       this.sortedHeap.insert(ints[i]);
     }
     this.setState({ hideTree: ints.length === 0 });
-    console.log(this.state.hideTree)
   },
   render() {
     document.title = 'Heap';

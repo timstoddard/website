@@ -3,11 +3,15 @@ import React from 'react';
 import './Time.scss';
 
 export default React.createClass({
+  updateTimer: null,
   getInitialState() {
     return { timeStr: '' };
   },
   componentDidMount() {
     this.showTime();
+  },
+  componentWillUnmount() {
+    clearTimeout(this.updateTimer);
   },
   showTime() {
     let now = new Date();
@@ -20,7 +24,7 @@ export default React.createClass({
     timeStr += (hours >= 12) ? ' PM' : ' AM';
     this.setState({ timeStr: timeStr });
     let millis = now.getMilliseconds();
-    let updateTime = setTimeout(() => this.showTime(), 1000 - millis < 10 ? 1000 : 1000 - millis);
+    this.updateTimer = setTimeout(() => this.showTime(), 1000 - millis < 10 ? 1000 : 1000 - millis);
   },
   render() {
     document.title = 'Time';

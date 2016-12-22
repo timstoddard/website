@@ -1,0 +1,26 @@
+.options {
+  text-align: center;
+
+  &__form {
+    display: flex;
+
+    &--min {
+      margin-right: 5px;
+    }
+
+    &--max {
+      margin-left: 5px;
+    }
+  }
+
+  &__ms {
+    font-weight: bold;
+  }
+
+  &__close {
+    font-size: 2rem;
+    position: absolute;
+    right: 5px;
+    top: 50px;
+  }
+}

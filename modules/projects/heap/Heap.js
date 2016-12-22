@@ -7,10 +7,14 @@ import HeapInput from './HeapInput';
 import './Heap.scss';
 
 export default React.createClass({
-  inputHeap: new BinaryHeap(false),
-  sortedHeap: new BinaryHeap(true),
+  inputHeap: null,
+  sortedHeap: null,
   getInitialState() {
     return { hideTree: true };
+  },
+  componentDidMount() {
+    this.inputHeap = new BinaryHeap(false);
+    this.sortedHeap = new BinaryHeap(true);
   },
   generateHeaps(ints) {
     this.inputHeap.init(ints.length);

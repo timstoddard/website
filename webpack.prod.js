@@ -33,6 +33,6 @@ module.exports = {
     }),
     new webpack.optimize.AggressiveMergingPlugin(),
     new webpack.optimize.DedupePlugin(),
-    new ExtractTextPlugin('bundle.css', { allChunks: true})
+    new ExtractTextPlugin('bundle.css', { allChunks: true })
   ]
 };

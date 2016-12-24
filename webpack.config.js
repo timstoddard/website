@@ -26,7 +26,7 @@ module.exports = {
   postcss: function () {
     return [autoprefixer];
   },
-  plugins: [new ExtractTextPlugin('bundle.css', { allChunks: true})],
+  plugins: [new ExtractTextPlugin('bundle.css', { allChunks: true })],
   devServer: {
     historyApiFallback: true,
   }

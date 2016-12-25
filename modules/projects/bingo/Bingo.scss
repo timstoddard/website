@@ -1,26 +1,19 @@
 $grey-lighten-2: #e0e0e0;
 
-.bingo__video {
-  height: auto;
-  width: 100%;
-}
+.board {
+  &__cell {
+    border: 1px solid $grey-lighten-2;
+    cursor: pointer;
+    width: 20%;
 
-.board__cell {
-  border: 1px solid $grey-lighten-2;
-  cursor: pointer;
-  width: 20%;
-
-  &:hover {
-    background-color: $grey-lighten-2;
+    &:hover {
+      background-color: $grey-lighten-2;
+    }
   }
-}
 
-.board__controls {
-  background-color: $grey-lighten-2;
-  margin: 0.25rem;
-  padding: 0.5rem;
-}
-
-.selected {
-  background-color: red !important;
+  &__controls {
+    background-color: $grey-lighten-2;
+    margin: 0.25rem;
+    padding: 0.5rem;
+  }
 }

@@ -76,10 +76,7 @@ export default React.createClass({
         },
         {
           name: 'POLS 112',
-          id: 4854,
-          otherLinks: [
-            { name: 'Globalyceum', href: 'https://www.globalyceum.com/student/student_home' }
-          ]
+          id: 4854
         },
         { name: 'STAT 312', id: 2541 },
         { name: 'ENGL 149', id: 6518 }
@@ -88,6 +85,7 @@ export default React.createClass({
         { name: 'Portal', href: 'https://my.calpoly.edu' },
         { name: 'Grades', href: 'https://docs.google.com/spreadsheets/d/1iJBFshNawvpG4JOUBNa9tkxefSHW8a67lVleAWVwH3Y' },
         { name: 'Student Center', href: 'https://my.calpoly.edu/cas/login?service=https://cmsweb.calpoly.edu/psp/HSLOPRD/EMPLOYEE/HRMS/c/SA_LEARNER_SERVICES.SSS_STUDENT_CENTER.GBL?FolderPath=PORTAL_ROOT_OBJECT.CO_EMPLOYEE_SELF_SERVICE.HC_SSS_STUDENT_CENTER%26IsFolder=false%26IgnoreParamTempl=FolderPath%2cIsFolder%26RL=%26target=main0%26navc=2398?clg=login%26languageCd=ENG%26userid=PS%26pwd=z' },
+        { name: 'Poly Profile', href: 'https://dashboards.calpoly.edu/dw/polydata/student_poly_profile_self_svc.display' },
         { name: 'PASS', href: 'https://pass.calpoly.edu/login.do' },
         { name: 'Poly Planner', href: 'https://polyplanner.calpoly.edu' },
         { name: 'Degree Reqs', href: 'http://catalog.calpoly.edu/collegesandprograms/collegeofengineering/computerscience/bscomputerscience' },

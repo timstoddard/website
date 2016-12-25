@@ -24,13 +24,12 @@ import DeviceRegisterAssignments from './modules/lc3/tables/DeviceRegisterAssign
 import MemoryMap from './modules/lc3/tables/MemoryMap';
 
 // projects
-import { Bingo, Heap, Imports, Projects, ProjectsHome, Strobe, Time, Zen } from './modules/projects';
+import { Bingo, Heap, Imports, Projects, ProjectsHome, Strobe, StrobeWithProps, Time, Zen } from './modules/projects';
 
 // start page
 import Start from './modules/start/Start';
 
-let App =
-<Router history={browserHistory}>
+let App = <Router history={browserHistory}>
   <Route path="/" component={Home} />
   <Route path="/about" component={About} />
   <Route path="/resume" component={Resume} />
@@ -52,11 +51,12 @@ let App =
     <Route path="/projects/bingo" component={Bingo} />
     <Route path="/projects/heap" component={Heap} />
     <Route path="/projects/imports" component={Imports} />
-    <Route path="/projects/strobe" component={Strobe} />
+    <Route path="/projects/strobe" component={StrobeWithProps(false)} />
     <Route path="/projects/time" component={Time} />
     <Route path="/projects/zen" component={Zen} />
     <Route path="/projects/*" component={NotFoundWithProps('/projects', 'the projects homepage')} />
   </Route>
+  <Route path="/strobe-full" component={StrobeWithProps(true)} />
   <Route path="*" component={NotFoundWithProps('', 'the homepage')} />
 </Router>;
 

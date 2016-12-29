@@ -10,9 +10,9 @@ export default React.createClass({
         { name: 'Car Crash Bingo', href: '/projects/bingo', works: true },
         { name: 'Max-Heap Visualizer', href: '/projects/heap', works: true },
         { name: 'Angular 2 Import Fixer', href: '/projects/imports', works: true },
-        { name: 'Turn your screen into a strobe light!', href: '/projects/strobe', works: false },
+        { name: 'Strobe Light!', href: '/projects/strobe', works: false },
         { name: 'Javascript Clock', href: '/projects/time', works: true },
-        { name: 'Zen Mode - Peaceful Animation', href: '/zen', works: false }
+        { name: 'Zen Mode (Peaceful, Infinite Animation)', href: '/projects/zen', works: true }
       ]
     }
   },

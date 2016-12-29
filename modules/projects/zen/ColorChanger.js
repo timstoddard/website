@@ -23,6 +23,27 @@ export default class {
     this.colorChangeSpeed = 1;
   }
 
+  setRGB(r, g, b, incr, color) {
+    this.r = r;
+    this.g = g;
+    this.b = b;
+    if (incr !== undefined) {
+      this.incr.r = false;
+      this.incr.g = false;
+      this.incr.b = false;
+      this.decr.r = false;
+      this.decr.g = false;
+      this.decr.b = false;
+      if (incr) {
+        this.incr[color] = true;
+      } else {
+        this.decr[color] = true;
+      }
+    } else {
+      throw new Error('must set incr/decr as well');
+    }
+  }
+
   nextColor() {
     let rgb = `rgba(${this.r},${this.g},${this.b},0.8)`;
     if (this.incr.g) { // red to yellow

@@ -6,7 +6,8 @@ import Mover from './Mover';
 import './Zen.scss';
 
 export default React.createClass({
-  colorChanger: null,
+  colorChanger1: null,
+  colorChanger2: null,
   moveInterval: null,
   getInitialState() {
     return {
@@ -17,7 +18,9 @@ export default React.createClass({
     }
   },
   componentDidMount() {
-    this.colorChanger = new ColorChanger();
+    this.colorChanger1 = new ColorChanger();
+    this.colorChanger2 = new ColorChanger();
+    this.colorChanger2.setRGB(0, 255, 255, false, 'g');
     this.moveInterval = setInterval(this.updateBlock, 5);
     this.onWindowResize();
     window.addEventListener('resize', this.onWindowResize);
@@ -35,9 +38,10 @@ export default React.createClass({
     });
   },
   updateBlock() {
-    let nextColor = this.colorChanger.nextColor();
-    this.mover1.move(nextColor);
-    this.mover2.move(nextColor);
+    let nextColor1 = this.colorChanger1.nextColor();
+    let nextColor2 = this.colorChanger2.nextColor();
+    this.mover1.move(nextColor1);
+    this.mover2.move(nextColor2);
   },
   render() {
     document.title = 'Zen Mode';

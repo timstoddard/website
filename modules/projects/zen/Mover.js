@@ -9,7 +9,7 @@ export default React.createClass({
       radius: 10,
       radiusIncr: true,
       theta: 0,
-      thetaChangeSpeed: Math.PI / 360 * 2.5
+      thetaChangeSpeed: Math.PI / 360 * 2
     };
   },
   move(nextColor) {
@@ -53,16 +53,14 @@ export default React.createClass({
         style={{
           'left': this.state.x,
           'top': this.state.y,
-          'boxShadow': this.state.boxShadow,
-          'transition': 'none'
+          'boxShadow': this.state.boxShadow
         }}
         className="zen__block" />
       <div
         style={{
           'right': this.state.x,
           'bottom': this.state.y,
-          'boxShadow': this.state.boxShadow,
-          'transition': 'none'
+          'boxShadow': this.state.boxShadow
         }}
         className="zen__block" />
     </div>;

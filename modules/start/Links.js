@@ -68,18 +68,20 @@ export default React.createClass({
     return {
       courses: [
         {
-          name: 'CPE 225',
-          id: 1160,
+          name: 'CPE 357',
+          id: 0,
           otherLinks: [
-            { name: 'Schedule', href: 'https://users.csc.calpoly.edu/~jplanck/225/225-F2016Schedule.html' }
+            { name: 'Piazza', href: 'https://piazza.com/class/ixjgisq8fmu435' }
           ]
         },
         {
-          name: 'POLS 112',
-          id: 4854
+          name: 'CSC 348',
+          id: 0
         },
-        { name: 'STAT 312', id: 2541 },
-        { name: 'ENGL 149', id: 6518 }
+        {
+          name: 'LA 211',
+          id: 10280
+        }
       ],
       links: [
         { name: 'Portal', href: 'https://my.calpoly.edu' },

@@ -1,29 +1,13 @@
 .projectsHome {
-  &__background {
-    height: 100%;
-  }
-
   &__title {
     margin-top: 0;
     padding-top: 2rem;
   }
 
   &__link {
+    color: black;
     display: inline-block;
-
-    &--home, &--works {
-      color: black;
-      text-decoration: underline;
-    }
-
-    &--broken {
-      color: gray;
-      text-decoration: line-through;
-
-      &:after {
-        content: ' (under construction)';
-      }
-    }
+    text-decoration: underline;
   }
 
   &__divider  {

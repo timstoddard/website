@@ -23,12 +23,14 @@ let Dropdown = React.createClass({
   propTypes: {
     'courseId': React.PropTypes.number,
     'index': React.PropTypes.number,
+    'folderId': React.PropTypes.string,
     'otherLinks': React.PropTypes.array
   },
   render() {
     let dropdownItems = [
       { name: 'Home', href: `https://polylearn.calpoly.edu/AY_2016-2017/course/view.php?id=${this.props.courseId}` },
-      { name: 'Grades', href: `https://polylearn.calpoly.edu/AY_2016-2017/grade/report/user/index.php?id=${this.props.courseId}&userid=128377` }
+      { name: 'Grades', href: `https://polylearn.calpoly.edu/AY_2016-2017/grade/report/user/index.php?id=${this.props.courseId}&userid=128377` },
+      { name: 'Drive', href: `https://drive.google.com/drive/folders/${this.props.folderId}` }
     ];
     if (this.props.otherLinks) {
       this.props.otherLinks.forEach(link => {
@@ -70,17 +72,20 @@ export default React.createClass({
         {
           name: 'CPE 357',
           id: 0,
+          folderId: '0B9dz0Ddcl3ESMG1ZT3dEWlJKSkk',
           otherLinks: [
             { name: 'Piazza', href: 'https://piazza.com/class/ixjgisq8fmu435' }
           ]
         },
         {
           name: 'CSC 348',
-          id: 0
+          id: 0,
+          folderId: '0B9dz0Ddcl3ESNlBJdzlvRGYtSVE',
         },
         {
           name: 'LA 211',
-          id: 10280
+          id: 10280,
+          folderId: '0B9dz0Ddcl3ESdmpfY0lvb1d4LWc',
         }
       ],
       links: [
@@ -105,7 +110,12 @@ export default React.createClass({
     let dropdownActivators = [];
     let links = [<Link className="links__collectionItem collection-item black-text" to="" key="home">Home</Link>];
     this.state.courses.forEach((course, index) => {
-      dropdowns.push(<Dropdown key={index} index={index} courseId={course.id} otherLinks={course.otherLinks} />);
+      dropdowns.push(<Dropdown
+        key={index}
+        index={index}
+        courseId={course.id}
+        folderId={course.folderId}
+        otherLinks={course.otherLinks} />);
       dropdownActivators.push(<DropdownActivator key={index} index={index} courseName={course.name} />);
     });
     this.state.links.forEach((link, index) => {

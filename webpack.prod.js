@@ -18,12 +18,12 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-          test: /\.scss$/,
-          loader: ExtractTextPlugin.extract('style-loader', ['css-loader', 'postcss-loader', 'sass-loader'])
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract('style-loader', ['css-loader', 'postcss-loader', 'sass-loader'])
       }
     ]
   },
-  postcss: function () {
+  postcss: function() {
     return [autoprefixer];
   },
   plugins: [

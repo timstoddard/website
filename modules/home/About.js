@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-import './About.scss';
-
 let IconLinks = React.createClass({
   getInitialState() {
     return {

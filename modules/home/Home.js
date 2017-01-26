@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-import './Home.scss';
-
 let SplitLetters = React.createClass({
   propTypes: {
     text: React.PropTypes.string

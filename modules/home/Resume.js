@@ -1,7 +1,5 @@
 import React from 'react';
 
-import './Resume.scss';
-
 export default React.createClass({
   render() {
     document.title = 'Resume';

@@ -10,7 +10,6 @@ import './index.scss';
 // homepage
 import Home from './modules/home/Home';
 import About from './modules/home/About';
-import Resume from './modules/home/Resume';
 
 // LC3 reference
 import LC3 from './modules/lc3/LC3';
@@ -24,7 +23,7 @@ import DeviceRegisterAssignments from './modules/lc3/tables/DeviceRegisterAssign
 import MemoryMap from './modules/lc3/tables/MemoryMap';
 
 // projects
-import { Bingo, Heap, Imports, Projects, ProjectsHome, Strobe, StrobeWithProps, Time, Zen } from './modules/projects';
+import { Bingo, Heap, Imports, Projects, ProjectsHome, StrobeWithProps, Time, Zen } from './modules/projects';
 
 // start page
 import Start from './modules/start/Start';
@@ -32,7 +31,6 @@ import Start from './modules/start/Start';
 let App = <Router history={browserHistory}>
   <Route path="/" component={Home} />
   <Route path="/about" component={About} />
-  <Route path="/resume" component={Resume} />
   <Route path="/start" component={Start} />
   <Route path="/lc3" component={LC3}>
     <IndexRoute component={LC3Home} />

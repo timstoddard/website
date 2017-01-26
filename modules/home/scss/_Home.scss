@@ -5,43 +5,49 @@ $blue-grey: #607d8b;
 
 .home {
   @include background;
-  height: 100vh;
-  margin: 0;
-}
-
-.home__verticalAlignWrapper {
+  color: transparent;
+  display: flex;
   align-items: center;
-  display: inline-flex;
   justify-content: center;
   flex-direction: column;
-  height: 100%;
-  width: 50%;
-  vertical-align: top;
-}
-
-.home__header--name,
-.home__link--text {
-  color: black;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.home__header--name {
-  font-size: calc(12px + 8vw);
-  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  height: 100vh;
   margin: 0;
-}
 
-.home__link:not(:last-of-type) {
-  padding-bottom: 0.8vw;
-}
+  &--visible {
+    color: black;
+  }
 
-.home__link--text {
-  font-family: 'Montserrat Subrayada', sans-serif;
-  font-size: calc(10px + 3vw);
-  transition: all 0.3s ease;
+  &__headerName,
+  &__linkText {
+    color: inherit;
+    text-transform: uppercase;
+    transition: all 0.5s ease;
+    white-space: nowrap;
+  }
 
-  &:hover {
-    text-shadow: 0 3px 4px $blue-grey;
+  &__headerName {
+    font-size: calc(12px + 6vw);
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+  }
+
+  &__links {
+    display: flex;
+    margin: 0;
+    margin-top: 20px;
+  }
+
+  &__link {
+    margin: 0 12px;
+  }
+
+  &__linkText {
+    font-family: 'Montserrat Subrayada', sans-serif;
+    font-size: calc(10px + 3vw);
+
+    &:hover {
+      text-shadow: 0 3px 4px $blue-grey;
+    }
   }
 }

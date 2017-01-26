@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router';
+import React from 'react'
+import { Link } from 'react-router'
 
 let IconLinks = React.createClass({
   getInitialState() {
@@ -10,28 +10,30 @@ let IconLinks = React.createClass({
         { name: 'Portfolium', href: 'https://portfolium.com/timstoddard' },
         { name: 'Facebook', href: 'https://facebook.com/timstoddard200' }
       ]
-    };
+    }
   },
   render() {
-    return <div className="about__icons">
-      {this.state.icons.map((icon, index) => (
-        <a
-          href={icon.href}
-          target="_blank"
-          key={index}>
-          <img
-            src={`../../media/logos/${icon.name.toLowerCase()}.png`}
-            alt={icon.name}
-            className="about__icon" />
-        </a>)
-      )}
-    </div>;
+    return (
+      <div className="about__icons">
+        {this.state.icons.map((icon, index) => (
+          <a
+            href={icon.href}
+            target="_blank"
+            key={index}>
+            <img
+              src={`../../media/logos/${icon.name.toLowerCase()}.png`}
+              alt={icon.name}
+              className="about__icon" />
+          </a>)
+        )}
+      </div>
+    )
   }
-});
+})
 
 export default React.createClass({
   render() {
-    document.title = 'About';
+    document.title = 'About'
     return (
       <div className="about">
         <div className="container">
@@ -57,6 +59,7 @@ export default React.createClass({
             </h5>
           </Link>
         </div>
-      </div>);
+      </div>
+    )
   }
-});
+})

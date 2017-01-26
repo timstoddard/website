@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router';
+import React from 'react'
+import { Link } from 'react-router'
 
 export default React.createClass({
   getInitialState() {
@@ -22,13 +22,13 @@ export default React.createClass({
           external: true
         }
       ]
-    };
+    }
   },
   componentDidMount() {
-    setTimeout(() => this.setState({ visible: true }), 500);
+    setTimeout(() => this.setState({ visible: true }), 500)
   },
   render() {
-    document.title = 'Tim Stoddard';
+    document.title = 'Tim Stoddard'
     return (
       <div className={`home ${this.state.visible ? 'home--visible' : ''}`}>
         <h1 className="home__headerName">
@@ -48,6 +48,7 @@ export default React.createClass({
             </li>
           ))}
         </ul>
-      </div>);
+      </div>
+    )
   }
-});
+})

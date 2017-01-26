@@ -1,7 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router';
-
-import './Links.scss';
+import React from 'react'
+import { Link } from 'react-router'
 
 let SidebarLink = React.createClass({
   propTypes: {
@@ -15,9 +13,9 @@ let SidebarLink = React.createClass({
       href={this.props.href}
       target="_blank">
       {this.props.name}
-    </a>;
+    </a>
   }
-});
+})
 
 let Dropdown = React.createClass({
   propTypes: {
@@ -31,22 +29,22 @@ let Dropdown = React.createClass({
       { name: 'Home', href: `https://polylearn.calpoly.edu/AY_2016-2017/course/view.php?id=${this.props.courseId}` },
       { name: 'Grades', href: `https://polylearn.calpoly.edu/AY_2016-2017/grade/report/user/index.php?id=${this.props.courseId}&userid=128377` },
       { name: 'Drive', href: `https://drive.google.com/drive/folders/${this.props.folderId}` }
-    ];
+    ]
     if (this.props.otherLinks) {
       this.props.otherLinks.forEach(link => {
-        dropdownItems.push({ name: link.name, href: link.href });
-      });
+        dropdownItems.push({ name: link.name, href: link.href })
+      })
     }
     dropdownItems = dropdownItems.map((dropdownItem, index) => {
       return <li key={index}>
         <SidebarLink name={dropdownItem.name} href={dropdownItem.href} inDropdown={true} />
-      </li>;
-    });
+      </li>
+    })
     return <ul id={`dropdown${this.props.index}`} className="dropdown-content">
       {dropdownItems}
-    </ul>;
+    </ul>
   }
-});
+})
 
 let DropdownActivator = React.createClass({
   propTypes: {
@@ -58,9 +56,9 @@ let DropdownActivator = React.createClass({
       className="links__collectionItem collection-item dropdown-button black-text"
       data-activates={`dropdown${this.props.index}`}>
       {this.props.courseName}
-    </a>;
+    </a>
   }
-});
+})
 
 export default React.createClass({
   propTypes: {
@@ -100,32 +98,32 @@ export default React.createClass({
         { name: 'Cal Poly Links', href: 'https://my.calpoly.edu/cas/limitedLayout' },
         { name: '16-17 Calendar', href: 'http://registrar.calpoly.edu/2016-17-academic-calendar' }
       ]
-    };
+    }
   },
   componentDidMount() {
-    $('.dropdown-button').dropdown();
+    $('.dropdown-button').dropdown()
   },
   render() {
-    let dropdowns = [];
-    let dropdownActivators = [];
-    let links = [<Link className="links__collectionItem collection-item black-text" to="" key="home">Home</Link>];
+    let dropdowns = []
+    let dropdownActivators = []
+    let links = [<Link className="links__collectionItem collection-item black-text" to="" key="home">Home</Link>]
     this.state.courses.forEach((course, index) => {
       dropdowns.push(<Dropdown
         key={index}
         index={index}
         courseId={course.id}
         folderId={course.folderId}
-        otherLinks={course.otherLinks} />);
-      dropdownActivators.push(<DropdownActivator key={index} index={index} courseName={course.name} />);
-    });
+        otherLinks={course.otherLinks} />)
+      dropdownActivators.push(<DropdownActivator key={index} index={index} courseName={course.name} />)
+    })
     this.state.links.forEach((link, index) => {
-      links.push(<SidebarLink key={index} name={link.name} href={link.href} />);
-    });
+      links.push(<SidebarLink key={index} name={link.name} href={link.href} />)
+    })
     return <div className={`links__collection collection ${this.props.className}`}>
       {dropdowns}
       {dropdownActivators}
       <div className="divider" />
       {links}
-    </div>;
+    </div>
   }
-});
+})

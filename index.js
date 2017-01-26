@@ -1,32 +1,32 @@
 // react stuff
-import React from 'react';
-import { render } from 'react-dom';
-import { Router, Route, browserHistory, IndexRoute } from 'react-router';
+import React from 'react'
+import { render } from 'react-dom'
+import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 
 // general stuff
-import { NotFoundWithProps } from './modules/NotFound';
-import './index.scss';
+import { NotFoundWithProps } from './modules/NotFound'
+import './index.scss'
 
 // homepage
-import Home from './modules/home/Home';
-import About from './modules/home/About';
+import Home from './modules/home/Home'
+import About from './modules/home/About'
 
 // LC3 reference
-import LC3 from './modules/lc3/LC3';
-import LC3Home from './modules/lc3/LC3Home';
-import LC3Ref from './modules/lc3/ref/LC3Ref';
-import LC3Sim from './modules/lc3/sim/LC3Sim';
-import LC3Tables from './modules/lc3/tables/LC3Tables';
-import AssemblerDirectives from './modules/lc3/tables/AssemblerDirectives';
-import TrapServiceRoutines from './modules/lc3/tables/TrapServiceRoutines';
-import DeviceRegisterAssignments from './modules/lc3/tables/DeviceRegisterAssignments';
-import MemoryMap from './modules/lc3/tables/MemoryMap';
+import LC3 from './modules/lc3/LC3'
+import LC3Home from './modules/lc3/LC3Home'
+import LC3Ref from './modules/lc3/ref/LC3Ref'
+import LC3Sim from './modules/lc3/sim/LC3Sim'
+import LC3Tables from './modules/lc3/tables/LC3Tables'
+import AssemblerDirectives from './modules/lc3/tables/AssemblerDirectives'
+import TrapServiceRoutines from './modules/lc3/tables/TrapServiceRoutines'
+import DeviceRegisterAssignments from './modules/lc3/tables/DeviceRegisterAssignments'
+import MemoryMap from './modules/lc3/tables/MemoryMap'
 
 // projects
-import { Bingo, Heap, Imports, Projects, ProjectsHome, StrobeWithProps, Time, Zen } from './modules/projects';
+import { Bingo, Heap, Imports, Projects, ProjectsHome, StrobeWithProps, Time, Zen } from './modules/projects'
 
 // start page
-import Start from './modules/start/Start';
+import Start from './modules/start/Start'
 
 let App = <Router history={browserHistory}>
   <Route path="/" component={Home} />
@@ -56,6 +56,6 @@ let App = <Router history={browserHistory}>
   </Route>
   <Route path="/strobe-full" component={StrobeWithProps(true)} />
   <Route path="*" component={NotFoundWithProps('', 'the homepage')} />
-</Router>;
+</Router>
 
-render(App, document.getElementById('app'));
+render(App, document.getElementById('app'))

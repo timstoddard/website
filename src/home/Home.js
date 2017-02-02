@@ -41,7 +41,7 @@ export default React.createClass({
               className="home__link">
               <Link
                 to={link.to}
-                target={link.external ? '_blank' : '_self'}
+                target={link.external ? '_blank' : ''}
                 className="home__linkText">
                 {link.text}
               </Link>

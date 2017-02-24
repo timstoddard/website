@@ -1,7 +1,5 @@
-@import url(https://fonts.googleapis.com/css?family=Montserrat|Montserrat+Subrayada);
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
 @import '../../scss/mixins/background';
-
-$blue-grey: #607d8b;
 
 .home {
   @include background;
@@ -21,8 +19,8 @@ $blue-grey: #607d8b;
   &__headerName,
   &__linkText {
     color: inherit;
-    text-transform: uppercase;
-    transition: all 0.5s ease;
+    text-transform: capitalize;
+    transition: all 0.25s ease;
     white-space: nowrap;
   }
 
@@ -39,15 +37,27 @@ $blue-grey: #607d8b;
   }
 
   &__link {
-    margin: 0 12px;
+    margin: 0 calc(8px + 0.8vw);
   }
 
   &__linkText {
-    font-family: 'Montserrat Subrayada', sans-serif;
+    border-bottom: 2px solid transparent;
+    font-family: 'Montserrat', sans-serif;
     font-size: calc(10px + 3vw);
+    transition: all 0.25s ease;
 
     &:hover {
-      text-shadow: 0 3px 4px $blue-grey;
+      border-bottom-color: black;
+    }
+  }
+
+  @media all and (max-width: 700px) {
+    &__links {
+      flex-direction: column;
+    }
+
+    &__link {
+      margin-top: 20px;
     }
   }
 }

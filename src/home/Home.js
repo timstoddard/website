@@ -9,17 +9,14 @@ export default React.createClass({
         {
           to: '/about',
           text: 'about',
-          external: false
         },
         {
           to: '/projects',
           text: 'projects',
-          external: false
         },
         {
           to: 'https://drive.google.com/file/d/0B9dz0Ddcl3ESV28wLVZzd2RFNkU/view?usp=sharing',
           text: 'resume',
-          external: true
         }
       ]
     }
@@ -41,7 +38,7 @@ export default React.createClass({
               className="home__link">
               <Link
                 to={link.to}
-                target={link.external ? '_blank' : ''}
+                target={link.to[0] !== '/' ? '_blank' : ''}
                 className="home__linkText">
                 {link.text}
               </Link>

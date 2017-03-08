@@ -28,23 +28,25 @@ export default React.createClass({
     document.title = 'Tim Stoddard'
     return (
       <div className={`home ${this.state.visible ? 'home--visible' : ''}`}>
-        <h1 className="home__headerName">
-          tim stoddard
-        </h1>
-        <ul className="home__links">
-          {this.state.links.map((link, index) => (
-            <li
-              key={index}
-              className="home__link">
-              <Link
-                to={link.to}
-                target={link.to[0] !== '/' ? '_blank' : ''}
-                className="home__linkText">
-                {link.text}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <div className="home__content">
+          <h1 className="home__headerName">
+            tim stoddard
+          </h1>
+          <ul className="home__links">
+            {this.state.links.map((link, index) => (
+              <li
+                key={index}
+                className="home__link">
+                <Link
+                  to={link.to}
+                  target={link.to[0] !== '/' ? '_blank' : ''}
+                  className="home__linkText">
+                  {link.text}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     )
   }

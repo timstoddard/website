@@ -1,6 +1,6 @@
-const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const autoprefixer = require('autoprefixer');
+const webpack = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const autoprefixer = require('autoprefixer')
 
 module.exports = {
   devtool: 'cheap-module-source-map',
@@ -24,7 +24,7 @@ module.exports = {
     ]
   },
   postcss: function() {
-    return [autoprefixer];
+    return [autoprefixer]
   },
   plugins: [
     new webpack.optimize.UglifyJsPlugin({
@@ -35,4 +35,4 @@ module.exports = {
     new webpack.optimize.DedupePlugin(),
     new ExtractTextPlugin('bundle.css', { allChunks: true })
   ]
-};
+}

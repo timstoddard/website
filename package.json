@@ -5,10 +5,13 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --inline --content-base",
-    "prod": "rimraf dist && NODE_ENV=production webpack -p --config ./webpack.prod.js && node server.js",
-    "lint": "eslint ./index.js && eslint src/**/*.js"
+    "prod": "rimraf dist && NODE_ENV=production webpack -p --config webpack.prod.js && node server.js",
+    "lint": "eslint index.js && eslint src/**/*.js"
   },
   "author": "Tim Stoddard",
+  "repository": {
+    "url": "https://github.com/timstoddard/website"
+  },
   "license": "ISC",
   "dependencies": {
     "autoprefixer": "^6.5.0",
@@ -27,13 +30,13 @@
     "react": "^0.14.8",
     "react-dom": "^0.14.8",
     "react-router": "^2.0.0",
-    "rimraf": "^2.5.4",
+    "rimraf": "^2.6.1",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.2"
   },
   "devDependencies": {
-    "eslint": "^3.7.1",
+    "eslint": "^3.17.1",
     "eslint-plugin-react": "^6.3.0",
     "webpack-dev-server": "^1.14.1"
   }

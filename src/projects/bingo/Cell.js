@@ -1,31 +1,38 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react'
 
-import { CellState } from './Board';
+import { CellState } from './Board'
 
-export default React.createClass({
-  propTypes: {
-    'onClick': React.PropTypes.func,
-    'status': React.PropTypes.number,
-    'title': React.PropTypes.string,
-  },
-  onClick() {
-    this.props.onClick();
-  },
+class Cell extends Component {
+  constructor(props) {
+    super(props)
+  }
+
   getModifierClassName() {
     switch (this.props.status) {
       case CellState.SUBMITTED:
-        return ' green accent-3';
+        return 'green accent-3'
       case CellState.SELECTED:
-        return ' yellow lighten-1';
+        return 'yellow lighten-1'
       default:
-        return '';
+        return ''
     }
-  },
-  render() {
-    return <td
-      className={'board__cell' + this.getModifierClassName()}
-      onClick={this.onClick}>
-      {this.props.title}
-    </td>;
   }
-});
+
+  render() {
+    return (
+      <td
+        className={`board__cell ${this.getModifierClassName()}`}
+        onClick={this.props.onClick}>
+        {this.props.title}
+      </td>
+    )
+  }
+}
+
+Cell.propTypes = {
+  onClick: PropTypes.func,
+  status: PropTypes.number,
+  title: PropTypes.string,
+}
+
+export default Cell

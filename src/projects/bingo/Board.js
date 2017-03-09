@@ -1,12 +1,12 @@
-import React from 'react';
+import React from 'react'
 
-import Cell from './Cell';
-import ControlPanel from './ControlPanel';
+import Cell from './Cell'
+import ControlPanel from './ControlPanel'
 
 export class CellState {
-  static get UNSELECTED() { return 0; }
-  static get SELECTED() { return 1; }
-  static get SUBMITTED() { return 2; }
+  static get UNSELECTED() { return 0 }
+  static get SELECTED() { return 1 }
+  static get SUBMITTED() { return 2 }
 }
 
 export default React.createClass({
@@ -15,16 +15,16 @@ export default React.createClass({
     'onSubmit': React.PropTypes.func
   },
   getInitialState() {
-    return this.init();
+    return this.init()
   },
   init() {
-    let board = [];
+    let board = []
     for (let i = 0; i < 25; i++) {
       if (i !== 12) {
-        board.push(CellState.UNSELECTED);
+        board.push(CellState.UNSELECTED)
       } else {
         // middle square is a freebie
-        board.push(CellState.SUBMITTED);
+        board.push(CellState.SUBMITTED)
       }
     }
     return {
@@ -34,35 +34,35 @@ export default React.createClass({
       selectedCells: 1, // middle square is a freebie
       buttonText: 'submit',
       userWon: false
-    };
+    }
   },
   onClick(index) {
     if (!this.state.userWon) {
-      let newBoard = this.state.board.slice();
-      let selectedCells = this.state.selectedCells;
+      let newBoard = this.state.board.slice()
+      let selectedCells = this.state.selectedCells
       if (newBoard[index] === CellState.UNSELECTED) {
-        newBoard[index] = CellState.SELECTED;
-        selectedCells++;
+        newBoard[index] = CellState.SELECTED
+        selectedCells++
       } else {
-        newBoard[index] = CellState.UNSELECTED;
-        selectedCells--;
+        newBoard[index] = CellState.UNSELECTED
+        selectedCells--
       }
-      this.setState({ board: newBoard, selectedCells: selectedCells });
+      this.setState({ board: newBoard, selectedCells: selectedCells })
     }
   },
   onSubmit() {
     // load new game if user won
     if (this.state.userWon) {
-      this.props.onSubmit();
-      this.setState(this.init());
-      return;
+      this.props.onSubmit()
+      this.setState(this.init())
+      return
     }
 
     // update status of all selected cells
-    let newBoard = this.state.board.slice();
+    let newBoard = this.state.board.slice()
     for (let i = 0; i < 25; i++) {
       if (newBoard[i] === CellState.SELECTED) {
-        newBoard[i] = CellState.SUBMITTED;
+        newBoard[i] = CellState.SUBMITTED
       }
     }
     this.setState({
@@ -71,44 +71,44 @@ export default React.createClass({
     }, () => {
       // check for bingo on rows and columns
       for (let i = 0; i < 5; i++) {
-        let fullColumn = true, fullRow = true;
+        let fullColumn = true, fullRow = true
         for (let j = 0; j < 5; j++) {
           if (this.state.board[i * 5 + j] !== CellState.SUBMITTED) {
-            fullRow = false;
+            fullRow = false
           }
           if (this.state.board[j * 5 + i] !== CellState.SUBMITTED) {
-            fullColumn = false;
+            fullColumn = false
           }
         }
         if (this.potentialWin(fullColumn || fullRow)) {
-          return;
+          return
         }
       }
 
       // check for bingo on diagonals
-      let fullDiagonalDown = true, fullDiagonalUp = true;
+      let fullDiagonalDown = true, fullDiagonalUp = true
       for (let j = 0; j < 5; j++) {
         if (this.state.board[j * 5 + j] !== CellState.SUBMITTED) {
-          fullDiagonalDown = false;
+          fullDiagonalDown = false
         }
         if (this.state.board[(j + 1) * 4] !== CellState.SUBMITTED) {
-          fullDiagonalUp = false;
+          fullDiagonalUp = false
         }
       }
       if (this.potentialWin(fullDiagonalDown || fullDiagonalUp)) {
-        return;
+        return
       }
 
       // load a new video since the user hasn't won yet
-      this.props.onSubmit();
-    });
+      this.props.onSubmit()
+    })
   },
   potentialWin(won) {
     if (won) {
-      this.setState({ userWon: true });
-      this.setState({ buttonText: 'play again' });
+      this.setState({ userWon: true })
+      this.setState({ buttonText: 'play again' })
     }
-    return won;
+    return won
   },
   getItems() {
     let items = [
@@ -140,38 +140,35 @@ export default React.createClass({
       'Pedestrian on vehicle assault',
       'Left turner',
       'U-turner'
-    ];
-    this.shuffle(items);
+    ]
+    this.shuffle(items)
     // middle square is a freebie
-    items.splice(12, 0, 'FREE (Blame the cammer)');
-    while (items.length > 25) {
-      items.pop();
-    }
-    return items;
+    items.splice(12, 0, 'FREE (Blame the cammer)')
+    return items.slice(0, 25)
   },
   shuffle(array) {
-    let m = array.length, t, i;
+    let m = array.length, t, i
     while (m) {
-      i = Math.floor(Math.random() * m--);
-      t = array[m];
-      array[m] = array[i];
-      array[i] = t;
+      i = Math.floor(Math.random() * m--)
+      t = array[m]
+      array[m] = array[i]
+      array[i] = t
     }
-    return array;
+    return array
   },
   render() {
-    let tableRows = [];
+    let tableRows = []
     for (let i = 0; i < 5; i++) {
-      let tableRow = [];
+      let tableRow = []
       for (let j = 0; j < 5; j++) {
-        let index = i * 5 + j;
+        let index = i * 5 + j
         tableRow.push(<Cell
           key={index}
           title={this.state.items[index]}
           status={this.state.board[index]}
-          onClick={this.onClick.bind(this, index) } />);
+          onClick={this.onClick.bind(this, index) } />)
       }
-      tableRows.push(<tr key={'r' + i}>{tableRow}</tr>);
+      tableRows.push(<tr key={'r' + i}>{tableRow}</tr>)
     }
     return <div className={this.props.className}>
       <table className="centered">
@@ -182,6 +179,6 @@ export default React.createClass({
         selectedCells={this.state.selectedCells}
         buttonText={this.state.buttonText}
         onSubmit={this.onSubmit} />
-    </div>;
+    </div>
   }
-});
+})

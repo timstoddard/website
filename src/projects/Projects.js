@@ -1,29 +1,29 @@
-import React from 'react';
-import { Link } from 'react-router';
+import React, { PropTypes } from 'react'
+import { Link } from 'react-router'
 
-import NavLink from '../NavLink';
-import './Projects.scss';
+import NavLink from '../NavLink'
+import './Projects.scss'
 
-export default React.createClass({
-  propTypes: {
-    'children': React.PropTypes.node
-  },
-  render() {
-    return <div className="projects__wrapper">
-      <nav className="projects__nav">
-        <div className="nav-wrapper light-blue">
-          <ul id="nav-mobile">
-            <li><Link to="/projects" className="projects__title">projects</Link></li>
-            <li><NavLink to="/projects/bingo">Bingo</NavLink></li>
-            <li><NavLink to="/projects/heap">Heap</NavLink></li>
-            <li><NavLink to="/projects/imports">Imports</NavLink></li>
-            <li><NavLink to="/projects/strobe">Strobe</NavLink></li>
-            <li><NavLink to="/projects/time">Time</NavLink></li>
-            <li><NavLink to="/projects/zen">Zen</NavLink></li>
-          </ul>
-        </div>
-      </nav>
-      {this.props.children}
-    </div>;
-  }
-});
+const Projects = ({ children }) =>
+  <div className="projects">
+    <nav className="projects__nav blue">
+      <ul>
+        <li><Link to="/projects" className="projects__title">projects</Link></li>
+        <li><NavLink to="/projects/bingo">Bingo</NavLink></li>
+        <li><NavLink to="/projects/heap">Heap</NavLink></li>
+        <li><NavLink to="/projects/imports">Imports</NavLink></li>
+        <li><NavLink to="/projects/strobe">Strobe</NavLink></li>
+        <li><NavLink to="/projects/time">Time</NavLink></li>
+        <li><NavLink to="/projects/zen">Zen</NavLink></li>
+      </ul>
+    </nav>
+    <div className="projects__children">
+      {children}
+    </div>
+  </div>
+
+Projects.propTypes = {
+  children: PropTypes.node
+}
+
+export default Projects

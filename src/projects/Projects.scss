@@ -1,15 +1,21 @@
-@import '../scss/mixins/background';
-
-.projects__wrapper {
+.projects {
   height: 100vh;
-}
 
-.projects__nav {
-  height: 2.5rem;
-  line-height: 2.5rem;
-  overflow: hidden;
-}
+  &__nav {
+    height: 5vh;
+    overflow: hidden;
 
-.projects__title {
-  text-transform: uppercase;
+    li {
+      line-height: 5vh;
+    }
+  }
+
+  &__title {
+    height: 5vh;
+    text-transform: uppercase;
+  }
+
+  &__children {
+    height: 95vh;
+  }
 }

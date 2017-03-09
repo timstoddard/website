@@ -1,123 +1,129 @@
-import Node from './Node';
+class Node {
+  constructor(data) {
+    this.data = data
+    this.left = null
+    this.right = null
+  }
+}
 
 export default function printTree(heap) {
-  let arr = heap.heapContents();
-  let maxLevel = heap.treeHeight();
-  let root = convertToNodes(arr);
-  return printTreeInternal([root], 1, maxLevel);
+  let arr = heap.heapContents()
+  let maxLevel = heap.treeHeight()
+  let root = convertToNodes(arr)
+  return printTreeInternal([root], 1, maxLevel)
 }
 
 function printTreeInternal(nodes, level, maxLevel) {
   if (nodes.length === 0 || allElementsDNE(nodes)) {
-    return '';
+    return ''
   }
 
-  let floor = maxLevel - level + 1;
-  let endgeLines = Math.floor(Math.pow(2, (Math.max(floor - 1, 0))));
-  let firstSpaces = Math.floor(Math.pow(2, (floor)) - 1);
-  let betweenSpaces = Math.floor(Math.pow(2, (floor + 1)) - 1);
-  let treeString = '';
+  let floor = maxLevel - level + 1
+  let endgeLines = Math.floor(Math.pow(2, (Math.max(floor - 1, 0))))
+  let firstSpaces = Math.floor(Math.pow(2, (floor)) - 1)
+  let betweenSpaces = Math.floor(Math.pow(2, (floor + 1)) - 1)
+  let treeString = ''
 
-  treeString += printWhitespace(firstSpaces);
-  let newNodes = [];
+  treeString += printWhitespace(firstSpaces)
+  let newNodes = []
   for (let i = 0; i < nodes.length; i++) {
-    let value = nodes[i];
+    let value = nodes[i]
     if (!DNE(value)) {
-      treeString += `<spanclass="heap__value">${value.data}</span>`;
-      newNodes.push(value.left);
-      newNodes.push(value.right);
+      treeString += `<spanclass="heap__value">${value.data}</span>`
+      newNodes.push(value.left)
+      newNodes.push(value.right)
     } else {
-      treeString += ' ';
-      newNodes.push(null);
-      newNodes.push(null);
+      treeString += ' '
+      newNodes.push(null)
+      newNodes.push(null)
     }
 
     if (value != null && i < nodes.length - 1 && floor < maxLevel) {
-      treeString += printWhitespace(betweenSpaces - ((value.data.toString()).length - 1));
+      treeString += printWhitespace(betweenSpaces - ((value.data.toString()).length - 1))
     }
   }
-  treeString += ','; // splitter character
+  treeString += ',' // splitter character
 
   for (let i = 1; i <= endgeLines; i++) {
     for (let j = 0; j < nodes.length; j++) {
-      treeString += printWhitespace(firstSpaces - i);
+      treeString += printWhitespace(firstSpaces - i)
       if (j > 0) {
-        treeString += printWhitespace(firstSpaces - i + 1);
+        treeString += printWhitespace(firstSpaces - i + 1)
       }
       if (DNE(nodes[j])) {
-        treeString += printWhitespace(endgeLines + endgeLines + i + 1);
-        continue;
+        treeString += printWhitespace(endgeLines + endgeLines + i + 1)
+        continue
       }
 
       if (!DNE(nodes[j].left)) {
-        treeString += '/';
+        treeString += '/'
       } else {
-        treeString += ' ';
+        treeString += ' '
       }
 
-      treeString += printWhitespace(i + i - 1);
+      treeString += printWhitespace(i + i - 1)
 
       if (!DNE(nodes[j].right)) {
-        treeString += '\\';
+        treeString += '\\'
       } else {
-        treeString += ' ';
+        treeString += ' '
       }
 
-      printWhitespace(endgeLines + endgeLines - i);
+      printWhitespace(endgeLines + endgeLines - i)
     }
-    treeString += ','; // splitter character
+    treeString += ',' // splitter character
   }
 
-  treeString += printTreeInternal(newNodes, level + 1, maxLevel);
+  treeString += printTreeInternal(newNodes, level + 1, maxLevel)
   if (level === 1) {
     treeString = treeString
       .replace(/[\s,]+$/, '') // remove whitespace after tree
       .replace(/[\s]+,/g, ',') // remove whitespace at end of lines
       .replace(/ /g, '&nbsp;')
       .replace(/spanclass/g, 'span class')
-      .replace(/,/g, '<br>');
+      .replace(/,/g, '<br>')
   }
-  return treeString;
+  return treeString
 }
 
 // helper functions
 
 function convertToNodes(arr) {
-  let data = [];
+  let data = []
   for (let i = 1; i <= arr.length; i++) {
-    data[i] = new Node(arr[i - 1]);
+    data[i] = new Node(arr[i - 1])
   }
   for (let i = 1; i < data.length; i++) {
     if (i * 2 < data.length) {
-      data[i].left = data[i * 2];
+      data[i].left = data[i * 2]
     } else {
-      break;
+      break
     }
     if (i * 2 + 1 < data.length) {
-      data[i].right = data[i * 2 + 1];
+      data[i].right = data[i * 2 + 1]
     }
   }
-  return data[1];
+  return data[1]
 }
 
 function DNE(value) {
-  return value === null || value === undefined;
+  return value === null || value === undefined
 }
 
 function allElementsDNE(list) {
-  var allDNE = true;
+  var allDNE = true
   list.forEach(value => {
     if (!DNE(value)) {
-      allDNE = false;
+      allDNE = false
     }
-  });
-  return allDNE;
+  })
+  return allDNE
 }
 
 function printWhitespace(len) {
-  let temp = '';
+  let temp = ''
   for (let i = 0; i < len; i++) {
-    temp += ' ';
+    temp += ' '
   }
-  return temp;
+  return temp
 }

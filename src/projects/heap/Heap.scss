@@ -2,6 +2,11 @@
   padding-bottom: 20px;
   text-align: center;
 
+  &__title {
+    margin: 0;
+    padding: 1rem 0;
+  }
+
   p {
     line-height: 1em;
     margin: 0.5em;

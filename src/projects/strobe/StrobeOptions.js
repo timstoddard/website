@@ -1,25 +1,25 @@
-import React from 'react';
+import React from 'react'
 
-import './StrobeOptions.scss';
+import './StrobeOptions.scss'
 
-const min = 5;
-const max = 500;
+const min = 5
+const max = 500
 
 export default React.createClass({
   propTypes: {
     'ms': React.PropTypes.number
   },
   componentDidMount() {
-    this.range.value = this.props.ms;
+    this.range.value = this.props.ms
   },
   onRangeChange(event) {
-    let newMs = parseInt(event.target.value, 10);
-    this.props.updateMs(newMs);
-    event.stopPropagation();
+    let newMs = parseInt(event.target.value, 10)
+    this.props.updateMs(newMs)
+    event.stopPropagation()
   },
   onCloseClick(event) {
-    this.props.hideOptions();
-    event.stopPropagation();
+    this.props.hideOptions()
+    event.stopPropagation()
   },
   render() {
     return <div className="options">
@@ -34,7 +34,7 @@ export default React.createClass({
           min={min}
           max={max}
           step="5"
-          ref={(range) => { this.range = range; }} />
+          ref={(range) => { this.range = range }} />
         <p className="options__form--max">{max}</p>
       </div>
       <div>
@@ -50,6 +50,6 @@ export default React.createClass({
           Close
         </a>
       </div>
-    </div>;
+    </div>
   }
-});
+})

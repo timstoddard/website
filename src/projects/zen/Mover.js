@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 export default React.createClass({
   getInitialState() {
@@ -10,34 +10,34 @@ export default React.createClass({
       radiusIncr: true,
       theta: 0,
       thetaChangeSpeed: Math.PI / 360 * 2
-    };
+    }
   },
   move(nextColor) {
     // update radius
     if (this.state.radiusIncr) {
-      var newRadius = this.state.radius + this.props.radiusChangeSpeed;
-      var newRadiusIncr = this.state.radiusIncr;
+      var newRadius = this.state.radius + this.props.radiusChangeSpeed
+      var newRadiusIncr = this.state.radiusIncr
       if (newRadius >= this.props.maxRadius) {
-        newRadius = this.props.maxRadius - this.props.radiusChangeSpeed;
-        newRadiusIncr = false;
+        newRadius = this.props.maxRadius - this.props.radiusChangeSpeed
+        newRadiusIncr = false
       }
     } else {
-      newRadius = this.state.radius - this.props.radiusChangeSpeed;
+      newRadius = this.state.radius - this.props.radiusChangeSpeed
       if (newRadius <= this.props.minRadius) {
-        newRadius = this.props.minRadius + this.props.radiusChangeSpeed;
-        newRadiusIncr = true;
+        newRadius = this.props.minRadius + this.props.radiusChangeSpeed
+        newRadiusIncr = true
       }
     }
     // increment theta value
-    let newTheta = (this.state.theta + this.state.thetaChangeSpeed * this.props.direction) % (Math.PI * 2);
+    let newTheta = (this.state.theta + this.state.thetaChangeSpeed * this.props.direction) % (Math.PI * 2)
     // calculate x and y values
-    let sin = Math.sin(newTheta + this.props.offset);
-    let cos = Math.cos(newTheta + this.props.offset);
-    let newX = this.props.centerX + Math.floor(newRadius * cos);
-    let newY = this.props.centerY + Math.floor(newRadius * sin);
+    let sin = Math.sin(newTheta + this.props.offset)
+    let cos = Math.cos(newTheta + this.props.offset)
+    let newX = this.props.centerX + Math.floor(newRadius * cos)
+    let newY = this.props.centerY + Math.floor(newRadius * sin)
     // update new tile
-    let radiusProportion = this.state.radius / this.props.maxRadius;
-    let newBoxShadow = `0px 0px ${50 + radiusProportion * 50}px ${15 + radiusProportion * 40}px ${nextColor}`;
+    let radiusProportion = this.state.radius / this.props.maxRadius
+    let newBoxShadow = `0px 0px ${50 + radiusProportion * 50}px ${15 + radiusProportion * 40}px ${nextColor}`
     this.setState({
       radius: newRadius,
       radiusIncr: newRadiusIncr,
@@ -45,7 +45,7 @@ export default React.createClass({
       y: newY,
       boxShadow: newBoxShadow,
       theta: newTheta
-    });
+    })
   },
   render() {
     return <div>
@@ -63,6 +63,6 @@ export default React.createClass({
           'boxShadow': this.state.boxShadow
         }}
         className="zen__block" />
-    </div>;
+    </div>
   }
-});
+})

@@ -13,7 +13,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         loader: 'babel-loader?presets[]=es2015&presets[]=react',
         exclude: /node_modules/
       },
@@ -22,6 +22,9 @@ module.exports = {
         loader: ExtractTextPlugin.extract('style-loader', ['css-loader', 'postcss-loader', 'sass-loader'])
       }
     ]
+  },
+  resolve: {
+    extensions: ['', '.js', '.jsx']
   },
   postcss: function() {
     return [autoprefixer]

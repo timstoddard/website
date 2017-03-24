@@ -3,27 +3,30 @@ let reloadWeatherTimer = null
 
 // Lat/long data currently stays until manually reset
 /* eslint-disable no-unused-vars */
-let hasLocationDataInLocalStorage = () => get('locationData') !== null
+const hasLocationDataInLocalStorage = () =>
+  get('locationData') !== null
 /* eslint-enable no-unused-vars */
-let hasWeatherDataInLocalStorage = () => get('weatherData') !== null && get('weatherDataTimestamp') !== null
+const hasWeatherDataInLocalStorage = () =>
+  get('weatherData') !== null &&
+  get('weatherDataTimestamp') !== null
 
 /**
  * Returns true if the timestamp is more than an
  * 15 mins old, or if a new hour has started since
  * the timestamp was set; false otherwise.
  */
-function needNewWeatherData() {
-  let time1 = new Date()
-  let time2 = new Date(parseInt(get('weatherDataTimestamp'), 10))
-  let timeDifferenceInMinutes = Math.floor(Math.abs(time2 - time1) / (60 * 1000))
+const needNewWeatherData = () => {
+  const time1 = new Date()
+  const time2 = new Date(parseInt(get('weatherDataTimestamp'), 10))
+  const timeDifferenceInMinutes = Math.floor(Math.abs(time2 - time1) / (60 * 1000))
   return timeDifferenceInMinutes > 15 ? true : time1.getHours() !== time2.getHours()
 }
 
-function getLocation() {
+const getLocation = () => {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (location) => {
-        let locationData = `${location.coords.latitude},${location.coords.longitude}`
+        const locationData = `${location.coords.latitude},${location.coords.longitude}`
         getWeatherData(locationData)
         set('locationData', locationData)
       },
@@ -34,7 +37,7 @@ function getLocation() {
   }
 }
 
-function getZipCode() {
+const getZipCode = () => {
   let zipCode = prompt('There was an error determining your location.\nPlease enter your 5 digit zip code.')
   if (zipCode !== null) {
     while (!(zipCode.match(/\d{5}/) || zipCode.match(/\d{5}[- ]?\d{4}/))) {
@@ -45,7 +48,7 @@ function getZipCode() {
   }
 }
 
-function getWeatherData(locationData) {
+const getWeatherData = (locationData) => {
   locationData = 'autoip' // TODO: add ability to switch to navigator.geolocation instead
   getWeatherDataAjax(`https://api.wunderground.com/api/8d7d14e295f9150a/conditions/forecast10day/astronomy/q/${locationData}.json`)
   reloadWeatherTimer = setInterval(() => {
@@ -53,7 +56,7 @@ function getWeatherData(locationData) {
   }, 900000)
 }
 
-function getWeatherDataAjax(url) {
+const getWeatherDataAjax = (url) => {
   $.ajax({
     url: url,
     type: 'GET',
@@ -65,7 +68,7 @@ function getWeatherDataAjax(url) {
   })
 }
 
-export let showWeather = (success) => {
+export const showWeather = (success) => {
   successFn = success
   // if (hasLocationDataInLocalStorage()) {
   if (hasWeatherDataInLocalStorage()) {
@@ -82,14 +85,54 @@ export let showWeather = (success) => {
   // }
 }
 
-export let reloadWeatherData = () => {
+export const get = (key) => JSON.parse(localStorage.getItem(key))
+export const set = (key, item) => localStorage.setItem(key, JSON.stringify(item))
+export const secureImg = (img) => `https://icons.wxug.com/i/c/v4/${img}.svg`
+export const cancelReloadWeatherTimer = () => clearInterval(reloadWeatherTimer)
+
+const formatTimeOfDay = (now) => {
+  const hours = now.getHours()
+  if (hours < 12) {
+    return 'Morning'
+  } else if (hours < 18) {
+    return 'Afternoon'
+  } else if (hours < 21) {
+    return 'Evening'
+  }
+  return 'Night'
+}
+
+export const createWelcomeMessage = (now) => {
+  const name = localStorage.getItem('name')
+  const timeOfDay = formatTimeOfDay(now)
+  return name
+    ? `Good ${timeOfDay}, ${name}!`
+    : `Good ${timeOfDay}!`
+}
+
+export const createDateString = (now) => {
+  const day = 'Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday'
+    .split('|')[now.getDay()]
+  const month = 'January|February|March|April|May|June|July|August|September|October|November|December'
+    .split('|')[now.getMonth()]
+  return `${day} ${month} ${now.getDate()}, ${now.getFullYear()}`
+}
+
+export const formatTime = (now) => {
+  const hours = now.getHours()
+  const h = hours > 12 ? hours - 12 : (hours > 0 ? hours : 12)
+  const minutes = now.getMinutes()
+  const m = `${minutes < 10 ? '0' : ''}${minutes}`
+  const seconds = now.getSeconds()
+  const s = `${seconds < 10 ? '0' : ''}${seconds}`
+  const ampm = `${hours >= 12 ? 'PM' : 'AM'}`
+  return `${h}:${m}:${s} ${ampm}`
+}
+
+export const reloadWeatherData = (setReloading) => {
   localStorage.removeItem('locationData')
   localStorage.removeItem('weatherData')
   localStorage.removeItem('weatherDataTimestamp')
   getLocation()
+  setReloading(true)
 }
-
-export let get = (key) => JSON.parse(localStorage.getItem(key))
-export let set = (key, item) => localStorage.setItem(key, JSON.stringify(item))
-export let secureImg = (img) => `https://icons.wxug.com/i/c/v4/${img}.svg`
-export let cancelReloadWeatherTimer = () => clearInterval(reloadWeatherTimer)

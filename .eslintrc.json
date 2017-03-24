@@ -4,6 +4,7 @@
     "es6": true
   },
   "extends": [
+    "airbnb",
     "eslint:recommended",
     "plugin:react/recommended"
   ],
@@ -40,6 +41,13 @@
     "semi": [
       "error",
       "never"
+    ],
+    "react/jsx-closing-bracket-location": [
+      "error",
+      {
+        "selfClosing": "props-aligned",
+        "nonEmpty": "after-props"
+      }
     ]
   }
 }

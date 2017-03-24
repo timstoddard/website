@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --inline --content-base",
-    "prod": "rimraf dist && NODE_ENV=production webpack -p --config webpack.prod.js && node server.js",
+    "prod": "rm -rf dist && NODE_ENV=production webpack -p --config webpack.prod.js && node server.js",
     "lint": "eslint index.js && eslint src/**/*.js"
   },
   "author": "Tim Stoddard",
@@ -30,14 +30,17 @@
     "react": "^0.14.8",
     "react-dom": "^0.14.8",
     "react-router": "^2.0.0",
-    "rimraf": "^2.6.1",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
-    "webpack": "^1.13.2"
+    "webpack": "^1.13.2",
+    "xml2js": "^0.4.17"
   },
   "devDependencies": {
-    "eslint": "^3.17.1",
-    "eslint-plugin-react": "^6.3.0",
+    "eslint": "^3.18.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.3",
     "webpack-dev-server": "^1.14.1"
   }
 }

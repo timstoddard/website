@@ -1,17 +1,67 @@
 @import url(https://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
 
+$iconAndTextSize: calc(1rem + 0.8vw);
+
 .infoBar {
+  display: flex;
   font-family: 'PT Sans Narrow', sans-serif !important;
-  margin: 0;
+  justify-content: space-around;
   margin-bottom: 0.8rem;
-  padding: 0;
+
+  &__item {
+    font-size: $iconAndTextSize;
+  }
+
+  @media only screen and (max-width: 900px) {
+    align-items: center;
+    flex-direction: column;
+  }
 }
 
-.infoBar__text {
-  font-size: calc(1rem + 0.8vw);
+.weatherForecastHeader {
+  align-items: center;
+  display: flex;
+  font-size: $iconAndTextSize;
+  justify-content: center;
+
+  &__city {
+    margin-left: 0.5rem;
+  }
+
+  &__feelsLike {
+    white-space: nowrap;
+  }
+
+  &__icon {
+    &--weather, &--reload {
+      max-width: calc(1.2rem + 0.8vw);
+      min-width: calc(1.2rem + 0.8vw);
+    }
+
+    &--reload {
+      filter: FlipH;
+      -ms-filter: "FlipH";
+      opacity: 0.2;
+      transform: scaleX(-1);
+      transition: opacity .25s;
+
+      &:hover {
+        opacity: 0.5;
+      }
+
+      &::selection {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__loading {
+    display: inline-block;
+  }
 }
 
-.infoBar__text--start {
-  letter-spacing: 0.4rem;
-  text-transform: uppercase;
+.loading__icon {
+  height: $iconAndTextSize !important;
+  margin-left: 0.5rem;
+  width: $iconAndTextSize !important;
 }

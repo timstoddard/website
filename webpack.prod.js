@@ -4,7 +4,7 @@ const autoprefixer = require('autoprefixer')
 
 module.exports = {
   devtool: 'cheap-module-source-map',
-  entry: './index.js',
+  entry: './index.jsx',
   output: {
     filename: 'bundle.js',
     path: __dirname + '/dist',

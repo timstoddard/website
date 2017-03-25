@@ -48,6 +48,14 @@
         "selfClosing": "props-aligned",
         "nonEmpty": "after-props"
       }
+    ],
+    "react/jsx-tag-spacing": [
+      "error",
+      {
+        "closingSlash": "never",
+        "beforeSelfClosing": "always",
+        "afterOpening": "never"
+      }
     ]
   }
 }

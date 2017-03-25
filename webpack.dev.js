@@ -4,7 +4,11 @@ const autoprefixer = require('autoprefixer')
 
 module.exports = {
   devtool: 'eval',
-  entry: './index.js',
+  entry: [
+    'webpack/hot/dev-server',
+    'webpack-hot-middleware/client',
+    './index.jsx',
+  ],
   output: {
     filename: 'bundle.js',
     path: __dirname + '/dist',
@@ -19,7 +23,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('style-loader', ['css-loader', 'postcss-loader', 'sass-loader'])
+        loader: 'style!css!postcss!sass'
       }
     ]
   },
@@ -29,8 +33,8 @@ module.exports = {
   postcss: function() {
     return [autoprefixer]
   },
-  plugins: [new ExtractTextPlugin('bundle.css', { allChunks: true })],
-  devServer: {
-    historyApiFallback: true,
-  }
+  plugins: [
+    new ExtractTextPlugin('bundle.css', { allChunks: true }),
+    new webpack.HotModuleReplacementPlugin(),
+  ],
 }

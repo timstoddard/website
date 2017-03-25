@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react'
 import * as Utils from './Utils'
 
 const WeatherForecastDay = ({ day }) =>
-  <div className="weatherForecastDay">
+  <div className="weatherForecastDay light-blue accent-1">
     <img
       src={Utils.secureImg(day.icon)}
       alt={day.icon}
@@ -51,7 +51,7 @@ class CNN extends Component {
 
   render() {
     return (
-      <div className={`z-depth-1 ${this.props.className}`}>
+      <div className={`blue-grey lighten-3 z-depth-1 ${this.props.className}`}>
         {this.state.data.map((item) =>
           <a
             key={item.link}
@@ -108,10 +108,8 @@ class RandomQuote extends Component {
 
   render() {
     return (
-      <div className={`quote center-align blue-grey lighten-3 z-depth-1 ${this.props.className}`}>
-        <p className="quote__text">
-          {this.state.quote}
-        </p>
+      <div className={`center-align blue-grey lighten-3 z-depth-1 ${this.props.className}`}>
+        <div>{this.state.quote}</div>
       </div>
     )
   }

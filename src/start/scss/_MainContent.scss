@@ -20,6 +20,8 @@
       align-items: center;
       display: flex;
       flex: 1;
+      font-size: calc(1rem + 0.8vw);
+      padding: 1.8rem;
 
       > * {
         // needed to make centering/scrolling work properly
@@ -77,20 +79,11 @@
   }
 
   &:hover {
-    background: rgb(240,240,240);
+    background: #cfd8dc; // TODO @import `blue-grey lighten-4` classes directly
 
     .rssItem__title {
       color: red;
       text-decoration: underline;
     }
-  }
-}
-
-.quote {
-  font-size: calc(1rem + 0.8vw);
-  padding: 1.8rem;
-
-  &__text {
-    margin: 0;
   }
 }

@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 
+import courses from '../courses'
+
 const SidebarLink = ({ inDropdown, href, name }) =>
   <a
     className={`black-text ${inDropdown ? '' : 'links__collectionItem collection-item'}`}
@@ -74,30 +76,6 @@ DropdownActivator.propTypes = {
   index: PropTypes.number
 }
 
-const courses = [
-  {
-    name: 'CPE 357',
-    id: 0,
-    gdriveFolderId: '0B9dz0Ddcl3ESMG1ZT3dEWlJKSkk',
-    otherLinks: [
-      {
-        name: 'Piazza',
-        href: 'https://piazza.com/class/ixjgisq8fmu435'
-      }
-    ]
-  },
-  {
-    name: 'CSC 348',
-    id: 0,
-    gdriveFolderId: '0B9dz0Ddcl3ESNlBJdzlvRGYtSVE',
-  },
-  {
-    name: 'LA 211',
-    id: 10280,
-    gdriveFolderId: '0B9dz0Ddcl3ESdmpfY0lvb1d4LWc',
-  }
-]
-
 const links = [
   {
     name: 'Portal',
@@ -132,12 +110,16 @@ const links = [
     href: 'http://flowcharts.calpoly.edu/downloads/mymap/15-17.52CSCBSU.pdf'
   },
   {
-    name: 'Cal Poly Links',
-    href: 'https://my.calpoly.edu/cas/limitedLayout'
-  },
-  {
     name: '16-17 Calendar',
     href: 'http://registrar.calpoly.edu/2016-17-academic-calendar'
+  },
+  {
+    name: 'Floor Plans',
+    href: 'https://afd.calpoly.edu/facilities/maps_floorplans.asp'
+  },
+  {
+    name: 'Cal Poly Links',
+    href: 'https://my.calpoly.edu/cas/limitedLayout'
   },
 ]
 

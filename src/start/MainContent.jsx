@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react'
 import * as Utils from './Utils'
 
 const WeatherForecastDay = ({ day }) =>
-  <div className="weatherForecastDay light-blue accent-1">
+  <div className="weatherForecastDay">
     <img
       src={Utils.secureImg(day.icon)}
       alt={day.icon}
@@ -121,7 +121,7 @@ RandomQuote.propTypes = {
 
 const MainContent = ({ className, forecast }) =>
   <div className={`mainContent center-align ${className}`}>
-    <div className="weatherForecastDays z-depth-1">
+    <div className="weatherForecastDays light-blue accent-1 z-depth-1">
       {forecast.map((forecastDay, i) =>
         <WeatherForecastDay
           key={i}

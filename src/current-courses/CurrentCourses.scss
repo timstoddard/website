@@ -1,0 +1,45 @@
+@import '../scss/mixins/background';
+
+.currentCourses {
+  @include background;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  margin: 0;
+  overflow-y: auto;
+  text-align: center;
+
+  &__content {
+    background: rgb(210, 170, 230);
+    box-shadow: 0 0 40px 4px rgba(0,0,0,0.2);
+    max-width: 90%;
+    padding: calc(10px + 4.5vw);
+  }
+
+  &__header {
+    font-size: calc(18px + 2vw);
+  }
+
+  &__divider {
+    background: black;
+    height: 1px;
+    margin: 12px 0;
+  }
+
+  &__course {
+    font-size: calc(14px + 1.2vw);
+    text-align: left;
+
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
+
+  @media screen and (min-width: 800px) {
+    &__divider {
+      height: 2px;
+    }
+  }
+}

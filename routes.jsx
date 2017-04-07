@@ -26,11 +26,15 @@ import { Bingo, Heap, Imports, Projects, ProjectsHome, StrobeWithProps, Time, Ze
 // start page
 import Start from './src/start/Start'
 
+// current courses
+import CurrentCourses from './src/current-courses/CurrentCourses'
+
 const Routes = (
   <Route path="">
     <Route path="/" component={Home} />
     <Route path="/about" component={About} />
     <Route path="/start" component={Start} />
+    <Route path="/courses" component={CurrentCourses} />
     <Route path="/lc3" component={LC3}>
       <IndexRoute component={LC3Home} />
       <Route path="/lc3/ref" component={LC3Ref} />

@@ -24,7 +24,7 @@ const courses = [
   {
     name: 'CPE 300',
     fullName: 'Professional Responsibilities',
-    id: 0,
+    id: 14748,
     gdriveFolderId: '0B9dz0Ddcl3ESdDlKTVUyVHJ5VkU',
   },
   {

@@ -103,7 +103,7 @@ const links = [
   },
   {
     name: 'Degree Reqs',
-    href: 'http://catalog.calpoly.edu/collegesandprograms/collegeofengineering/computerscience/bscomputerscience'
+    href: 'http://flowcharts.calpoly.edu/downloads/curric/15-17.Computer%20Science.pdf'
   },
   {
     name: 'Degree Flowchart',

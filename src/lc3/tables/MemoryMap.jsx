@@ -1,7 +1,6 @@
 import React from 'react'
 
 import CustomTable from './CustomTable'
-import './MemoryMap.scss'
 
 const headers = ['Range', 'Range Length', 'Contents']
 const data = [

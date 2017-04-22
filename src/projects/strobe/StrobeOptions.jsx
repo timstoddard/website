@@ -1,7 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 
-import './StrobeOptions.scss'
-
 export default class StrobeOptions extends Component {
   constructor(props) {
     super(props)

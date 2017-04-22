@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 
-import './Time.scss'
-
 export default class Time extends Component {
   constructor() {
     super()

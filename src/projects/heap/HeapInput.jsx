@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 
-import './HeapInput.scss'
-
 export default class HeapInput extends Component {
   constructor(props) {
     super(props)

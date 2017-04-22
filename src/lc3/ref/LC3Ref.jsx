@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 
 import instructions from './Data'
 import InstructionEncoding from './InstructionEncoding'
-import './LC3Ref.scss'
 
 const DetailHeader = ({ assemblerFormat, fn }) =>
   <div className="detailHeader row">
@@ -94,7 +93,7 @@ const LC3Ref = () =>
       Adapted from <a href="https://drive.google.com/file/d/0B9dz0Ddcl3ESRUdQX1lQczBwblk/view" target="_blank" rel="noopener noreferrer">this pdf</a> by Tim Stoddard.
       </h5>
     <div className="refList__content">
-      {this.state.instructions.map((instruction, index) =>
+      {instructions.map((instruction, index) =>
         instruction.formats.map((format, index) =>
           <InstructionRow
             instruction={instruction}

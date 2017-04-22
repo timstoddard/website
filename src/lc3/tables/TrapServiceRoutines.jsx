@@ -1,7 +1,6 @@
 import React from 'react'
 
 import CustomTable from './CustomTable'
-import './TrapServiceRoutines.scss'
 
 const headers = ['Trap Vector', 'Assembler Name', 'Description']
 const data = [

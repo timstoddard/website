@@ -1,0 +1,39 @@
+$bitWidth: 25px;
+
+.encoding {
+  &__bit {
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    display: inline-block;
+    text-align: center;
+
+    @for $i from 1 through 16 {
+      &--#{$i} {
+        width: $bitWidth * $i;
+      }
+    }
+
+    &--first {
+      border-left: 1px solid black;
+    }
+
+    &--lastInSection {
+      border-right: 1px solid black;
+    }
+
+    &Number {
+      display: inline-block;
+      font-family: monospace;
+      font-size: 0.6rem;
+      width: $bitWidth;
+
+      &Wrapper {
+        line-height: 1rem !important;
+      }
+    }
+  }
+
+  &__wrapper {
+    display: inline-block;
+  }
+}

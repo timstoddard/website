@@ -4,8 +4,6 @@ import BinaryHeap from './BinaryHeap'
 import HeapDetail from './HeapDetail'
 import HeapInput from './HeapInput'
 
-import './Heap.scss'
-
 export default class Heap extends Component {
   constructor() {
     super()

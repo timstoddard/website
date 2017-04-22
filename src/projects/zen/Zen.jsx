@@ -3,8 +3,6 @@ import React, { Component } from 'react'
 import ColorChanger from './ColorChanger'
 import Mover from './Mover'
 
-import './Zen.scss'
-
 export default class Zen extends Component {
   constructor() {
     super()
@@ -12,9 +10,9 @@ export default class Zen extends Component {
     this.colorChanger1 = new ColorChanger()
     this.colorChanger2 = new ColorChanger()
     this.colorChanger2.setRGB(0, 255, 255, false, 'g')
-    this.moveInterval = setInterval(this.updateBlock, 5)
 
     this.updateBlock = this.updateBlock.bind(this)
+    this.moveInterval = setInterval(this.updateBlock, 5)
 
     this.state = {
       screenCenterX: 0,

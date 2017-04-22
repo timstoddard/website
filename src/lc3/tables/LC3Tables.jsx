@@ -1,7 +1,6 @@
 import React from 'react'
 
 import NavLink from '../../NavLink'
-import './LC3Tables.scss'
 
 const LC3Tables = ({ children }) =>
   <div className="container">

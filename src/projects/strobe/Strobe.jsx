@@ -3,8 +3,6 @@ import React, { Component } from 'react'
 import ColorChanger from './ColorChanger'
 import StrobeOptions from './StrobeOptions'
 
-import './Strobe.scss'
-
 export default class Strobe extends Component {
   constructor() {
     super()

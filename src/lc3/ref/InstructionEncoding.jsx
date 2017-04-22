@@ -1,7 +1,5 @@
 import React from 'react'
 
-import './InstructionEncoding.scss'
-
 const BitEncoding = ({ isFirstBit, isLastBitInSection, min, max, width, value }) => {
   const bitNumbers = []
   let classes = ''

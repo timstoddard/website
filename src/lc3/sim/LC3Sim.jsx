@@ -1,7 +1,5 @@
 import React from 'react'
 
-import './LC3Sim.scss'
-
 const QuickStart = () =>
   <div>
     <h5 className="LC3Sim__sectionTitle">{this.props.title}</h5>

@@ -1,7 +1,6 @@
 import React from 'react'
 
 import NavLink from '../NavLink'
-import './LC3Home.scss'
 
 const LC3Home = () =>
   <div className="container center-align">

@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 
-import './Imports.scss'
-
 export default class Imports extends Component {
   constructor() {
     super()

@@ -1,7 +1,6 @@
 import React from 'react'
 
 import CustomTable from './CustomTable'
-import './DeviceRegisterAssignments.scss'
 
 const headers = ['Opcode', 'Operand', 'Meaning']
 const data = [

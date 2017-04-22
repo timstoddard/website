@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 
 import NavLink from '../NavLink'
-import './Projects.scss'
 
 const Projects = ({ children }) =>
   <div className="projects">

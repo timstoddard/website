@@ -2,8 +2,6 @@ import React, { Component, PropTypes } from 'react'
 
 import printTree from './BinaryTreePrinter'
 
-import './HeapDetail.scss'
-
 export default class HeapDetail extends Component {
   constructor(props) {
     super(props)

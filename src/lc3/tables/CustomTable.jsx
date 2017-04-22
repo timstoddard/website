@@ -1,7 +1,5 @@
 import React from 'react'
 
-import './CustomTable.scss'
-
 const CustomTable = ({ title, headers, body }) =>
   <div>
     <h3 className="center-align">

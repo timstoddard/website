@@ -107,9 +107,13 @@ const Simulator = ({ title }) =>
     <h6 className="LC3Sim__sectionSubTitle">Commands</h6>
     <ul>
       {commands.map((command, index) =>
-        <li key={index} className="LC3Sim__row row">
+        <li
+          key={index}
+          className="LC3Sim__row row">
           <div className="col s4">
-            <span className="LC3Sim__codeSample">{command.name}</span>
+            <span className="LC3Sim__codeSample">
+              {command.name}
+            </span>
           </div>
           <div className="col s8">{command.description}</div>
         </li>
@@ -121,9 +125,14 @@ const Simulator = ({ title }) =>
     <h6 className="LC3Sim__sectionSubTitle">Examples</h6>
     <ul>
       {examples.map((example, index) =>
-        <li key={index} className="LC3Sim__row row">
+        <li
+          key={index}
+          className="LC3Sim__row row">
           <div className="col s4">
-            (lc3sim) <span className="LC3Sim__codeSample">{example.text}</span>
+            (lc3sim)&nbsp;
+            <span className="LC3Sim__codeSample">
+              {example.text}
+            </span>
           </div>
           <div className="col s8">{example.description}</div>
         </li>
@@ -168,7 +177,9 @@ const Converter = ({ title }) =>
 
 const LC3Sim = () =>
   <div className="LC3Sim__container container">
-    <h3 className="center-align">LC3 Simulator Information</h3>
+    <h3 className="center-align">
+      LC3 Simulator Information
+    </h3>
     <QuickStart title="Quickstart Info" />
     <Simulator title="Simulator Info" />
     <Assembler title="Assembler Info" />

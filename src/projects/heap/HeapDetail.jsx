@@ -12,19 +12,19 @@ export default class HeapDetail extends Component {
     this.state = { showSorted: false }
   }
 
+  getTreeString() {
+    const treeString = this.state.showSorted
+      ? printTree(this.props.sortedHeap)
+      : printTree(this.props.inputHeap)
+    return { __html: `${treeString}<br><br>` }
+  }
+
   showInputHeap() {
     this.setState({ showSorted: false })
   }
 
   showSortedHeap() {
     this.setState({ showSorted: true })
-  }
-
-  getTreeString() {
-    const treeString = this.state.showSorted
-      ? printTree(this.props.sortedHeap)
-      : printTree(this.props.inputHeap)
-    return { __html: `${treeString}<br><br>` }
   }
 
   render() {

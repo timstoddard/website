@@ -30,26 +30,6 @@ export default class Board extends Component {
     this.state = this.init()
   }
 
-  init() {
-    const board = []
-    for (let i = 0; i < 25; i++) {
-      if (i !== 12) {
-        board.push(CellState.UNSELECTED)
-      } else {
-        // middle square is a freebie
-        board.push(CellState.SUBMITTED)
-      }
-    }
-    return {
-      items: this.getItems(),
-      board: board,
-      moveCount: 0,
-      selectedCells: 1, // middle square is a freebie
-      buttonText: 'submit',
-      userWon: false,
-    }
-  }
-
   onClick(index) {
     if (!this.state.userWon) {
       const newBoard = this.state.board.slice()
@@ -119,16 +99,6 @@ export default class Board extends Component {
     })
   }
 
-  potentialWin(won) {
-    if (won) {
-      this.setState({
-        userWon: true,
-        buttonText: 'play again',
-      })
-    }
-    return won
-  }
-
   getItems() {
     const items = [
       'Russia',
@@ -165,6 +135,36 @@ export default class Board extends Component {
     // middle square is a freebie
     items.splice(12, 0, 'FREE (Blame the cammer)')
     return items.slice(0, 25)
+  }
+
+  init() {
+    const board = []
+    for (let i = 0; i < 25; i++) {
+      if (i !== 12) {
+        board.push(CellState.UNSELECTED)
+      } else {
+        // middle square is a freebie
+        board.push(CellState.SUBMITTED)
+      }
+    }
+    return {
+      items: this.getItems(),
+      board: board,
+      moveCount: 0,
+      selectedCells: 1, // middle square is a freebie
+      buttonText: 'submit',
+      userWon: false,
+    }
+  }
+
+  potentialWin(won) {
+    if (won) {
+      this.setState({
+        userWon: true,
+        buttonText: 'play again',
+      })
+    }
+    return won
   }
 
   render() {

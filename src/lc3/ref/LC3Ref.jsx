@@ -101,11 +101,17 @@ const LC3Ref = () =>
   <div className="container">
     <h1 className="refList__title">LC3 Reference Guide</h1>
     <h5 className="refList__title">
-      Adapted from <a href="https://drive.google.com/file/d/0B9dz0Ddcl3ESRUdQX1lQczBwblk/view" target="_blank" rel="noopener noreferrer">this pdf</a> by Tim Stoddard.
-      </h5>
+      (Adapted from&nbsp;
+      <a
+        href="https://drive.google.com/file/d/0B9dz0Ddcl3ESRUdQX1lQczBwblk/view"
+        target="_blank"
+        rel="noopener noreferrer">
+        this pdf)
+      </a>
+    </h5>
     <div className="refList__content">
-      {instructions.map((instruction, index) =>
-        instruction.formats.map((format, index) =>
+      {instructions.map(instruction =>
+        instruction.formats.map(format =>
           <InstructionRow
             instruction={instruction}
             format={format}

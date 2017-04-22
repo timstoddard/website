@@ -22,7 +22,11 @@ const ProjectsHome = ({ links }) => {
       </ul>
       <hr className="projectsHome__divider" />
       <h5 className="center-align">
-        <Link to="" className="projectsHome__link">Back</Link>
+        <Link
+          to=""
+          className="projectsHome__link">
+          Back
+        </Link>
       </h5>
     </div>
   </div>)

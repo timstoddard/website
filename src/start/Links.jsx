@@ -47,7 +47,9 @@ const setupDropdownLinks = (courseId, gdriveFolderId, otherLinks) => {
 }
 
 const Dropdown = ({ courseId, index, gdriveFolderId, otherLinks }) =>
-  <ul id={`dropdown${index}`} className="dropdown-content">
+  <ul
+    id={`dropdown${index}`}
+    className="dropdown-content">
     {setupDropdownLinks(courseId, gdriveFolderId, otherLinks)
       .map(dropdownItem =>
         <li key={dropdownItem.href}>

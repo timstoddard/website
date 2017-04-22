@@ -8,7 +8,11 @@ import './index.scss'
 
 const renderApp = (routes) =>
   render(
-    <Router key={new Date()} history={browserHistory} children={routes} />,
+    <Router
+      key={new Date()}
+      history={browserHistory}
+      children={routes}
+      />,
     document.getElementById('app'))
 
 renderApp(Routes)

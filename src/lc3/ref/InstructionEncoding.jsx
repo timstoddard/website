@@ -10,9 +10,12 @@ const BitEncoding = ({ isFirstBit, isLastBitInSection, min, max, width, value })
     classes += ' encoding__bit--lastInSection'
   }
   for (let i = max; i >= min; i--) {
-    bitNumbers.push(<div key={i} className="encoding__bitNumber">
-      {i}
-    </div>)
+    bitNumbers.push(
+      <div
+        key={i}
+        className="encoding__bitNumber">
+        {i}
+      </div>)
   }
   return (
     <div className="encoding__wrapper">

@@ -91,7 +91,7 @@ import 'code';`})
           onKeyDown={this.checkKeyDown}
           onKeyUp={this.checkKeyUp}
           onPaste={this.replaceText}
-        />
+          />
         <div>
           <a
             className="import__button waves-effect waves-light btn light-blue accent-2"
@@ -108,7 +108,7 @@ import 'code';`})
           id="output"
           value={this.state.formattedValue}
           className="import__textarea"
-        />
+          />
       </div>
     )
   }

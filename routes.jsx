@@ -81,7 +81,11 @@ const Routes = (
       </Route>
       <Route
         path="/lc3/*"
-        component={() => <NotFound to={'/lc3'} destination={'the LC3 homepage'} />}
+        component={() =>
+          <NotFound
+            to={'/lc3'}
+            destination={'the LC3 homepage'}
+            />}
         />
     </Route>
     <Route
@@ -114,7 +118,11 @@ const Routes = (
         />
       <Route
         path="/projects/*"
-        component={() => <NotFound to={'/projects'} destination={'the projects homepage'} />}
+        component={() =>
+          <NotFound
+            to={'/projects'}
+            destination={'the projects homepage'}
+            />}
         />
     </Route>
     <Route
@@ -123,7 +131,11 @@ const Routes = (
       />
     <Route
       path="/*"
-      component={() => <NotFound to={''} destination={'the homepage'} />}
+      component={() =>
+        <NotFound
+          to={''}
+          destination={'the homepage'}
+          />}
       />
   </Route>)
 

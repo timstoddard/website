@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon app.dev.js",
     "prod": "rm -rf dist && NODE_ENV=production webpack -p --config webpack.prod.js && node app.prod.js",
-    "lint": "eslint --ext .jsx,.js --ignore-pattern '/dist/*' ."
+    "lint": "eslint --ext .jsx,.js --ignore-pattern '/dist/*' --fix ."
   },
   "author": "Tim Stoddard",
   "repository": {

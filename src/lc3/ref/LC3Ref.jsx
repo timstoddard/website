@@ -6,13 +6,13 @@ import InstructionEncoding from './InstructionEncoding'
 const DetailHeader = ({ assemblerFormat, fn }) =>
   <div className="detailHeader row">
     <div className="detailHeader__text detailHeader__text--opcode col s3">
-      {this.props.assemblerFormat.name || 'none'}
+      {assemblerFormat.name || 'none'}
     </div>
     <div className="detailHeader__text detailHeader__text--operands col s4">
-      {this.props.assemblerFormat.operands || 'none'}
+      {assemblerFormat.operands || 'none'}
     </div>
     <div className="detailHeader__text detailHeader__text--function col s5">
-      {this.props.fn}
+      {fn}
     </div>
   </div>
 
@@ -21,16 +21,26 @@ const DetailDescription = ({ description }) =>
     {description}
   </div>
 
-const DetailOperation = () => {
-  const operations = this.props.operation.map((line, index) =>
-    line.tooltip
-      ? <div key={index} className="detailOperation__tooltip"><em>{line.text}</em></div>
-      : <div key={index} className={`detail__text--code detailOperation__text--${line.indentationLevel}`}>{line.text}</div>)
-  return (
-    <div className="detailOperation">
-      {operations}
-    </div>)
-}
+const DetailOperation = ({ operation }) =>
+  <div className="detailOperation">
+    {operation.map((line, index) =>
+      line.tooltip
+        ? (
+          <div
+            key={index}
+            className="detailOperation__tooltip">
+            <em>{line.text}</em>
+          </div>
+        )
+        : (
+          <div
+            key={index}
+            className={`detail__text--code detailOperation__text--${line.indentationLevel}`}>
+            {line.text}
+          </div>
+        )
+    )}
+  </div>
 
 const DetailExample = ({ example }) =>
   <div className="detailExample">
@@ -42,6 +52,8 @@ class InstructionRow extends Component {
   constructor(props) {
     super(props)
 
+    this.onClick = this.onClick.bind(this)
+
     this.state = { expanded: false }
   }
 
@@ -50,11 +62,6 @@ class InstructionRow extends Component {
   }
 
   render() {
-    const examples = this.props.format.examples.map((example, index) =>
-      <DetailExample
-        key={index}
-        example={example}
-        />)
     return (
       <div>
         <div
@@ -80,7 +87,11 @@ class InstructionRow extends Component {
             />
           <DetailDescription description={this.props.instruction.description} />
           <DetailOperation operation={this.props.instruction.operation} />
-          {examples}
+          {this.props.format.examples.map((example, index) =>
+            <DetailExample
+              key={index}
+              example={example}
+              />)}
         </div>
       </div>)
   }

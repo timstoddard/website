@@ -1,25 +1,34 @@
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
 
 import printTree from './BinaryTreePrinter'
 
 import './HeapDetail.scss'
 
-export default React.createClass({
-  getInitialState() {
-    return { showSorted: false }
-  },
+export default class HeapDetail extends Component {
+  constructor(props) {
+    super(props)
+
+    this.showInputHeap = this.showInputHeap.bind(this)
+    this.showSortedHeap = this.showSortedHeap.bind(this)
+
+    this.state = { showSorted: false }
+  }
+
   showInputHeap() {
     this.setState({ showSorted: false })
-  },
+  }
+
   showSortedHeap() {
     this.setState({ showSorted: true })
-  },
+  }
+
   getTreeString() {
     const treeString = this.state.showSorted
       ? printTree(this.props.sortedHeap)
       : printTree(this.props.inputHeap)
     return { __html: `${treeString}<br><br>` }
-  },
+  }
+
   render() {
     return (
       <div className="heapDetail blue-grey lighten-4">
@@ -45,5 +54,5 @@ export default React.createClass({
         </div>
       </div>
     )
-  },
-})
+  }
+}

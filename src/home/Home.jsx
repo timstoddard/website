@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router'
 
-export default React.createClass({
-  getInitialState() {
-    return {
+export default class Home extends Component {
+  constructor() {
+    super()
+
+    this.state = {
       visible: false,
       links: [
         {
@@ -20,10 +22,12 @@ export default React.createClass({
         },
       ],
     }
-  },
+  }
+
   componentDidMount() {
     setTimeout(() => this.setState({ visible: true }), 500)
-  },
+  }
+
   render() {
     document.title = 'Tim Stoddard'
     return (
@@ -49,5 +53,5 @@ export default React.createClass({
         </div>
       </div>
     )
-  },
-})
+  }
+}

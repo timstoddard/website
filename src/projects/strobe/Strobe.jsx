@@ -1,47 +1,62 @@
-import React from 'react'
-import { Link } from 'react-router'
+import React, { Component } from 'react'
 
 import ColorChanger from './ColorChanger'
 import StrobeOptions from './StrobeOptions'
 
 import './Strobe.scss'
 
-const Strobe = React.createClass({
-  colorChanger: null,
-  moveInterval: null,
-  getInitialState() {
-    return {
+export default class Strobe extends Component {
+  constructor() {
+    super()
+
+    this.colorChanger = null
+    this.moveInterval = null
+
+    this.updateStrobe = this.updateStrobe.bind(this)
+    this.updateMs = this.updateMs.bind(this)
+    this.showOptions = this.showOptions.bind(this)
+    this.hideOptions = this.hideOptions.bind(this)
+    this.togglePause = this.togglePause.bind(this)
+
+    this.state = {
       background: 'black',
       ms: 45,
       paused: false,
       showOptions: false,
     }
-  },
+  }
+
   componentDidMount() {
     this.colorChanger = new ColorChanger()
     this.moveInterval = setInterval(this.updateStrobe, this.state.ms)
-  },
+  }
+
   componentWillUnmount() {
     clearInterval(this.moveInterval)
-  },
+  }
+
   updateStrobe() {
     this.setState({ background: this.colorChanger.nextColor() })
-  },
+  }
+
   updateMs(newMs) {
     this.setState({ ms: newMs })
-  },
+  }
+
   showOptions() {
     this.setState({ showOptions: true })
     if (!this.state.paused) {
       this.togglePause(true)
     }
-  },
+  }
+
   hideOptions() {
     this.setState({ showOptions: false })
     if (this.state.paused) {
       this.togglePause(false)
     }
-  },
+  }
+
   togglePause(showOptions) {
     if (showOptions) {
       this.setState({ showOptions: true })
@@ -55,38 +70,33 @@ const Strobe = React.createClass({
       this.moveInterval = setInterval(this.updateStrobe, this.state.ms)
     }
     this.setState({ paused: !this.state.paused })
-  },
+  }
+
   render() {
     document.title = 'Strobe'
-    return (<div
-      className={`strobe--${this.props.isFullscreen ? 'full' : 'regular'}`}
-      style={{ background: this.state.background }}>
-      {!this.state.showOptions && <div className="strobe__buttons">
-        <a
-          onClick={() => this.togglePause(false)}
-          className="strobe__button">
-          Pause
-        </a>
-        <a
-          onClick={this.showOptions}
-          className="strobe__button">
-          Options
-        </a>
-        <Link
-          to={this.props.isFullscreen ? '/projects/strobe' : '/strobe-full'}
-          className="strobe__button">
-          {`${this.props.isFullscreen ? 'Back' : 'Fullscreen'}`}
-        </Link>
-      </div>}
-      {this.state.showOptions && <StrobeOptions
-        ms={this.state.ms}
-        updateMs={this.updateMs}
-        hideOptions={this.hideOptions}
-        />}
-    </div>)
-  },
-})
-
-export default Strobe
-// export const StrobeWithProps = (isFullscreen) =>
-//   () => <Strobe isFullscreen={isFullscreen} />
+    return (
+      <div
+        className="strobe--regular"
+        style={{ background: this.state.background }}>
+        {!this.state.showOptions &&
+          <div className="strobe__buttons">
+            <a
+              onClick={() => this.togglePause(false)}
+              className="strobe__button">
+              Pause
+            </a>
+            <a
+              onClick={this.showOptions}
+              className="strobe__button">
+              Options
+            </a>
+          </div>}
+        {this.state.showOptions && <StrobeOptions
+          ms={this.state.ms}
+          updateMs={this.updateMs}
+          hideOptions={this.hideOptions}
+          />}
+      </div>
+    )
+  }
+}

@@ -1,121 +1,114 @@
-import React from 'react'
+import React, { Component } from 'react'
 
 import instructions from './Data'
 import InstructionEncoding from './InstructionEncoding'
 import './LC3Ref.scss'
 
-const DetailHeader = React.createClass({
-  render() {
-    return (<div className="detailHeader row">
-      <div className="detailHeader__text detailHeader__text--opcode col s3">
-        {this.props.assemblerFormat.name || 'none'}
-      </div>
-      <div className="detailHeader__text detailHeader__text--operands col s4">
-        {this.props.assemblerFormat.operands || 'none'}
-      </div>
-      <div className="detailHeader__text detailHeader__text--function col s5">
-        {this.props.function}
-      </div>
-    </div>)
-  },
-})
+const DetailHeader = ({ assemblerFormat, fn }) =>
+  <div className="detailHeader row">
+    <div className="detailHeader__text detailHeader__text--opcode col s3">
+      {this.props.assemblerFormat.name || 'none'}
+    </div>
+    <div className="detailHeader__text detailHeader__text--operands col s4">
+      {this.props.assemblerFormat.operands || 'none'}
+    </div>
+    <div className="detailHeader__text detailHeader__text--function col s5">
+      {this.props.fn}
+    </div>
+  </div>
 
-const DetailDescription = React.createClass({
-  render() {
-    return (<div className="detailDescription">
-      {this.props.description}
-    </div>)
-  },
-})
+const DetailDescription = ({ description }) =>
+  <div className="detailDescription">
+    {description}
+  </div>
 
-const DetailOperation = React.createClass({
-  render() {
-    const operations = this.props.operation.map((line, index) =>
-      line.tooltip
-        ? <div key={index} className="detailOperation__tooltip"><em>{line.text}</em></div>
-        : <div key={index} className={`detail__text--code detailOperation__text--${line.indentationLevel}`}>{line.text}</div>)
-    return (<div className="detailOperation">
+const DetailOperation = () => {
+  const operations = this.props.operation.map((line, index) =>
+    line.tooltip
+      ? <div key={index} className="detailOperation__tooltip"><em>{line.text}</em></div>
+      : <div key={index} className={`detail__text--code detailOperation__text--${line.indentationLevel}`}>{line.text}</div>)
+  return (
+    <div className="detailOperation">
       {operations}
     </div>)
-  },
-})
+}
 
-const DetailExample = React.createClass({
-  render() {
-    return (<div className="detailExample">
-      <div className="detail__text--code">{this.props.example.text}</div>
-      <div>{this.props.example.description}</div>
-    </div>)
-  },
-})
+const DetailExample = ({ example }) =>
+  <div className="detailExample">
+    <div className="detail__text--code">{example.text}</div>
+    <div>{example.description}</div>
+  </div>
 
-const InstructionRow = React.createClass({
-  getInitialState() {
-    return { expanded: false }
-  },
+class InstructionRow extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = { expanded: false }
+  }
+
   onClick() {
     this.setState({ expanded: !this.state.expanded })
-  },
+  }
+
   render() {
     const examples = this.props.format.examples.map((example, index) =>
-      <DetailExample key={index} example={example} />)
-    return (<div>
-      <div
-        onClick={this.onClick}
-        className="instruction row">
-        <div className="col s3">
-          <div className="instruction__wrapper">
-            <div className="instruction__name">
-              {this.props.instruction.name}
+      <DetailExample
+        key={index}
+        example={example}
+        />)
+    return (
+      <div>
+        <div
+          onClick={this.onClick}
+          className="instruction row">
+          <div className="col s3">
+            <div className="instruction__wrapper">
+              <div className="instruction__name">
+                {this.props.instruction.name}
+              </div>
+              <div className={`instruction__modifiesCC--${this.props.modifiesCC}`} />
             </div>
-            <div className={`instruction__modifiesCC--${this.props.modifiesCC}`} />
           </div>
+          <InstructionEncoding
+            className="col s9"
+            encoding={this.props.format.encoding}
+            />
         </div>
-        <InstructionEncoding
-          className="col s9"
-          encoding={this.props.format.encoding}
-          />
-      </div>
-      <div className={`instruction__detail ${this.state.expanded ? '' : 'instruction__detail--hidden'}`}>
-        <DetailHeader
-          assemblerFormat={this.props.format.assemblerFormat}
-          function={this.props.instruction.function}
-          />
-        <DetailDescription description={this.props.instruction.description} />
-        <DetailOperation operation={this.props.instruction.operation} />
-        {examples}
-      </div>
-    </div>)
-  },
-})
+        <div className={`instruction__detail ${this.state.expanded ? '' : 'instruction__detail--hidden'}`}>
+          <DetailHeader
+            assemblerFormat={this.props.format.assemblerFormat}
+            fn={this.props.instruction.function}
+            />
+          <DetailDescription description={this.props.instruction.description} />
+          <DetailOperation operation={this.props.instruction.operation} />
+          {examples}
+        </div>
+      </div>)
+  }
+}
 
-export default React.createClass({
-  getInitialState() {
-    return { instructions: instructions }
-  },
-  render() {
-    const instructions = this.state.instructions.map((instruction, index) => {
-      return instruction.formats.map((format, index) => {
-        return (<InstructionRow
-          instruction={instruction}
-          format={format}
-          modifiesCC={instruction.modifiesConditionCodes}
-          />)
-      })
-    })
-    return (<div className="container">
-      <h1 className="refList__title">LC3 Reference Guide</h1>
-      <h5 className="refList__title">
-        Adapted from <a href="https://drive.google.com/file/d/0B9dz0Ddcl3ESRUdQX1lQczBwblk/view" target="_blank" rel="noopener noreferrer">this pdf</a> by Tim Stoddard.
+const LC3Ref = () =>
+  <div className="container">
+    <h1 className="refList__title">LC3 Reference Guide</h1>
+    <h5 className="refList__title">
+      Adapted from <a href="https://drive.google.com/file/d/0B9dz0Ddcl3ESRUdQX1lQczBwblk/view" target="_blank" rel="noopener noreferrer">this pdf</a> by Tim Stoddard.
       </h5>
-      <div className="refList__content">
-        {instructions}
-        <p className="refList__note--title">Notes</p>
-        <ul>
-          <li className="refList__note--text">Click on an instruction to see more information about it.</li>
-          <li className="refList__note--text">The dot next to an instruction's name refers to whether or not the instruction modifies condition codes. <span className="instruction__modifiesCC--true" /> means it modifies condition codes, and <span className="instruction__modifiesCC--false" /> means it does not.</li>
-        </ul>
-      </div>
-    </div>)
-  },
-})
+    <div className="refList__content">
+      {this.state.instructions.map((instruction, index) =>
+        instruction.formats.map((format, index) =>
+          <InstructionRow
+            instruction={instruction}
+            format={format}
+            modifiesCC={instruction.modifiesConditionCodes}
+            />
+        )
+      )}
+      <p className="refList__note--title">Notes</p>
+      <ul>
+        <li className="refList__note--text">Click on an instruction to see more information about it.</li>
+        <li className="refList__note--text">The dot next to an instruction&quot;s name refers to whether or not the instruction modifies condition codes. <span className="instruction__modifiesCC--true" /> means it modifies condition codes, and <span className="instruction__modifiesCC--false" /> means it does not.</li>
+      </ul>
+    </div>
+  </div>
+
+export default LC3Ref

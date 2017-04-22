@@ -1,11 +1,19 @@
-import React from 'react'
+import React, { Component } from 'react'
 
 import './HeapInput.scss'
 
-export default React.createClass({
+export default class HeapInput extends Component {
+  constructor(props) {
+    super(props)
+
+    this.showSample = this.showSample.bind(this)
+    this.processInput = this.processInput.bind(this)
+  }
+
   componentDidMount() {
     this.checkUrlHash()
-  },
+  }
+
   checkUrlHash() {
     try {
       const hashData = decodeURIComponent(window.location.hash.substr(1))
@@ -21,11 +29,13 @@ export default React.createClass({
     } catch (e) {
       window.location.hash = ''
     }
-  },
+  }
+
   showSample() {
     window.location.hash = encodeURIComponent('1,2,3')
     this.checkUrlHash()
-  },
+  }
+
   processInput() {
     const rawInput = this.input.value.replace(/\s/g, '')
     if (rawInput.length === 0) {
@@ -50,32 +60,35 @@ export default React.createClass({
     this.props.generateHeaps(ints)
     const encoded = encodeURIComponent(ints)
     window.location.hash = encoded.length ? `#${encoded}` : ''
-  },
+  }
+
   render() {
-    return (<div className="heapInput">
-      <div className="heapInput__form">
-        <p>Paste your heap contents here:</p>
-        <input
-          ref={(input) => this.input = input}
-          type="text"
-          className="heapInput__form--textbox"
-          />
-        <a
-          onClick={this.processInput}
-          className="btn">
-          Generate tree
+    return (
+      <div className="heapInput">
+        <div className="heapInput__form">
+          <p>Paste your heap contents here:</p>
+          <input
+            ref={(input) => this.input = input}
+            type="text"
+            className="heapInput__form--textbox"
+            />
+          <a
+            onClick={this.processInput}
+            className="btn">
+            Generate tree
         </a>
-      </div>
-      <p>
-        Accepted format example:&nbsp;
-        <a
-          onClick={this.showSample}
-          className="heapInput__sample">
-          1,2,3
+        </div>
+        <p>
+          Accepted format example:&nbsp;
+          <a
+            onClick={this.showSample}
+            className="heapInput__sample">
+            1,2,3
         </a>
-        &nbsp;(no enclosing brackets, spaces optional)
+          &nbsp;(no enclosing brackets, spaces optional)
       </p>
-      <p>Note: numbers with more than 3 digits will mess up the spacing.</p>
-    </div>)
-  },
-})
+        <p>Note: numbers with more than 3 digits will mess up the spacing.</p>
+      </div>
+    )
+  }
+}

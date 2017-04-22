@@ -6,7 +6,7 @@ import InfoBar from './InfoBar'
 import Links from './Links'
 import MainContent from './MainContent'
 
-class Start extends Component {
+export default class Start extends Component {
   constructor(props) {
     super(props)
 
@@ -60,5 +60,3 @@ class Start extends Component {
     )
   }
 }
-
-export default Start

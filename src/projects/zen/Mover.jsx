@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
 
-export default React.createClass({
-  getInitialState() {
-    return {
+export default class Mover extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
       x: 0,
       y: 0,
       boxShadow: '',
@@ -11,7 +13,8 @@ export default React.createClass({
       theta: 0,
       thetaChangeSpeed: Math.PI / 360 * 2,
     }
-  },
+  }
+
   move(nextColor) {
     // update radius
     if (this.state.radiusIncr) {
@@ -46,25 +49,28 @@ export default React.createClass({
       boxShadow: newBoxShadow,
       theta: newTheta,
     })
-  },
+  }
+
   render() {
-    return (<div>
-      <div
-        style={{
-          'left': this.state.x,
-          'top': this.state.y,
-          'boxShadow': this.state.boxShadow,
-        }}
-        className="zen__block"
-        />
-      <div
-        style={{
-          'right': this.state.x,
-          'bottom': this.state.y,
-          'boxShadow': this.state.boxShadow,
-        }}
-        className="zen__block"
-        />
-    </div>)
-  },
-})
+    return (
+      <div>
+        <div
+          style={{
+            'left': this.state.x,
+            'top': this.state.y,
+            'boxShadow': this.state.boxShadow,
+          }}
+          className="zen__block"
+          />
+        <div
+          style={{
+            'right': this.state.x,
+            'bottom': this.state.y,
+            'boxShadow': this.state.boxShadow,
+          }}
+          className="zen__block"
+          />
+      </div>
+    )
+  }
+}

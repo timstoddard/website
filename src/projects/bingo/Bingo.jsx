@@ -5,7 +5,7 @@ import Video from './Video'
 
 import './Bingo.scss'
 
-class Bingo extends Component {
+export default class Bingo extends Component {
   constructor() {
     super()
     this.loadNewVideo = this.loadNewVideo.bind(this)
@@ -30,5 +30,3 @@ class Bingo extends Component {
     </div>)
   }
 }
-
-export default Bingo

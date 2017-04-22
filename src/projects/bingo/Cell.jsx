@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 
 import { CellState } from './Board'
 
-class Cell extends Component {
+export default class Cell extends Component {
   constructor(props) {
     super(props)
   }
@@ -34,5 +34,3 @@ Cell.propTypes = {
   status: PropTypes.number,
   title: PropTypes.string,
 }
-
-export default Cell

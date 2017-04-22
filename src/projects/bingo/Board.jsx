@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
 
 import Cell from './Cell'
 import ControlPanel from './ControlPanel'
@@ -9,14 +9,27 @@ export class CellState {
   static get SUBMITTED() { return 2 }
 }
 
-export default React.createClass({
-  propTypes: {
-    'className': React.PropTypes.string,
-    'onSubmit': React.PropTypes.func,
-  },
-  getInitialState() {
-    return this.init()
-  },
+const shuffle = (array) => {
+  let m = array.length, t, i
+  while (m) {
+    i = Math.floor(Math.random() * m--)
+    t = array[m]
+    array[m] = array[i]
+    array[i] = t
+  }
+  return array
+}
+
+export default class Board extends Component {
+  constructor(props) {
+    super(props)
+
+    this.onClick = this.onClick.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
+
+    this.state = this.init()
+  }
+
   init() {
     const board = []
     for (let i = 0; i < 25; i++) {
@@ -35,7 +48,8 @@ export default React.createClass({
       buttonText: 'submit',
       userWon: false,
     }
-  },
+  }
+
   onClick(index) {
     if (!this.state.userWon) {
       const newBoard = this.state.board.slice()
@@ -49,7 +63,8 @@ export default React.createClass({
       }
       this.setState({ board: newBoard, selectedCells: selectedCells })
     }
-  },
+  }
+
   onSubmit() {
     // load new game if user won
     if (this.state.userWon) {
@@ -102,14 +117,18 @@ export default React.createClass({
       // load a new video since the user hasn't won yet
       this.props.onSubmit()
     })
-  },
+  }
+
   potentialWin(won) {
     if (won) {
-      this.setState({ userWon: true })
-      this.setState({ buttonText: 'play again' })
+      this.setState({
+        userWon: true,
+        buttonText: 'play again',
+      })
     }
     return won
-  },
+  }
+
   getItems() {
     const items = [
       'Russia',
@@ -141,21 +160,13 @@ export default React.createClass({
       'Left turner',
       'U-turner',
     ]
-    this.shuffle(items)
+    shuffle(items)
+
     // middle square is a freebie
     items.splice(12, 0, 'FREE (Blame the cammer)')
     return items.slice(0, 25)
-  },
-  shuffle(array) {
-    let m = array.length, t, i
-    while (m) {
-      i = Math.floor(Math.random() * m--)
-      t = array[m]
-      array[m] = array[i]
-      array[i] = t
-    }
-    return array
-  },
+  }
+
   render() {
     const tableRows = []
     for (let i = 0; i < 5; i++) {
@@ -166,21 +177,28 @@ export default React.createClass({
           key={index}
           title={this.state.items[index]}
           status={this.state.board[index]}
-          onClick={this.onClick.bind(this, index)}
+          onClick={() => this.onClick(index)}
           />)
       }
       tableRows.push(<tr key={'r' + i}>{tableRow}</tr>)
     }
-    return (<div className={this.props.className}>
-      <table className="centered">
-        <tbody>{tableRows}</tbody>
-      </table>
-      <ControlPanel
-        moveCount={this.state.moveCount}
-        selectedCells={this.state.selectedCells}
-        buttonText={this.state.buttonText}
-        onSubmit={this.onSubmit}
-        />
-    </div>)
-  },
-})
+    return (
+      <div className={this.props.className}>
+        <table className="centered">
+          <tbody>{tableRows}</tbody>
+        </table>
+        <ControlPanel
+          moveCount={this.state.moveCount}
+          selectedCells={this.state.selectedCells}
+          buttonText={this.state.buttonText}
+          onSubmit={this.onSubmit}
+          />
+      </div>
+    )
+  }
+}
+
+Board.propTypes = {
+  className: PropTypes.string,
+  onSubmit: PropTypes.func,
+}

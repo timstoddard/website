@@ -130,7 +130,7 @@ const links = [
   },
 ]
 
-class Links extends Component {
+export default class Links extends Component {
   constructor(props) {
     super(props)
   }
@@ -179,5 +179,3 @@ class Links extends Component {
 Links.propTypes = {
   className: PropTypes.string.isRequired,
 }
-
-export default Links

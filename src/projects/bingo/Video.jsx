@@ -1,17 +1,19 @@
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
 
-export default React.createClass({
-  propTypes: {
-    'className': React.PropTypes.string,
-  },
-  getInitialState() {
-    return {
+export default class Video extends Component {
+  constructor(props) {
+    super(props)
+
+    this.onResize = this.onResize.bind(this)
+
+    this.state = {
       videos: [],
       currentVideoTitle: '',
       currentVideoHtml: '',
       previousVideoIndex: -1,
     }
-  },
+  }
+
   componentDidMount() {
     $.ajax({
       url: 'https://www.reddit.com/r/Roadcam.json',
@@ -35,17 +37,20 @@ export default React.createClass({
       $(window).on('resize keyup', this.onResize)
     }.bind(this))
     this.videoDiv.addEventListener('dblclick', this.onResize)
-  },
+  }
+
   componentWillUnmount() {
     $(function() {
       $(window).off('resize keyup', this.onResize)
     }.bind(this))
     this.videoDiv.removeEventListener('dblclick', this.onResize)
-  },
+  }
+
   onResize() {
     const iframe = $(('iframe[src*="www.youtube.com"]'))
     setTimeout(() => iframe.height(iframe.width() / this.state.currentVideoAspectRatio))
-  },
+  }
+
   loadNewVideo() {
     let newIndex = this.state.previousVideoIndex
     while (newIndex === this.state.previousVideoIndex || !this.state.videos[newIndex].data.media_embed.content) {
@@ -70,17 +75,25 @@ export default React.createClass({
     $(function() {
       $(window).resize() // trigger a resize event to make the embedded video fit
     })
-  },
+  }
+
   videoHtml() {
     return { __html: this.state.currentVideoHtml }
-  },
+  }
+
   render() {
-    return (<div className={this.props.className}>
-      <h5>{this.state.currentVideoTitle}</h5>
-      <div
-        ref={(div) => this.videoDiv = div}
-        dangerouslySetInnerHTML={this.videoHtml()}
-        />
-    </div>)
-  },
-})
+    return (
+      <div className={this.props.className}>
+        <h5>{this.state.currentVideoTitle}</h5>
+        <div
+          ref={(div) => this.videoDiv = div}
+          dangerouslySetInnerHTML={this.videoHtml()}
+          />
+      </div>
+    )
+  }
+}
+
+Video.propTypes = {
+  className: PropTypes.string,
+}

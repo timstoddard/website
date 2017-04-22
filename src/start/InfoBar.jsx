@@ -76,7 +76,7 @@ WeatherForecastHeader.propTypes = {
   setReloading: PropTypes.func,
 }
 
-class InfoBar extends Component {
+export default class InfoBar extends Component {
   constructor(props) {
     super(props)
 
@@ -150,5 +150,3 @@ InfoBar.propTypes = {
   reloading: PropTypes.bool,
   setReloading: PropTypes.func,
 }
-
-export default InfoBar

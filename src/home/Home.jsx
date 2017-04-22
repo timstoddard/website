@@ -17,8 +17,8 @@ export default React.createClass({
         {
           to: 'https://drive.google.com/file/d/0B9dz0Ddcl3ESV28wLVZzd2RFNkU/view?usp=sharing',
           text: 'resume',
-        }
-      ]
+        },
+      ],
     }
   },
   componentDidMount() {
@@ -49,5 +49,5 @@ export default React.createClass({
         </div>
       </div>
     )
-  }
+  },
 })

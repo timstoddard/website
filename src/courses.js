@@ -38,7 +38,7 @@ const courses = [
     fullName: 'Ethics and Political Philosophy',
     id: 19969,
     gdriveFolderId: '0B9dz0Ddcl3ESWlhQdzUyUENqVTA',
-  }
+  },
 ]
 
 export default courses

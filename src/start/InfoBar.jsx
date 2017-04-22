@@ -48,6 +48,8 @@ const WeatherForecastHeader = ({ className, currentObservation, reloading, setRe
               : (
                 <img
                   src="../../media/icons/reload.svg"
+                  alt="Reload"
+                  role="button"
                   onClick={() => Utils.reloadWeatherData(setReloading)}
                   className="weatherForecastHeader__icon--reload"
                   />
@@ -71,7 +73,7 @@ WeatherForecastHeader.propTypes = {
   className: PropTypes.string,
   currentObservation: PropTypes.object,
   reloading: PropTypes.bool,
-  setReloading: PropTypes.func
+  setReloading: PropTypes.func,
 }
 
 class InfoBar extends Component {
@@ -80,7 +82,7 @@ class InfoBar extends Component {
 
     this.state = {
       now: new Date(),
-      name: ''
+      name: '',
     }
 
     this.checkForSavedName = this.checkForSavedName.bind(this)
@@ -146,7 +148,7 @@ class InfoBar extends Component {
 InfoBar.propTypes = {
   currentObservation: PropTypes.object,
   reloading: PropTypes.bool,
-  setReloading: PropTypes.func
+  setReloading: PropTypes.func,
 }
 
 export default InfoBar

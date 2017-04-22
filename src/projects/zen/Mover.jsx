@@ -9,7 +9,7 @@ export default React.createClass({
       radius: 10,
       radiusIncr: true,
       theta: 0,
-      thetaChangeSpeed: Math.PI / 360 * 2
+      thetaChangeSpeed: Math.PI / 360 * 2,
     }
   },
   move(nextColor) {
@@ -29,40 +29,42 @@ export default React.createClass({
       }
     }
     // increment theta value
-    let newTheta = (this.state.theta + this.state.thetaChangeSpeed * this.props.direction) % (Math.PI * 2)
+    const newTheta = (this.state.theta + this.state.thetaChangeSpeed * this.props.direction) % (Math.PI * 2)
     // calculate x and y values
-    let sin = Math.sin(newTheta + this.props.offset)
-    let cos = Math.cos(newTheta + this.props.offset)
-    let newX = this.props.centerX + Math.floor(newRadius * cos)
-    let newY = this.props.centerY + Math.floor(newRadius * sin)
+    const sin = Math.sin(newTheta + this.props.offset)
+    const cos = Math.cos(newTheta + this.props.offset)
+    const newX = this.props.centerX + Math.floor(newRadius * cos)
+    const newY = this.props.centerY + Math.floor(newRadius * sin)
     // update new tile
-    let radiusProportion = this.state.radius / this.props.maxRadius
-    let newBoxShadow = `0px 0px ${50 + radiusProportion * 50}px ${15 + radiusProportion * 40}px ${nextColor}`
+    const radiusProportion = this.state.radius / this.props.maxRadius
+    const newBoxShadow = `0px 0px ${50 + radiusProportion * 50}px ${15 + radiusProportion * 40}px ${nextColor}`
     this.setState({
       radius: newRadius,
       radiusIncr: newRadiusIncr,
       x: newX,
       y: newY,
       boxShadow: newBoxShadow,
-      theta: newTheta
+      theta: newTheta,
     })
   },
   render() {
-    return <div>
+    return (<div>
       <div
         style={{
           'left': this.state.x,
           'top': this.state.y,
-          'boxShadow': this.state.boxShadow
+          'boxShadow': this.state.boxShadow,
         }}
-        className="zen__block" />
+        className="zen__block"
+        />
       <div
         style={{
           'right': this.state.x,
           'bottom': this.state.y,
-          'boxShadow': this.state.boxShadow
+          'boxShadow': this.state.boxShadow,
         }}
-        className="zen__block" />
-    </div>
-  }
+        className="zen__block"
+        />
+    </div>)
+  },
 })

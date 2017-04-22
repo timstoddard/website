@@ -1,11 +1,11 @@
-import React from 'react';
+import React from 'react'
 
-import NavLink from '../../NavLink';
-import './LC3Tables.scss';
+import NavLink from '../../NavLink'
+import './LC3Tables.scss'
 
 export default React.createClass({
   render() {
-    return <div className="container">
+    return (<div className="container">
       <ul className="center-align">
         <li className="LC3Tables__navLink">
           <NavLink to="/lc3/tables/assembler-directives">Assembler Directives</NavLink>
@@ -21,6 +21,6 @@ export default React.createClass({
         </li>
       </ul>
       {this.props.children}
-    </div>;
-  }
-});
+    </div>)
+  },
+})

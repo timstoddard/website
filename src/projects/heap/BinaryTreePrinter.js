@@ -7,9 +7,9 @@ class Node {
 }
 
 export default function printTree(heap) {
-  let arr = heap.heapContents()
-  let maxLevel = heap.treeHeight()
-  let root = convertToNodes(arr)
+  const arr = heap.heapContents()
+  const maxLevel = heap.treeHeight()
+  const root = convertToNodes(arr)
   return printTreeInternal([root], 1, maxLevel)
 }
 
@@ -18,16 +18,16 @@ function printTreeInternal(nodes, level, maxLevel) {
     return ''
   }
 
-  let floor = maxLevel - level + 1
-  let endgeLines = Math.floor(Math.pow(2, (Math.max(floor - 1, 0))))
-  let firstSpaces = Math.floor(Math.pow(2, (floor)) - 1)
-  let betweenSpaces = Math.floor(Math.pow(2, (floor + 1)) - 1)
+  const floor = maxLevel - level + 1
+  const endgeLines = Math.floor(Math.pow(2, (Math.max(floor - 1, 0))))
+  const firstSpaces = Math.floor(Math.pow(2, (floor)) - 1)
+  const betweenSpaces = Math.floor(Math.pow(2, (floor + 1)) - 1)
   let treeString = ''
 
   treeString += printWhitespace(firstSpaces)
-  let newNodes = []
+  const newNodes = []
   for (let i = 0; i < nodes.length; i++) {
-    let value = nodes[i]
+    const value = nodes[i]
     if (!DNE(value)) {
       treeString += `<spanclass="heap__value">${value.data}</span>`
       newNodes.push(value.left)
@@ -51,7 +51,7 @@ function printTreeInternal(nodes, level, maxLevel) {
         treeString += printWhitespace(firstSpaces - i + 1)
       }
       if (DNE(nodes[j])) {
-        treeString += printWhitespace(endgeLines + endgeLines + i + 1)
+        treeString += printWhitespace(endgeLines * 2 + i + 1)
         continue
       }
 
@@ -69,7 +69,7 @@ function printTreeInternal(nodes, level, maxLevel) {
         treeString += ' '
       }
 
-      printWhitespace(endgeLines + endgeLines - i)
+      printWhitespace(endgeLines * 2 - i)
     }
     treeString += ',' // splitter character
   }
@@ -89,7 +89,7 @@ function printTreeInternal(nodes, level, maxLevel) {
 // helper functions
 
 function convertToNodes(arr) {
-  let data = []
+  const data = []
   for (let i = 1; i <= arr.length; i++) {
     data[i] = new Node(arr[i - 1])
   }

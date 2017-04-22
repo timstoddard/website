@@ -12,13 +12,13 @@ export class CellState {
 export default React.createClass({
   propTypes: {
     'className': React.PropTypes.string,
-    'onSubmit': React.PropTypes.func
+    'onSubmit': React.PropTypes.func,
   },
   getInitialState() {
     return this.init()
   },
   init() {
-    let board = []
+    const board = []
     for (let i = 0; i < 25; i++) {
       if (i !== 12) {
         board.push(CellState.UNSELECTED)
@@ -33,12 +33,12 @@ export default React.createClass({
       moveCount: 0,
       selectedCells: 1, // middle square is a freebie
       buttonText: 'submit',
-      userWon: false
+      userWon: false,
     }
   },
   onClick(index) {
     if (!this.state.userWon) {
-      let newBoard = this.state.board.slice()
+      const newBoard = this.state.board.slice()
       let selectedCells = this.state.selectedCells
       if (newBoard[index] === CellState.UNSELECTED) {
         newBoard[index] = CellState.SELECTED
@@ -59,7 +59,7 @@ export default React.createClass({
     }
 
     // update status of all selected cells
-    let newBoard = this.state.board.slice()
+    const newBoard = this.state.board.slice()
     for (let i = 0; i < 25; i++) {
       if (newBoard[i] === CellState.SELECTED) {
         newBoard[i] = CellState.SUBMITTED
@@ -67,7 +67,7 @@ export default React.createClass({
     }
     this.setState({
       board: newBoard,
-      moveCount: this.state.moveCount + 1
+      moveCount: this.state.moveCount + 1,
     }, () => {
       // check for bingo on rows and columns
       for (let i = 0; i < 5; i++) {
@@ -111,7 +111,7 @@ export default React.createClass({
     return won
   },
   getItems() {
-    let items = [
+    const items = [
       'Russia',
       'BMW',
       'Prius',
@@ -139,7 +139,7 @@ export default React.createClass({
       'Road rage',
       'Pedestrian on vehicle assault',
       'Left turner',
-      'U-turner'
+      'U-turner',
     ]
     this.shuffle(items)
     // middle square is a freebie
@@ -157,20 +157,21 @@ export default React.createClass({
     return array
   },
   render() {
-    let tableRows = []
+    const tableRows = []
     for (let i = 0; i < 5; i++) {
-      let tableRow = []
+      const tableRow = []
       for (let j = 0; j < 5; j++) {
-        let index = i * 5 + j
+        const index = i * 5 + j
         tableRow.push(<Cell
           key={index}
           title={this.state.items[index]}
           status={this.state.board[index]}
-          onClick={this.onClick.bind(this, index) } />)
+          onClick={this.onClick.bind(this, index)}
+          />)
       }
       tableRows.push(<tr key={'r' + i}>{tableRow}</tr>)
     }
-    return <div className={this.props.className}>
+    return (<div className={this.props.className}>
       <table className="centered">
         <tbody>{tableRows}</tbody>
       </table>
@@ -178,7 +179,8 @@ export default React.createClass({
         moveCount={this.state.moveCount}
         selectedCells={this.state.selectedCells}
         buttonText={this.state.buttonText}
-        onSubmit={this.onSubmit} />
-    </div>
-  }
+        onSubmit={this.onSubmit}
+        />
+    </div>)
+  },
 })

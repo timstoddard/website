@@ -29,5 +29,5 @@ export default React.createClass({
   render() {
     document.title = 'Time'
     return <div className="time">{this.state.timeStr}</div>
-  }
+  },
 })

@@ -8,23 +8,23 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: __dirname + '/dist',
-    publicPath: '/dist'
+    publicPath: '/dist',
   },
   module: {
     loaders: [
       {
         test: /\.jsx?$/,
         loader: 'babel-loader?presets[]=es2015&presets[]=react',
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('style-loader', ['css-loader', 'postcss-loader', 'sass-loader'])
-      }
-    ]
+        loader: ExtractTextPlugin.extract('style-loader', ['css-loader', 'postcss-loader', 'sass-loader']),
+      },
+    ],
   },
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx'],
   },
   postcss: function() {
     return [autoprefixer]
@@ -32,10 +32,10 @@ module.exports = {
   plugins: [
     new webpack.optimize.UglifyJsPlugin({
       compress: { warnings: false },
-      comments: false
+      comments: false,
     }),
     new webpack.optimize.AggressiveMergingPlugin(),
     new webpack.optimize.DedupePlugin(),
-    new ExtractTextPlugin('bundle.css', { allChunks: true })
-  ]
+    new ExtractTextPlugin('bundle.css', { allChunks: true }),
+  ],
 }

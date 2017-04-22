@@ -27,12 +27,13 @@ export default React.createClass({
   },
   render() {
     document.title = 'Heap'
-    return <div className="heap container">
+    return (<div className="heap container">
       <h5 className="heap__title">Max-Heap Tree Generator</h5>
       <HeapInput generateHeaps={this.generateHeaps} />
       {this.state.showTree && <HeapDetail
         inputHeap={this.inputHeap}
-        sortedHeap={this.sortedHeap} />}
-    </div>
-  }
+        sortedHeap={this.sortedHeap}
+        />}
+    </div>)
+  },
 })

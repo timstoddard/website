@@ -7,7 +7,7 @@ export default React.createClass({
     return {
       rawValue: '',
       formattedValue: '',
-      shiftKeyDown: false
+      shiftKeyDown: false,
     }
   },
   onChange(event) {
@@ -29,8 +29,8 @@ export default React.createClass({
   },
   replaceText(event) {
     event.preventDefault()
-    let clipboardData = event.clipboardData || window.clipboardData
-    let pastedData = clipboardData.getData('Text')
+    const clipboardData = event.clipboardData || window.clipboardData
+    const pastedData = clipboardData.getData('Text')
     this.setState({ rawValue: pastedData })
     document.getElementById('input').value = this.state.rawValue
   },
@@ -69,17 +69,17 @@ import 'code';`})
     if (firstModuleNameChar === -1) { // only a relative path, no folder/file names
       firstModuleNameChar = moduleName.length
     }
-    let prefixLength = moduleName.substr(0, firstModuleNameChar).length
-    let moduleNameStripped = moduleName.substr(firstModuleNameChar).trim()
+    const prefixLength = moduleName.substr(0, firstModuleNameChar).length
+    const moduleNameStripped = moduleName.substr(firstModuleNameChar).trim()
 
     // import data
-    let aliases = []
+    const aliases = []
     if (str.indexOf('{') > -1 && str.indexOf('}') > -1) {
       var brackets = true
-      let imports = str.substring(str.indexOf('{') + 1, str.indexOf('}')).split(',')
+      const imports = str.substring(str.indexOf('{') + 1, str.indexOf('}')).split(',')
       imports.forEach(function(value) {
         if (value.indexOf(' as ') > -1) {
-          let data = value.split(' as ')
+          const data = value.split(' as ')
           aliases.push({ importName: data[0].trim(), alias: data[1].trim() })
         } else {
           aliases.push({ importName: value.trim() })
@@ -88,9 +88,9 @@ import 'code';`})
     } else {
       brackets = false
       if (str.indexOf('from') > -1) {
-        let importStr = str.substring(str.indexOf('import') + 6, str.indexOf('from'))
+        const importStr = str.substring(str.indexOf('import') + 6, str.indexOf('from'))
         if (importStr.indexOf(' as ') > -1) { // case: import thing as idk from './foo';
-          let data = importStr.split(' as ')
+          const data = importStr.split(' as ')
           aliases.push({ importName: data[0].trim(), alias: data[1].trim() })
         } else { // case: import thing from './foo';
           aliases.push({ importName: importStr.trim() })
@@ -104,21 +104,21 @@ import 'code';`})
       pathLength: prefixLength,
       imports: aliases,
       thirdParty: !/[./]/.test(moduleName[0]),
-      brackets: brackets
+      brackets: brackets,
     }
   },
   fixImports() {
 
     // read in the data and format it
-    let rawLines = document.getElementById('input').value
+    const rawLines = document.getElementById('input').value
       .replace(/;;+/g, ';') // remove duplicate semicolons
       .split('\n') // split over the newlines
-    let lines = []
+    const lines = []
     let lastLineWasComplete = true
     rawLines.forEach(function(value) {
       // get rid of leading/trailing whitespace
       value = value.trim()
-      let lastChar = value.charAt(value.length - 1)
+      const lastChar = value.charAt(value.length - 1)
       // line ends with a semicolon -- awesome!
       if (lastChar === ';') {
         if (!lastLineWasComplete) {
@@ -152,17 +152,17 @@ import 'code';`})
     })
 
     // create an object to hold of the module objects
-    let modules = {}
+    const modules = {}
     lines.forEach(function(value) {
       // don't want any blank imports
       if (value.trim().length > 0) {
         // need module name, as well as data about import
-        let data = this.getData(value)
+        const data = this.getData(value)
         if (!modules[data.path]) {
           modules[data.path] = data // create new module object
         } else {
           // add data to existing module object
-          let newImports = data.imports
+          const newImports = data.imports
           // loop over all the new imports
           newImports.forEach(function(value) {
             // check if module already contains this import
@@ -182,10 +182,10 @@ import 'code';`})
     }.bind(this))
 
     // sort imports and split into third party and internal imports
-    let thirdPartyImports = []
-    let internalImports = []
-    for (let prop in modules) {
-      let currentModule = modules[prop]
+    const thirdPartyImports = []
+    const internalImports = []
+    for (const prop in modules) {
+      const currentModule = modules[prop]
       currentModule.imports.sort(function(a, b) {
         return a.importName.toLowerCase().localeCompare(b.importName.toLowerCase())
       })
@@ -197,11 +197,11 @@ import 'code';`})
     }
 
     // sort modules by name
-    let sorter = function(a, b) {
+    const sorter = function(a, b) {
       if (a.imports.length === 0) {
         if (b.imports.length === 0) {
           // a and b both have no imports, so sort by module name
-          let result = a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+          const result = a.name.toLowerCase().localeCompare(b.name.toLowerCase())
           if (result === 0) {
             return a.pathLength < b.pathLength ? -1 : 1
           }
@@ -215,7 +215,7 @@ import 'code';`})
         return -1
       }
       // a and b both have imports, so sort by module name
-      let result = a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+      const result = a.name.toLowerCase().localeCompare(b.name.toLowerCase())
       if (result === 0) {
         return a.pathLength < b.pathLength ? -1 : 1
       }
@@ -228,14 +228,14 @@ import 'code';`})
     let result = ''
     if (thirdPartyImports) {
       thirdPartyImports.forEach(function(value, index) {
-        let importStr = this.generateImportString(value.imports, value.path, value.brackets)
+        const importStr = this.generateImportString(value.imports, value.path, value.brackets)
         result += importStr + (index < thirdPartyImports.length - 1 ? '\n' : '')
       }.bind(this))
       result += internalImports ? '\n\n' : ''
     }
     if (internalImports) {
       internalImports.forEach(function(value, index) {
-        let importStr = this.generateImportString(value.imports, value.path, value.brackets)
+        const importStr = this.generateImportString(value.imports, value.path, value.brackets)
         result += importStr + (index < internalImports.length - 1 ? '\n' : '')
       }.bind(this))
     }
@@ -266,7 +266,7 @@ import 'code';`})
   render() {
     document.title = 'Import Fixer'
     // TODO: use `ref`s to interact with textareas
-    return <div className="center-align">
+    return (<div className="center-align">
       <h3 className="import__title">Import Fixer</h3>
       <textarea
         id="input"
@@ -275,7 +275,8 @@ import 'code';`})
         onChange={this.onChange}
         onKeyDown={this.checkKeyDown}
         onKeyUp={this.checkKeyUp}
-        onPaste={this.replaceText} />
+        onPaste={this.replaceText}
+        />
       <div>
         <a
           className="import__button waves-effect waves-light btn light-blue accent-2"
@@ -291,7 +292,8 @@ import 'code';`})
       <textarea
         id="output"
         value={this.state.formattedValue}
-        className="import__textarea" />
-    </div>
-  }
+        className="import__textarea"
+        />
+    </div>)
+  },
 })

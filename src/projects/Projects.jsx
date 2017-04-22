@@ -23,7 +23,7 @@ const Projects = ({ children }) =>
   </div>
 
 Projects.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
 }
 
 export default Projects

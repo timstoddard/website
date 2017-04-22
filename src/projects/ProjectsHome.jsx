@@ -5,12 +5,12 @@ import './ProjectsHome.scss'
 
 const ProjectsHome = ({ links }) => {
   document.title = 'Projects'
-  return <div className="projectsHome">
+  return (<div className="projectsHome">
     <div className="projectsHome__container container">
       <h5 className="projectsHome__title">
-        Check out some of the cool things I've made!
+        Check out some of the cool things I&apos;ve made!
       </h5>
-      <p>Most of these projects were originally written in vanilla Javascript + jQuery, so I rewrote them in React to work with this site. Click on any project's name to view it!</p>
+      <p>Most of these projects were originally written in vanilla Javascript + jQuery, so I rewrote them in React to work with this site. Click on any project&apos;s name to view it!</p>
       <ul>
         {links.map(link =>
           <li key={link.name}>
@@ -27,11 +27,11 @@ const ProjectsHome = ({ links }) => {
         <Link to="" className="projectsHome__link">Back</Link>
       </h5>
     </div>
-  </div>
+  </div>)
 }
 
 ProjectsHome.propTypes = {
-  links: PropTypes.array
+  links: PropTypes.array,
 }
 
 ProjectsHome.defaultProps = {
@@ -41,8 +41,8 @@ ProjectsHome.defaultProps = {
     { name: 'Angular 2 (ES6) Import Fixer', href: '/projects/imports' },
     { name: 'Strobe Light!', href: '/projects/strobe' },
     { name: 'Javascript Clock', href: '/projects/time' },
-    { name: 'Zen Mode (Peaceful, Infinite Animation)', href: '/projects/zen' }
-  ]
+    { name: 'Zen Mode (Peaceful, Infinite Animation)', href: '/projects/zen' },
+  ],
 }
 
 export default ProjectsHome

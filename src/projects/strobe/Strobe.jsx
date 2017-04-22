@@ -6,7 +6,7 @@ import StrobeOptions from './StrobeOptions'
 
 import './Strobe.scss'
 
-let Strobe = React.createClass({
+const Strobe = React.createClass({
   colorChanger: null,
   moveInterval: null,
   getInitialState() {
@@ -14,7 +14,7 @@ let Strobe = React.createClass({
       background: 'black',
       ms: 45,
       paused: false,
-      showOptions: false
+      showOptions: false,
     }
   },
   componentDidMount() {
@@ -58,7 +58,7 @@ let Strobe = React.createClass({
   },
   render() {
     document.title = 'Strobe'
-    return <div
+    return (<div
       className={`strobe--${this.props.isFullscreen ? 'full' : 'regular'}`}
       style={{ background: this.state.background }}>
       {!this.state.showOptions && <div className="strobe__buttons">
@@ -81,11 +81,12 @@ let Strobe = React.createClass({
       {this.state.showOptions && <StrobeOptions
         ms={this.state.ms}
         updateMs={this.updateMs}
-        hideOptions={this.hideOptions} />}
-    </div>
-  }
+        hideOptions={this.hideOptions}
+        />}
+    </div>)
+  },
 })
 
 export default Strobe
-export const StrobeWithProps = (isFullscreen) =>
-  () => <Strobe isFullscreen={isFullscreen} />
+// export const StrobeWithProps = (isFullscreen) =>
+//   () => <Strobe isFullscreen={isFullscreen} />

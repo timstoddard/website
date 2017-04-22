@@ -2,14 +2,14 @@ import React from 'react'
 
 export default React.createClass({
   propTypes: {
-    'className': React.PropTypes.string
+    'className': React.PropTypes.string,
   },
   getInitialState() {
     return {
       videos: [],
       currentVideoTitle: '',
       currentVideoHtml: '',
-      previousVideoIndex: -1
+      previousVideoIndex: -1,
     }
   },
   componentDidMount() {
@@ -29,7 +29,7 @@ export default React.createClass({
         console.log(`Status: ${status}`)
         console.dir(xhr)
         /* eslint-enable no-console */
-      }.bind(this)
+      }.bind(this),
     })
     $(function() {
       $(window).on('resize keyup', this.onResize)
@@ -64,7 +64,7 @@ export default React.createClass({
     this.setState({
       currentVideoTitle: video.title,
       currentVideoHtml: videoHtml,
-      currentVideoAspectRatio: videoAspectRatio
+      currentVideoAspectRatio: videoAspectRatio,
     })
     this.setState({ previousVideoIndex: newIndex })
     $(function() {
@@ -75,11 +75,12 @@ export default React.createClass({
     return { __html: this.state.currentVideoHtml }
   },
   render() {
-    return <div className={this.props.className}>
+    return (<div className={this.props.className}>
       <h5>{this.state.currentVideoTitle}</h5>
       <div
         ref={(div) => this.videoDiv = div}
-        dangerouslySetInnerHTML={this.videoHtml() } />
-    </div>
-  }
+        dangerouslySetInnerHTML={this.videoHtml()}
+        />
+    </div>)
+  },
 })

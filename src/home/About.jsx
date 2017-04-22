@@ -7,17 +7,19 @@ const IconLinks = ({ icons }) =>
       <a
         href={icon.href}
         target="_blank"
+        rel="noopener noreferrer"
         key={icon.name}>
         <img
           src={`../../media/logos/${icon.name.toLowerCase()}.png`}
           alt={icon.name}
-          className="about__icon" />
+          className="about__icon"
+          />
       </a>
     )}
   </div>
 
 IconLinks.propTypes = {
-  icons: PropTypes.array
+  icons: PropTypes.arrayOf(PropTypes.object),
 }
 
 IconLinks.defaultProps = {
@@ -25,8 +27,8 @@ IconLinks.defaultProps = {
     { name: 'Github', href: 'https://github.com/timstoddard' },
     { name: 'LinkedIn', href: 'https://linkedin.com/in/timstoddard200' },
     { name: 'Portfolium', href: 'https://portfolium.com/timstoddard' },
-    { name: 'Facebook', href: 'https://facebook.com/timstoddard200' }
-  ]
+    { name: 'Facebook', href: 'https://facebook.com/timstoddard200' },
+  ],
 }
 
 const About = () => {
@@ -38,10 +40,10 @@ const About = () => {
           About Me
         </h5>
         <p className="about__text">
-          Hi, I'm Tim! I am a second year student at <a className="about__link" href="http://calpoly.edu" target="_blank">Cal Poly, San Luis Obispo</a> studying Computer Science.
+          Hi, I&apos;m Tim! I am a second year student at <a className="about__link" href="http://calpoly.edu" target="_blank" rel="noopener noreferrer">Cal Poly, San Luis Obispo</a> studying Computer Science.
         </p>
         <p className="about__text">
-          I am currently a software engineering intern at <a className="about__link" href="https://socreate.it" target="_blank">SoCreate</a>, where I regularly work with Angular 2, PHP, and MS SQL. Other technologies I've used there include Git, Jira, and BitBucket.
+          I am currently a software engineering intern at <a className="about__link" href="https://socreate.it" target="_blank" rel="noopener noreferrer">SoCreate</a>, where I regularly work with Angular 2, PHP, and MS SQL. Other technologies I&apos;ve used there include Git, Jira, and BitBucket.
         </p>
         <p className="about__text">
           In my free time, I am learning ReactJS - in fact, this site uses React and React Router. I also lift weights several times a week, a passion that I have enjoyed since my sophomore year of high school.

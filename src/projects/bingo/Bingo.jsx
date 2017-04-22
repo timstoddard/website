@@ -17,15 +17,17 @@ class Bingo extends Component {
 
   render() {
     document.title = 'Bingo'
-    return <div className="bingo center-align row">
+    return (<div className="bingo center-align row">
       <h3 className="bingo__title">Car Crash Bingo</h3>
       <Video
         className="video col s12 m12 l6"
-        ref={(ref) => this.videoPlayer = ref} />
+        ref={(ref) => this.videoPlayer = ref}
+        />
       <Board
         className="board col s12 m12 l6"
-        onSubmit={this.loadNewVideo} />
-    </div>
+        onSubmit={this.loadNewVideo}
+        />
+    </div>)
   }
 }
 

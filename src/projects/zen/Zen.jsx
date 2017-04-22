@@ -14,7 +14,7 @@ export default React.createClass({
       screenCenterX: 0,
       screenCenterY: 0,
       minRadius: 0,
-      maxRadius: 0
+      maxRadius: 0,
     }
   },
   componentDidMount() {
@@ -34,18 +34,18 @@ export default React.createClass({
       screenCenterX: window.innerWidth / 2,
       screenCenterY: window.innerHeight / 2,
       minRadius: this.state.minRadius,
-      maxRadius: (Math.min(window.innerWidth, window.innerHeight) * 2 / 5)
+      maxRadius: (Math.min(window.innerWidth, window.innerHeight) * 2 / 5),
     })
   },
   updateBlock() {
-    let nextColor1 = this.colorChanger1.nextColor()
-    let nextColor2 = this.colorChanger2.nextColor()
+    const nextColor1 = this.colorChanger1.nextColor()
+    const nextColor2 = this.colorChanger2.nextColor()
     this.mover1.move(nextColor1)
     this.mover2.move(nextColor2)
   },
   render() {
     document.title = 'Zen Mode'
-    return <div className="zen">
+    return (<div className="zen">
       <Mover
         ref={mover => this.mover1 = mover}
         direction={1}
@@ -54,7 +54,8 @@ export default React.createClass({
         centerY={this.state.screenCenterY}
         minRadius={60}
         maxRadius={this.state.maxRadius}
-        radiusChangeSpeed={0.2} />
+        radiusChangeSpeed={0.2}
+        />
       <Mover
         ref={mover => this.mover2 = mover}
         direction={-1}
@@ -63,7 +64,8 @@ export default React.createClass({
         centerY={this.state.screenCenterY}
         minRadius={60}
         maxRadius={this.state.maxRadius}
-        radiusChangeSpeed={0.4} />
-    </div>
-  }
+        radiusChangeSpeed={0.4}
+        />
+    </div>)
+  },
 })

@@ -64,7 +64,7 @@ const getWeatherDataAjax = (url) => {
     /* eslint-disable no-console */
     error: () => console.log('weather data failed to load'),
     /* eslint-enable no-console */
-    timeout: 30000
+    timeout: 30000,
   })
 }
 

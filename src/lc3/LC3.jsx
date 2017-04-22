@@ -1,16 +1,16 @@
-import React from 'react';
-import { Link } from 'react-router';
+import React from 'react'
+import { Link } from 'react-router'
 
-import NavLink from '../NavLink';
-import './LC3.scss';
+import NavLink from '../NavLink'
+import './LC3.scss'
 
 export default React.createClass({
   propTypes: {
-    'children': React.PropTypes.node
+    'children': React.PropTypes.node,
   },
   render() {
-    document.title = 'LC3 Info';
-    return <div>
+    document.title = 'LC3 Info'
+    return (<div>
       <nav>
         <div className="nav-wrapper light-blue">
           <ul id="nav-mobile">
@@ -22,6 +22,6 @@ export default React.createClass({
         </div>
       </nav>
       {this.props.children}
-    </div>;
-  }
-});
+    </div>)
+  },
+})

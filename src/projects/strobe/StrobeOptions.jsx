@@ -7,13 +7,13 @@ const max = 500
 
 export default React.createClass({
   propTypes: {
-    'ms': React.PropTypes.number
+    'ms': React.PropTypes.number,
   },
   componentDidMount() {
     this.range.value = this.props.ms
   },
   onRangeChange(event) {
-    let newMs = parseInt(event.target.value, 10)
+    const newMs = parseInt(event.target.value, 10)
     this.props.updateMs(newMs)
     event.stopPropagation()
   },
@@ -22,7 +22,7 @@ export default React.createClass({
     event.stopPropagation()
   },
   render() {
-    return <div className="options">
+    return (<div className="options">
       <h5 className="options__title">
         Options
       </h5>
@@ -34,7 +34,8 @@ export default React.createClass({
           min={min}
           max={max}
           step="5"
-          ref={(range) => { this.range = range }} />
+          ref={(range) => { this.range = range }}
+          />
         <p className="options__form--max">{max}</p>
       </div>
       <div>
@@ -50,6 +51,6 @@ export default React.createClass({
           Close
         </a>
       </div>
-    </div>
-  }
+    </div>)
+  },
 })

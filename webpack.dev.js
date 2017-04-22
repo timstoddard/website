@@ -12,23 +12,23 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: __dirname + '/dist',
-    publicPath: '/dist'
+    publicPath: '/dist',
   },
   module: {
     loaders: [
       {
         test: /\.jsx?$/,
         loader: 'babel-loader?presets[]=es2015&presets[]=react',
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.scss$/,
-        loader: 'style!css!postcss!sass'
-      }
-    ]
+        loader: 'style!css!postcss!sass',
+      },
+    ],
   },
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx'],
   },
   postcss: function() {
     return [autoprefixer]

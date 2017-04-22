@@ -15,7 +15,7 @@ export default React.createClass({
     this.setState({ showSorted: true })
   },
   getTreeString() {
-    let treeString = this.state.showSorted
+    const treeString = this.state.showSorted
       ? printTree(this.props.sortedHeap)
       : printTree(this.props.inputHeap)
     return { __html: `${treeString}<br><br>` }
@@ -40,9 +40,10 @@ export default React.createClass({
         <div className="heapDetail__treeWrapper">
           <div
             dangerouslySetInnerHTML={this.getTreeString()}
-            className="heapDetail__tree" />
+            className="heapDetail__tree"
+            />
         </div>
       </div>
     )
-  }
+  },
 })

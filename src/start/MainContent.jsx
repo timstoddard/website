@@ -20,16 +20,23 @@ const WeatherForecastDay = ({ day }) =>
   </div>
 
 WeatherForecastDay.propTypes = {
-  day: PropTypes.object,
+  day: PropTypes.shape({
+    icon: PropTypes.string,
+    date: PropTypes.shape({
+      weekday: PropTypes.string,
+      month: PropTypes.number,
+      day: PropTypes.number,
+    }),
+    low: PropTypes.shape({ fahrenheit: PropTypes.string }),
+    high: PropTypes.shape({ fahrenheit: PropTypes.string }),
+  }).isRequired,
 }
 
 class CNN extends Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      data: []
-    }
+    this.state = { data: [] }
   }
 
   componentDidMount() {
@@ -45,7 +52,7 @@ class CNN extends Component {
         console.error(error)
         /* eslint-enable no-console */
       },
-      timeout: 10000
+      timeout: 10000,
     })
   }
 
@@ -57,6 +64,7 @@ class CNN extends Component {
             key={item.link}
             href={item.origLink}
             target="_blank"
+            rel="noopener noreferrer"
             className="rssItem">
             <div className="rssItem__title">
               {item.title}
@@ -71,7 +79,7 @@ class CNN extends Component {
 }
 
 CNN.propTypes = {
-  className: PropTypes.string,
+  className: PropTypes.string.isRequired,
 }
 
 class RandomQuote extends Component {
@@ -79,7 +87,7 @@ class RandomQuote extends Component {
     super(props)
 
     this.state = {
-      quote: ''
+      quote: '',
     }
   }
 
@@ -102,7 +110,7 @@ class RandomQuote extends Component {
         console.error(error)
         /* eslint-enable no-console */
       },
-      timeout: 10000
+      timeout: 10000,
     })
   }
 
@@ -116,15 +124,15 @@ class RandomQuote extends Component {
 }
 
 RandomQuote.propTypes = {
-  className: PropTypes.string,
+  className: PropTypes.string.isRequired,
 }
 
 const MainContent = ({ className, forecast }) =>
   <div className={`mainContent center-align ${className}`}>
     <div className="weatherForecastDays light-blue accent-1 z-depth-1">
-      {forecast.map((forecastDay, i) =>
+      {forecast.map(forecastDay =>
         <WeatherForecastDay
-          key={i}
+          key={forecastDay.date.day}
           day={forecastDay}
           />
       )}
@@ -136,8 +144,12 @@ const MainContent = ({ className, forecast }) =>
   </div>
 
 MainContent.propTypes = {
-  className: PropTypes.string,
-  forecast: PropTypes.arrayOf(PropTypes.object)
+  className: PropTypes.string.isRequired,
+  forecast: PropTypes.arrayOf(PropTypes.object),
+}
+
+MainContent.defaultProps = {
+  forecast: [],
 }
 
 export default MainContent

@@ -23,6 +23,10 @@
     "react"
   ],
   "rules": {
+    "comma-dangle": [
+      "error",
+      "always-multiline"
+    ],
     "indent": [
       "error",
       2,
@@ -34,6 +38,9 @@
       "error",
       "unix"
     ],
+    "prefer-const": [
+      "error"
+    ],
     "quotes": [
       "error",
       "single"
@@ -42,12 +49,20 @@
       "error",
       "never"
     ],
+    "react/jsx-boolean-value": [
+      "error",
+      "always"
+    ],
     "react/jsx-closing-bracket-location": [
       "error",
       {
         "selfClosing": "props-aligned",
         "nonEmpty": "after-props"
       }
+    ],
+    "react/jsx-first-prop-new-line": [
+      "error",
+      "multiline"
     ],
     "react/jsx-tag-spacing": [
       "error",

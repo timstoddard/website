@@ -15,7 +15,7 @@ class Start extends Component {
     this.state = {
       currentObservation: null,
       forecast: [],
-      reloading: false
+      reloading: false,
     }
   }
 
@@ -24,7 +24,7 @@ class Start extends Component {
       this.setState({
         currentObservation: response.current_observation,
         forecast: response.forecast.simpleforecast.forecastday,
-        reloading: false
+        reloading: false,
       })
       Utils.set('weatherData', response)
       Utils.set('weatherDataTimestamp', Date.now())

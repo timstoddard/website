@@ -5,8 +5,8 @@ $iconAndTextSize: calc(1rem + 0.8vw);
 .infoBar {
   display: flex;
   font-family: 'PT Sans Narrow', sans-serif !important;
+  margin: 0;
   justify-content: space-around;
-  margin-bottom: 0.8rem;
 
   &__item {
     font-size: $iconAndTextSize;

@@ -20,6 +20,16 @@ const courses = [
     fullName: 'Computer Architecture',
     id: 17105,
     gdriveFolderId: '0B9dz0Ddcl3ESQUNPaXRsZjRmczA',
+    otherLinks: [
+      {
+        name: 'MIPS Reference',
+        href: 'http://www-inst.eecs.berkeley.edu/~cs61c/resources/MIPS_Green_Sheet.pdf',
+      },
+      {
+        name: 'MIPS Basics',
+        href: 'https://www2.engr.arizona.edu/~ece369/Resources/spim/QtSPIM_examples.pdf',
+      },
+    ],
   },
   {
     name: 'CPE 300',

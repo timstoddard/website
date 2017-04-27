@@ -1,6 +1,10 @@
 import React, { Component, PropTypes } from 'react'
 
-import { CellState } from './Board'
+export class CellState {
+  static get UNSELECTED() { return 0 }
+  static get SELECTED() { return 1 }
+  static get SUBMITTED() { return 2 }
+}
 
 export default class Cell extends Component {
   constructor(props) {
@@ -19,11 +23,12 @@ export default class Cell extends Component {
   }
 
   render() {
+    const { onClick, title } = this.props
     return (
       <td
         className={`board__cell ${this.getModifierClassName()}`}
-        onClick={this.props.onClick}>
-        {this.props.title}
+        onClick={onClick}>
+        {title}
       </td>
     )
   }

@@ -36,15 +36,19 @@ export default class Heap extends Component {
 
   render() {
     document.title = 'Heap'
+    const { generateHeaps, inputHeap, sortedHeap } = this
+    const { showTree } = this.state
+
     return (
       <div className="heap container">
         <h5 className="heap__title">Max-Heap Tree Generator</h5>
-        <HeapInput generateHeaps={this.generateHeaps} />
-        {this.state.showTree &&
+        <HeapInput generateHeaps={generateHeaps} />
+        {showTree &&
           <HeapDetail
-            inputHeap={this.inputHeap}
-            sortedHeap={this.sortedHeap}
-            />}
+            inputHeap={inputHeap}
+            sortedHeap={sortedHeap}
+            />
+        }
       </div>
     )
   }

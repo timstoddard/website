@@ -30,7 +30,7 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.jsx'],
   },
-  postcss: function() {
+  postcss() {
     return [autoprefixer]
   },
   plugins: [

@@ -58,7 +58,7 @@ const getWeatherData = (locationData) => {
 
 const getWeatherDataAjax = (url) => {
   $.ajax({
-    url: url,
+    url,
     type: 'GET',
     success: successFn,
     /* eslint-disable no-console */

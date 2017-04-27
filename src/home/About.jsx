@@ -3,15 +3,15 @@ import { Link } from 'react-router'
 
 const IconLinks = ({ icons }) =>
   <div className="about__icons">
-    {icons.map(icon =>
+    {icons.map(({ href, name }) =>
       <a
-        href={icon.href}
+        href={href}
         target="_blank"
         rel="noopener noreferrer"
-        key={icon.name}>
+        key={name}>
         <img
-          src={`../../media/logos/${icon.name.toLowerCase()}.png`}
-          alt={icon.name}
+          src={`../../media/logos/${name.toLowerCase()}.png`}
+          alt={name}
           className="about__icon"
           />
       </a>

@@ -17,7 +17,7 @@ export default class StrobeOptions extends Component {
 
   onRangeChange(event) {
     const newMs = parseInt(event.target.value, 10)
-    this.props.updateMs(newMs)
+    this.props.updateMillis(newMs)
     event.stopPropagation()
   }
 
@@ -27,32 +27,34 @@ export default class StrobeOptions extends Component {
   }
 
   render() {
+    const { min, max, onRangeChange, onCloseClick } = this
+    const { ms } = this.props
     return (
       <div className="options">
         <h5 className="options__title">
           Options
       </h5>
         <div className="options__form">
-          <p className="options__form--min">{this.min}</p>
+          <p className="options__form--min">{min}</p>
           <input
             type="range"
-            onChange={this.onRangeChange}
-            min={this.min}
-            max={this.max}
+            onChange={onRangeChange}
+            min={min}
+            max={max}
             step="5"
             ref={(range) => { this.range = range }}
             />
-          <p className="options__form--max">{this.max}</p>
+          <p className="options__form--max">{max}</p>
         </div>
         <div>
           <span className="options__ms">
-            {this.props.ms}
+            {ms}
           </span>
           &nbsp;milliseconds between strobes
       </div>
         <div className="options__buttonWrapper">
           <a
-            onClick={this.onCloseClick}
+            onClick={onCloseClick}
             className="options__button">
             Close
         </a>

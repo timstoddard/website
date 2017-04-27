@@ -3,6 +3,8 @@ import { Link } from 'react-router'
 
 import NavLink from '../NavLink'
 
+// TODO make this an array
+
 const Projects = ({ children }) =>
   <div className="projects">
     <nav className="projects__nav blue">

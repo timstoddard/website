@@ -13,9 +13,11 @@ export default class HeapDetail extends Component {
   }
 
   getTreeString() {
-    const treeString = this.state.showSorted
-      ? printTree(this.props.sortedHeap)
-      : printTree(this.props.inputHeap)
+    const { showSorted } = this.state
+    const { sortedHeap, inputHeap } = this.props
+    const treeString = showSorted
+      ? printTree(sortedHeap)
+      : printTree(inputHeap)
     return { __html: `${treeString}<br><br>` }
   }
 
@@ -28,6 +30,9 @@ export default class HeapDetail extends Component {
   }
 
   render() {
+    const { sortedHeap, inputHeap } = this.props
+    const { showSorted } = this.state
+
     return (
       <div className="heapDetail blue-grey lighten-4">
         <hr />
@@ -41,9 +46,9 @@ export default class HeapDetail extends Component {
           className="btn heapDetail__button">
           show sorted heap
         </a>
-        <p>Number of elements: {this.props.inputHeap.heapSize()}</p>
-        <p>Number of levels: {this.props.inputHeap.treeHeight()}</p>
-        <p>Heap in array form: {this.props[this.state.showSorted ? 'sortedHeap' : 'inputHeap'].toString()}</p>
+        <p>Number of elements: {inputHeap.heapSize()}</p>
+        <p>Number of levels: {inputHeap.treeHeight()}</p>
+        <p>Heap in array form: {(showSorted ? sortedHeap : inputHeap).toString()}</p>
         <div className="heapDetail__treeWrapper">
           <div
             dangerouslySetInnerHTML={this.getTreeString()}

@@ -38,8 +38,22 @@
       "error",
       "unix"
     ],
+    "object-shorthand": [
+      "error",
+      "always"
+    ],
     "prefer-const": [
       "error"
+    ],
+    "prefer-destructuring": [
+      "error",
+      {
+        "array": true,
+        "object": true
+      },
+      {
+        "enforceForRenamedProperties": false
+      }
     ],
     "quotes": [
       "error",

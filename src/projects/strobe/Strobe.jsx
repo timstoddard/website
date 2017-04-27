@@ -25,8 +25,9 @@ export default class Strobe extends Component {
   }
 
   componentDidMount() {
+    const { ms } = this.state
     this.colorChanger = new ColorChanger()
-    this.moveInterval = setInterval(this.updateStrobe, this.state.ms)
+    this.moveInterval = setInterval(this.updateStrobe, ms)
   }
 
   componentWillUnmount() {
@@ -37,8 +38,8 @@ export default class Strobe extends Component {
     this.setState({ background: this.colorChanger.nextColor() })
   }
 
-  updateMs(newMs) {
-    this.setState({ ms: newMs })
+  updateMs(ms) {
+    this.setState({ ms })
   }
 
   showOptions() {
@@ -56,27 +57,29 @@ export default class Strobe extends Component {
   }
 
   togglePause(showOptions) {
+    const { paused, background, ms } = this.state
     if (showOptions) {
       this.setState({ showOptions: true })
     }
-    if (!this.state.paused) {
+    if (!paused) {
       clearInterval(this.moveInterval)
-      if (this.state.background === 'rgb(0,0,0)') {
+      if (background === 'rgb(0,0,0)') {
         this.updateStrobe()
       }
     } else {
-      this.moveInterval = setInterval(this.updateStrobe, this.state.ms)
+      this.moveInterval = setInterval(this.updateStrobe, ms)
     }
-    this.setState({ paused: !this.state.paused })
+    this.setState({ paused: !paused })
   }
 
   render() {
     document.title = 'Strobe'
+    const { background, showOptions, ms } = this.state
     return (
       <div
         className="strobe--regular"
-        style={{ background: this.state.background }}>
-        {!this.state.showOptions &&
+        style={{ background }}>
+        {!showOptions &&
           <div className="strobe__buttons">
             <a
               onClick={() => this.togglePause(false)}
@@ -88,12 +91,15 @@ export default class Strobe extends Component {
               className="strobe__button">
               Options
             </a>
-          </div>}
-        {this.state.showOptions && <StrobeOptions
-          ms={this.state.ms}
-          updateMs={this.updateMs}
-          hideOptions={this.hideOptions}
-          />}
+          </div>
+        }
+        {showOptions &&
+          <StrobeOptions
+            ms={ms}
+            updateMs={this.updateMs}
+            hideOptions={this.hideOptions}
+            />
+          }
       </div>
     )
   }

@@ -41,7 +41,7 @@ const createServer = (setUp) => {
                     .replace(/<div class="feedflare"[\s\S]*/, ''),
                 }
               })
-              response.send(JSON.stringify({ items: items }))
+              response.send(JSON.stringify({ items }))
             })
           })
         }).on('error', function(e) {

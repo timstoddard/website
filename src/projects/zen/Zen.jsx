@@ -33,11 +33,13 @@ export default class Zen extends Component {
   }
 
   onWindowResize() {
+    const { innerWidth, innerHeight } = window
+    const { minRadius } = this.state
     this.setState({
-      screenCenterX: window.innerWidth / 2,
-      screenCenterY: window.innerHeight / 2,
-      minRadius: this.state.minRadius,
-      maxRadius: (Math.min(window.innerWidth, window.innerHeight) * 2 / 5),
+      screenCenterX: innerWidth / 2,
+      screenCenterY: innerHeight / 2,
+      minRadius,
+      maxRadius: (Math.min(innerWidth, innerHeight) * 2 / 5),
     })
   }
 
@@ -50,26 +52,27 @@ export default class Zen extends Component {
 
   render() {
     document.title = 'Zen Mode'
+    const { screenCenterX, screenCenterY, maxRadius } = this.state
     return (
       <div className="zen">
         <Mover
           ref={mover => this.mover1 = mover}
           direction={1}
           offset={0}
-          centerX={this.state.screenCenterX}
-          centerY={this.state.screenCenterY}
+          centerX={screenCenterX}
+          centerY={screenCenterY}
           minRadius={60}
-          maxRadius={this.state.maxRadius}
+          maxRadius={maxRadius}
           radiusChangeSpeed={0.2}
           />
         <Mover
           ref={mover => this.mover2 = mover}
           direction={-1}
           offset={Math.PI / 2}
-          centerX={this.state.screenCenterX}
-          centerY={this.state.screenCenterY}
+          centerX={screenCenterX}
+          centerY={screenCenterY}
           minRadius={60}
-          maxRadius={this.state.maxRadius}
+          maxRadius={maxRadius}
           radiusChangeSpeed={0.4}
           />
       </div>

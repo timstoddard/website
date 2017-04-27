@@ -23,51 +23,48 @@ const LoadingAnimation = () =>
     )}
   </div>
 
-const WeatherForecastHeader = ({ className, currentObservation, reloading, setReloading }) => {
-  const degree = String.fromCharCode(176)
-  return (
-    <div className={className}>
-      {currentObservation
-        ? (
-          <div className="weatherForecastHeader">
-            <img
-              src={Utils.secureImg(currentObservation.icon)}
-              alt={currentObservation.icon}
-              className="weatherForecastHeader__icon--weather"
-              />
-            <div className="weatherForecastHeader__city">
-              {`${currentObservation.display_location.city}: ${currentObservation.temp_f}${degree}F`}
-              {Math.abs(currentObservation.temp_f - currentObservation.feelslike_f) > 2 && (
-                <span className="weatherForecastHeader__feelsLike">
-                  {` (Feels like ${currentObservation.feelslike_f}${degree}F)`}
-                </span>
-              )}
-            </div>
-            {reloading
-              ? <LoadingAnimation />
-              : (
-                <img
-                  src="../../media/icons/reload.svg"
-                  alt="Reload"
-                  role="button"
-                  onClick={() => Utils.reloadWeatherData(setReloading)}
-                  className="weatherForecastHeader__icon--reload"
-                  />
-              )}
+const DEGREE = String.fromCharCode(176)
+const WeatherForecastHeader = ({ className, currentObservation, reloading, setReloading }) =>
+  <div className={className}>
+    {currentObservation
+      ? (
+        <div className="weatherForecastHeader">
+          <img
+            src={Utils.secureImg(currentObservation.icon)}
+            alt={currentObservation.icon}
+            className="weatherForecastHeader__icon--weather"
+            />
+          <div className="weatherForecastHeader__city">
+            {`${currentObservation.display_location.city}: ${currentObservation.temp_f}${DEGREE}F`}
+            {Math.abs(currentObservation.temp_f - currentObservation.feelslike_f) > 2 && (
+              <span className="weatherForecastHeader__feelsLike">
+                {` (Feels like ${currentObservation.feelslike_f}${DEGREE}F)`}
+              </span>
+            )}
           </div>
-        )
-        : (
-          <div className="weatherForecastHeader">
-            <div className="weatherForecastHeader__loading">
-              Loading weather...
-            </div>
-            <LoadingAnimation />
+          {reloading
+            ? <LoadingAnimation />
+            : (
+              <img
+                src="../../media/icons/reload.svg"
+                alt="Reload"
+                role="button"
+                onClick={() => Utils.reloadWeatherData(setReloading)}
+                className="weatherForecastHeader__icon--reload"
+                />
+            )}
+        </div>
+      )
+      : (
+        <div className="weatherForecastHeader">
+          <div className="weatherForecastHeader__loading">
+            Loading weather...
           </div>
-        )
-      }
-    </div>
-  )
-}
+          <LoadingAnimation />
+        </div>
+      )
+    }
+  </div>
 
 WeatherForecastHeader.propTypes = {
   className: PropTypes.string,
@@ -99,7 +96,7 @@ export default class InfoBar extends Component {
   }
 
   checkForSavedName() {
-    const url = window.location.href // TODO: does react router have something for this?
+    const url = window.location.href
     const index = url.indexOf('?')
     if (index === -1) return
 
@@ -108,7 +105,7 @@ export default class InfoBar extends Component {
 
     try {
       name = decodeURIComponent(name)
-      this.setState({ name: name })
+      this.setState({ name })
       localStorage.setItem('name', name)
     }
     /* eslint-disable no-empty */
@@ -118,30 +115,33 @@ export default class InfoBar extends Component {
 
   updateTime() {
     const now = new Date()
-    this.setState({ now: now })
+    this.setState({ now })
     const millis = now.getMilliseconds()
     this.nowTimer = setTimeout(this.updateTime, 1000 - millis)
   }
 
   render() {
-    const now = this.state.now
-    return (<div className="infoBar cyan accent-3 black-text z-depth-1">
-      <div className="infoBar__item">
-        {Utils.createWelcomeMessage(now)}
+    const { currentObservation, reloading, setReloading } = this.props
+    const { now } = this.state
+    return (
+      <div className="infoBar cyan accent-3 black-text z-depth-1">
+        <div className="infoBar__item">
+          {Utils.createWelcomeMessage(now)}
+        </div>
+        <div className="infoBar__item">
+          {Utils.createDateString(now)}
+        </div>
+        <div className="infoBar__item">
+          {Utils.formatTime(now)}
+        </div>
+        <WeatherForecastHeader
+          currentObservation={currentObservation}
+          reloading={reloading}
+          setReloading={setReloading}
+          className="infoBar__item"
+          />
       </div>
-      <div className="infoBar__item">
-        {Utils.createDateString(now)}
-      </div>
-      <div className="infoBar__item">
-        {Utils.formatTime(now)}
-      </div>
-      <WeatherForecastHeader
-        currentObservation={this.props.currentObservation}
-        reloading={this.props.reloading}
-        setReloading={this.props.setReloading}
-        className="infoBar__item"
-        />
-    </div>)
+    )
   }
 }
 

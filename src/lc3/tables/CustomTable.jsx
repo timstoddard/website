@@ -8,10 +8,11 @@ const CustomTable = ({ title, headers, body }) =>
     <table className="LC3CustomTable bordered centered">
       <thead>
         <tr>
-          {headers.map((header, index) =>
+          {headers.map(header =>
             <th key={header}>
               {header}
-            </th>)}
+            </th>
+          )}
         </tr>
       </thead>
       <tbody>{body}</tbody>

@@ -28,7 +28,4 @@ NotFound.propTypes = {
   to: PropTypes.string.isRequired,
 }
 
-// const NotFoundWithProps = (to, destination) =>
-//   () => <NotFound to={to} destination={destination} />
-
 export default NotFound

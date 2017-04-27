@@ -23,20 +23,20 @@ const DetailDescription = ({ description }) =>
 
 const DetailOperation = ({ operation }) =>
   <div className="detailOperation">
-    {operation.map((line, index) =>
-      line.tooltip
+    {operation.map(({ tooltip, text, indentationLevel }, index) =>
+      tooltip
         ? (
           <div
             key={index}
             className="detailOperation__tooltip">
-            <em>{line.text}</em>
+            <em>{text}</em>
           </div>
         )
         : (
           <div
             key={index}
-            className={`detail__text--code detailOperation__text--${line.indentationLevel}`}>
-            {line.text}
+            className={`detail__text--code detailOperation__text--${indentationLevel}`}>
+            {text}
           </div>
         )
     )}
@@ -62,6 +62,8 @@ class InstructionRow extends Component {
   }
 
   render() {
+    const { instruction, modifiesCC, format } = this.props
+    const { expanded } = this.state
     return (
       <div>
         <div
@@ -70,30 +72,31 @@ class InstructionRow extends Component {
           <div className="col s3">
             <div className="instruction__wrapper">
               <div className="instruction__name">
-                {this.props.instruction.name}
+                {instruction.name}
               </div>
-              <div className={`instruction__modifiesCC--${this.props.modifiesCC}`} />
+              <div className={`instruction__modifiesCC--${modifiesCC}`} />
             </div>
           </div>
           <InstructionEncoding
             className="col s9"
-            encoding={this.props.format.encoding}
+            encoding={format.encoding}
             />
         </div>
-        <div className={`instruction__detail ${this.state.expanded ? '' : 'instruction__detail--hidden'}`}>
+        <div className={`instruction__detail ${expanded ? '' : 'instruction__detail--hidden'}`}>
           <DetailHeader
-            assemblerFormat={this.props.format.assemblerFormat}
-            fn={this.props.instruction.function}
+            assemblerFormat={format.assemblerFormat}
+            fn={instruction.function}
             />
-          <DetailDescription description={this.props.instruction.description} />
-          <DetailOperation operation={this.props.instruction.operation} />
-          {this.props.format.examples.map((example, index) =>
+          <DetailDescription description={instruction.description} />
+          <DetailOperation operation={instruction.operation} />
+          {format.examples.map((example, index) =>
             <DetailExample
               key={index}
               example={example}
               />)}
         </div>
-      </div>)
+      </div>
+    )
   }
 }
 
@@ -106,8 +109,9 @@ const LC3Ref = () =>
         href="https://drive.google.com/file/d/0B9dz0Ddcl3ESRUdQX1lQczBwblk/view"
         target="_blank"
         rel="noopener noreferrer">
-        this pdf)
+        this pdf
       </a>
+      )
     </h5>
     <div className="refList__content">
       {instructions.map(instruction =>

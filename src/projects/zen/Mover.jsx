@@ -16,30 +16,33 @@ export default class Mover extends Component {
   }
 
   move(nextColor) {
+    const { radiusChangeSpeed, maxRadius, minRadius, direction, offset, centerX, centerY } = this.props
+    const { radius, radiusIncr, theta, thetaChangeSpeed } = this.state
+
     // update radius
-    if (this.state.radiusIncr) {
-      var newRadius = this.state.radius + this.props.radiusChangeSpeed
-      var newRadiusIncr = this.state.radiusIncr
-      if (newRadius >= this.props.maxRadius) {
-        newRadius = this.props.maxRadius - this.props.radiusChangeSpeed
+    if (radiusIncr) {
+      var newRadius = radius + radiusChangeSpeed
+      var newRadiusIncr = radiusIncr
+      if (newRadius >= maxRadius) {
+        newRadius = maxRadius - radiusChangeSpeed
         newRadiusIncr = false
       }
     } else {
-      newRadius = this.state.radius - this.props.radiusChangeSpeed
-      if (newRadius <= this.props.minRadius) {
-        newRadius = this.props.minRadius + this.props.radiusChangeSpeed
+      newRadius = radius - radiusChangeSpeed
+      if (newRadius <= minRadius) {
+        newRadius = minRadius + radiusChangeSpeed
         newRadiusIncr = true
       }
     }
     // increment theta value
-    const newTheta = (this.state.theta + this.state.thetaChangeSpeed * this.props.direction) % (Math.PI * 2)
+    const newTheta = (theta + thetaChangeSpeed * direction) % (Math.PI * 2)
     // calculate x and y values
-    const sin = Math.sin(newTheta + this.props.offset)
-    const cos = Math.cos(newTheta + this.props.offset)
-    const newX = this.props.centerX + Math.floor(newRadius * cos)
-    const newY = this.props.centerY + Math.floor(newRadius * sin)
+    const sin = Math.sin(newTheta + offset)
+    const cos = Math.cos(newTheta + offset)
+    const newX = centerX + Math.floor(newRadius * cos)
+    const newY = centerY + Math.floor(newRadius * sin)
     // update new tile
-    const radiusProportion = this.state.radius / this.props.maxRadius
+    const radiusProportion = radius / maxRadius
     const newBoxShadow = `0px 0px ${50 + radiusProportion * 50}px ${15 + radiusProportion * 40}px ${nextColor}`
     this.setState({
       radius: newRadius,
@@ -52,21 +55,24 @@ export default class Mover extends Component {
   }
 
   render() {
+    document.title = 'Zen Mode'
+    const { x, y, boxShadow } = this.state
+
     return (
       <div>
         <div
           style={{
-            'left': this.state.x,
-            'top': this.state.y,
-            'boxShadow': this.state.boxShadow,
+            'left': x,
+            'top': y,
+            boxShadow,
           }}
           className="zen__block"
           />
         <div
           style={{
-            'right': this.state.x,
-            'bottom': this.state.y,
-            'boxShadow': this.state.boxShadow,
+            'right': x,
+            'bottom': y,
+            boxShadow,
           }}
           className="zen__block"
           />

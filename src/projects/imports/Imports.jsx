@@ -18,22 +18,32 @@ export default class Imports extends Component {
     }
   }
 
+  componentDidMount() {
+    document.getElementById('input').focus()
+  }
+
   onChange(event) {
     this.setState({ rawValue: event.target.value })
   }
 
   checkKeyDown(event) {
-    if (event.key === 'Shift') {
+    const { key } = event
+    const { shiftKeyDown } = this.state
+    
+    if (key === 'Shift') {
       this.setState({ shiftKeyDown: true })
     }
-    if (event.key === 'Enter' && !this.state.shiftKeyDown) {
+    
+    if (key === 'Enter' && !shiftKeyDown) {
       event.preventDefault()
       this.fix()
     }
   }
 
   checkKeyUp(event) {
-    if (event.key === 'Shift') {
+    const { key } = event
+
+    if (key === 'Shift') {
       this.setState({ shiftKeyDown: false })
     }
   }
@@ -42,8 +52,11 @@ export default class Imports extends Component {
     event.preventDefault()
     const clipboardData = event.clipboardData || window.clipboardData
     const pastedData = clipboardData.getData('Text')
-    this.setState({ rawValue: pastedData })
-    document.getElementById('input').value = this.state.rawValue
+    this.setState({ rawValue: pastedData }, () => {
+      // TODO is this needed?
+      const { rawValue } = this.state
+      document.getElementById('input').value = rawValue
+    })
   }
 
   loadMockImports() {
@@ -65,12 +78,15 @@ import {EventEmitter, Component} from '@angular/core';;
 import {  Location,  EventEmitter  } from '@angular/core'
 import {TestComponent, OtherComponent, ACoolService, SomeDirective, CoolOtherComponent, OtherOtherComponent, asyncValidator, state, acoolservice, LOWERCASE, uppercase} from "../my/app/is/cool";
 import * as something from './test-me';
-import 'code';`})
-    document.getElementById('input').value = this.state.rawValue
+import 'code';`}, () => {
+      // TODO is this needed?
+      const { rawValue } = this.state
+      document.getElementById('input').value = rawValue
+    })
   }
 
   fix() {
-    const value = document.getElementById('input').value
+    const { value } = document.getElementById('input')
     const result = fixImports(value)
     this.setState({ formattedValue: result }, () => {
       document.getElementById('output').focus()
@@ -79,6 +95,8 @@ import 'code';`})
 
   render() {
     document.title = 'Import Fixer'
+    const { onChange, checkKeyDown, checkKeyUp, replaceText, loadMockImports, fix } = this
+    const { rawValue, formattedValue } = this.state
     // TODO: use `ref`s to interact with textareas
     return (
       <div className="center-align">
@@ -86,27 +104,27 @@ import 'code';`})
         <textarea
           id="input"
           className="import__textarea"
-          value={this.state.rawValue}
-          onChange={this.onChange}
-          onKeyDown={this.checkKeyDown}
-          onKeyUp={this.checkKeyUp}
-          onPaste={this.replaceText}
+          value={rawValue}
+          onChange={onChange}
+          onKeyDown={checkKeyDown}
+          onKeyUp={checkKeyUp}
+          onPaste={replaceText}
           />
         <div>
           <a
             className="import__button waves-effect waves-light btn light-blue accent-2"
-            onClick={this.loadMockImports}>
+            onClick={loadMockImports}>
             load sample
           </a>
           <a
             className="import__button waves-effect waves-light btn light-blue accent-2"
-            onClick={this.fix}>
+            onClick={fix}>
             fix imports
           </a>
         </div>
         <textarea
           id="output"
-          value={this.state.formattedValue}
+          value={formattedValue}
           className="import__textarea"
           />
       </div>
@@ -121,10 +139,10 @@ const fixImports = (value) => {
     .split('\n') // split over the newlines
   const lines = []
   let lastLineWasComplete = true
-  rawLines.forEach(function(value) {
+  rawLines.forEach((value) => {
     // get rid of leading/trailing whitespace
     value = value.trim()
-    const lastChar = value.charAt(value.length - 1)
+    const lastChar = value[value.length - 1]
     // line ends with a semicolon -- awesome!
     if (lastChar === ';') {
       if (!lastLineWasComplete) {
@@ -159,7 +177,7 @@ const fixImports = (value) => {
 
   // create an object to hold of the module objects
   const modules = {}
-  lines.forEach(function(value) {
+  lines.forEach((value) => {
     // don't want any blank imports
     if (value.trim().length > 0) {
       // need module name, as well as data about import
@@ -170,10 +188,10 @@ const fixImports = (value) => {
         // add data to existing module object
         const newImports = data.imports
         // loop over all the new imports
-        newImports.forEach(function(value) {
+        newImports.forEach((value) => {
           // check if module already contains this import
           let alreadyContained = false
-          modules[data.path].imports.forEach(function(existingValue) {
+          modules[data.path].imports.forEach((existingValue) => {
             if (existingValue.importName === value.importName) {
               alreadyContained = true
             }
@@ -192,7 +210,7 @@ const fixImports = (value) => {
   const internalImports = []
   for (const prop in modules) {
     const currentModule = modules[prop]
-    currentModule.imports.sort(function(a, b) {
+    currentModule.imports.sort((a, b) => {
       return a.importName.toLowerCase().localeCompare(b.importName.toLowerCase())
     })
     if (currentModule.thirdParty) {
@@ -203,7 +221,7 @@ const fixImports = (value) => {
   }
 
   // sort modules by name
-  const sorter = function(a, b) {
+  const sorter = (a, b) => {
     if (a.imports.length === 0) {
       if (b.imports.length === 0) {
         // a and b both have no imports, so sort by module name
@@ -233,15 +251,15 @@ const fixImports = (value) => {
   // generate the final string
   let result = ''
   if (thirdPartyImports) {
-    thirdPartyImports.forEach(function(value, index) {
-      const importStr = generateImportString(value.imports, value.path, value.brackets)
+    thirdPartyImports.forEach(({ imports, path, brackets }, index) => {
+      const importStr = generateImportString(imports, path, brackets)
       result += importStr + (index < thirdPartyImports.length - 1 ? '\n' : '')
     })
     result += internalImports ? '\n\n' : ''
   }
   if (internalImports) {
-    internalImports.forEach(function(value, index) {
-      const importStr = generateImportString(value.imports, value.path, value.brackets)
+    internalImports.forEach(({ imports, path, brackets }, index) => {
+      const importStr = generateImportString(imports, path, brackets)
       result += importStr + (index < internalImports.length - 1 ? '\n' : '')
     })
   }
@@ -251,12 +269,11 @@ const fixImports = (value) => {
 
 const getData = (str) => {
   // module data
-  let moduleName = ''
-  if (str.indexOf('\'') > -1) { // single quotes
-    moduleName = str.substring(str.indexOf('\'') + 1, str.lastIndexOf('\''))
-  } else { // double quotes
-    moduleName = str.substring(str.indexOf('"') + 1, str.lastIndexOf('"'))
-  }
+  const moduleName = str.indexOf('\'') > -1
+    ? str.substring(str.indexOf('\'') + 1, str.lastIndexOf('\''))
+    : str.substring(str.indexOf('"') + 1, str.lastIndexOf('"'))
+
+  // TODO fix this to be module name, not path name
   let firstModuleNameChar = moduleName.search(/[^\.\/]/)
   if (firstModuleNameChar === -1) { // only a relative path, no folder/file names
     firstModuleNameChar = moduleName.length
@@ -269,7 +286,7 @@ const getData = (str) => {
   if (str.indexOf('{') > -1 && str.indexOf('}') > -1) {
     var brackets = true
     const imports = str.substring(str.indexOf('{') + 1, str.indexOf('}')).split(',')
-    imports.forEach(function(value) {
+    imports.forEach((value) => {
       if (value.indexOf(' as ') > -1) {
         const data = value.split(' as ')
         aliases.push({ importName: data[0].trim(), alias: data[1].trim() })
@@ -296,19 +313,21 @@ const getData = (str) => {
     pathLength: prefixLength,
     imports: aliases,
     thirdParty: !/[./]/.test(moduleName[0]),
-    brackets: brackets,
+    brackets,
   }
 }
 
 const generateImportString = (imports, moduleName, useBrackets) => {
-  let importStr = 'import ' + (useBrackets ? '{ ' : '')
+  let importStr = `import ${useBrackets ? '{ ' : ''}`
   if (imports.length > 0) {
-    imports.forEach(function(importValue, index) {
-      importStr += importValue.importName + (importValue.alias ? ' as ' + importValue.alias : '') + (index < imports.length - 1 ? ', ' : '')
+    imports.forEach(({ importName, alias }, index) => {
+      importStr += importName
+        + (alias ? ` as ${alias}` : '')
+        + (index < imports.length - 1 ? ', ' : '')
     })
-    importStr += (useBrackets ? ' }' : '') + ' from \'' + moduleName + '\';'
+    importStr += `${useBrackets ? ' }' : ''} from '${moduleName}';`
   } else {
-    importStr += '\'' + moduleName + '\';'
+    importStr += `'${moduleName}';`
   }
 
   // limit line to 140 characters (TODO make this an option)

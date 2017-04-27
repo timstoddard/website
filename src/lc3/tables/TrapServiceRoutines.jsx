@@ -37,12 +37,13 @@ const data = [
 ]
 
 const TrapServiceRoutines = () => {
-  const rows = data.map(row =>
-    <tr key={row.trapVector}>
-      <td>{row.trapVector}</td>
-      <td>{row.assemblerName}</td>
-      <td>{row.description}</td>
-    </tr>)
+  const rows = data.map(({ trapVector, assemblerName, description }) =>
+    <tr key={trapVector}>
+      <td>{trapVector}</td>
+      <td>{assemblerName}</td>
+      <td>{description}</td>
+    </tr>
+  )
   return (
     <CustomTable
       title="Trap Service Routines"

@@ -42,18 +42,19 @@ export default class Start extends Component {
 
   render() {
     document.title = 'Start'
+    const { currentObservation, reloading, forecast } = this.state
     return (
       <div>
         <InfoBar
-          currentObservation={this.state.currentObservation}
-          reloading={this.state.reloading}
+          currentObservation={currentObservation}
+          reloading={reloading}
           setReloading={this.setReloading}
           />
         <div className="start row">
           <Links className="col s12 m3 l2" />
           <MainContent
             className="col s12 m9 l10"
-            forecast={this.state.forecast}
+            forecast={forecast}
             />
         </div>
       </div>

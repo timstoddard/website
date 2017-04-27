@@ -14,15 +14,16 @@ export default class HeapInput extends Component {
 
   checkUrlHash() {
     try {
+      const { generateHeaps } = this.props
       const hashData = decodeURIComponent(window.location.hash.substr(1))
       if (/\d(\,\d+)*/.test(hashData)) {
         this.input.value = hashData
         const ints = hashData.split(',').map(num => parseInt(num, 10))
-        this.props.generateHeaps(ints)
+        generateHeaps(ints)
       } else {
         window.location.hash = ''
         this.input.value = ''
-        this.props.generateHeaps([])
+        generateHeaps([])
       }
     } catch (e) {
       window.location.hash = ''

@@ -32,11 +32,11 @@ const data = [
 ]
 
 const AssemblerDirectives = () => {
-  const rows = data.map(row =>
-    <tr key={row.opcode}>
-      <td>{row.opcode}</td>
-      <td>{row.operand}</td>
-      <td>{row.meaning}</td>
+  const rows = data.map(({ opcode, operand, meaning }) =>
+    <tr key={opcode}>
+      <td>{opcode}</td>
+      <td>{operand}</td>
+      <td>{meaning}</td>
     </tr>)
   return (
     <CustomTable

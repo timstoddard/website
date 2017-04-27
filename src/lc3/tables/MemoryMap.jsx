@@ -32,15 +32,15 @@ const data = [
 ]
 
 const MemoryMap = () => {
-  const rows = data.map(row => {
-    const rangeStart = parseInt(`0${row.start}`, 16)
-    const rangeEnd = parseInt(`0${row.end}`, 16)
+  const rows = data.map(({ start, end, name }) => {
+    const rangeStart = parseInt(`0${start}`, 16)
+    const rangeEnd = parseInt(`0${end}`, 16)
     const rangeLength = rangeEnd - rangeStart
     return (
-      <tr key={row.start}>
-        <td>{`${row.start} - ${row.end}`}</td>
+      <tr key={start}>
+        <td>{start} - {end}</td>
         <td>{rangeLength}</td>
-        <td>{row.name}</td>
+        <td>{name}</td>
       </tr>
     )
   })

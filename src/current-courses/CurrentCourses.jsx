@@ -8,11 +8,11 @@ const CurrentCourses = () =>
       <div className="currentCourses__header">Tim&apos;s Current Courses</div>
       <div className="currentCourses__divider" />
       <div>
-        {courses.map(course =>
+        {courses.map(({ id, name, fullName }) =>
           <div
-            key={course.id}
+            key={id}
             className="currentCourses__course">
-            {course.name}: {course.fullName}
+            {name}: {fullName}
           </div>)}
       </div>
     </div>

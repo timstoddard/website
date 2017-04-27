@@ -1,13 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 
-import Cell from './Cell'
+import Cell, { CellState } from './Cell'
 import ControlPanel from './ControlPanel'
-
-export class CellState {
-  static get UNSELECTED() { return 0 }
-  static get SELECTED() { return 1 }
-  static get SUBMITTED() { return 2 }
-}
 
 const shuffle = (array) => {
   let m = array.length, t, i
@@ -31,9 +25,11 @@ export default class Board extends Component {
   }
 
   onClick(index) {
-    if (!this.state.userWon) {
-      const newBoard = this.state.board.slice()
-      let selectedCells = this.state.selectedCells
+    const { userWon, board } = this.state
+    if (!userWon) {
+      const newBoard = board.slice()
+      let { selectedCells } = this.state
+      // TODO don't allow unselecting submitted cells
       if (newBoard[index] === CellState.UNSELECTED) {
         newBoard[index] = CellState.SELECTED
         selectedCells++
@@ -41,20 +37,23 @@ export default class Board extends Component {
         newBoard[index] = CellState.UNSELECTED
         selectedCells--
       }
-      this.setState({ board: newBoard, selectedCells: selectedCells })
+      this.setState({ board: newBoard, selectedCells })
     }
   }
 
   onSubmit() {
+    const { onSubmit } = this.props
+    const { userWon, board, moveCount } = this.state
+
     // load new game if user won
-    if (this.state.userWon) {
-      this.props.onSubmit()
+    if (userWon) {
+      onSubmit()
       this.setState(this.init())
       return
     }
 
     // update status of all selected cells
-    const newBoard = this.state.board.slice()
+    const newBoard = board.slice()
     for (let i = 0; i < 25; i++) {
       if (newBoard[i] === CellState.SELECTED) {
         newBoard[i] = CellState.SUBMITTED
@@ -62,16 +61,18 @@ export default class Board extends Component {
     }
     this.setState({
       board: newBoard,
-      moveCount: this.state.moveCount + 1,
+      moveCount: moveCount + 1,
     }, () => {
+      const { board } = this.state
+
       // check for bingo on rows and columns
       for (let i = 0; i < 5; i++) {
         let fullColumn = true, fullRow = true
         for (let j = 0; j < 5; j++) {
-          if (this.state.board[i * 5 + j] !== CellState.SUBMITTED) {
+          if (board[i * 5 + j] !== CellState.SUBMITTED) {
             fullRow = false
           }
-          if (this.state.board[j * 5 + i] !== CellState.SUBMITTED) {
+          if (board[j * 5 + i] !== CellState.SUBMITTED) {
             fullColumn = false
           }
         }
@@ -83,10 +84,10 @@ export default class Board extends Component {
       // check for bingo on diagonals
       let fullDiagonalDown = true, fullDiagonalUp = true
       for (let j = 0; j < 5; j++) {
-        if (this.state.board[j * 5 + j] !== CellState.SUBMITTED) {
+        if (board[j * 5 + j] !== CellState.SUBMITTED) {
           fullDiagonalDown = false
         }
-        if (this.state.board[(j + 1) * 4] !== CellState.SUBMITTED) {
+        if (board[(j + 1) * 4] !== CellState.SUBMITTED) {
           fullDiagonalUp = false
         }
       }
@@ -95,7 +96,7 @@ export default class Board extends Component {
       }
 
       // load a new video since the user hasn't won yet
-      this.props.onSubmit()
+      onSubmit()
     })
   }
 
@@ -149,7 +150,7 @@ export default class Board extends Component {
     }
     return {
       items: this.getItems(),
-      board: board,
+      board,
       moveCount: 0,
       selectedCells: 1, // middle square is a freebie
       buttonText: 'submit',
@@ -168,30 +169,35 @@ export default class Board extends Component {
   }
 
   render() {
+    const { onSubmit } = this
+    const { className } = this.props
+    const { board, items, moveCount, selectedCells, buttonText } = this.state
     const tableRows = []
+
     for (let i = 0; i < 5; i++) {
       const tableRow = []
       for (let j = 0; j < 5; j++) {
         const index = i * 5 + j
         tableRow.push(<Cell
           key={index}
-          title={this.state.items[index]}
-          status={this.state.board[index]}
+          title={items[index]}
+          status={board[index]}
           onClick={() => this.onClick(index)}
           />)
       }
-      tableRows.push(<tr key={'r' + i}>{tableRow}</tr>)
+      tableRows.push(<tr key={`r${i}`}>{tableRow}</tr>)
     }
+
     return (
-      <div className={this.props.className}>
+      <div className={className}>
         <table className="centered">
           <tbody>{tableRows}</tbody>
         </table>
         <ControlPanel
-          moveCount={this.state.moveCount}
-          selectedCells={this.state.selectedCells}
-          buttonText={this.state.buttonText}
-          onSubmit={this.onSubmit}
+          moveCount={moveCount}
+          selectedCells={selectedCells}
+          buttonText={buttonText}
+          onSubmit={onSubmit}
           />
       </div>
     )

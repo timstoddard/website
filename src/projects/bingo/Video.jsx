@@ -20,8 +20,8 @@ export default class Video extends Component {
       type: 'GET',
       dataType: 'json',
       cache: false,
-      success: function(response) {
-        this.setState({ videos: response.data.children })
+      success: function({ data }) {
+        this.setState({ videos: data.children })
         this.loadNewVideo()
       }.bind(this),
       error: function(xhr, status, errorThrown) {
@@ -47,16 +47,18 @@ export default class Video extends Component {
   }
 
   onResize() {
+    const { currentVideoAspectRatio } = this.state
     const iframe = $(('iframe[src*="www.youtube.com"]'))
-    setTimeout(() => iframe.height(iframe.width() / this.state.currentVideoAspectRatio))
+    setTimeout(() => iframe.height(iframe.width() / currentVideoAspectRatio))
   }
 
   loadNewVideo() {
-    let newIndex = this.state.previousVideoIndex
-    while (newIndex === this.state.previousVideoIndex || !this.state.videos[newIndex].data.media_embed.content) {
-      newIndex = Math.floor(this.state.videos.length * Math.random())
+    const { videos, previousVideoIndex } = this.state
+    let newIndex = previousVideoIndex
+    while (newIndex === previousVideoIndex || !videos[newIndex].data.media_embed.content) {
+      newIndex = Math.floor(videos.length * Math.random())
     }
-    const video = this.state.videos[newIndex].data
+    const video = videos[newIndex].data
     const videoRawHtml = video.media_embed.content
     const videoWidth = parseInt(videoRawHtml.match(/width="(\d+)"/)[1], 10)
     const videoHeight = parseInt(videoRawHtml.match(/height="(\d+)"/)[1], 10)
@@ -77,17 +79,15 @@ export default class Video extends Component {
     })
   }
 
-  videoHtml() {
-    return { __html: this.state.currentVideoHtml }
-  }
-
   render() {
+    const { className } = this.props
+    const { currentVideoTitle, currentVideoHtml } = this.state
     return (
-      <div className={this.props.className}>
-        <h5>{this.state.currentVideoTitle}</h5>
+      <div className={className}>
+        <h5>{currentVideoTitle}</h5>
         <div
           ref={(div) => this.videoDiv = div}
-          dangerouslySetInnerHTML={this.videoHtml()}
+          dangerouslySetInnerHTML={{ __html: currentVideoHtml }}
           />
       </div>
     )

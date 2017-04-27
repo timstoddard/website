@@ -40,8 +40,8 @@ const setupDropdownLinks = (courseId, gdriveFolderId, otherLinks) => {
     name: 'Drive',
     href: `https://drive.google.com/drive/folders/${gdriveFolderId}`,
   })
-  otherLinks.forEach(link => {
-    dropdownItems.push({ name: link.name, href: link.href })
+  otherLinks.forEach(({ name, href }) => {
+    dropdownItems.push({ name, href })
   })
   return dropdownItems
 }
@@ -51,11 +51,11 @@ const Dropdown = ({ courseId, index, gdriveFolderId, otherLinks }) =>
     id={`dropdown${index}`}
     className="dropdown-content">
     {setupDropdownLinks(courseId, gdriveFolderId, otherLinks)
-      .map(dropdownItem =>
-        <li key={dropdownItem.href}>
+      .map(({ name, href }) =>
+        <li key={href}>
           <SidebarLink
-            name={dropdownItem.name}
-            href={dropdownItem.href}
+            name={name}
+            href={href}
             inDropdown={true}
             />
         </li>
@@ -142,22 +142,23 @@ export default class Links extends Component {
   }
 
   render() {
+    const { className } = this.props
     return (
-      <div className={`links__collection collection ${this.props.className}`}>
-        {courses.map((course, index) =>
+      <div className={`links__collection collection ${className}`}>
+        {courses.map(({ id, gdriveFolderId, otherLinks }, index) =>
           <Dropdown
-            key={course.id}
+            key={id}
             index={index}
-            courseId={course.id}
-            gdriveFolderId={course.gdriveFolderId}
-            otherLinks={course.otherLinks}
+            courseId={id}
+            gdriveFolderId={gdriveFolderId}
+            otherLinks={otherLinks}
             />
         )}
-        {courses.map((course, index) =>
+        {courses.map(({ id, name }, index) =>
           <DropdownActivator
-            key={course.id}
+            key={id}
             index={index}
-            courseName={course.name}
+            courseName={name}
             />
         )}
         <div className="divider" />
@@ -166,11 +167,11 @@ export default class Links extends Component {
           to="">
           Home
         </Link>
-        {links.map(link =>
+        {links.map(({ href, name }) =>
           <SidebarLink
-            key={link.href}
-            name={link.name}
-            href={link.href}
+            key={href}
+            name={name}
+            href={href}
             />
         )}
       </div>

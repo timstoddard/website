@@ -106,16 +106,16 @@ const Simulator = ({ title }) =>
     <div>The LC3 simulator (lc3sim) is a text based program. It works like many text-based debuggers, so having some familiarity with this type of interface will be useful to you in the future. Start lc3sim by simply executing lc3sim from the command line. Note that the lc3sim is only installed on the 32bit unix machines (unix1-3).The object file to execute can be provided at the command-line as an argument, or loaded separately once lc3sim has started. lc3sim dumps all system registers to the screen on start. You can also see the system registers at any time using the &quot;p&quot; or &quot;printregs&quot; command.</div>
     <h6 className="LC3Sim__sectionSubTitle">Commands</h6>
     <ul>
-      {commands.map((command, index) =>
+      {commands.map(({ name, description }, index) =>
         <li
           key={index}
           className="LC3Sim__row row">
           <div className="col s4">
             <span className="LC3Sim__codeSample">
-              {command.name}
+              {name}
             </span>
           </div>
-          <div className="col s8">{command.description}</div>
+          <div className="col s8">{description}</div>
         </li>
       )}
     </ul>
@@ -124,17 +124,17 @@ const Simulator = ({ title }) =>
     <div>Use a &quot;#&quot; to indicate a decimal value (for example, #99).</div>
     <h6 className="LC3Sim__sectionSubTitle">Examples</h6>
     <ul>
-      {examples.map((example, index) =>
+      {examples.map(({ text, description }, index) =>
         <li
           key={index}
           className="LC3Sim__row row">
           <div className="col s4">
             (lc3sim)&nbsp;
             <span className="LC3Sim__codeSample">
-              {example.text}
+              {text}
             </span>
           </div>
-          <div className="col s8">{example.description}</div>
+          <div className="col s8">{description}</div>
         </li>
       )}
     </ul>

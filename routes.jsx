@@ -29,6 +29,9 @@ import Start from './src/start/Start'
 // current courses
 import CurrentCourses from './src/current-courses/CurrentCourses'
 
+// rice purity test
+import RicePurityTest from './src/rice-purity-test/RicePurityTest'
+
 const Routes = (
   <Route path="">
     <Route
@@ -83,8 +86,8 @@ const Routes = (
         path="/lc3/*"
         component={() =>
           <NotFound
-            to={'/lc3'}
-            destination={'the LC3 homepage'}
+            to="/lc3"
+            destination="the LC3 homepage"
             />}
         />
     </Route>
@@ -120,23 +123,24 @@ const Routes = (
         path="/projects/*"
         component={() =>
           <NotFound
-            to={'/projects'}
-            destination={'the projects homepage'}
+            to="/projects"
+            destination="the projects homepage"
             />}
         />
     </Route>
     <Route
-      path="/strobe-full"
-      component={Strobe}
+      path="/rice-purity-test"
+      component={RicePurityTest}
       />
     <Route
       path="/*"
       component={() =>
         <NotFound
-          to={''}
-          destination={'the homepage'}
+          to=""
+          destination="the homepage"
           />}
       />
-  </Route>)
+  </Route>
+)
 
 export default Routes

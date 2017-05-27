@@ -18,7 +18,7 @@ const Infinity = ({data, link, onClick, handleClick, showingBorders}) => {
     !(data.a || data.b) && showingBorders
       ? 'infinity__child--end--bordered'
       : '',
-    link.length % 2 === 0 ? 'infinity--vertical' : '',
+    link.length % 2 === 1 ? 'infinity--vertical' : '',
     `infinity--level${link.length}`,
   ]
 
@@ -50,18 +50,14 @@ export default class InfinityWrapper extends Component {
     this.handleClick = this.handleClick.bind(this)
     this.handleKeyDown = this.handleKeyDown.bind(this)
 
-    this.state = this.init()
+    this.state = {
+      data: {},
+      showingBorders: false,
+    }
   }
 
   getBaseData() {
     return { a: {}, b: {} }
-  }
-
-  init() {
-    return {
-      data: {},
-      showingBorders: false,
-    }
   }
 
   handleClick(link) {
@@ -77,7 +73,7 @@ export default class InfinityWrapper extends Component {
       link.forEach((name, i) => {
         if (i === link.length - 1) {
           if (statePointer[name].a || statePointer[name].b) {
-            // user clicked on border of an <Infinity> with children
+            // not last child, so don't update
             canUpdate = false
           } else {
             statePointer[name] = this.getBaseData()
@@ -98,7 +94,7 @@ export default class InfinityWrapper extends Component {
         this.setState({ showingBorders: !this.state.showingBorders })
         break
       case 'r':
-        this.setState(this.init())
+        this.setState({ data: {} })
         break
     }
   }
@@ -112,15 +108,24 @@ export default class InfinityWrapper extends Component {
         onKeyDown={handleKeyDown}
         tabIndex="0"
         className="infinity">
-        {!(data.a || data.b) &&
-          <div
-            onClick={handleClick()}
-            className="infinity__child infinity__child--landing">
-            Click to get started!
-          </div>
+        {(data.a && data.b)
+          ? (
+            <Infinity
+              data={data}
+              link={[]}
+              onClick={handleClick([])}
+              handleClick={handleClick}
+              showingBorders={showingBorders}
+              />
+          )
+          : (
+            <div
+              onClick={handleClick()}
+              className="infinity__child infinity__child--landing">
+              Click to get started!
+            </div>
+          )
         }
-        {data.a && <Infinity {...getProps('a', data, [], handleClick, showingBorders)} />}
-        {data.b && <Infinity {...getProps('b', data, [], handleClick, showingBorders)} />}
       </div>
     )
   }

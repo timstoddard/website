@@ -32,6 +32,9 @@ import CurrentCourses from './src/current-courses/CurrentCourses'
 // rice purity test
 import RicePurityTest from './src/rice-purity-test/RicePurityTest'
 
+// infinity demo
+import Infinity from './src/infinity/Infinity'
+
 const Routes = (
   <Route path="">
     <Route
@@ -131,6 +134,10 @@ const Routes = (
     <Route
       path="/rice-purity-test"
       component={RicePurityTest}
+      />
+    <Route
+      path="/infinity"
+      component={Infinity}
       />
     <Route
       path="/*"

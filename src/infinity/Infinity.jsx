@@ -89,6 +89,9 @@ export default class InfinityWrapper extends Component {
   }
 
   handleKeyDown(e) {
+    e.preventDefault()
+    e.stopPropagation()
+
     switch (e.key) {
       case ' ':
         this.setState({ showingBorders: !this.state.showingBorders })
@@ -100,6 +103,8 @@ export default class InfinityWrapper extends Component {
   }
 
   render() {
+    document.title = 'Infinity Demo'
+
     const { handleClick, handleKeyDown } = this
     const { data, showingBorders } = this.state
 

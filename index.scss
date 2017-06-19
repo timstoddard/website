@@ -7,12 +7,13 @@
 @import './src/current-courses/scss/CurrentCourses';
 @import './src/rice-purity-test/scss/RicePurityTest';
 @import './src/infinity/scss/Infinity';
+@import './src/e85/scss/E85';
+
+html {
+  font-size: 18px;
+}
 
 body {
   height: 100vh;
   width: 100vw;
-}
-
-html {
-    font-size: 18px;
 }

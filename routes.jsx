@@ -35,6 +35,9 @@ import RicePurityTest from './src/rice-purity-test/RicePurityTest'
 // infinity demo
 import Infinity from './src/infinity/Infinity'
 
+// e85 calculator
+import E85 from './src/e85/E85'
+
 const Routes = (
   <Route path="">
     <Route
@@ -138,6 +141,10 @@ const Routes = (
     <Route
       path="/infinity"
       component={Infinity}
+      />
+    <Route
+      path="/e85"
+      component={E85}
       />
     <Route
       path="/*"

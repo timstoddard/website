@@ -1,0 +1,78 @@
+$borderColor: rgb(180,180,180);
+$smallPad: 8px;
+$mediumPad: 10px;
+$largePad: 20px;
+
+@mixin paddedBox() {
+  margin-top: $mediumPad;
+  max-width: 400px;
+  padding: $smallPad $largePad;
+  text-align: center;
+}
+
+.e85 {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  padding: $mediumPad;
+
+  &__form {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+
+    &__row {
+      display: flex;
+    }
+  }
+
+  &__inputWrapper {
+    border: 1px solid $borderColor;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0 $smallPad / 2 $smallPad;
+    padding: 10px;
+
+    @media screen and (min-width: 600px) {
+      max-width: 200px;
+      min-width: 200px;
+    }
+
+    @media screen and (max-width: 600px) {
+      max-width: 150px;
+      min-width: 150px;
+    }
+  }
+
+  &__input {
+    background: rgb(245,245,245) !important;
+    border: 0 !important;
+    margin: 0 !important;
+    padding: 0 $mediumPad !important;
+    width: 80% !important;
+  }
+
+  &__submit {
+    input:focus {
+      outline: none;
+    }
+  }
+
+  &__results {
+    @include paddedBox;
+    border: 1px solid $borderColor;
+  }
+
+  &__resultGallons {
+    text-decoration: underline;
+  }
+
+  &__error {
+    @include paddedBox;
+    border: 1px solid red;
+    color: red;
+  }
+}

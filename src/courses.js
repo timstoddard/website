@@ -16,38 +16,20 @@ course structure
 
 const courses = [
   {
-    name: 'CPE 315',
+    name: 'CSC 365',
     fullName: 'Computer Architecture',
-    id: 17105,
-    gdriveFolderId: '0B9dz0Ddcl3ESQUNPaXRsZjRmczA',
+    id: 0,
+    gdriveFolderId: '0B9dz0Ddcl3ESWWxmeU4xaHB0RkU',
     otherLinks: [
       {
-        name: 'MIPS Reference',
-        href: 'http://www-inst.eecs.berkeley.edu/~cs61c/resources/MIPS_Green_Sheet.pdf',
+        name: 'Home',
+        href: 'http://users.csc.calpoly.edu/~grade-cstaley/DBIntro/',
       },
       {
-        name: 'MIPS Basics',
-        href: 'https://www2.engr.arizona.edu/~ece369/Resources/spim/QtSPIM_examples.pdf',
+        name: 'Piazza',
+        href: 'https://piazza.com/class/j47dt3bidnm6j9',
       },
     ],
-  },
-  {
-    name: 'CPE 300',
-    fullName: 'Professional Responsibilities',
-    id: 14748,
-    gdriveFolderId: '0B9dz0Ddcl3ESdDlKTVUyVHJ5VkU',
-  },
-  {
-    name: 'BUS 310',
-    fullName: 'Introduction to Entrepreneurship',
-    id: 21242,
-    gdriveFolderId: '0B9dz0Ddcl3ESU2h1NFlEcEZTUEU',
-  },
-  {
-    name: 'PHIL 231',
-    fullName: 'Ethics and Political Philosophy',
-    id: 19969,
-    gdriveFolderId: '0B9dz0Ddcl3ESWlhQdzUyUENqVTA',
   },
 ]
 

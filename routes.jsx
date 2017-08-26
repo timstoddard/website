@@ -38,6 +38,9 @@ import Infinity from './src/infinity/Infinity'
 // e85 calculator
 import E85 from './src/e85/E85'
 
+// incremental game
+import IncrGame from './src/incr-game/IncrGame'
+
 const Routes = (
   <Route path="">
     <Route
@@ -145,6 +148,10 @@ const Routes = (
     <Route
       path="/e85"
       component={E85}
+      />
+    <Route
+      path="/incr-game"
+      component={IncrGame}
       />
     <Route
       path="/*"

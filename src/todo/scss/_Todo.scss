@@ -1,0 +1,30 @@
+.todo {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+
+  &:hover {
+    background: rgb(240, 240, 240);
+  }
+
+  &:not(:last-of-type) {
+    border-bottom: 1px solid black;
+  }
+
+  &__label {
+    color: black;
+    text-decoration: inherit;
+    transition: all 0.2s ease-out;
+
+    &--completed {
+      color: rgb(145, 145, 145);
+      font-style: italic;
+      text-decoration: line-through;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+  }
+}

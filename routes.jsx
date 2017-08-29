@@ -41,6 +41,9 @@ import E85 from './src/e85/E85'
 // incremental game
 import IncrGame from './src/incr-game/IncrGame'
 
+// todo app
+import TodoList from './src/todo/TodoList'
+
 const Routes = (
   <Route path="">
     <Route
@@ -152,6 +155,10 @@ const Routes = (
     <Route
       path="/incr-game"
       component={IncrGame}
+      />
+    <Route
+      path="/todo"
+      component={TodoList}
       />
     <Route
       path="/*"

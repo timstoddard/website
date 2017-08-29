@@ -1,0 +1,18 @@
+.iconButton {
+  fill: black;
+  height: 30px;
+  margin: 5px;
+  stroke: black;
+  width: 30px;
+
+  &:hover {
+    cursor: pointer;
+    fill: rgb(145, 145, 145);
+    stroke: rgb(145, 145, 145);
+  }
+
+  svg {
+    height: 100%;
+    width: 100%;
+  }
+}

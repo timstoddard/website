@@ -44,6 +44,9 @@ import IncrGame from './src/incr-game/IncrGame'
 // todo app
 import TodoList from './src/todo/TodoList'
 
+// battery stats
+import Battery from './src/battery/Battery'
+
 const Routes = (
   <Route path="">
     <Route
@@ -159,6 +162,10 @@ const Routes = (
     <Route
       path="/todo"
       component={TodoList}
+      />
+    <Route
+      path="/battery"
+      component={Battery}
       />
     <Route
       path="/*"

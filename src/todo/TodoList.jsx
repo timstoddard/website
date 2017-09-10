@@ -4,6 +4,8 @@ import Todo from './Todo'
 import IconButton, { IconPath } from './IconButton'
 import { TransitionState, TRANSITION_MS } from './transition'
 
+/* eslint-disable react/no-did-mount-set-state */
+
 export default class TodoList extends Component {
   constructor() {
     super()
@@ -30,6 +32,10 @@ export default class TodoList extends Component {
   }
 
   componentDidMount() {
+    const todos = JSON.parse(localStorage.getItem('todos'))
+    if (todos) {
+      this.setState({ todos })
+    }
     this.toggleShowingList()
   }
 
@@ -64,6 +70,7 @@ export default class TodoList extends Component {
         todos: newTodos,
         todosRemaining: newTodos.filter(todo => !todo.completed).length,
       })
+      this.saveList(newTodos)
     }
   }
 
@@ -83,6 +90,7 @@ export default class TodoList extends Component {
           todos: newTodos,
           todosRemaining: newTodos.filter(todo => !todo.completed).length,
         })
+        this.saveList(newTodos)
       } else {
         const index = todos.findIndex(todo => todo.isEditing)
         this.updateTodo(index, currentTodoMessage)
@@ -100,6 +108,7 @@ export default class TodoList extends Component {
         todos: newTodos,
         todosRemaining: newTodos.filter(todo => !todo.completed).length,
       })
+      this.saveList(newTodos)
     }
   }
 
@@ -118,6 +127,7 @@ export default class TodoList extends Component {
       todos: newTodos,
       todosRemaining: newTodos.filter(todo => !todo.completed).length,
     })
+    this.saveList(newTodos)
   }
 
   toggleTodo(i) {
@@ -134,6 +144,7 @@ export default class TodoList extends Component {
         todos: newTodos,
         todosRemaining: newTodos.filter(todo => !todo.completed).length,
       })
+      this.saveList(newTodos)
     }
   }
 
@@ -148,6 +159,7 @@ export default class TodoList extends Component {
         todos: newTodos,
         todosRemaining: newTodos.filter(todo => !todo.completed).length,
       })
+      this.saveList(newTodos)
     }
   }
 
@@ -164,6 +176,10 @@ export default class TodoList extends Component {
         })
       }, TRANSITION_MS)
     })
+  }
+
+  saveList(todos) {
+    localStorage.setItem('todos', JSON.stringify(todos))
   }
 
   currentTransition() {

@@ -1,15 +1,16 @@
 .todo {
   align-items: center;
+  cursor: move;
   display: flex;
   justify-content: space-between;
   padding: 10px;
 
-  &:hover {
-    background: rgb(240, 240, 240);
-  }
-
   &:not(:last-of-type) {
     border-bottom: 1px solid black;
+  }
+
+  &:hover {
+    background: rgb(240,240,240);
   }
 
   &__label {
@@ -18,7 +19,7 @@
     transition: all 0.2s ease-out;
 
     &--completed {
-      color: rgb(145, 145, 145);
+      color: rgb(145,145,145);
       font-style: italic;
       text-decoration: line-through;
     }
@@ -26,5 +27,9 @@
 
   &__buttons {
     display: flex;
+  }
+
+  &__dropZone {
+    background: rgba(0,255,0,0.8) !important;
   }
 }

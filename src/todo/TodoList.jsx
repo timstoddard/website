@@ -17,6 +17,7 @@ export default class TodoList extends Component {
     this.editTodo = this.editTodo.bind(this)
     this.deleteTodo = this.deleteTodo.bind(this)
     this.toggleTodo = this.toggleTodo.bind(this)
+    this.updateOrder = this.updateOrder.bind(this)
     this.toggleShowingList = this.toggleShowingList.bind(this)
 
     this.state = {
@@ -69,19 +70,16 @@ export default class TodoList extends Component {
   editTodo(i) {
     return () => {
       const { currentTodoMessage, todos } = this.state
-      const { message, completed, isEditing } = todos[i]
-      const updatedTodo = {
-        message,
-        completed,
-        isEditing: !isEditing,
-      }
+      const updatedTodo = Object.assign({}, todos[i], {
+        isEditing: !todos[i].isEditing,
+      })
 
       if (updatedTodo.isEditing) {
         const elementsBefore = todos.slice(0, i)
         const elementsAfter = todos.slice(i + 1)
         const newTodos = [...elementsBefore, updatedTodo, ...elementsAfter]
         this.setState({
-          currentTodoMessage: message,
+          currentTodoMessage: updatedTodo.message,
           todos: newTodos,
           todosRemaining: newTodos.filter(todo => !todo.completed).length,
         })
@@ -107,12 +105,10 @@ export default class TodoList extends Component {
 
   updateTodo(i, message) {
     const { todos } = this.state
-    const { completed } = todos[i]
-    const updatedTodo = {
+    const updatedTodo = Object.assign({}, todos[i], {
       message,
-      completed,
       isEditing: false,
-    }
+    })
 
     const elementsBefore = todos.slice(0, i)
     const elementsAfter = todos.slice(i + 1)
@@ -127,16 +123,27 @@ export default class TodoList extends Component {
   toggleTodo(i) {
     return (e) => {
       const { todos } = this.state
-      const { message, isEditing } = todos[i]
-      const updatedTodo = {
-        message,
+      const updatedTodo = Object.assign({}, todos[i], {
         completed: e.target.checked,
-        isEditing,
-      }
+      })
 
       const elementsBefore = todos.slice(0, i)
       const elementsAfter = todos.slice(i + 1)
       const newTodos = [...elementsBefore, updatedTodo, ...elementsAfter]
+      this.setState({
+        todos: newTodos,
+        todosRemaining: newTodos.filter(todo => !todo.completed).length,
+      })
+    }
+  }
+
+  updateOrder(insertAt) {
+    return (i) => {
+      const { todos } = this.state
+      const updatedTodo = Object.assign({}, todos[i])
+      const newTodos = [...todos]
+      newTodos.splice(i, 1)
+      newTodos.splice(insertAt, 0, updatedTodo)
       this.setState({
         todos: newTodos,
         todosRemaining: newTodos.filter(todo => !todo.completed).length,
@@ -191,6 +198,7 @@ export default class TodoList extends Component {
       editTodo,
       deleteTodo,
       toggleTodo,
+      updateOrder,
       toggleShowingList,
     } = this
     const {
@@ -232,13 +240,13 @@ export default class TodoList extends Component {
                     completed={completed}
                     isEditing={isEditing}
                     index={i}
-                    checkboxId={`checkbox${i}`}
                     toggleTodo={toggleTodo}
                     editTodo={editTodo}
                     deleteTodo={deleteTodo}
                     handleInput={handleInput}
                     handleKeyDown={handleKeyDown}
                     currentTodoMessage={currentTodoMessage}
+                    updateOrder={updateOrder(i)}
                     />
                 )}
               </ul>

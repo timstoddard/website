@@ -21,6 +21,7 @@ export default class TodoList extends Component {
     this.toggleTodo = this.toggleTodo.bind(this)
     this.updateOrder = this.updateOrder.bind(this)
     this.toggleShowingList = this.toggleShowingList.bind(this)
+    this.updateDragState = this.updateDragState.bind(this)
 
     this.state = {
       todos: [],
@@ -28,6 +29,7 @@ export default class TodoList extends Component {
       todosRemaining: 0,
       showingList: false,
       transitionState: TransitionState.STOPPED,
+      isDragging: false,
     }
   }
 
@@ -182,6 +184,10 @@ export default class TodoList extends Component {
     localStorage.setItem('todos', JSON.stringify(todos))
   }
 
+  updateDragState(isDragging) {
+    this.setState({ isDragging })
+  }
+
   currentTransition() {
     switch (this.state.transitionState) {
       case TransitionState.OUT:
@@ -216,12 +222,14 @@ export default class TodoList extends Component {
       toggleTodo,
       updateOrder,
       toggleShowingList,
+      updateDragState,
     } = this
     const {
       todos,
       currentTodoMessage,
       todosRemaining,
       showingList,
+      isDragging,
     } = this.state
 
     const transform = this.currentTransform()
@@ -255,6 +263,7 @@ export default class TodoList extends Component {
                     message={message}
                     completed={completed}
                     isEditing={isEditing}
+                    hideIcons={isDragging}
                     index={i}
                     toggleTodo={toggleTodo}
                     editTodo={editTodo}
@@ -263,6 +272,7 @@ export default class TodoList extends Component {
                     handleKeyDown={handleKeyDown}
                     currentTodoMessage={currentTodoMessage}
                     updateOrder={updateOrder(i)}
+                    updateDragState={updateDragState}
                     />
                 )}
               </ul>

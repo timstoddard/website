@@ -2,13 +2,19 @@
   fill: black;
   height: 30px;
   margin: 5px;
+  opacity: 1;
   stroke: black;
+  transition: opacity 0.25s ease-out;
   width: 30px;
 
   &:hover {
     cursor: pointer;
     fill: rgb(145, 145, 145);
     stroke: rgb(145, 145, 145);
+  }
+
+  &--hidden {
+    opacity: 0;
   }
 
   svg {

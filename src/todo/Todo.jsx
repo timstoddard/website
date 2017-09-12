@@ -22,6 +22,8 @@ export default class Todo extends Component {
     const { index } = this.props
     e.dataTransfer.setData('text/plain', index)
     e.dataTransfer.dropEffect = 'link'
+    this.props.updateDragState(true)
+    this.setState({ isDraggable: true })
   }
 
   onDragEnter() {
@@ -48,6 +50,8 @@ export default class Todo extends Component {
     if (data !== index) {
       updateOrder(data)
     }
+    this.props.updateDragState(false)
+    this.setState({ isDraggable: false })
   }
 
   render() {
@@ -62,6 +66,7 @@ export default class Todo extends Component {
       message,
       completed,
       isEditing,
+      hideIcons,
       index,
       toggleTodo,
       editTodo,
@@ -113,16 +118,19 @@ export default class Todo extends Component {
         <div className="todo__buttons">
           <IconButton
             path={IconPath.EDIT}
+            hidden={hideIcons}
             onClick={editTodo(index)}
             />
           <IconButton
             className="todo__button--drag"
             path={IconPath.DRAG}
+            hidden={hideIcons && !isDraggable}
             onDragStart={onDragStart}
             isDraggable={true}
             />
           <IconButton
             path={IconPath.DELETE}
+            hidden={hideIcons}
             onClick={deleteTodo(index)}
             />
         </div>
@@ -135,6 +143,7 @@ Todo.propTypes = {
   message: PropTypes.string.isRequired,
   completed: PropTypes.bool.isRequired,
   isEditing: PropTypes.bool.isRequired,
+  hideIcons: PropTypes.bool.isRequired,
   index: PropTypes.number.isRequired,
   toggleTodo: PropTypes.func.isRequired,
   editTodo: PropTypes.func.isRequired,
@@ -143,4 +152,5 @@ Todo.propTypes = {
   handleKeyDown: PropTypes.func.isRequired,
   currentTodoMessage: PropTypes.string.isRequired,
   updateOrder: PropTypes.func.isRequired,
+  updateDragState: PropTypes.func.isRequired,
 }

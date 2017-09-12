@@ -6,7 +6,10 @@ export default class Todo extends Component {
   constructor(props) {
     super(props)
 
-    this.state = { isDropTarget: false }
+    this.state = {
+      isDraggable: false,
+      isDropTarget: false,
+    }
 
     this.onDragStart = this.onDragStart.bind(this)
     this.onDragEnter = this.onDragEnter.bind(this)
@@ -24,9 +27,12 @@ export default class Todo extends Component {
   onDragEnter() {
     this.setState({ isDropTarget: true })
   }
-  
-  onDragLeave() {
-    this.setState({ isDropTarget: false })
+
+  onDragLeave(e) {
+    const targetPath = e.nativeEvent.path.slice(1)
+    if (!targetPath.includes(this.dropTarget)) {
+      this.setState({ isDropTarget: false })
+    }
   }
 
   onDragOver(e) {
@@ -65,6 +71,7 @@ export default class Todo extends Component {
       currentTodoMessage,
     } = this.props
     const {
+      isDraggable,
       isDropTarget,
     } = this.state
     const checkboxId = `checkbox${index}`
@@ -72,12 +79,12 @@ export default class Todo extends Component {
     return (
       <li
         className={`todo ${isDropTarget ? 'todo__dropZone' : ''}`}
-        onDragStart={onDragStart}
         onDragEnter={onDragEnter}
         onDragLeave={onDragLeave}
         onDragOver={onDragOver}
         onDrop={onDrop}
-        draggable={true}>
+        draggable={isDraggable}
+        ref={elem => this.dropTarget = elem}>
         <div>
           <input
             type="checkbox"
@@ -107,6 +114,12 @@ export default class Todo extends Component {
           <IconButton
             path={IconPath.EDIT}
             onClick={editTodo(index)}
+            />
+          <IconButton
+            className="todo__button--drag"
+            path={IconPath.DRAG}
+            onDragStart={onDragStart}
+            isDraggable={true}
             />
           <IconButton
             path={IconPath.DELETE}

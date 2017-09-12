@@ -1,6 +1,5 @@
 .todo {
   align-items: center;
-  cursor: move;
   display: flex;
   justify-content: space-between;
   padding: 10px;
@@ -27,6 +26,12 @@
 
   &__buttons {
     display: flex;
+  }
+
+  &__button {
+    &--drag {
+      cursor: move !important;
+    }
   }
 
   &__dropZone {

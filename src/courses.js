@@ -16,20 +16,22 @@ course structure
 
 const courses = [
   {
-    name: 'CSC 365',
-    fullName: 'Computer Architecture',
-    id: 0,
-    gdriveFolderId: '0B9dz0Ddcl3ESWWxmeU4xaHB0RkU',
-    otherLinks: [
-      {
-        name: 'Home',
-        href: 'http://users.csc.calpoly.edu/~grade-cstaley/DBIntro/',
-      },
-      {
-        name: 'Piazza',
-        href: 'https://piazza.com/class/j47dt3bidnm6j9',
-      },
-    ],
+    name: 'CSC 307',
+    fullName: 'Intro to Software Engineering',
+    id: 7040,
+    gdriveFolderId: '0B9dz0Ddcl3ESbnRUSExNQVdBYUE',
+  },
+  {
+    name: 'CSC 349',
+    fullName: 'Algorithms',
+    id: 5516,
+    gdriveFolderId: '0B9dz0Ddcl3ESaHNMcDZ5dTNsLXM',
+  },
+  {
+    name: 'BUS 220',
+    fullName: 'Business Basics for Entrepreneurs',
+    id: 6470,
+    gdriveFolderId: '0B9dz0Ddcl3ESUTRidU9oTXkzV0E',
   },
 ]
 

@@ -28,11 +28,11 @@ const setupDropdownLinks = (courseId, gdriveFolderId, otherLinks) => {
     dropdownItems.push(
       {
         name: 'Home',
-        href: `https://polylearn.calpoly.edu/AY_2016-2017/course/view.php?id=${courseId}`,
+        href: `https://polylearn.calpoly.edu/AY_2017-2018/course/view.php?id=${courseId}`,
       },
       {
         name: 'Grades',
-        href: `https://polylearn.calpoly.edu/AY_2016-2017/grade/report/user/index.php?id=${courseId}&userid=128377`,
+        href: `https://polylearn.calpoly.edu/AY_2017-2018/grade/report/user/index.php?id=${courseId}`,
       }
     )
   }

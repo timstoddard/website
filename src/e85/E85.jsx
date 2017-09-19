@@ -9,7 +9,7 @@ const FormInput = ({ id, label, value, onChange }) =>
       className="e85__input"
       id={id}
       type="number"
-      step="0.01"
+      step="1"
       value={value}
       onChange={onChange}
       required={true}
@@ -90,7 +90,11 @@ export default class E85 extends Component {
     const neededEthanolPercentage = (desiredTotalGallons * desiredEthanolPercentage - currentGallons * currentEthanolPercentage) / neededGallons
     const fuel1Gallons = (neededEthanolPercentage - fuel2EthanolPercentage) *  neededGallons / (fuel1EthanolPercentage - fuel2EthanolPercentage)
     const fuel2Gallons = neededGallons - fuel1Gallons
-    if (neededEthanolPercentage < 0 || fuel1Gallons > neededGallons) {
+    if (neededEthanolPercentage < 0
+      || fuel1Gallons > neededGallons
+      || fuel1Gallons < 0
+      || fuel2Gallons < 0
+    ) {
       this.showError('The input you provided is impossible.')
       return
     }
@@ -166,11 +170,11 @@ export default class E85 extends Component {
               onChange={handleInput('desiredEthanolPercentage')}
               />
           </div>
-          <input
-            className="e85__submit btn waves-effect waves-light"
-            type="submit"
-            value="Calculate"
-            />
+          <button
+            className="btn waves-effect waves-light"
+            type="submit">
+            Calculate
+          </button>
         </form>
         {showResults &&
           <div className="e85__results">

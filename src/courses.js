@@ -32,6 +32,12 @@ const courses = [
     fullName: 'Business Basics for Entrepreneurs',
     id: 6470,
     gdriveFolderId: '0B9dz0Ddcl3ESUTRidU9oTXkzV0E',
+    otherLinks: [
+      {
+        name: 'Connect',
+        href: 'https://newconnect.mheducation.com/flow/connect.html',
+      },
+    ],
   },
 ]
 

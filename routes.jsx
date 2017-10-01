@@ -47,6 +47,9 @@ import TodoList from './src/todo/TodoList'
 // battery stats
 import Battery from './src/battery/Battery'
 
+// random trippy thing
+import Trippy from './src/trippy/Trippy'
+
 const Routes = (
   <Route path="">
     <Route
@@ -166,6 +169,10 @@ const Routes = (
     <Route
       path="/battery"
       component={Battery}
+      />
+    <Route
+      path="/trippy"
+      component={Trippy}
       />
     <Route
       path="/*"

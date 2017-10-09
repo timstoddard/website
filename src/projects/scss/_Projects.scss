@@ -59,4 +59,10 @@
     padding: 0;
     text-align: center;
   }
+
+  @media screen and (max-width: 600px) {
+    &__container {
+      width: 100%;
+    }
+  }
 }

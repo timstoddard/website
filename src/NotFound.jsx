@@ -7,7 +7,7 @@ const NotFound = ({ destination, to }) => {
   document.title = 'Page Not Found'
   return (
     <div className="notFound">
-      <h1>The page you&apos;re looking for does not exist.</h1>
+      <h1>The page you&rsquo;re looking for does not exist.</h1>
       <h1>
         <Link
           className="notFound__link"

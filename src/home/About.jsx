@@ -1,7 +1,14 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 import { Link } from 'react-router'
 
-const IconLinks = ({ icons }) =>
+const icons = [
+  { name: 'Github', href: 'https://github.com/timstoddard' },
+  { name: 'LinkedIn', href: 'https://linkedin.com/in/timstoddard200' },
+  { name: 'Portfolium', href: 'https://portfolium.com/timstoddard' },
+  { name: 'Facebook', href: 'https://facebook.com/timstoddard200' },
+]
+
+const IconLinks = () =>
   <div className="about__icons">
     {icons.map(({ href, name }) =>
       <a
@@ -18,29 +25,17 @@ const IconLinks = ({ icons }) =>
     )}
   </div>
 
-IconLinks.propTypes = {
-  icons: PropTypes.arrayOf(PropTypes.object),
-}
-
-IconLinks.defaultProps = {
-  icons: [
-    { name: 'Github', href: 'https://github.com/timstoddard' },
-    { name: 'LinkedIn', href: 'https://linkedin.com/in/timstoddard200' },
-    { name: 'Portfolium', href: 'https://portfolium.com/timstoddard' },
-    { name: 'Facebook', href: 'https://facebook.com/timstoddard200' },
-  ],
-}
-
 const About = () => {
   document.title = 'About Me'
+
   return (
     <div className="about">
-      <div className="about__container container">
+      <div className="about__container">
         <h5 className="about__title center-align">
-          About Me
+          Tim Stoddard
         </h5>
         <p className="about__text">
-          Hi, I&apos;m Tim! I am a second year student at&nbsp;
+          Hi! I am a 3rd year student at&nbsp;
           <a
             className="about__link"
             href="http://calpoly.edu"
@@ -48,7 +43,7 @@ const About = () => {
             rel="noopener noreferrer">
             Cal Poly, San Luis Obispo
           </a>
-          &nbsp;studying Computer Science.
+          &nbsp;majoring Computer Science and minoring in Entrepreneurship.
         </p>
         <p className="about__text">
           I am currently a software engineering intern at&nbsp;
@@ -59,10 +54,13 @@ const About = () => {
             rel="noopener noreferrer">
             SoCreate
           </a>
-          , where I regularly work with Angular 2, PHP, and MS SQL. Other technologies I&apos;ve used there include Git, Jira, and BitBucket.
+          , where I regularly work with Angular 2, PHP, and MS SQL. Other technologies I use there include Git, Jira, and BitBucket.
         </p>
         <p className="about__text">
-          In my free time, I am learning ReactJS - in fact, this site uses React and React Router. I also lift weights several times a week, a passion that I have enjoyed since my sophomore year of high school.
+          I am also the Chief Software Architect at Tutorfly, an education technology startup that focuses on pairing high school students for tutoring sessions. We use React, Meteor, and Mongo for our technology stack, and Heroku to manage deployments.
+        </p>
+        <p className="about__text">
+          I also lift weights several times a week, a passion that I have enjoyed since my sophomore year of high school.
         </p>
         <p className="about__text">
           Feel free to have a look around the site and/or&nbsp;

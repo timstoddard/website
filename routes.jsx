@@ -1,13 +1,16 @@
-// react stuff
+// react
 import React from 'react'
 import { Route, IndexRoute } from 'react-router'
 
-// general stuff
+// general
 import NotFound from './src/NotFound'
 
 // homepage
 import Home from './src/home/Home'
 import About from './src/home/About'
+
+// start page
+import Start from './src/start/Start'
 
 // LC3 reference
 import LC3 from './src/lc3/LC3'
@@ -21,34 +24,39 @@ import DeviceRegisterAssignments from './src/lc3/tables/DeviceRegisterAssignment
 import MemoryMap from './src/lc3/tables/MemoryMap'
 
 // projects
-import { Bingo, Heap, Imports, Projects, ProjectsHome, Strobe, Time, Zen } from './src/projects'
-
-// start page
-import Start from './src/start/Start'
-
-// current courses
-import CurrentCourses from './src/current-courses/CurrentCourses'
-
-// rice purity test
-import RicePurityTest from './src/rice-purity-test/RicePurityTest'
-
-// infinity demo
-import Infinity from './src/infinity/Infinity'
-
-// e85 calculator
-import E85 from './src/e85/E85'
-
-// incremental game
-import IncrGame from './src/incr-game/IncrGame'
-
-// todo app
-import TodoList from './src/todo/TodoList'
-
-// battery stats
 import Battery from './src/battery/Battery'
-
-// random trippy thing
+import Bingo from './src/bingo/Bingo'
+import CurrentCourses from './src/current-courses/CurrentCourses'
+import E85 from './src/e85/E85'
+import Heap from './src/heap/Heap'
+import Imports from './src/imports/Imports'
+import IncrGame from './src/incr-game/IncrGame'
+import Infinity from './src/infinity/Infinity'
+import Projects from './src/projects/Projects'
+import RicePurityTest from './src/rice-purity-test/RicePurityTest'
+import Strobe from './src/strobe/Strobe'
+import Time from './src/time/Time'
+import TodoList from './src/todo/TodoList'
 import Trippy from './src/trippy/Trippy'
+import Zen from './src/zen/Zen'
+
+const projects = [
+  { path: '/battery', component: Battery },
+  { path: '/bingo', component: Bingo },
+  { path: '/courses', component: CurrentCourses },
+  { path: '/e85', component: E85 },
+  { path: '/heap', component: Heap },
+  { path: '/imports', component: Imports },
+  { path: '/incr-game', component: IncrGame },
+  { path: '/infinity', component: Infinity },
+  { path: '/projects', component: Projects },
+  { path: '/rice-purity-test', component: RicePurityTest },
+  { path: '/todo', component: TodoList },
+  { path: '/trippy', component: Trippy },
+  { path: '/strobe', component: Strobe },
+  { path: '/time', component: Time },
+  { path: '/zen', component: Zen },
+]
 
 const Routes = (
   <Route path="">
@@ -64,10 +72,7 @@ const Routes = (
       path="/start"
       component={Start}
       />
-    <Route
-      path="/courses"
-      component={CurrentCourses}
-      />
+    {projects.map((props) => <Route {...props} />)}
     <Route
       path="/lc3"
       component={LC3}>
@@ -109,71 +114,6 @@ const Routes = (
             />}
         />
     </Route>
-    <Route
-      path="/projects"
-      component={Projects}>
-      <IndexRoute component={ProjectsHome} />
-      <Route
-        path="/projects/bingo"
-        component={Bingo}
-        />
-      <Route
-        path="/projects/heap"
-        component={Heap}
-        />
-      <Route
-        path="/projects/imports"
-        component={Imports}
-        />
-      <Route
-        path="/projects/strobe"
-        component={Strobe}
-        />
-      <Route
-        path="/projects/time"
-        component={Time}
-        />
-      <Route
-        path="/projects/zen"
-        component={Zen}
-        />
-      <Route
-        path="/projects/*"
-        component={() =>
-          <NotFound
-            to="/projects"
-            destination="the projects homepage"
-            />}
-        />
-    </Route>
-    <Route
-      path="/rice-purity-test"
-      component={RicePurityTest}
-      />
-    <Route
-      path="/infinity"
-      component={Infinity}
-      />
-    <Route
-      path="/e85"
-      component={E85}
-      />
-    <Route
-      path="/incr-game"
-      component={IncrGame}
-      />
-    <Route
-      path="/todo"
-      component={TodoList}
-      />
-    <Route
-      path="/battery"
-      component={Battery}
-      />
-    <Route
-      path="/trippy"
-      component={Trippy}
-      />
     <Route
       path="/*"
       component={() =>

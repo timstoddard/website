@@ -1,11 +1,5 @@
 .strobe {
-  &--regular {
-    height: 100%;
-  }
-
-  &--full {
-    height: 100vh;
-  }
+  height: 100vh;
 
   &__buttons {
     display: flex;

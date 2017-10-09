@@ -77,7 +77,7 @@ export default class Strobe extends Component {
     const { background, showOptions, ms } = this.state
     return (
       <div
-        className="strobe--regular"
+        className="strobe"
         style={{ background }}>
         {!showOptions &&
           <div className="strobe__buttons">

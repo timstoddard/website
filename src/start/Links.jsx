@@ -63,13 +63,14 @@ const Dropdown = ({ courseId, index, gdriveFolderId, otherLinks }) =>
   </ul>
 
 Dropdown.propTypes = {
-  courseId: PropTypes.number.isRequired,
+  courseId: PropTypes.number,
   index: PropTypes.number.isRequired,
   gdriveFolderId: PropTypes.string.isRequired,
   otherLinks: PropTypes.arrayOf(PropTypes.object),
 }
 
 Dropdown.defaultProps = {
+  courseId: 0,
   otherLinks: [],
 }
 
@@ -145,18 +146,18 @@ export default class Links extends Component {
     const { className } = this.props
     return (
       <div className={`links__collection collection ${className}`}>
-        {courses.map(({ id, gdriveFolderId, otherLinks }, index) =>
+        {courses.map(({ id, gdriveFolderId, otherLinks, isCalPolyCourse }, index) =>
           <Dropdown
-            key={id}
+            key={gdriveFolderId}
             index={index}
             courseId={id}
             gdriveFolderId={gdriveFolderId}
             otherLinks={otherLinks}
             />
         )}
-        {courses.map(({ id, name }, index) =>
+        {courses.map(({ name }, index) =>
           <DropdownActivator
-            key={id}
+            key={name}
             index={index}
             courseName={name}
             />
@@ -167,9 +168,9 @@ export default class Links extends Component {
           to="">
           Home
         </Link>
-        {links.map(({ href, name }) =>
+        {links.map(({ name, href }) =>
           <SidebarLink
-            key={href}
+            key={name}
             name={name}
             href={href}
             />

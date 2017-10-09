@@ -39,6 +39,21 @@ const courses = [
       },
     ],
   },
+  {
+    name: 'CNET 260',
+    fullName: 'Network Fundamentals',
+    gdriveFolderId: '0B9dz0Ddcl3ESSXc0emo0WEsxYTQ',
+    otherLinks: [
+      {
+        name: 'Netacad',
+        href: 'https://1274739.netacad.com/courses/538100',
+      },
+      {
+        name: 'Cuesta Course',
+        href: 'https://cuesta.instructure.com/courses/6521',
+      },
+    ],
+  },
 ]
 
 export default courses

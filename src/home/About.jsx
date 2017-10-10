@@ -54,7 +54,7 @@ const About = () =>
         , where I regularly work with Angular 2, PHP, and MS SQL. Other technologies I use there include Git, Jira, and BitBucket.
       </p>
       <p className="about__text">
-        I am also the Chief Software Architect at Tutorfly, an education technology startup that focuses on pairing high school students for tutoring sessions. We use React, Meteor, and Mongo for our technology stack, and Heroku to manage deployments.
+        I am also the Chief Software Architect at Tutorfly, an education technology startup that focuses on pairing high school student tutors and with tutees from the same school. We use React, Meteor, and Mongo for our technology stack, and Heroku to manage deployments.
       </p>
       <p className="about__text">
         I also lift weights several times a week, a passion that I have enjoyed since my sophomore year of high school.

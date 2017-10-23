@@ -40,17 +40,17 @@ const courses = [
     ],
   },
   {
-    name: 'CNET 260',
-    fullName: 'Network Fundamentals',
-    gdriveFolderId: '0B9dz0Ddcl3ESSXc0emo0WEsxYTQ',
+    name: 'CNET 261',
+    fullName: 'Router Theory',
+    gdriveFolderId: '0B9dz0Ddcl3ESamhVTS1BT0dLbVE',
     otherLinks: [
       {
         name: 'Netacad',
-        href: 'https://1274739.netacad.com/courses/538100',
+        href: 'https://1274739.netacad.com/courses/583167',
       },
       {
-        name: 'Cuesta Course',
-        href: 'https://cuesta.instructure.com/courses/6521',
+        name: 'CNET 260',
+        href: 'https://1274739.netacad.com/courses/538100',
       },
     ],
   },

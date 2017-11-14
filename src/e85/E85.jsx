@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 
-const FormInput = ({ id, label, value, onChange }) =>
+const FormInput = ({ id, label, value, usePrecision, onChange }) =>
   <label
     className="e85__inputWrapper"
     htmlFor={id}>
@@ -9,7 +9,7 @@ const FormInput = ({ id, label, value, onChange }) =>
       className="e85__input"
       id={id}
       type="number"
-      step="1"
+      step={usePrecision ? '0.01' : '1'}
       value={value}
       onChange={onChange}
       required={true}
@@ -20,7 +20,12 @@ FormInput.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  usePrecision: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
+}
+
+FormInput.defaultProps = {
+  usePrecision: false,
 }
 
 export default class E85 extends Component {
@@ -133,6 +138,7 @@ export default class E85 extends Component {
               id="currentGallons"
               label="Current Gallons"
               value={currentGallons}
+              usePrecision={true}
               onChange={handleInput('currentGallons')}
               />
             <FormInput
@@ -161,6 +167,7 @@ export default class E85 extends Component {
               id="desiredTotalGallons"
               label="Total Gallons"
               value={desiredTotalGallons}
+              usePrecision={true}
               onChange={handleInput('desiredTotalGallons')}
               />
             <FormInput

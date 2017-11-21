@@ -1,7 +1,4 @@
-@import '../../scss/mixins/background';
-
 .currentCourses {
-  @include background;
   align-items: center;
   display: flex;
   flex-direction: column;

@@ -1,9 +1,14 @@
-@import url(https://fonts.googleapis.com/css?family=Montserrat);
-@import '../../scss/mixins/background';
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+@mixin robotoFont($size) {
+  font-family: 'Roboto', sans-serif;
+  font-size: $size;
+  font-weight: 200;
+}
 
 .home {
-  @include background;
   align-items: center;
+  background: white;
   color: transparent;
   display: flex;
   flex-direction: column;
@@ -17,22 +22,22 @@
   }
 
   &__content {
-    background: rgba(0,0,0,0.15);
-    box-shadow: inset 0 0 40px 4px rgba(0,0,0,0.2);
+    background: rgb(66,133,244);
+    border-radius: 3px;
+    box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.4);
     padding: 5vw;
   }
 
   &__headerName,
   &__linkText {
-    color: inherit;
+    color: white;
     text-transform: capitalize;
     transition: all 0.25s ease;
     white-space: nowrap;
   }
 
   &__headerName {
-    font-family: 'Montserrat', sans-serif;
-    font-size: calc(12px + 6vw);
+    @include robotoFont(calc(12px + 6vw));
     margin: 0;
   }
 
@@ -47,13 +52,13 @@
   }
 
   &__linkText {
-    border-bottom: 0.4vh solid transparent;
-    font-family: 'Montserrat', sans-serif;
-    font-size: calc(10px + 3vw);
+    @include robotoFont(calc(10px + 3vw));
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid white;
     transition: all 0.35s ease;
 
     &:hover {
-      border-bottom-color: black;
+      border-top-color: white;
     }
   }
 

@@ -120,8 +120,8 @@ const links = [
     href: 'http://flowcharts.calpoly.edu/downloads/mymap/15-17.52CSCBSU.pdf',
   },
   {
-    name: '16-17 Calendar',
-    href: 'http://registrar.calpoly.edu/2016-17-academic-calendar',
+    name: '17-18 Calendar',
+    href: 'http://registrar.calpoly.edu/2017-18-academic-calendar',
   },
   {
     name: 'Floor Plans',

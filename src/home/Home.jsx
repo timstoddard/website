@@ -37,9 +37,9 @@ export default class Home extends Component {
             tim stoddard
           </h1>
           <ul className="home__links">
-            {links.map(({ to, text }, index) => (
+            {links.map(({ to, text }) => (
               <li
-                key={index}
+                key={text}
                 className="home__link">
                 <Link
                   to={to}

@@ -1,5 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Link } from 'react-router'
+
+import Dots from './Dots'
 
 const links = [
   {
@@ -16,42 +18,33 @@ const links = [
   },
 ]
 
-export default class Home extends Component {
-  constructor() {
-    super()
+const Home = () => {
+  document.title = 'Tim Stoddard'
 
-    this.state = { visible: false }
-  }
-
-  componentDidMount() {
-    setTimeout(() => this.setState({ visible: true }), 500)
-  }
-
-  render() {
-    document.title = 'Tim Stoddard'
-    const { visible } = this.state
-    return (
-      <div className={`home ${visible ? 'home--visible' : ''}`}>
-        <div className="home__content">
-          <h1 className="home__headerName">
-            tim stoddard
-          </h1>
-          <ul className="home__links">
-            {links.map(({ to, text }) => (
-              <li
-                key={text}
-                className="home__link">
-                <Link
-                  to={to}
-                  target={to[0] !== '/' ? '_blank' : ''}
-                  className="home__linkText">
-                  {text}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+  return (
+    <div className="home">
+      <Dots delay={2000} />
+      <div className="home__content">
+        <h1 className="home__headerName">
+          tim stoddard
+        </h1>
+        <ul className="home__links">
+          {links.map(({ to, text }) => (
+            <li
+              key={text}
+              className="home__link">
+              <Link
+                to={to}
+                target={to[0] !== '/' ? '_blank' : ''}
+                className="home__linkText">
+                {text}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
-    )
-  }
+    </div>
+  )
 }
+
+export default Home

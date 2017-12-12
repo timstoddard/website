@@ -1,0 +1,12 @@
+.dots {
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  transition: opacity 1s ease-in;
+  user-select: none;
+
+  &--visible {
+    opacity: 1;
+  }
+}

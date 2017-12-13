@@ -49,7 +49,7 @@ export default class IncrGame extends Component {
       moneyAdderCost,
     } = this.state
     if (money >= moneyAdderCost) {
-      const moneyAdderLevel = oldMoneyAdderLevel + 1 
+      const moneyAdderLevel = oldMoneyAdderLevel + 1
       this.setState({
         money: money - moneyAdderCost,
         moneyAdder: moneyAmount(this.getMoneyAdder(moneyAdderLevel)),
@@ -66,7 +66,7 @@ export default class IncrGame extends Component {
       timerCost,
     } = this.state
     if (money >= timerCost) {
-      const timerLevel = oldTimerLevel + 1 
+      const timerLevel = oldTimerLevel + 1
       this.setState({
         money: money - timerCost,
         timer: moneyAmount(this.getTimer(timerLevel)),

@@ -29,11 +29,11 @@ export default class Imports extends Component {
   checkKeyDown(event) {
     const { key } = event
     const { shiftKeyDown } = this.state
-    
+
     if (key === 'Shift') {
       this.setState({ shiftKeyDown: true })
     }
-    
+
     if (key === 'Enter' && !shiftKeyDown) {
       event.preventDefault()
       this.fix()
@@ -63,7 +63,7 @@ export default class Imports extends Component {
     this.setState({
       rawValue: `import {Subject as subj, Observable as obs} from 'rxjs/Subject';
 import {ADirective, AComponent, AService, APipe} from './test-module';;
-import 'rxjs/add/observable/of' 
+import 'rxjs/add/observable/of'
 import {SomeClass} from '../test-module';
 import * from './idk';
 import DefaultClass from './file.name';

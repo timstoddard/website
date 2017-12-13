@@ -5,17 +5,17 @@ import java.util.List;
 public class PrettyPrinter {
 
     private static Node<Integer> test() {
-       
+
        int capacity = 20; // max capacity of the array
        MyHeap heap = new MyHeap(capacity);
-       
+
        // build/insert section //
        heap.buildHeap(new int[] {2,9,4,8,1,7,3,6,5});
        for (int i = 0; i < capacity; i++) {
           heap.insert((int) (Math.random() * 99) + 1); // numbers longer than 3 chars will break the spacing
        }
        //////////////////////////
-       
+
        int[] temp = heap.heapContents();
        ArrayList<Node<Integer>> data = new ArrayList<Node<Integer>>();
        data.add(new Node<Integer>(-1));
@@ -80,7 +80,7 @@ class BTreePrinter {
                 newNodes.add(null);
                 System.out.print(" ");
             }
-            
+
             if (node != null) {
                BTreePrinter.printWhitespaces(betweenSpaces - ((node.data + "").length() - 1));
             }

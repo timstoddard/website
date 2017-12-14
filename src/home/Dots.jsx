@@ -8,11 +8,6 @@ export default class Dots extends Component {
   }
 
   componentDidMount() {
-    // timer to make dots visible
-    setTimeout(() => {
-      this.setState({ visible: true })
-    }, this.props.delay)
-
     // generate the dots
     this.dots = []
     for (let i = 0; i < 50; i++) {
@@ -22,13 +17,24 @@ export default class Dots extends Component {
     // start the interval to move the dots
     this.moveInterval = setInterval(this.moveDots.bind(this), 5)
 
+    // timer to make dots visible
+    this.visibleTimer = setTimeout(() => {
+      this.setState({ visible: true })
+    }, this.props.delay)
+
     // track the window size
-    this.saveViewportDimensions()
-    window.onresize = this.saveViewportDimensions.bind(this)
+    const trackWindowSize = () => {
+      this.canvas.width = document.documentElement.clientWidth
+      this.canvas.height = document.documentElement.clientHeight
+    }
+    trackWindowSize()
+    window.onresize = trackWindowSize
   }
 
   componentWillUnmount() {
     clearInterval(this.moveInterval)
+    clearTimeout(this.visibleTimer)
+    window.onresize = () => {}
   }
 
   moveDots() {
@@ -124,16 +130,6 @@ export default class Dots extends Component {
     canvas.lineTo(x2, y2)
     canvas.strokeStyle = `rgba(66,133,244,${opacity})`
     canvas.stroke()
-  }
-
-  saveViewportDimensions() {
-    const {
-      clientWidth: viewportWidth,
-      clientHeight: viewportHeight,
-    } = document.documentElement
-    this.canvas.width = viewportWidth
-    this.canvas.height = viewportHeight
-    this.setState({ viewportWidth, viewportHeight })
   }
 
   render() {

@@ -49,6 +49,10 @@ $homeContentAnimationDelay: 0.5s;
       top: 0;
       width: 0;
       z-index: -1;
+
+      @media all and (max-width: $maxMobileWidth) {
+        border: 0.5vw solid transparent;
+      }
     }
 
     &:before {

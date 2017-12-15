@@ -61,10 +61,11 @@ export default class Dots extends Component {
         const dot2 = this.dots[j]
         const a = dot1.x - dot2.x
         const b = dot1.y - dot2.y
-        const dist = Math.sqrt(a * a + b * b)
+        const distSquared = a * a + b * b
         const threshold = Math.min(viewportWidth, viewportHeight) / 6
-        if (dist < threshold) {
-          const opacity = Math.min(threshold / dist - 1, 1)
+        const thresholdSquared = threshold * threshold
+        if (distSquared < thresholdSquared) {
+          const opacity = Math.min(thresholdSquared / distSquared - 1, 1)
           this.drawLine(canvas, dot1.x, dot1.y, dot2.x, dot2.y, opacity)
         }
       }

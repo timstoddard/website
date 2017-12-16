@@ -24,6 +24,7 @@ import Heap from './src/heap/Heap'
 import Imports from './src/imports/Imports'
 import IncrGame from './src/incr-game/IncrGame'
 import Infinity from './src/infinity/Infinity'
+import Perf from './src/perf/Perf'
 import Projects from './src/projects/Projects'
 import RicePurityTest from './src/rice-purity-test/RicePurityTest'
 import Strobe from './src/strobe/Strobe'
@@ -43,6 +44,7 @@ const routes = [
   { path: '/imports', component: Imports },
   { path: '/incr-game', component: IncrGame },
   { path: '/infinity', component: Infinity },
+  { path: '/perf', component: Perf },
   { path: '/projects', component: Projects },
   { path: '/rice-purity-test', component: RicePurityTest },
   { path: '/start', component: Start },

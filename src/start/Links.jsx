@@ -24,7 +24,7 @@ SidebarLink.defaultProps = {
 
 const setupDropdownLinks = (courseId, gdriveFolderId, otherLinks) => {
   const dropdownItems = []
-  if (courseId) {
+  if (courseId > 0) {
     dropdownItems.push(
       {
         name: 'Home',

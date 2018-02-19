@@ -40,22 +40,6 @@ const courses = [
     ],
   },
   {
-    id: -2,
-    name: 'CSC 437',
-    fullName: 'Dynamic Web Development',
-    gdriveFolderId: '1t9Tfh4QazvyKHpddOzGonV2HLhZOHTiM',
-    otherLinks: [
-      {
-        name: 'Course Home',
-        href: 'https://users.csc.calpoly.edu/~grade-cstaley/WebDev',
-      },
-      {
-        name: 'IHS',
-        href: 'https://softwareinventions.com',
-      },
-    ],
-  },
-  {
     id: 10128,
     name: 'ENGR 234',
     fullName: 'Introduction to Design Thinking',

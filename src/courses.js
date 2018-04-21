@@ -17,39 +17,37 @@ course structure
 const courses = [
   {
     id: -1,
-    name: 'CSC 430',
-    fullName: 'Programming Languages',
-    gdriveFolderId: '1h0MOVbxGzzgpKr7H-XVGV89U_muN-RT3',
+    name: 'CSC 431',
+    fullName: 'Programming Languages II',
+    gdriveFolderId: '19vltdfT5VuDfAQVHK00t_NEKRkN4vrju',
     otherLinks: [
       {
         name: 'Course Home',
-        href: 'https://www.brinckerhoff.org/clements/2182-csc430',
+        href: 'https://www.brinckerhoff.org/clements/2184-csc431',
       },
       {
         name: 'Piazza',
-        href: 'https://piazza.com/class/jc5c5jc6v1o43b',
-      },
-      {
-        name: 'Lab Submissions',
-        href: 'http://www.brinckerhoff.org:8026/servlets/standalone.rkt',
-      },
-      {
-        name: 'Gradescope',
-        href: 'https://gradescope.com/',
+        href: 'https://piazza.com/class/jffpdfgal32gr',
       },
     ],
   },
   {
-    id: 10128,
-    name: 'ENGR 234',
-    fullName: 'Introduction to Design Thinking',
-    gdriveFolderId: '1OnALhXFaIgj9NHQTeF5e21dV8o4Ti6z-',
+    id: 21438,
+    name: 'BUS 389',
+    fullName: 'Introduction to Business Negotiation for Entrepreneurs',
+    gdriveFolderId: '1LxoXrFxvgHMbqKL0EtnH2e1FftIl-Ngp',
   },
   {
-    id: 9630,
-    name: 'PHIL 322',
-    fullName: 'Philosophy of Technology',
-    gdriveFolderId: '19VZgO8tsyq4GX8SO4DFzixsKG_AzaJe7',
+    id: -2,
+    name: 'PSYC 49',
+    fullName: 'Human Sexuality',
+    gdriveFolderId: '1HWg1Qv0sr3mfk1xZHvhTvNYPUM2Y3Ua1',
+    otherLinks: [
+      {
+        name: 'Course Home',
+        href: 'https://foothillcollege.instructure.com/courses/6400/modules',
+      },
+    ],
   },
 ]
 

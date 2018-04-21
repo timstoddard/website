@@ -188,7 +188,7 @@ export default class Perf extends Component {
           className="perf__form"
           onSubmit={runTests}>
           {snippetsToTest.map((snippet, index) =>
-            <div key={`${index + 1}`}>
+            (<div key={`${index + 1}`}>
               <div className="perf__form__snippetHeader">
                 <div className="perf__form__snippetHeader__title">
                   Snippet {index + 1}
@@ -211,8 +211,8 @@ export default class Perf extends Component {
                 onKeyDown={ignoreTab(index)}
                 cols="20"
                 rows="10"
-                />
-            </div>
+              />
+             </div>)
           )}
           <a
             className="perf__button btn light-blue"
@@ -257,7 +257,7 @@ export default class Perf extends Component {
               isWorst,
               error,
             }, index) =>
-              <div key={id}>
+              (<div key={id}>
                 <hr />
                 <h5>
                   Snippet {index + 1}
@@ -289,7 +289,7 @@ export default class Perf extends Component {
                     </dl>
                   )
                 }
-              </div>
+               </div>)
             )}
           </div>
         }

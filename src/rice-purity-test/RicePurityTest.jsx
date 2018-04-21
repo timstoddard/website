@@ -196,17 +196,17 @@ export default class RicePurityTest extends Component {
               <h4>Have you ever...</h4>
               <form onSubmit={showResult}>
                 {questions.map((question, index) =>
-                  <p key={question}>
+                  (<p key={question}>
                     <input
                       type="checkbox"
                       onChange={handleCheckboxChange}
                       id={`checkbox${index}`}
                       className="rpt__checkbox"
-                      />
+                    />
                     <label htmlFor={`checkbox${index}`}>
                       {index + 1}. {question}
                     </label>
-                  </p>
+                   </p>)
                 )}
                 <div className="rpt__buttons">
                   <input

@@ -1,13 +1,14 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 import * as Utils from './Utils'
 
 const colors = ['blue', 'red', 'yellow', 'green']
 
 const LoadingAnimation = () =>
-  <div className="loading__icon preloader-wrapper small active">
+  (<div className="loading__icon preloader-wrapper small active">
     {colors.map((color) =>
-      <div
+      (<div
         key={color}
         className={`spinner-layer spinner-${color}`}>
         <div className="circle-clipper left">
@@ -19,13 +20,13 @@ const LoadingAnimation = () =>
         <div className="circle-clipper right">
           <div className="circle" />
         </div>
-      </div>
+      </div>)
     )}
-  </div>
+   </div>)
 
 const DEGREE = String.fromCharCode(176)
 const WeatherForecastHeader = ({ className, currentObservation, reloading, setReloading }) =>
-  <div className={className}>
+  (<div className={className}>
     {currentObservation
       ? (
         <div className="weatherForecastHeader">
@@ -33,7 +34,7 @@ const WeatherForecastHeader = ({ className, currentObservation, reloading, setRe
             src={Utils.secureImg(currentObservation.icon)}
             alt={currentObservation.icon}
             className="weatherForecastHeader__icon--weather"
-            />
+          />
           <div className="weatherForecastHeader__city">
             {`${currentObservation.display_location.city}: ${currentObservation.temp_f}${DEGREE}F`}
             {Math.abs(currentObservation.temp_f - currentObservation.feelslike_f) > 2 && (
@@ -51,7 +52,7 @@ const WeatherForecastHeader = ({ className, currentObservation, reloading, setRe
                 role="button"
                 onClick={() => Utils.reloadWeatherData(setReloading)}
                 className="weatherForecastHeader__icon--reload"
-                />
+              />
             )}
         </div>
       )
@@ -64,7 +65,7 @@ const WeatherForecastHeader = ({ className, currentObservation, reloading, setRe
         </div>
       )
     }
-  </div>
+   </div>)
 
 WeatherForecastHeader.propTypes = {
   className: PropTypes.string,

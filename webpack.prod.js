@@ -1,41 +1,73 @@
 const webpack = require('webpack')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const autoprefixer = require('autoprefixer')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
-  devtool: 'cheap-module-source-map',
-  entry: './index.jsx',
+  entry: [
+    './index.jsx',
+    './index.scss',
+  ],
   output: {
     filename: 'bundle.js',
     path: __dirname + '/dist',
     publicPath: '/dist',
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?$/,
-        loader: 'babel-loader?presets[]=es2015&presets[]=react',
+        loader: 'babel-loader?presets[]=env&presets[]=react',
         exclude: /node_modules/,
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('style-loader', ['css-loader', 'postcss-loader', 'sass-loader']),
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
+        ],
       },
     ],
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
-  },
-  postcss() {
-    return [autoprefixer]
+    extensions: ['.js', '.jsx'],
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      compress: { warnings: false },
-      comments: false,
+    new UglifyJsPlugin({
+      cache: true,
+      parallel: true,
+      sourceMap: false,
+      uglifyOptions: {
+        output: {
+          comments: false,
+        },
+        compress: {
+          unused: true,
+          dead_code: true,
+          warnings: false,
+          drop_debugger: true,
+          conditionals: true,
+          evaluate: true,
+          drop_console: false,
+          sequences: true,
+          booleans: true,
+        },
+      },
     }),
     new webpack.optimize.AggressiveMergingPlugin(),
-    new webpack.optimize.DedupePlugin(),
-    new ExtractTextPlugin('bundle.css', { allChunks: true }),
+    new MiniCssExtractPlugin({ filename: 'bundle.css' }),
+    new HtmlWebpackPlugin({
+      template: 'app.html',
+      filename: '../index.html',
+      minify: {
+        collapseWhitespace: true,
+        minifyJS: {
+          mangle: false,
+        },
+        removeComments: true,
+      },
+    }),
   ],
 }

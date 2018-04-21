@@ -6,7 +6,7 @@ const path = require('path')
 const http = require('http')
 const xml2js = require('xml2js')
 
-const createServer = (setUp) => {
+module.exports = (setUp) => {
   const port = process.env.PORT || 8080
   const app = express()
 
@@ -44,9 +44,10 @@ const createServer = (setUp) => {
               response.send(JSON.stringify({ items }))
             })
           })
-        }).on('error', function(e) {
-          console.log('CNN XML error: ' + e.message)
-        })
+        }
+      ).on('error', function(e) {
+        console.log('CNN XML error: ' + e.message)
+      })
     } else {
       response.sendFile(path.resolve(__dirname, 'index.html'))
     }
@@ -55,5 +56,3 @@ const createServer = (setUp) => {
   app.listen(port)
   console.log('Server started on port ' + port)
 }
-
-module.exports = createServer

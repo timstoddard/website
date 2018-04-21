@@ -1,6 +1,6 @@
 // react-router
 import React from 'react'
-import { Route } from 'react-router'
+import { Route, Switch } from 'react-router-dom'
 
 // general
 import NotFound from './src/NotFound'
@@ -13,7 +13,7 @@ import About from './src/home/About'
 import Start from './src/start/Start'
 
 // LC3 routes
-import LC3Routes from './src/lc3/LC3Routes'
+// import LC3Routes from './src/lc3/LC3Routes'
 
 // projects
 import Battery from './src/battery/Battery'
@@ -56,23 +56,25 @@ const routes = [
 ]
 
 const Routes = (
-  <Route path="">
-    {routes.map((props) =>
+  <Switch>
+    {routes.map((props) => (
       <Route
         key={props.path}
+        exact={true}
         {...props}
-        />
-      )}
-    {LC3Routes}
+        />)
+    )}
+    {/* {LC3Routes} */}
     <Route
       path="/*"
-      component={() =>
+      component={() => (
         <NotFound
           to=""
           destination="the homepage"
-          />}
+          />
+        )}
       />
-  </Route>
+  </Switch>
 )
 
 export default Routes

@@ -75,7 +75,7 @@ export default class HeapInput extends Component {
             onClick={this.processInput}
             className="btn">
             Generate tree
-        </a>
+          </a>
         </div>
         <p>
           Accepted format example:&nbsp;
@@ -83,9 +83,9 @@ export default class HeapInput extends Component {
             onClick={this.showSample}
             className="heapInput__sample">
             1,2,3
-        </a>
+          </a>
           &nbsp;(no enclosing brackets, spaces optional)
-      </p>
+        </p>
         <p>Note: numbers with more than 3 digits will mess up the spacing.</p>
       </div>
     )

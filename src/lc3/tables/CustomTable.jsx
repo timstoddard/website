@@ -1,7 +1,7 @@
 import React from 'react'
 
 const CustomTable = ({ title, headers, body }) =>
-  <div>
+  (<div>
     <h3 className="center-align">
       {title}
     </h3>
@@ -9,14 +9,14 @@ const CustomTable = ({ title, headers, body }) =>
       <thead>
         <tr>
           {headers.map(header =>
-            <th key={header}>
+            (<th key={header}>
               {header}
-            </th>
+            </th>)
           )}
         </tr>
       </thead>
       <tbody>{body}</tbody>
     </table>
-  </div>
+   </div>)
 
 export default CustomTable

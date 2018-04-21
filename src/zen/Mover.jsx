@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 export default class Mover extends Component {
   constructor(props) {
@@ -79,4 +80,14 @@ export default class Mover extends Component {
       </div>
     )
   }
+}
+
+Mover.propTypes = {
+  radiusChangeSpeed: PropTypes.number.isRequired,
+  maxRadius: PropTypes.number.isRequired,
+  minRadius: PropTypes.number.isRequired,
+  direction: PropTypes.number.isRequired,
+  offset: PropTypes.number.isRequired,
+  centerX: PropTypes.number.isRequired,
+  centerY: PropTypes.number.isRequired,
 }

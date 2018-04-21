@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 export default class StrobeOptions extends Component {
   constructor(props) {
@@ -33,7 +34,7 @@ export default class StrobeOptions extends Component {
       <div className="options">
         <h5 className="options__title">
           Options
-      </h5>
+        </h5>
         <div className="options__form">
           <p className="options__form--min">{min}</p>
           <input
@@ -51,13 +52,13 @@ export default class StrobeOptions extends Component {
             {ms}
           </span>
           &nbsp;milliseconds between strobes
-      </div>
+        </div>
         <div className="options__buttonWrapper">
           <a
             onClick={onCloseClick}
             className="options__button">
             Close
-        </a>
+          </a>
         </div>
       </div>
     )

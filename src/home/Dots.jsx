@@ -1,10 +1,14 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 export default class Dots extends Component {
   constructor(props) {
     super(props)
 
-    this.state = { visible: false }
+    this.state = {
+      visible: false,
+      drawLineThresholdSquared: 0,
+    }
   }
 
   componentDidMount() {
@@ -24,8 +28,14 @@ export default class Dots extends Component {
 
     // track the window size
     const trackWindowSize = () => {
-      this.canvas.width = document.documentElement.clientWidth
-      this.canvas.height = document.documentElement.clientHeight
+      const {
+        clientWidth: viewportWidth,
+        clientHeight: viewportHeight,
+      } = document.documentElement
+      this.canvas.width = viewportWidth
+      this.canvas.height = viewportHeight
+      const threshold = Math.min(viewportWidth, viewportHeight) / 6
+      this.setState({ drawLineThresholdSquared: threshold * threshold })
     }
     trackWindowSize()
     window.onresize = trackWindowSize
@@ -50,11 +60,12 @@ export default class Dots extends Component {
         newY < 0 ||
         newY > viewportHeight
       return outOfBounds
-         ? this.generateNewDot()
-         : { x: newX, y: newY, dx, dy, radius, opacity }
+        ? this.generateNewDot()
+        : { x: newX, y: newY, dx, dy, radius, opacity }
     })
     const canvas = this.canvas.getContext('2d')
     canvas.clearRect(0, 0, viewportWidth, viewportHeight)
+    const { drawLineThresholdSquared } = this.state
     for (let i = 0; i < this.dots.length; i++) {
       for (let j = i + 1; j < this.dots.length; j++) {
         const dot1 = this.dots[i]
@@ -62,10 +73,8 @@ export default class Dots extends Component {
         const a = dot1.x - dot2.x
         const b = dot1.y - dot2.y
         const distSquared = a * a + b * b
-        const threshold = Math.min(viewportWidth, viewportHeight) / 6
-        const thresholdSquared = threshold * threshold
-        if (distSquared < thresholdSquared) {
-          const opacity = Math.min(thresholdSquared / distSquared - 1, 1)
+        if (distSquared < drawLineThresholdSquared) {
+          const opacity = Math.min(drawLineThresholdSquared / distSquared - 1, 1)
           this.drawLine(canvas, dot1.x, dot1.y, dot2.x, dot2.y, opacity)
         }
       }

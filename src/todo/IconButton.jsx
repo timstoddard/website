@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 
 const IconButton = ({
   onClick,
@@ -8,7 +9,7 @@ const IconButton = ({
   className,
   isDraggable,
 }) =>
-  <div
+  (<div
     className={`iconButton ${hidden ? 'iconButton--hidden' : ''} ${className}`}
     onDragStart={onDragStart}
     draggable={isDraggable}>
@@ -22,7 +23,7 @@ const IconButton = ({
         <path d={path} />
       </g>
     </svg>
-  </div>
+   </div>)
 
 IconButton.propTypes = {
   onClick: PropTypes.func,

@@ -1,12 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router'
-
-import './NavLink.scss'
+import { Link } from 'react-router-dom'
 
 const NavLink = (props) =>
-  <Link
+  (<Link
     {...props}
     activeClassName="nav__link--active"
-    />
+  />)
 
 export default NavLink

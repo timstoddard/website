@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 const getProps = (name, data, link, handleClick, showingBorders) => {
   const newLink = [...link, name]

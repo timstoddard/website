@@ -1,16 +1,17 @@
-import React, { Component, PropTypes } from 'react'
-import { Link } from 'react-router'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 import courses from '../courses'
 
 const SidebarLink = ({ inDropdown, href, name }) =>
-  <a
+  (<a
     className={`black-text ${inDropdown ? '' : 'links__collectionItem collection-item'}`}
     href={href}
     target="_blank"
     rel="noopener noreferrer">
     {name}
-  </a>
+   </a>)
 
 SidebarLink.propTypes = {
   inDropdown: PropTypes.bool,
@@ -47,20 +48,20 @@ const setupDropdownLinks = (courseId, gdriveFolderId, otherLinks) => {
 }
 
 const Dropdown = ({ courseId, index, gdriveFolderId, otherLinks }) =>
-  <ul
+  (<ul
     id={`dropdown${index}`}
     className="dropdown-content">
     {setupDropdownLinks(courseId, gdriveFolderId, otherLinks)
       .map(({ name, href }) =>
-        <li key={href}>
+        (<li key={href}>
           <SidebarLink
             name={name}
             href={href}
             inDropdown={true}
             />
-        </li>
+        </li>)
       )}
-  </ul>
+   </ul>)
 
 Dropdown.propTypes = {
   courseId: PropTypes.number,
@@ -75,11 +76,11 @@ Dropdown.defaultProps = {
 }
 
 const DropdownActivator = ({ index, courseName }) =>
-  <a
+  (<a
     className="links__collectionItem collection-item dropdown-button black-text"
     data-activates={`dropdown${index}`}>
     {courseName}
-  </a>
+   </a>)
 
 DropdownActivator.propTypes = {
   courseName: PropTypes.string.isRequired,
@@ -147,20 +148,20 @@ export default class Links extends Component {
     return (
       <div className={`links__collection collection ${className}`}>
         {courses.map(({ id, gdriveFolderId, otherLinks, isCalPolyCourse }, index) =>
-          <Dropdown
+          (<Dropdown
             key={gdriveFolderId}
             index={index}
             courseId={id}
             gdriveFolderId={gdriveFolderId}
             otherLinks={otherLinks}
-            />
+          />)
         )}
         {courses.map(({ name }, index) =>
-          <DropdownActivator
+          (<DropdownActivator
             key={name}
             index={index}
             courseName={name}
-            />
+          />)
         )}
         <div className="divider" />
         <Link
@@ -169,11 +170,11 @@ export default class Links extends Component {
           Home
         </Link>
         {links.map(({ name, href }) =>
-          <SidebarLink
+          (<SidebarLink
             key={name}
             name={name}
             href={href}
-            />
+          />)
         )}
       </div>
     )

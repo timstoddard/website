@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 
 const icons = [
   { name: 'Github', href: 'https://github.com/timstoddard' },
@@ -9,9 +9,9 @@ const icons = [
 ]
 
 const IconLinks = () =>
-  <div className="about__icons">
+  (<div className="about__icons">
     {icons.map(({ href, name }) =>
-      <a
+      (<a
         href={href}
         target="_blank"
         rel="noopener noreferrer"
@@ -21,12 +21,12 @@ const IconLinks = () =>
           alt={name}
           className="about__icon"
           />
-      </a>
+      </a>)
     )}
-  </div>
+   </div>)
 
 const About = () =>
-  <div className="about">
+  (<div className="about">
     <div className="about__container">
       <h5 className="about__title center-align">
         Tim Stoddard
@@ -75,6 +75,6 @@ const About = () =>
         </h5>
       </Link>
     </div>
-  </div>
+   </div>)
 
 export default About

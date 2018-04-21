@@ -1,11 +1,9 @@
 let successFn = () => { }
 let reloadWeatherTimer = null
 
-// Lat/long data currently stays until manually reset
-/* eslint-disable no-unused-vars */
-const hasLocationDataInLocalStorage = () =>
-  get('locationData') !== null
-/* eslint-enable no-unused-vars */
+// Lat/long and weather data currently stays until manually reset
+// const hasLocationDataInLocalStorage = () =>
+//   get('locationData') !== null
 const hasWeatherDataInLocalStorage = () =>
   get('weatherData') !== null &&
   get('weatherDataTimestamp') !== null

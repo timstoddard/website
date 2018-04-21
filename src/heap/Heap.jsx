@@ -12,10 +12,12 @@ export default class Heap extends Component {
     this.sortedHeap = new BinaryHeap(true)
 
     this.generateHeaps = this.generateHeaps.bind(this)
+    this.showInputHeap = this.showInputHeap.bind(this)
+    this.showSortedHeap = this.showSortedHeap.bind(this)
 
     this.state = {
       showTree: false,
-      isMounted: false,
+      heap: this.inputHeap,
     }
   }
 
@@ -34,19 +36,30 @@ export default class Heap extends Component {
     this.setState({ showTree: ints.length > 0 })
   }
 
+  showInputHeap() {
+    this.setState({ heap: this.inputHeap })
+  }
+
+  showSortedHeap() {
+    this.setState({ heap: this.sortedHeap })
+  }
+
   render() {
     document.title = 'Heap'
-    const { generateHeaps, inputHeap, sortedHeap } = this
-    const { showTree } = this.state
+    const { generateHeaps, showInputHeap, showSortedHeap } = this
+    const { showTree, heap } = this.state
 
     return (
       <div className="heap container">
-        <h5 className="heap__title">Max-Heap Tree Generator</h5>
+        <h5 className="heap__title">
+          Max-Heap Tree Generator
+        </h5>
         <HeapInput generateHeaps={generateHeaps} />
         {showTree &&
           <HeapDetail
-            inputHeap={inputHeap}
-            sortedHeap={sortedHeap}
+            heap={heap}
+            showInputHeap={showInputHeap}
+            showSortedHeap={showSortedHeap}
             />
         }
       </div>

@@ -1,13 +1,14 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 import * as Utils from './Utils'
 
 const WeatherForecastDay = ({ day }) =>
-  <div className="weatherForecastDay">
+  (<div className="weatherForecastDay">
     <img
       src={Utils.secureImg(day.icon)}
       alt={day.icon}
-      />
+    />
     <p className="weatherForecastDay__line">
       {day.date.weekday}
     </p>
@@ -17,7 +18,7 @@ const WeatherForecastDay = ({ day }) =>
     <p className="weatherForecastDay__line">
       {day.low.fahrenheit}-{day.high.fahrenheit}&deg;F
     </p>
-  </div>
+   </div>)
 
 WeatherForecastDay.propTypes = {
   day: PropTypes.shape({
@@ -62,7 +63,7 @@ class CNN extends Component {
     return (
       <div className={`blue-grey lighten-3 z-depth-1 ${className}`}>
         {data.map(({ link, origLink, title, description }) =>
-          <a
+          (<a
             key={link}
             href={origLink}
             target="_blank"
@@ -74,7 +75,7 @@ class CNN extends Component {
             <div className="rssItem__description">
               {description}
             </div>
-          </a>
+           </a>)
         )}
       </div>
     )
@@ -131,20 +132,20 @@ RandomQuote.propTypes = {
 }
 
 const MainContent = ({ className, forecast }) =>
-  <div className={`mainContent center-align ${className}`}>
+  (<div className={`mainContent center-align ${className}`}>
     <div className="weatherForecastDays light-blue accent-1 z-depth-1">
       {forecast.map(forecastDay =>
-        <WeatherForecastDay
+        (<WeatherForecastDay
           key={forecastDay.date.day}
           day={forecastDay}
-          />
+          />)
       )}
     </div>
     <div className="mainContent__blocks">
       <CNN className="mainContent__blocks--cnn" />
       <RandomQuote className="mainContent__blocks--quote" />
     </div>
-  </div>
+   </div>)
 
 MainContent.propTypes = {
   className: PropTypes.string.isRequired,

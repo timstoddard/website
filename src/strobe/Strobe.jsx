@@ -99,7 +99,7 @@ export default class Strobe extends Component {
             updateMs={this.updateMs}
             hideOptions={this.hideOptions}
             />
-          }
+        }
       </div>
     )
   }

@@ -1,4 +1,4 @@
-export default class {
+export default class BinaryHeap {
   constructor(sort, maxCapacity) {
     this.sort = sort
     this.init(maxCapacity)

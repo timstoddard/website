@@ -40,7 +40,7 @@ export default class Battery extends Component {
         level: 1,
         decreasing: true,
       })
-      setInterval(() => {
+      this.batteryAnimationInterval = setInterval(() => {
         if (this.state.decreasing && this.state.level <= 0) {
           this.updateAnimation({
             level: 0,
@@ -57,6 +57,10 @@ export default class Battery extends Component {
         this.updateAnimation({ level: this.state.level + amountToAdd })
       }, 4)
     }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.batteryAnimationInterval)
   }
 
   updateStats(battery) {

@@ -4,8 +4,6 @@ import Todo from './Todo'
 import IconButton, { IconPath } from './IconButton'
 import { TransitionState, TRANSITION_MS } from './transition'
 
-/* eslint-disable react/no-did-mount-set-state */
-
 export default class TodoList extends Component {
   constructor() {
     super()
@@ -33,7 +31,7 @@ export default class TodoList extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const todos = JSON.parse(localStorage.getItem('todos'))
     if (todos) {
       this.setState({ todos })
@@ -258,7 +256,7 @@ export default class TodoList extends Component {
               <h5>{todos.length} item{todos.length !== 1 && 's'}, {todosRemaining} remaining</h5>
               <ul className="todoList__list">
                 {todos.map(({ message, completed, isEditing }, i) =>
-                  <Todo
+                  (<Todo
                     key={`${message}~${i + 1}`}
                     message={message}
                     completed={completed}
@@ -273,7 +271,7 @@ export default class TodoList extends Component {
                     currentTodoMessage={currentTodoMessage}
                     updateOrder={updateOrder(i)}
                     updateDragState={updateDragState}
-                    />
+                  />)
                 )}
               </ul>
             </div>

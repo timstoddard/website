@@ -1,13 +1,12 @@
-const webpack = require('webpack')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const autoprefixer = require('autoprefixer')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
+  mode: 'development',
   devtool: 'eval',
   entry: [
-    'webpack/hot/dev-server',
-    'webpack-hot-middleware/client',
     './index.jsx',
+    './index.scss',
   ],
   output: {
     filename: 'bundle.js',
@@ -15,26 +14,34 @@ module.exports = {
     publicPath: '/dist',
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?$/,
-        loader: 'babel-loader?presets[]=es2015&presets[]=react',
+        loader: 'babel-loader?presets[]=env&presets[]=react',
         exclude: /node_modules/,
       },
       {
         test: /\.scss$/,
-        loader: 'style!css!postcss!sass',
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
+        ],
       },
     ],
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
-  },
-  postcss() {
-    return [autoprefixer]
+    extensions: ['.js', '.jsx'],
   },
   plugins: [
-    new ExtractTextPlugin('bundle.css', { allChunks: true }),
-    new webpack.HotModuleReplacementPlugin(),
+    new MiniCssExtractPlugin({ filename: 'bundle.css' }),
+    new HtmlWebpackPlugin({
+      template: 'app.html',
+      filename: '../index.html',
+    }),
   ],
+  devServer: {
+    historyApiFallback: true,
+  },
 }

@@ -4,7 +4,7 @@
 // index files
 @import './src/heap/scss/index';
 @import './src/home/scss/index';
-@import './src/lc3/scss/index';
+// @import './src/lc3/scss/index';
 @import './src/start/scss/index';
 @import './src/strobe/scss/index';
 @import './src/todo/scss/index';
@@ -17,12 +17,16 @@
 @import './src/imports/scss/Imports';
 @import './src/incr-game/scss/IncrGame';
 @import './src/infinity/scss/Infinity';
+@import './src/NotFound';
 @import './src/perf/scss/Perf';
 @import './src/projects/scss/Projects';
 @import './src/rice-purity-test/scss/RicePurityTest';
 @import './src/time/scss/Time';
 @import './src/trippy/scss/Trippy';
 @import './src/zen/scss/Zen';
+
+// other
+@import './src/NavLink';
 
 html {
   font-size: 18px;

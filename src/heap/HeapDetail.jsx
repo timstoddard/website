@@ -1,54 +1,38 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
+import BinaryHeap from './BinaryHeap'
 import printTree from './BinaryTreePrinter'
 
 export default class HeapDetail extends Component {
   constructor(props) {
     super(props)
-
-    this.showInputHeap = this.showInputHeap.bind(this)
-    this.showSortedHeap = this.showSortedHeap.bind(this)
-
-    this.state = { showSorted: false }
   }
 
   getTreeString() {
-    const { showSorted } = this.state
-    const { sortedHeap, inputHeap } = this.props
-    const treeString = showSorted
-      ? printTree(sortedHeap)
-      : printTree(inputHeap)
-    return { __html: `${treeString}<br><br>` }
-  }
-
-  showInputHeap() {
-    this.setState({ showSorted: false })
-  }
-
-  showSortedHeap() {
-    this.setState({ showSorted: true })
+    const { heap } = this.props
+    return { __html: `${printTree(heap)}<br><br>` }
   }
 
   render() {
-    const { sortedHeap, inputHeap } = this.props
-    const { showSorted } = this.state
+    const { heap, showInputHeap, showSortedHeap } = this.props
 
     return (
       <div className="heapDetail blue-grey lighten-4">
         <hr />
         <a
-          onClick={this.showInputHeap}
-          className="btn heapDetail__button">
+          onClick={showInputHeap}
+          className="heapDetail__button btn">
           show your input heap
         </a>
         <a
-          onClick={this.showSortedHeap}
-          className="btn heapDetail__button">
+          onClick={showSortedHeap}
+          className="heapDetail__button btn">
           show sorted heap
         </a>
-        <p>Number of elements: {inputHeap.heapSize()}</p>
-        <p>Number of levels: {inputHeap.treeHeight()}</p>
-        <p>Heap in array form: {(showSorted ? sortedHeap : inputHeap).toString()}</p>
+        <p>Number of elements: {heap.heapSize()}</p>
+        <p>Number of levels: {heap.treeHeight()}</p>
+        <p>Heap in array form: {heap.toString()}</p>
         <div className="heapDetail__treeWrapper">
           <div
             dangerouslySetInnerHTML={this.getTreeString()}
@@ -58,4 +42,10 @@ export default class HeapDetail extends Component {
       </div>
     )
   }
+}
+
+HeapDetail.propTypes = {
+  heap: PropTypes.instanceOf(BinaryHeap).isRequired,
+  showInputHeap: PropTypes.func.isRequired,
+  showSortedHeap: PropTypes.func.isRequired,
 }

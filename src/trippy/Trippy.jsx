@@ -114,8 +114,10 @@ export default class Trippy extends Component {
     const baseDeltaX = (x - centerX) / n
     const baseDeltaY = (y - centerY) / n
     const pairGroups = []
+    pairGroups.push([{ x: centerX, y: centerY, radius }])
+
     const limit = extended ? n * 1.5 : n
-    for (let i = 0; i <= limit; i++) {
+    for (let i = 1; i <= limit; i++) {
       const deltaX = i * baseDeltaX
       const deltaY = i * baseDeltaY
       pairGroups.push([
@@ -171,7 +173,8 @@ export default class Trippy extends Component {
         {pairGroups.map((pairGroup, i) => {
           const background = getColor(i)
           return pairGroup.map(({ x, y, radius }) =>
-            <div
+            (<div
+              key={`${x}-${y}-${radius}`}
               className="trippy__disk"
               style={{
                 background,
@@ -182,7 +185,7 @@ export default class Trippy extends Component {
                 borderRadius: radius,
                 transition: `background ${REFRESH_DELAY / 1000}s ease`,
               }}
-              />
+            />)
           )
         })}
       </div>

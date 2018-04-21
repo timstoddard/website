@@ -52,7 +52,7 @@ const InstructionEncoding = ({ encoding, className }) => {
           )
         } else {
           return code.split('').map((bit, index, arr) =>
-            <BitEncoding
+            (<BitEncoding
               key={index}
               value={bit}
               width={1}
@@ -60,7 +60,7 @@ const InstructionEncoding = ({ encoding, className }) => {
               isLastBitInSection={index === arr.length - 1}
               min={bitNumber}
               max={bitNumber--}
-              />)
+            />))
         }
       })}
     </div>

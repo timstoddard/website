@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run clean && npm run webpack-dev",
-    "webpack-dev": "webpack --config webpack.dev.js && webpack-dev-server --config webpack.dev.js --open",
+    "webpack-dev": "webpack --config webpack/webpack.dev.js && webpack-dev-server --config webpack/webpack.dev.js --open",
     "prod": "npm run clean && npm run webpack-prod && node app.prod.js",
-    "webpack-prod": "webpack -p --config webpack.prod.js",
+    "webpack-prod": "webpack -p --config webpack/webpack.prod.js",
     "lint": "eslint --ext .jsx,.js --ignore-pattern '/dist/*' --fix .",
     "clean": "rm -rf dist index.html"
   },
@@ -39,6 +39,7 @@
     "style-loader": "^0.20.3",
     "uglifyjs-webpack-plugin": "^1.2.4",
     "webpack": "^4.4.1",
+    "webpack-merge": "^4.1.2",
     "xml2js": "^0.4.19"
   },
   "devDependencies": {

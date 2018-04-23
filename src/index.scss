@@ -1,6 +1,9 @@
 /* from time @import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300); */
 /* from ng2 demo @import url(https://fonts.googleapis.com/css?family=Roboto); */
 
+// shared variables
+@import '../src/scss/variables';
+
 // index files
 @import '../src/heap/scss/index';
 @import '../src/home/scss/index';

@@ -76,7 +76,7 @@ const projects = [
         inProgress: false,
       },
       {
-        name: 'Peaceful Animation',
+        name: 'Calm Animation',
         link: '/zen',
         inProgress: false,
       },
@@ -94,33 +94,25 @@ const Projects = () => {
         </h4>
         <hr className="projects__divider" />
         {projects.map(({ name, links }) => (
-          <div
-            key={name}
-            className="projects__group">
+          <div key={name}>
             <h5 className="projects__title">
               {name}
             </h5>
-            <ul className="projects__group__list">
+            <ul className="collection">
               {links.map(({ name, link, inProgress }) => (
-                <li key={name}>
+                <li
+                  className="collection-item projects__linkWrapper"
+                  key={name}>
                   <Link to={link}>
-                    <h6 className={`projects__link ${inProgress ? 'projects__link--inProgress' : ''}`}>
+                    <span className={`projects__link ${inProgress ? 'projects__link--inProgress' : ''}`}>
                       {name}
-                    </h6>
+                    </span>
                   </Link>
                 </li>
               ))}
             </ul>
-            <hr className="projects__divider" />
           </div>
         ))}
-        <h5 className="center-align">
-          <Link
-            to=""
-            className="projects__link">
-            Back
-          </Link>
-        </h5>
       </div>
     </div>
   )

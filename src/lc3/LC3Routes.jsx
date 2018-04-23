@@ -51,11 +51,12 @@ const LC3Routes = (
     </Route>
     <Route
       path="/lc3/*"
-      component={() =>
-        (<NotFound
+      component={() => (
+        <NotFound
           to="/lc3"
           destination="the LC3 homepage"
-        />)}
+          />
+      )}
       />
   </Route>
 )

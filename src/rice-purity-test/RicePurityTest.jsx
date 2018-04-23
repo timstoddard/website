@@ -171,59 +171,56 @@ export default class RicePurityTest extends Component {
             )
           </div>
         </h1>
-        {showingResult
-          ? (
-            <div className="rpt__result">
-              <h4>Your result</h4>
-              <div className="rpt__purity">
-                {purity}
-              </div>
+        {showingResult ? (
+          <div className="rpt__result">
+            <h4>Your result</h4>
+            <div className="rpt__purity">
+              {purity}
+            </div>
+            <div className="rpt__buttons">
+              <button
+                onClick={showTest}
+                className="waves-effect waves-light btn">
+                Take it again!
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <div className="rpt__caution">
+              Caution: This is not a bucket list. Completion of all items on this test will likely result in death.
+            </div>
+            <div>Click on every item you have done. MPS stands for Member of the Preferred Sex.</div>
+            <h4>Have you ever...</h4>
+            <form onSubmit={showResult}>
+              {questions.map((question, index) => (
+                <p key={question}>
+                  <input
+                    type="checkbox"
+                    onChange={handleCheckboxChange}
+                    id={`checkbox${index}`}
+                    className="rpt__checkbox"
+                    />
+                  <label htmlFor={`checkbox${index}`}>
+                    {index + 1}. {question}
+                  </label>
+                </p>
+              ))}
               <div className="rpt__buttons">
+                <input
+                  type="submit"
+                  value="Calculate My Score"
+                  className="waves-effect waves-light btn"
+                  />
                 <button
-                  onClick={showTest}
+                  onClick={clearCheckboxes}
                   className="waves-effect waves-light btn">
-                  Take it again!
+                  Clear checkboxes
                 </button>
               </div>
-            </div>
-          )
-          : (
-            <div>
-              <div className="rpt__caution">
-                Caution: This is not a bucket list. Completion of all items on this test will likely result in death.
-              </div>
-              <div>Click on every item you have done. MPS stands for Member of the Preferred Sex.</div>
-              <h4>Have you ever...</h4>
-              <form onSubmit={showResult}>
-                {questions.map((question, index) =>
-                  (<p key={question}>
-                    <input
-                      type="checkbox"
-                      onChange={handleCheckboxChange}
-                      id={`checkbox${index}`}
-                      className="rpt__checkbox"
-                    />
-                    <label htmlFor={`checkbox${index}`}>
-                      {index + 1}. {question}
-                    </label>
-                   </p>)
-                )}
-                <div className="rpt__buttons">
-                  <input
-                    type="submit"
-                    value="Calculate My Score"
-                    className="waves-effect waves-light btn"
-                    />
-                  <button
-                    onClick={clearCheckboxes}
-                    className="waves-effect waves-light btn">
-                    Clear checkboxes
-                  </button>
-                </div>
-              </form>
-            </div>
-          )
-        }
+            </form>
+          </div>
+        )}
       </div>
     )
   }

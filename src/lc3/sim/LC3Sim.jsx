@@ -1,14 +1,15 @@
 import React from 'react'
 
-const QuickStart = ({ title }) =>
-  (<div>
+const QuickStart = ({ title }) => (
+  <div>
     <h5 className="LC3Sim__sectionTitle">{title}</h5>
     <div>The LC3 simulator on the UNIX workstations is a very simple program that is composed of three components.</div>
     <div>lc3sim – The actual simulator</div>
     <div>lc3as – The LC3 program assembler.</div>
     <div>lc3convert – binary or hex to object file converter</div>
     <div>Every program must either be assembled using lc3as, or if a bin or hex file, converted using lc3convert. The resulting object file can then run under lc3sim.</div>
-   </div>)
+  </div>
+)
 
 const commands = [
   {
@@ -100,14 +101,14 @@ const examples = [
   },
 ]
 
-const Simulator = ({ title }) =>
-  (<div>
+const Simulator = ({ title }) => (
+  <div>
     <h5 className="LC3Sim__sectionTitle">{title}</h5>
     <div>The LC3 simulator (lc3sim) is a text based program. It works like many text-based debuggers, so having some familiarity with this type of interface will be useful to you in the future. Start lc3sim by simply executing lc3sim from the command line. Note that the lc3sim is only installed on the 32bit unix machines (unix1-3).The object file to execute can be provided at the command-line as an argument, or loaded separately once lc3sim has started. lc3sim dumps all system registers to the screen on start. You can also see the system registers at any time using the &quot;p&quot; or &quot;printregs&quot; command.</div>
     <h6 className="LC3Sim__sectionSubTitle">Commands</h6>
     <ul>
-      {commands.map(({ name, description }, index) =>
-        (<li
+      {commands.map(({ name, description }, index) => (
+        <li
           key={index}
           className="LC3Sim__row row">
           <div className="col s4">
@@ -116,16 +117,16 @@ const Simulator = ({ title }) =>
             </span>
           </div>
           <div className="col s8">{description}</div>
-        </li>)
-      )}
+        </li>
+      ))}
     </ul>
     <div>All commands except quit can be abbreviated.</div>
     <div>Note that the simulator assumes all values are hexadecimal.</div>
     <div>Use a &quot;#&quot; to indicate a decimal value (for example, #99).</div>
     <h6 className="LC3Sim__sectionSubTitle">Examples</h6>
     <ul>
-      {examples.map(({ text, description }, index) =>
-        (<li
+      {examples.map(({ text, description }, index) => (
+        <li
           key={index}
           className="LC3Sim__row row">
           <div className="col s4">
@@ -135,13 +136,14 @@ const Simulator = ({ title }) =>
             </span>
           </div>
           <div className="col s8">{description}</div>
-        </li>)
-      )}
+        </li>
+      ))}
     </ul>
-   </div>)
+  </div>
+)
 
-const Assembler = ({ title }) =>
-  (<div>
+const Assembler = ({ title }) => (
+  <div>
     <h5 className="LC3Sim__sectionTitle">{title}</h5>
     <div>The LC3 assembler (lc3as) works purely at the command line. lc3as will execute and return to the command line, telling you whether it succeeded or not in creating the object file. The lc3as program is executed at the command line with the *.asm file to assemble supplied as an argument. If successful, the output is an object file with the.obj extension. The assembler will output error messages if the assembly is unsuccessful.</div>
     <div>Example:
@@ -153,10 +155,11 @@ const Assembler = ({ title }) =>
         </li>
       </ul>
     </div>
-   </div>)
+  </div>
+)
 
-const Converter = ({ title }) =>
-  (<div>
+const Converter = ({ title }) => (
+  <div>
     <h5 className="LC3Sim__sectionTitle">{title}</h5>
     <div>The LC3 converter converts the supplied *.bin or *.hex file to an object file. A bin file is a text file with the intended final object file encoded as 1’s and 0’s. A bin file is still a text file and can be opened with notepad or any other text editor. A hex file is a text file with the intended final object file encoded as hexadecimal values. Both bin and hex files assume one command per line. An object file cannot be read using a text editor. If successful, the output is an object file with the .obj extension.</div>
     <div>Examples:
@@ -173,10 +176,11 @@ const Converter = ({ title }) =>
         </li>
       </ul>
     </div>
-   </div>)
+  </div>
+)
 
-const LC3Sim = () =>
-  (<div className="LC3Sim__container container">
+const LC3Sim = () => (
+  <div className="LC3Sim__container container">
     <h3 className="center-align">
       LC3 Simulator Information
     </h3>
@@ -184,6 +188,7 @@ const LC3Sim = () =>
     <Simulator title="Simulator Info" />
     <Assembler title="Assembler Info" />
     <Converter title="Converter Info" />
-   </div>)
+  </div>
+)
 
 export default LC3Sim

@@ -8,10 +8,10 @@ const icons = [
   { name: 'Facebook', href: 'https://facebook.com/timstoddard200' },
 ]
 
-const IconLinks = () =>
-  (<div className="about__icons">
-    {icons.map(({ href, name }) =>
-      (<a
+const IconLinks = () => (
+  <div className="about__icons">
+    {icons.map(({ href, name }) => (
+      <a
         href={href}
         target="_blank"
         rel="noopener noreferrer"
@@ -21,12 +21,13 @@ const IconLinks = () =>
           alt={name}
           className="about__icon"
           />
-      </a>)
-    )}
-   </div>)
+      </a>
+    ))}
+  </div>
+)
 
-const About = () =>
-  (<div className="about">
+const About = () => (
+  <div className="about">
     <div className="about__container">
       <h5 className="about__title center-align">
         Tim Stoddard
@@ -75,6 +76,7 @@ const About = () =>
         </h5>
       </Link>
     </div>
-   </div>)
+  </div>
+)
 
 export default About

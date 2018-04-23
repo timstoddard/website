@@ -3,8 +3,8 @@ import React, { Component } from 'react'
 import instructions from './Data'
 import InstructionEncoding from './InstructionEncoding'
 
-const DetailHeader = ({ assemblerFormat, fn }) =>
-  (<div className="detailHeader row">
+const DetailHeader = ({ assemblerFormat, fn }) => (
+  <div className="detailHeader row">
     <div className="detailHeader__text detailHeader__text--opcode col s3">
       {assemblerFormat.name || 'none'}
     </div>
@@ -14,39 +14,41 @@ const DetailHeader = ({ assemblerFormat, fn }) =>
     <div className="detailHeader__text detailHeader__text--function col s5">
       {fn}
     </div>
-   </div>)
+  </div>
+)
 
-const DetailDescription = ({ description }) =>
-  (<div className="detailDescription">
+const DetailDescription = ({ description }) => (
+  <div className="detailDescription">
     {description}
-   </div>)
+  </div>
+)
 
-const DetailOperation = ({ operation }) =>
-  (<div className="detailOperation">
+const DetailOperation = ({ operation }) => (
+  <div className="detailOperation">
     {operation.map(({ tooltip, text, indentationLevel }, index) =>
-      tooltip
-        ? (
-          <div
-            key={index}
-            className="detailOperation__tooltip">
-            <em>{text}</em>
-          </div>
-        )
-        : (
-          <div
-            key={index}
-            className={`detail__text--code detailOperation__text--${indentationLevel}`}>
-            {text}
-          </div>
-        )
+      tooltip ? (
+        <div
+          key={index}
+          className="detailOperation__tooltip">
+          <em>{text}</em>
+        </div>
+      ) : (
+        <div
+          key={index}
+          className={`detail__text--code detailOperation__text--${indentationLevel}`}>
+          {text}
+        </div>
+      )
     )}
-   </div>)
+  </div>
+)
 
-const DetailExample = ({ example }) =>
-  (<div className="detailExample">
+const DetailExample = ({ example }) => (
+  <div className="detailExample">
     <div className="detail__text--code">{example.text}</div>
     <div>{example.description}</div>
-   </div>)
+  </div>
+)
 
 class InstructionRow extends Component {
   constructor(props) {
@@ -89,19 +91,20 @@ class InstructionRow extends Component {
             />
           <DetailDescription description={instruction.description} />
           <DetailOperation operation={instruction.operation} />
-          {format.examples.map((example, index) =>
-            (<DetailExample
+          {format.examples.map((example, index) => (
+            <DetailExample
               key={index}
               example={example}
-            />))}
+              />
+          ))}
         </div>
       </div>
     )
   }
 }
 
-const LC3Ref = () =>
-  (<div className="container">
+const LC3Ref = () => (
+  <div className="container">
     <h1 className="refList__title">LC3 Reference Guide</h1>
     <h5 className="refList__title">
       (Adapted from&nbsp;
@@ -115,13 +118,13 @@ const LC3Ref = () =>
     </h5>
     <div className="refList__content">
       {instructions.map(instruction =>
-        instruction.formats.map(format =>
-          (<InstructionRow
+        instruction.formats.map(format => (
+          <InstructionRow
             instruction={instruction}
             format={format}
             modifiesCC={instruction.modifiesConditionCodes}
-            />)
-        )
+            />
+        ))
       )}
       <p className="refList__note--title">Notes</p>
       <ul>
@@ -129,6 +132,7 @@ const LC3Ref = () =>
         <li className="refList__note--text">The dot next to an instruction&quot;s name refers to whether or not the instruction modifies condition codes. <span className="instruction__modifiesCC--true" /> means it modifies condition codes, and <span className="instruction__modifiesCC--false" /> means it does not.</li>
       </ul>
     </div>
-   </div>)
+  </div>
+)
 
 export default LC3Ref

@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const ControlPanel = ({ buttonText, moveCount, selectedCells, onSubmit }) =>
-  (<div className="board__controls row">
+const ControlPanel = ({ buttonText, moveCount, selectedCells, onSubmit }) => (
+  <div className="board__controls row">
     <div className="col s6">
       <div>Moves: {moveCount}</div>
       <div>Selected cells: {selectedCells}</div>
@@ -14,7 +14,8 @@ const ControlPanel = ({ buttonText, moveCount, selectedCells, onSubmit }) =>
         {buttonText}
       </a>
     </div>
-   </div>)
+   </div>
+)
 
 ControlPanel.propTypes = {
   buttonText: PropTypes.string,

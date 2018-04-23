@@ -8,8 +8,8 @@ const IconButton = ({
   hidden,
   className,
   isDraggable,
-}) =>
-  (<div
+}) => (
+  <div
     className={`iconButton ${hidden ? 'iconButton--hidden' : ''} ${className}`}
     onDragStart={onDragStart}
     draggable={isDraggable}>
@@ -23,7 +23,8 @@ const IconButton = ({
         <path d={path} />
       </g>
     </svg>
-   </div>)
+  </div>
+)
 
 IconButton.propTypes = {
   onClick: PropTypes.func,

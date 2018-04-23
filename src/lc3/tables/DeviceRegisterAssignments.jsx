@@ -37,12 +37,13 @@ const data = [
 ]
 
 const DeviceRegisterAssignments = () => {
-  const rows = data.map(({ address, registerName, alsoKnownAs, registerFunction }) =>
-    (<tr key={address}>
+  const rows = data.map(({ address, registerName, alsoKnownAs, registerFunction }) => (
+    <tr key={address}>
       <td>{address}</td>
       <td>{registerName} ({alsoKnownAs})</td>
       <td>{registerFunction}</td>
-     </tr>))
+    </tr>
+  ))
   return (
     <CustomTable
       title="Device Register Assignments"

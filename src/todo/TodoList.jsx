@@ -255,8 +255,8 @@ export default class TodoList extends Component {
               <h2>Todo List</h2>
               <h5>{todos.length} item{todos.length !== 1 && 's'}, {todosRemaining} remaining</h5>
               <ul className="todoList__list">
-                {todos.map(({ message, completed, isEditing }, i) =>
-                  (<Todo
+                {todos.map(({ message, completed, isEditing }, i) => (
+                  <Todo
                     key={`${message}~${i + 1}`}
                     message={message}
                     completed={completed}
@@ -271,8 +271,8 @@ export default class TodoList extends Component {
                     currentTodoMessage={currentTodoMessage}
                     updateOrder={updateOrder(i)}
                     updateDragState={updateDragState}
-                  />)
-                )}
+                    />
+                ))}
               </ul>
             </div>
           }

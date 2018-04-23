@@ -5,10 +5,10 @@ import * as Utils from './Utils'
 
 const colors = ['blue', 'red', 'yellow', 'green']
 
-const LoadingAnimation = () =>
-  (<div className="loading__icon preloader-wrapper small active">
-    {colors.map((color) =>
-      (<div
+const LoadingAnimation = () => (
+  <div className="loading__icon preloader-wrapper small active">
+    {colors.map((color) => (
+      <div
         key={color}
         className={`spinner-layer spinner-${color}`}>
         <div className="circle-clipper left">
@@ -20,52 +20,51 @@ const LoadingAnimation = () =>
         <div className="circle-clipper right">
           <div className="circle" />
         </div>
-      </div>)
-    )}
-   </div>)
+      </div>
+    ))}
+  </div>
+)
 
 const DEGREE = String.fromCharCode(176)
-const WeatherForecastHeader = ({ className, currentObservation, reloading, setReloading }) =>
-  (<div className={className}>
-    {currentObservation
-      ? (
-        <div className="weatherForecastHeader">
-          <img
-            src={Utils.secureImg(currentObservation.icon)}
-            alt={currentObservation.icon}
-            className="weatherForecastHeader__icon--weather"
+const WeatherForecastHeader = ({ className, currentObservation, reloading, setReloading }) => (
+  <div className={className}>
+    {currentObservation ? (
+      <div className="weatherForecastHeader">
+        <img
+          src={Utils.secureImg(currentObservation.icon)}
+          alt={currentObservation.icon}
+          className="weatherForecastHeader__icon--weather"
           />
-          <div className="weatherForecastHeader__city">
-            {`${currentObservation.display_location.city}: ${currentObservation.temp_f}${DEGREE}F`}
-            {Math.abs(currentObservation.temp_f - currentObservation.feelslike_f) > 2 && (
-              <span className="weatherForecastHeader__feelsLike">
-                {` (Feels like ${currentObservation.feelslike_f}${DEGREE}F)`}
-              </span>
-            )}
-          </div>
-          {reloading
-            ? <LoadingAnimation />
-            : (
-              <img
-                src="../../media/icons/reload.svg"
-                alt="Reload"
-                role="button"
-                onClick={() => Utils.reloadWeatherData(setReloading)}
-                className="weatherForecastHeader__icon--reload"
+        <div className="weatherForecastHeader__city">
+          {`${currentObservation.display_location.city}: ${currentObservation.temp_f}${DEGREE}F`}
+          {Math.abs(currentObservation.temp_f - currentObservation.feelslike_f) > 2 && (
+            <span className="weatherForecastHeader__feelsLike">
+              {` (Feels like ${currentObservation.feelslike_f}${DEGREE}F)`}
+            </span>
+          )}
+        </div>
+        {reloading
+          ? <LoadingAnimation />
+          : (
+            <img
+              src="../../media/icons/reload.svg"
+              alt="Reload"
+              role="button"
+              onClick={() => Utils.reloadWeatherData(setReloading)}
+              className="weatherForecastHeader__icon--reload"
               />
-            )}
+          )}
+      </div>
+    ) : (
+      <div className="weatherForecastHeader">
+        <div className="weatherForecastHeader__loading">
+          Loading weather...
         </div>
-      )
-      : (
-        <div className="weatherForecastHeader">
-          <div className="weatherForecastHeader__loading">
-            Loading weather...
-          </div>
-          <LoadingAnimation />
-        </div>
-      )
-    }
-   </div>)
+        <LoadingAnimation />
+      </div>
+    )}
+  </div>
+)
 
 WeatherForecastHeader.propTypes = {
   className: PropTypes.string,

@@ -4,14 +4,15 @@ import { Link } from 'react-router-dom'
 
 import courses from '../_shared/courses'
 
-const SidebarLink = ({ inDropdown, href, name }) =>
-  (<a
+const SidebarLink = ({ inDropdown, href, name }) => (
+  <a
     className={`black-text ${inDropdown ? '' : 'links__collectionItem collection-item'}`}
     href={href}
     target="_blank"
     rel="noopener noreferrer">
     {name}
-   </a>)
+  </a>
+)
 
 SidebarLink.propTypes = {
   inDropdown: PropTypes.bool,
@@ -47,21 +48,22 @@ const setupDropdownLinks = (courseId, gdriveFolderId, otherLinks) => {
   return dropdownItems
 }
 
-const Dropdown = ({ courseId, index, gdriveFolderId, otherLinks }) =>
-  (<ul
+const Dropdown = ({ courseId, index, gdriveFolderId, otherLinks }) => (
+  <ul
     id={`dropdown${index}`}
     className="dropdown-content">
     {setupDropdownLinks(courseId, gdriveFolderId, otherLinks)
-      .map(({ name, href }) =>
-        (<li key={href}>
+      .map(({ name, href }) => (
+        <li key={href}>
           <SidebarLink
             name={name}
             href={href}
             inDropdown={true}
             />
-        </li>)
-      )}
-   </ul>)
+        </li>
+      ))}
+  </ul>
+)
 
 Dropdown.propTypes = {
   courseId: PropTypes.number,
@@ -75,12 +77,13 @@ Dropdown.defaultProps = {
   otherLinks: [],
 }
 
-const DropdownActivator = ({ index, courseName }) =>
-  (<a
+const DropdownActivator = ({ index, courseName }) => (
+  <a
     className="links__collectionItem collection-item dropdown-button black-text"
     data-activates={`dropdown${index}`}>
     {courseName}
-   </a>)
+  </a>
+)
 
 DropdownActivator.propTypes = {
   courseName: PropTypes.string.isRequired,
@@ -147,35 +150,35 @@ export default class Links extends Component {
     const { className } = this.props
     return (
       <div className={`links__collection collection ${className}`}>
-        {courses.map(({ id, gdriveFolderId, otherLinks, isCalPolyCourse }, index) =>
-          (<Dropdown
+        {courses.map(({ id, gdriveFolderId, otherLinks, isCalPolyCourse }, index) => (
+          <Dropdown
             key={gdriveFolderId}
             index={index}
             courseId={id}
             gdriveFolderId={gdriveFolderId}
             otherLinks={otherLinks}
-          />)
-        )}
-        {courses.map(({ name }, index) =>
-          (<DropdownActivator
+            />
+        ))}
+        {courses.map(({ name }, index) => (
+          <DropdownActivator
             key={name}
             index={index}
             courseName={name}
-          />)
-        )}
+            />
+        ))}
         <div className="divider" />
         <Link
           className="links__collectionItem collection-item black-text"
           to="">
           Home
         </Link>
-        {links.map(({ name, href }) =>
-          (<SidebarLink
+        {links.map(({ name, href }) => (
+          <SidebarLink
             key={name}
             name={name}
             href={href}
-          />)
-        )}
+            />
+        ))}
       </div>
     )
   }

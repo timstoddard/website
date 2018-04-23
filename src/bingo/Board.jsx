@@ -179,12 +179,14 @@ export default class Board extends Component {
       const tableRow = []
       for (let j = 0; j < 5; j++) {
         const index = i * 5 + j
-        tableRow.push(<Cell
-          key={index}
-          title={items[index]}
-          status={board[index]}
-          onClick={() => this.onClick(index)}
-          />)
+        tableRow.push(
+          <Cell
+            key={index}
+            title={items[index]}
+            status={board[index]}
+            onClick={() => this.onClick(index)}
+            />
+        )
       }
       tableRows.push(<tr key={`r${i}`}>{tableRow}</tr>)
     }

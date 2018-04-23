@@ -2,8 +2,8 @@ import React from 'react'
 
 import NavLink from '../../_shared/NavLink'
 
-const LC3Tables = ({ children }) =>
-  (<div className="container">
+const LC3Tables = ({ children }) => (
+  <div className="container">
     <ul className="center-align">
       <li className="LC3Tables__navLink">
         <NavLink to="/lc3/tables/assembler-directives">Assembler Directives</NavLink>
@@ -19,6 +19,7 @@ const LC3Tables = ({ children }) =>
       </li>
     </ul>
     {children}
-   </div>)
+  </div>
+)
 
 export default LC3Tables

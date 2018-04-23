@@ -172,8 +172,8 @@ export default class Trippy extends Component {
         tabIndex="0">
         {pairGroups.map((pairGroup, i) => {
           const background = getColor(i)
-          return pairGroup.map(({ x, y, radius }) =>
-            (<div
+          return pairGroup.map(({ x, y, radius }) => (
+            <div
               key={`${x}-${y}-${radius}`}
               className="trippy__disk"
               style={{
@@ -185,8 +185,8 @@ export default class Trippy extends Component {
                 borderRadius: radius,
                 transition: `background ${REFRESH_DELAY / 1000}s ease`,
               }}
-            />)
-          )
+              />
+          ))
         })}
       </div>
     )

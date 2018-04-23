@@ -93,27 +93,27 @@ const Projects = () => {
           Tim&rsquo;s Projects
         </h4>
         <hr className="projects__divider" />
-        {projects.map(({ name, links }) =>
-          (<div
+        {projects.map(({ name, links }) => (
+          <div
             key={name}
             className="projects__group">
             <h5 className="projects__title">
               {name}
             </h5>
             <ul className="projects__group__list">
-              {links.map(({ name, link, inProgress }) =>
-                (<li key={name}>
+              {links.map(({ name, link, inProgress }) => (
+                <li key={name}>
                   <Link to={link}>
                     <h6 className={`projects__link ${inProgress ? 'projects__link--inProgress' : ''}`}>
                       {name}
                     </h6>
                   </Link>
-                </li>)
-              )}
+                </li>
+              ))}
             </ul>
             <hr className="projects__divider" />
-           </div>)
-        )}
+          </div>
+        ))}
         <h5 className="center-align">
           <Link
             to=""

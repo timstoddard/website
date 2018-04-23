@@ -187,8 +187,8 @@ export default class Perf extends Component {
         <form
           className="perf__form"
           onSubmit={runTests}>
-          {snippetsToTest.map((snippet, index) =>
-            (<div key={`${index + 1}`}>
+          {snippetsToTest.map((snippet, index) => (
+            <div key={`${index + 1}`}>
               <div className="perf__form__snippetHeader">
                 <div className="perf__form__snippetHeader__title">
                   Snippet {index + 1}
@@ -211,9 +211,9 @@ export default class Perf extends Component {
                 onKeyDown={ignoreTab(index)}
                 cols="20"
                 rows="10"
-              />
-             </div>)
-          )}
+                />
+            </div>
+          ))}
           <a
             className="perf__button btn light-blue"
             onClick={addSnippet}>
@@ -256,8 +256,8 @@ export default class Perf extends Component {
               isBest,
               isWorst,
               error,
-            }, index) =>
-              (<div key={id}>
+            }, index) => (
+              <div key={id}>
                 <hr />
                 <h5>
                   Snippet {index + 1}
@@ -266,31 +266,28 @@ export default class Perf extends Component {
                     : ` (#${place} average time)`
                   }
                 </h5>
-                {error
-                  ? (
-                    <div className="perf__results__details">
-                      This code snippet encountered an error: <strong>{error}</strong>
-                    </div>
-                  )
-                  : (
-                    <dl className={`perf__results__details ${isBest ? 'perf__results__details--best' : ''} ${isWorst ? 'perf__results__details--worst' : ''}`}>
-                      <dt>
-                        <strong>Avg</strong>
-                      </dt>
-                      <dd>
-                        <strong>{avg} ms</strong>
-                      </dd>
-                      <dt>Min</dt>
-                      <dd>{min} ms</dd>
-                      <dt>Max</dt>
-                      <dd>{max} ms</dd>
-                      <dt>Total</dt>
-                      <dd>{total} ms</dd>
-                    </dl>
-                  )
-                }
-               </div>)
-            )}
+                {error ? (
+                  <div className="perf__results__details">
+                    This code snippet encountered an error: <strong>{error}</strong>
+                  </div>
+                ) : (
+                  <dl className={`perf__results__details ${isBest ? 'perf__results__details--best' : ''} ${isWorst ? 'perf__results__details--worst' : ''}`}>
+                    <dt>
+                      <strong>Avg</strong>
+                    </dt>
+                    <dd>
+                      <strong>{avg} ms</strong>
+                    </dd>
+                    <dt>Min</dt>
+                    <dd>{min} ms</dd>
+                    <dt>Max</dt>
+                    <dd>{max} ms</dd>
+                    <dt>Total</dt>
+                    <dd>{total} ms</dd>
+                  </dl>
+                )}
+              </div>
+            ))}
           </div>
         }
       </div>

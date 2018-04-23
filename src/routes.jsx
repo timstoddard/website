@@ -62,8 +62,8 @@ const Routes = (
         key={props.path}
         exact={true}
         {...props}
-        />)
-    )}
+        />
+    ))}
     {/* {LC3Routes} */}
     <Route
       path="/*"

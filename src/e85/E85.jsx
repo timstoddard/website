@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-const FormInput = ({ id, label, value, usePrecision, onChange }) =>
-  (<label
+const FormInput = ({ id, label, value, usePrecision, onChange }) => (
+  <label
     className="e85__inputWrapper"
     htmlFor={id}>
     <div>{label}</div>
@@ -14,8 +14,9 @@ const FormInput = ({ id, label, value, usePrecision, onChange }) =>
       value={value}
       onChange={onChange}
       required={true}
-    />
-   </label>)
+      />
+  </label>
+)
 
 FormInput.propTypes = {
   id: PropTypes.string.isRequired,

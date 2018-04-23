@@ -114,24 +114,21 @@ export default class InfinityWrapper extends Component {
         onKeyDown={handleKeyDown}
         tabIndex="0"
         className="infinity">
-        {(data.a && data.b)
-          ? (
-            <Infinity
-              data={data}
-              link={[]}
-              onClick={handleClick([])}
-              handleClick={handleClick}
-              showingBorders={showingBorders}
-              />
-          )
-          : (
-            <div
-              onClick={handleClick()}
-              className="infinity__child infinity__child--landing">
-              Click to get started!
-            </div>
-          )
-        }
+        {(data.a && data.b) ? (
+          <Infinity
+            data={data}
+            link={[]}
+            onClick={handleClick([])}
+            handleClick={handleClick}
+            showingBorders={showingBorders}
+            />
+        ) : (
+          <div
+            onClick={handleClick()}
+            className="infinity__child infinity__child--landing">
+            Click to get started!
+          </div>
+        )}
       </div>
     )
   }

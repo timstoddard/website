@@ -1,0 +1,38 @@
+/* from time @import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300); */
+/* from ng2 demo @import url(https://fonts.googleapis.com/css?family=Roboto); */
+
+// index files
+@import '../src/heap/scss/index';
+@import '../src/home/scss/index';
+// @import '../src/lc3/scss/index';
+@import '../src/start/scss/index';
+@import '../src/strobe/scss/index';
+@import '../src/todo/scss/index';
+
+// direct imports
+@import '../src/battery/scss/Battery';
+@import '../src/bingo/scss/Bingo';
+@import '../src/current-courses/scss/CurrentCourses';
+@import '../src/e85/scss/E85';
+@import '../src/imports/scss/Imports';
+@import '../src/incr-game/scss/IncrGame';
+@import '../src/infinity/scss/Infinity';
+@import '../src/not-found/NotFound';
+@import '../src/perf/scss/Perf';
+@import '../src/projects/scss/Projects';
+@import '../src/rice-purity-test/scss/RicePurityTest';
+@import '../src/time/scss/Time';
+@import '../src/trippy/scss/Trippy';
+@import '../src/zen/scss/Zen';
+
+// other
+@import '../src/_shared/NavLink';
+
+html {
+  font-size: 18px;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+}

@@ -3,35 +3,35 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
 // general
-import NotFound from './src/NotFound'
+import NotFound from '../src/not-found/NotFound'
 
 // homepage
-import Home from './src/home/Home'
-import About from './src/home/About'
+import Home from '../src/home/Home'
+import About from '../src/home/About'
 
 // start page
-import Start from './src/start/Start'
+import Start from '../src/start/Start'
 
 // LC3 routes
-// import LC3Routes from './src/lc3/LC3Routes'
+// import LC3Routes from '../src/lc3/LC3Routes'
 
 // projects
-import Battery from './src/battery/Battery'
-import Bingo from './src/bingo/Bingo'
-import CurrentCourses from './src/current-courses/CurrentCourses'
-import E85 from './src/e85/E85'
-import Heap from './src/heap/Heap'
-import Imports from './src/imports/Imports'
-import IncrGame from './src/incr-game/IncrGame'
-import Infinity from './src/infinity/Infinity'
-import Perf from './src/perf/Perf'
-import Projects from './src/projects/Projects'
-import RicePurityTest from './src/rice-purity-test/RicePurityTest'
-import Strobe from './src/strobe/Strobe'
-import Time from './src/time/Time'
-import TodoList from './src/todo/TodoList'
-import Trippy from './src/trippy/Trippy'
-import Zen from './src/zen/Zen'
+import Battery from '../src/battery/Battery'
+import Bingo from '../src/bingo/Bingo'
+import CurrentCourses from '../src/current-courses/CurrentCourses'
+import E85 from '../src/e85/E85'
+import Heap from '../src/heap/Heap'
+import Imports from '../src/imports/Imports'
+import IncrGame from '../src/incr-game/IncrGame'
+import Infinity from '../src/infinity/Infinity'
+import Perf from '../src/perf/Perf'
+import Projects from '../src/projects/Projects'
+import RicePurityTest from '../src/rice-purity-test/RicePurityTest'
+import Strobe from '../src/strobe/Strobe'
+import Time from '../src/time/Time'
+import TodoList from '../src/todo/TodoList'
+import Trippy from '../src/trippy/Trippy'
+import Zen from '../src/zen/Zen'
 
 const routes = [
   { path: '/', component: Home },

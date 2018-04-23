@@ -3,7 +3,7 @@ import React from 'react'
 import { Route, IndexRoute } from 'react-router'
 
 // not found route
-import NotFound from '../NotFound'
+import NotFound from '../not-found/NotFound'
 
 // lc3 components
 import LC3 from './LC3'

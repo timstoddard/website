@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
-import NavLink from '../NavLink'
+import NavLink from '../_shared/NavLink'
 
 const LC3 = ({ children }) => {
   document.title = 'LC3 Info'

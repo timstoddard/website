@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
-import courses from '../courses'
+import courses from '../_shared/courses'
 
 const SidebarLink = ({ inDropdown, href, name }) =>
   (<a

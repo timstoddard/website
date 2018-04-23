@@ -1,6 +1,6 @@
 import React from 'react'
 
-import courses from '../courses'
+import courses from '../_shared/courses'
 
 const CurrentCourses = () =>
   (<div className="currentCourses">

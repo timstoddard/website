@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run clean && npm run webpack-dev",
     "webpack-dev": "webpack --config webpack/webpack.dev.js && webpack-dev-server --config webpack/webpack.dev.js --open",
-    "prod": "npm run clean && npm run webpack-prod && node app.prod.js",
+    "prod": "npm run clean && npm run webpack-prod && node start-server.js",
     "webpack-prod": "webpack -p --config webpack/webpack.prod.js",
     "lint": "eslint --ext .jsx,.js --ignore-pattern '/dist/*' --fix .",
     "clean": "rm -rf dist index.html"

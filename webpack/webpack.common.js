@@ -1,11 +1,12 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const autoprefixer = require('autoprefixer')
 
 module.exports = {
   config: {
     entry: [
-      './index.jsx',
-      './index.scss',
+      './src/index.jsx',
+      './src/index.scss',
     ],
     output: {
       filename: 'bundle.js',
@@ -24,7 +25,13 @@ module.exports = {
           use: [
             MiniCssExtractPlugin.loader,
             'css-loader',
-            'postcss-loader',
+            {
+              loader: 'postcss-loader',
+              options: {
+                ident: 'postcss',
+                plugins: [autoprefixer],
+              },
+            },
             'sass-loader',
           ],
         },
@@ -36,7 +43,7 @@ module.exports = {
   },
   sharedPlugins: (mode) => {
     const htmlWebpackPluginOptions = {
-      template: 'app.html',
+      template: 'src/app.html',
       filename: '../index.html',
     }
     if (mode === 'prod') {

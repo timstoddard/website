@@ -1,6 +1,6 @@
 import React from 'react'
 
-import NavLink from '../NavLink'
+import NavLink from '../_shared/NavLink'
 
 const LC3Home = () =>
   (<div className="container center-align">

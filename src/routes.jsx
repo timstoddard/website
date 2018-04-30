@@ -1,67 +1,101 @@
-// react-router
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
+import Loadable from 'react-loadable'
 
-// general
-import NotFound from '../src/not-found/NotFound'
-
-// homepage
-import Home from '../src/home/Home'
-import About from '../src/home/About'
-
-// start page
-import Start from '../src/start/Start'
-
-// LC3 routes
-// import LC3Routes from '../src/lc3/LC3Routes'
-
-// projects
-import Battery from '../src/battery/Battery'
-import Bingo from '../src/bingo/Bingo'
-import CurrentCourses from '../src/current-courses/CurrentCourses'
-import E85 from '../src/e85/E85'
-import Heap from '../src/heap/Heap'
-import Imports from '../src/imports/Imports'
-import IncrGame from '../src/incr-game/IncrGame'
-import Infinity from '../src/infinity/Infinity'
-import Perf from '../src/perf/Perf'
-import Projects from '../src/projects/Projects'
-import RicePurityTest from '../src/rice-purity-test/RicePurityTest'
-import Strobe from '../src/strobe/Strobe'
-import Time from '../src/time/Time'
-import TodoList from '../src/todo/TodoList'
-import Trippy from '../src/trippy/Trippy'
-import Zen from '../src/zen/Zen'
+import NotFound from './not-found/NotFound'
 
 const routes = [
-  { path: '/', component: Home },
-  { path: '/about', component: About },
-  { path: '/battery', component: Battery },
-  { path: '/bingo', component: Bingo },
-  { path: '/courses', component: CurrentCourses },
-  { path: '/e85', component: E85 },
-  { path: '/heap', component: Heap },
-  { path: '/imports', component: Imports },
-  { path: '/incr-game', component: IncrGame },
-  { path: '/infinity', component: Infinity },
-  { path: '/perf', component: Perf },
-  { path: '/projects', component: Projects },
-  { path: '/rice-purity-test', component: RicePurityTest },
-  { path: '/start', component: Start },
-  { path: '/strobe', component: Strobe },
-  { path: '/todo', component: TodoList },
-  { path: '/trippy', component: Trippy },
-  { path: '/time', component: Time },
-  { path: '/zen', component: Zen },
+  {
+    path: '/',
+    loader: () => import('./home/Home'),
+  },
+  {
+    path: '/about',
+    loader: () => import('./home/About'),
+  },
+  {
+    path: '/battery',
+    loader: () => import('./battery/Battery'),
+  },
+  {
+    path: '/bingo',
+    loader: () => import('./bingo/Bingo'),
+  },
+  {
+    path: '/courses',
+    loader: () => import('./current-courses/CurrentCourses'),
+  },
+  {
+    path: '/e85',
+    loader: () => import('./e85/E85'),
+  },
+  {
+    path: '/heap',
+    loader: () => import('./heap/Heap'),
+  },
+  {
+    path: '/imports',
+    loader: () => import('./imports/Imports'),
+  },
+  {
+    path: '/incr-game',
+    loader: () => import('./incr-game/IncrGame'),
+  },
+  {
+    path: '/infinity',
+    loader: () => import('./infinity/Infinity'),
+  },
+  {
+    path: '/perf',
+    loader: () => import('./perf/Perf'),
+  },
+  {
+    path: '/projects',
+    loader: () => import('./projects/Projects'),
+  },
+  {
+    path: '/rice-purity-test',
+    loader: () => import('./rice-purity-test/RicePurityTest'),
+  },
+  {
+    path: '/start',
+    loader: () => import('./start/Start'),
+  },
+  {
+    path: '/strobe',
+    loader: () => import('./strobe/Strobe'),
+  },
+  {
+    path: '/todo',
+    loader: () => import('./todo/TodoList'),
+  },
+  {
+    path: '/trippy',
+    loader: () => import('./trippy/Trippy'),
+  },
+  {
+    path: '/time',
+    loader: () => import('./time/Time'),
+  },
+  {
+    path: '/zen',
+    loader: () => import('./zen/Zen'),
+  },
 ]
 
 const Routes = (
   <Switch>
-    {routes.map((props) => (
+    {routes.map(({ path, loader }) => (
       <Route
-        key={props.path}
+        key={path}
         exact={true}
-        {...props}
+        path={path}
+        component={
+          Loadable({
+            loader,
+            loading: () => <div>Loading...</div>
+          })
+        }
         />
     ))}
     {/* {LC3Routes} */}
@@ -72,7 +106,7 @@ const Routes = (
           to=""
           destination="the homepage"
           />
-        )}
+      )}
       />
   </Switch>
 )

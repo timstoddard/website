@@ -11,13 +11,13 @@ module.exports = {
     output: {
       filename: 'bundle.js',
       path: `${__dirname}/../dist`,
-      publicPath: '/dist',
+      publicPath: '/dist/',
     },
     module: {
       rules: [
         {
           test: /\.jsx?$/,
-          loader: 'babel-loader?presets[]=env&presets[]=react',
+          loader: 'babel-loader',
           exclude: /node_modules/,
         },
         {

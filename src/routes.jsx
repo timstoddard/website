@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import Loadable from 'react-loadable'
 
+import LoadingPage from './loading-page/LoadingPage'
 import NotFound from './not-found/NotFound'
 
 const routes = [
@@ -93,7 +94,9 @@ const Routes = (
         component={
           Loadable({
             loader,
-            loading: () => <div>Loading...</div>
+            loading: LoadingPage,
+            delay: 200,
+            timeout: 10,
           })
         }
         />

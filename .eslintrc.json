@@ -12,12 +12,14 @@
     "React": true,
     "$": true
   },
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
       "experimentalObjectRestSpread": true,
       "jsx": true
     },
-    "sourceType": "module"
+    "sourceType": "module",
+    "allowImportExportEverywhere": true
   },
   "plugins": [
     "react"

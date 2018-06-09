@@ -95,8 +95,8 @@ const Routes = (
           Loadable({
             loader,
             loading: LoadingPage,
-            delay: 1000,
-            timeout: 10,
+            delay: 1000, // 1 second
+            timeout: 5000, // 5 seconds
           })
         }
         />

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 import instructions from './Data'
 import InstructionEncoding from './InstructionEncoding'
@@ -17,24 +18,36 @@ const DetailHeader = ({ assemblerFormat, fn }) => (
   </div>
 )
 
+DetailHeader.propTypes = {
+  assemblerFormat: PropTypes.shape({
+    name: PropTypes.string,
+    operands: PropTypes.string,
+  }).isRequired,
+  fn: PropTypes.string.isRequired,
+}
+
 const DetailDescription = ({ description }) => (
   <div className="detailDescription">
     {description}
   </div>
 )
 
+DetailDescription.propTypes = {
+  description: PropTypes.string.isRequired,
+}
+
 const DetailOperation = ({ operation }) => (
   <div className="detailOperation">
-    {operation.map(({ tooltip, text, indentationLevel }, index) =>
+    {operation.map(({ tooltip, text, indentationLevel }) =>
       tooltip ? (
         <div
-          key={index}
+          key={text}
           className="detailOperation__tooltip">
           <em>{text}</em>
         </div>
       ) : (
         <div
-          key={index}
+          key={text}
           className={`detail__text--code detailOperation__text--${indentationLevel}`}>
           {text}
         </div>
@@ -43,12 +56,36 @@ const DetailOperation = ({ operation }) => (
   </div>
 )
 
+DetailOperation.propTypes = {
+  operation: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.shape({
+        text: PropTypes.string,
+        indentationLevel: PropTypes.number,
+      }),
+      PropTypes.shape({
+        text: PropTypes.string,
+        tooltip: PropTypes.bool,
+      }),
+    ])
+  ).isRequired,
+}
+
 const DetailExample = ({ example }) => (
   <div className="detailExample">
-    <div className="detail__text--code">{example.text}</div>
+    <div className="detail__text--code">
+      {example.text}
+    </div>
     <div>{example.description}</div>
   </div>
 )
+
+DetailExample.propTypes = {
+  example: PropTypes.shape({
+    text: PropTypes.string,
+    description: PropTypes.string,
+  }).isRequired,
+}
 
 class InstructionRow extends Component {
   constructor(props) {
@@ -81,26 +118,65 @@ class InstructionRow extends Component {
           </div>
           <InstructionEncoding
             className="col s9"
-            encoding={format.encoding}
-            />
+            encoding={format.encoding} />
         </div>
         <div className={`instruction__detail ${expanded ? '' : 'instruction__detail--hidden'}`}>
           <DetailHeader
             assemblerFormat={format.assemblerFormat}
-            fn={instruction.function}
-            />
+            fn={instruction.function} />
           <DetailDescription description={instruction.description} />
           <DetailOperation operation={instruction.operation} />
-          {format.examples.map((example, index) => (
+          {format.examples.map((example) => (
             <DetailExample
-              key={index}
-              example={example}
-              />
+              key={example.text}
+              example={example} />
           ))}
         </div>
       </div>
     )
   }
+}
+
+InstructionRow.propTypes = {
+  instruction: PropTypes.shape({
+    name: PropTypes.string,
+    description: PropTypes.string,
+    function: PropTypes.string,
+    operation: PropTypes.arrayOf(
+      PropTypes.oneOfType([
+        PropTypes.shape({
+          text: PropTypes.string,
+          indentationLevel: PropTypes.number,
+        }),
+        PropTypes.shape({
+          text: PropTypes.string,
+          tooltip: PropTypes.bool,
+        }),
+      ])
+    ),
+  }).isRequired,
+  modifiesCC: PropTypes.bool.isRequired,
+  format: PropTypes.shape({
+    encoding: PropTypes.arrayOf(
+      PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.shape({
+          value: PropTypes.string,
+          bits: PropTypes.number,
+        }),
+      ])
+    ),
+    assemblerFormat: PropTypes.shape({
+      name: PropTypes.string,
+      operands: PropTypes.string,
+    }),
+    examples: PropTypes.arrayOf(
+      PropTypes.shape({
+        text: PropTypes.string,
+        description: PropTypes.string,
+      })
+    ),
+  }).isRequired,
 }
 
 const LC3Ref = () => (
@@ -120,10 +196,10 @@ const LC3Ref = () => (
       {instructions.map(instruction =>
         instruction.formats.map(format => (
           <InstructionRow
+            key={format.name}
             instruction={instruction}
             format={format}
-            modifiesCC={instruction.modifiesConditionCodes}
-            />
+            modifiesCC={instruction.modifiesConditionCodes} />
         ))
       )}
       <p className="refList__note--title">Notes</p>

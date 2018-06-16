@@ -48,8 +48,7 @@ const TrapServiceRoutines = () => {
     <CustomTable
       title="Trap Service Routines"
       headers={headers}
-      body={rows}
-      />
+      body={rows} />
   )
 }
 

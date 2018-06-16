@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const QuickStart = ({ title }) => (
   <div>
@@ -10,6 +11,10 @@ const QuickStart = ({ title }) => (
     <div>Every program must either be assembled using lc3as, or if a bin or hex file, converted using lc3convert. The resulting object file can then run under lc3sim.</div>
   </div>
 )
+
+QuickStart.propTypes = {
+  title: PropTypes.string.isRequired,
+}
 
 const commands = [
   {
@@ -107,9 +112,9 @@ const Simulator = ({ title }) => (
     <div>The LC3 simulator (lc3sim) is a text based program. It works like many text-based debuggers, so having some familiarity with this type of interface will be useful to you in the future. Start lc3sim by simply executing lc3sim from the command line. Note that the lc3sim is only installed on the 32bit unix machines (unix1-3).The object file to execute can be provided at the command-line as an argument, or loaded separately once lc3sim has started. lc3sim dumps all system registers to the screen on start. You can also see the system registers at any time using the &quot;p&quot; or &quot;printregs&quot; command.</div>
     <h6 className="LC3Sim__sectionSubTitle">Commands</h6>
     <ul>
-      {commands.map(({ name, description }, index) => (
+      {commands.map(({ name, description }) => (
         <li
-          key={index}
+          key={name}
           className="LC3Sim__row row">
           <div className="col s4">
             <span className="LC3Sim__codeSample">
@@ -125,9 +130,9 @@ const Simulator = ({ title }) => (
     <div>Use a &quot;#&quot; to indicate a decimal value (for example, #99).</div>
     <h6 className="LC3Sim__sectionSubTitle">Examples</h6>
     <ul>
-      {examples.map(({ text, description }, index) => (
+      {examples.map(({ text, description }) => (
         <li
-          key={index}
+          key={text}
           className="LC3Sim__row row">
           <div className="col s4">
             (lc3sim)&nbsp;
@@ -141,6 +146,10 @@ const Simulator = ({ title }) => (
     </ul>
   </div>
 )
+
+Simulator.propTypes = {
+  title: PropTypes.string.isRequired,
+}
 
 const Assembler = ({ title }) => (
   <div>
@@ -157,6 +166,10 @@ const Assembler = ({ title }) => (
     </div>
   </div>
 )
+
+Assembler.propTypes = {
+  title: PropTypes.string.isRequired,
+}
 
 const Converter = ({ title }) => (
   <div>
@@ -178,6 +191,10 @@ const Converter = ({ title }) => (
     </div>
   </div>
 )
+
+Converter.propTypes = {
+  title: PropTypes.string.isRequired,
+}
 
 const LC3Sim = () => (
   <div className="LC3Sim__container container">

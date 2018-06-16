@@ -108,8 +108,7 @@ import 'code';`}, () => {
           onChange={onChange}
           onKeyDown={checkKeyDown}
           onKeyUp={checkKeyUp}
-          onPaste={replaceText}
-          />
+          onPaste={replaceText} />
         <div>
           <a
             className="import__button waves-effect waves-light btn light-blue accent-2"
@@ -125,8 +124,7 @@ import 'code';`}, () => {
         <textarea
           id="output"
           value={formattedValue}
-          className="import__textarea"
-          />
+          className="import__textarea" />
       </div>
     )
   }
@@ -274,7 +272,7 @@ const getData = (str) => {
     : str.substring(str.indexOf('"') + 1, str.lastIndexOf('"'))
 
   // TODO fix this to be module name, not path name
-  let firstModuleNameChar = moduleName.search(/[^\.\/]/)
+  let firstModuleNameChar = moduleName.search(/[^./]/)
   if (firstModuleNameChar === -1) { // only a relative path, no folder/file names
     firstModuleNameChar = moduleName.length
   }

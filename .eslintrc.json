@@ -71,10 +71,7 @@
     ],
     "react/jsx-closing-bracket-location": [
       "error",
-      {
-        "selfClosing": "props-aligned",
-        "nonEmpty": "after-props"
-      }
+      "after-props"
     ],
     "react/jsx-first-prop-new-line": [
       "error",

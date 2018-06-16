@@ -59,8 +59,7 @@ export default class Heap extends Component {
           <HeapDetail
             heap={heap}
             showInputHeap={showInputHeap}
-            showSortedHeap={showSortedHeap}
-            />
+            showSortedHeap={showSortedHeap} />
         }
       </div>
     )

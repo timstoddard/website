@@ -21,7 +21,6 @@ export default class IncrGame extends Component {
       timer: 1000,
       timerLevel: 1,
       timerCost: 10,
-      isHovering: false,
     }
   }
 
@@ -142,8 +141,7 @@ export default class IncrGame extends Component {
           onClick={addMoney}
           onMouseEnter={handleHover}
           onMouseLeave={stopHovering}
-          style={{ width: '100px', height: '100px', background: 'red' }}
-          />
+          style={{ width: '100px', height: '100px', background: 'red' }} />
       </div>
     )
   }

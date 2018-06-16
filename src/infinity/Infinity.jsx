@@ -120,8 +120,7 @@ export default class InfinityWrapper extends Component {
             link={[]}
             onClick={handleClick([])}
             handleClick={handleClick}
-            showingBorders={showingBorders}
-            />
+            showingBorders={showingBorders} />
         ) : (
           <div
             onClick={handleClick()}

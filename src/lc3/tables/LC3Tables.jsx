@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import NavLink from '../../_shared/NavLink'
 
@@ -21,5 +22,13 @@ const LC3Tables = ({ children }) => (
     {children}
   </div>
 )
+
+LC3Tables.propTypes = {
+  children: PropTypes.node,
+}
+
+LC3Tables.defaultProps = {
+  children: null,
+}
 
 export default LC3Tables

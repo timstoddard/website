@@ -97,8 +97,7 @@ export default class Todo extends Component {
             className="todo__checkbox"
             onChange={toggleTodo(index)}
             id={checkboxId}
-            checked={completed}
-            />
+            checked={completed} />
           {!isEditing &&
             <label
               htmlFor={checkboxId}
@@ -112,28 +111,24 @@ export default class Todo extends Component {
               className="todo__input"
               onChange={handleInput}
               onKeyDown={handleKeyDown}
-              value={currentTodoMessage}
-              />
+              value={currentTodoMessage} />
           }
         </div>
         <div className="todo__buttons">
           <IconButton
             path={IconPath.EDIT}
             hidden={hideIcons}
-            onClick={editTodo(index)}
-            />
+            onClick={editTodo(index)} />
           <IconButton
             className="todo__button--drag"
             path={IconPath.DRAG}
             hidden={hideIcons && !isDraggable}
             onDragStart={onDragStart}
-            isDraggable={true}
-            />
+            isDraggable={true} />
           <IconButton
             path={IconPath.DELETE}
             hidden={hideIcons}
-            onClick={deleteTodo(index)}
-            />
+            onClick={deleteTodo(index)} />
         </div>
       </li>
     )

@@ -98,8 +98,7 @@ const Routes = (
             delay: 1000, // 1 second
             timeout: 5000, // 5 seconds
           })
-        }
-        />
+        } />
     ))}
     {/* {LC3Routes} */}
     <Route
@@ -107,10 +106,8 @@ const Routes = (
       component={() => (
         <NotFound
           to=""
-          destination="the homepage"
-          />
-      )}
-      />
+          destination="the homepage" />
+      )} />
   </Switch>
 )
 

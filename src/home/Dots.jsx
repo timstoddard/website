@@ -148,8 +148,7 @@ export default class Dots extends Component {
     return (
       <canvas
         className={`dots ${visible ? 'dots--visible': ''}`}
-        ref={(canvas) => { this.canvas = canvas }}
-        />
+        ref={(canvas) => { this.canvas = canvas }} />
     )
   }
 }

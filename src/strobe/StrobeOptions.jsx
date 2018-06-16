@@ -43,8 +43,7 @@ export default class StrobeOptions extends Component {
             min={min}
             max={max}
             step="5"
-            ref={(range) => { this.range = range }}
-            />
+            ref={(range) => { this.range = range }} />
           <p className="options__form--max">{max}</p>
         </div>
         <div>
@@ -67,4 +66,12 @@ export default class StrobeOptions extends Component {
 
 StrobeOptions.propTypes = {
   ms: PropTypes.number,
+  updateMillis: PropTypes.func,
+  hideOptions: PropTypes.func,
+}
+
+StrobeOptions.defaultProps = {
+  ms: 0,
+  updateMillis: () => {},
+  hideOptions: () => {},
 }

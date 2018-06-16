@@ -33,8 +33,7 @@ const WeatherForecastHeader = ({ className, currentObservation, reloading, setRe
         <img
           src={Utils.secureImg(currentObservation.icon)}
           alt={currentObservation.icon}
-          className="weatherForecastHeader__icon--weather"
-          />
+          className="weatherForecastHeader__icon--weather" />
         <div className="weatherForecastHeader__city">
           {`${currentObservation.display_location.city}: ${currentObservation.temp_f}${DEGREE}F`}
           {Math.abs(currentObservation.temp_f - currentObservation.feelslike_f) > 2 && (
@@ -51,8 +50,7 @@ const WeatherForecastHeader = ({ className, currentObservation, reloading, setRe
               alt="Reload"
               role="button"
               onClick={() => Utils.reloadWeatherData(setReloading)}
-              className="weatherForecastHeader__icon--reload"
-              />
+              className="weatherForecastHeader__icon--reload" />
           )}
       </div>
     ) : (
@@ -67,10 +65,17 @@ const WeatherForecastHeader = ({ className, currentObservation, reloading, setRe
 )
 
 WeatherForecastHeader.propTypes = {
-  className: PropTypes.string,
-  currentObservation: PropTypes.object,
-  reloading: PropTypes.bool,
-  setReloading: PropTypes.func,
+  className: PropTypes.string.isRequired,
+  currentObservation: PropTypes.shape({
+    icon: PropTypes.string,
+    display_location: PropTypes.shape({
+      city: PropTypes.string,
+    }),
+    temp_f: PropTypes.string,
+    feelslike_f: PropTypes.string,
+  }).isRequired,
+  reloading: PropTypes.bool.isRequired,
+  setReloading: PropTypes.func.isRequired,
 }
 
 export default class InfoBar extends Component {
@@ -79,7 +84,7 @@ export default class InfoBar extends Component {
 
     this.state = {
       now: new Date(),
-      name: '',
+      name: localStorage.getItem('name') || '',
     }
 
     this.checkForSavedName = this.checkForSavedName.bind(this)
@@ -122,11 +127,11 @@ export default class InfoBar extends Component {
 
   render() {
     const { currentObservation, reloading, setReloading } = this.props
-    const { now } = this.state
+    const { now, name } = this.state
     return (
       <div className="infoBar cyan accent-3 black-text z-depth-1">
         <div className="infoBar__item">
-          {Utils.createWelcomeMessage(now)}
+          {Utils.createWelcomeMessage(now, name)}
         </div>
         <div className="infoBar__item">
           {Utils.createDateString(now)}
@@ -138,15 +143,34 @@ export default class InfoBar extends Component {
           currentObservation={currentObservation}
           reloading={reloading}
           setReloading={setReloading}
-          className="infoBar__item"
-          />
+          className="infoBar__item" />
       </div>
     )
   }
 }
 
 InfoBar.propTypes = {
-  currentObservation: PropTypes.object,
+  currentObservation: PropTypes.shape({
+    icon: PropTypes.string,
+    display_location: PropTypes.shape({
+      city: PropTypes.string,
+    }),
+    temp_f: PropTypes.string,
+    feelslike_f: PropTypes.string,
+  }),
   reloading: PropTypes.bool,
   setReloading: PropTypes.func,
+}
+
+InfoBar.defaultProps = {
+  currentObservation: {
+    icon: '',
+    display_location: {
+      city: '',
+    },
+    temp_f: '',
+    feelslike_f: '',
+  },
+  reloading: false,
+  setReloading: () => {},
 }

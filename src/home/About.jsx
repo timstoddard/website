@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 const icons = [
   { name: 'Github', href: 'https://github.com/timstoddard' },
@@ -19,8 +18,7 @@ const IconLinks = () => (
         <img
           src={`../../media/logos/${name.toLowerCase()}.png`}
           alt={name}
-          className="about__icon"
-          />
+          className="about__icon" />
       </a>
     ))}
   </div>

@@ -210,8 +210,7 @@ export default class Perf extends Component {
                 onChange={updateSnippet(index)}
                 onKeyDown={ignoreTab(index)}
                 cols="20"
-                rows="10"
-                />
+                rows="10" />
             </div>
           ))}
           <a
@@ -227,15 +226,13 @@ export default class Perf extends Component {
               className="perf__form__numberOfRuns__input"
               type="number"
               value={numberOfRuns}
-              onChange={updateNumberOfRuns}
-              />
+              onChange={updateNumberOfRuns} />
           </div>
           {!runningTests &&
             <input
               className="perf__button btn red"
               type="submit"
-              value="Run Tests"
-              />
+              value="Run Tests" />
           }
           {runningTests &&
             <div>Running tests...</div>

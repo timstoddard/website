@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const CustomTable = ({ title, headers, body }) => (
   <div>
@@ -19,5 +20,17 @@ const CustomTable = ({ title, headers, body }) => (
     </table>
   </div>
 )
+
+CustomTable.propTypes = {
+  title: PropTypes.string,
+  headers: PropTypes.arrayOf(PropTypes.string),
+  body: PropTypes.arrayOf(PropTypes.node),
+}
+
+CustomTable.defaultProps = {
+  title: '',
+  headers: [],
+  body: [],
+}
 
 export default CustomTable

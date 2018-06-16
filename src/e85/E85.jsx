@@ -13,8 +13,7 @@ const FormInput = ({ id, label, value, usePrecision, onChange }) => (
       step={usePrecision ? '0.01' : '1'}
       value={value}
       onChange={onChange}
-      required={true}
-      />
+      required={true} />
   </label>
 )
 
@@ -141,28 +140,24 @@ export default class E85 extends Component {
               label="Current Gallons"
               value={currentGallons}
               usePrecision={true}
-              onChange={handleInput('currentGallons')}
-              />
+              onChange={handleInput('currentGallons')} />
             <FormInput
               id="currentEthanolPercentage"
               label="Current Ethanol %"
               value={currentEthanolPercentage}
-              onChange={handleInput('currentEthanolPercentage')}
-              />
+              onChange={handleInput('currentEthanolPercentage')} />
           </div>
           <div className="e85__form__row">
             <FormInput
               id="fuel1EthanolPercentage"
               label="Fuel 1 Ethanol %"
               value={fuel1EthanolPercentage}
-              onChange={handleInput('fuel1EthanolPercentage')}
-              />
+              onChange={handleInput('fuel1EthanolPercentage')} />
             <FormInput
               id="fuel2EthanolPercentage"
               label="Fuel 2 Ethanol %"
               value={fuel2EthanolPercentage}
-              onChange={handleInput('fuel2EthanolPercentage')}
-              />
+              onChange={handleInput('fuel2EthanolPercentage')} />
           </div>
           <div className="e85__form__row">
             <FormInput
@@ -170,14 +165,12 @@ export default class E85 extends Component {
               label="Total Gallons"
               value={desiredTotalGallons}
               usePrecision={true}
-              onChange={handleInput('desiredTotalGallons')}
-              />
+              onChange={handleInput('desiredTotalGallons')} />
             <FormInput
               id="desiredEthanolPercentage"
               label="Desired Ethanol %"
               value={desiredEthanolPercentage}
-              onChange={handleInput('desiredEthanolPercentage')}
-              />
+              onChange={handleInput('desiredEthanolPercentage')} />
           </div>
           <button
             className="btn waves-effect waves-light"

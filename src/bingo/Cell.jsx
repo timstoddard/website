@@ -40,3 +40,9 @@ Cell.propTypes = {
   status: PropTypes.number,
   title: PropTypes.string,
 }
+
+Cell.defaultProps = {
+  onClick: () => {},
+  status: 0,
+  title: '',
+}

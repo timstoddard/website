@@ -14,7 +14,7 @@ const ControlPanel = ({ buttonText, moveCount, selectedCells, onSubmit }) => (
         {buttonText}
       </a>
     </div>
-   </div>
+  </div>
 )
 
 ControlPanel.propTypes = {
@@ -22,6 +22,13 @@ ControlPanel.propTypes = {
   moveCount: PropTypes.number,
   selectedCells: PropTypes.number,
   onSubmit: PropTypes.func,
+}
+
+ControlPanel.defaultProps = {
+  buttonText: '',
+  moveCount: 0,
+  selectedCells: 0,
+  onSubmit: () => {},
 }
 
 export default ControlPanel

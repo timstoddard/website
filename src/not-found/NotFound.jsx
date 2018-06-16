@@ -16,8 +16,7 @@ const NotFound = ({ destination, to }) => {
       </h4>
       <img
         src="https://http.cat/404"
-        alt="Page Not Found"
-        />
+        alt="Page Not Found" />
     </div>
   )
 }

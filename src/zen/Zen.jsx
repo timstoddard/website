@@ -63,8 +63,7 @@ export default class Zen extends Component {
           centerY={screenCenterY}
           minRadius={60}
           maxRadius={maxRadius}
-          radiusChangeSpeed={0.2}
-          />
+          radiusChangeSpeed={0.2} />
         <Mover
           ref={mover => this.mover2 = mover}
           direction={-1}
@@ -73,8 +72,7 @@ export default class Zen extends Component {
           centerY={screenCenterY}
           minRadius={60}
           maxRadius={maxRadius}
-          radiusChangeSpeed={0.4}
-          />
+          radiusChangeSpeed={0.4} />
       </div>
     )
   }

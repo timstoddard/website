@@ -48,8 +48,7 @@ const MemoryMap = () => {
     <CustomTable
       title="Memory Map"
       headers={headers}
-      body={rows}
-      />
+      body={rows} />
   )
 }
 

@@ -48,8 +48,7 @@ const DeviceRegisterAssignments = () => {
     <CustomTable
       title="Device Register Assignments"
       headers={headers}
-      body={rows}
-      />
+      body={rows} />
   )
 }
 

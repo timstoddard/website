@@ -184,8 +184,7 @@ export default class Trippy extends Component {
                 left: x - radius,
                 borderRadius: radius,
                 transition: `background ${REFRESH_DELAY / 1000}s ease`,
-              }}
-              />
+              }} />
           ))
         })}
       </div>

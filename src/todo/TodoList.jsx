@@ -247,8 +247,7 @@ export default class TodoList extends Component {
               className="todoList__input"
               onChange={handleInput}
               onKeyDown={handleKeyDown}
-              value={currentTodoMessage}
-              />
+              value={currentTodoMessage} />
           }
           {showingList &&
             <div className="todoList__listWrapper">
@@ -270,8 +269,7 @@ export default class TodoList extends Component {
                     handleKeyDown={handleKeyDown}
                     currentTodoMessage={currentTodoMessage}
                     updateOrder={updateOrder(i)}
-                    updateDragState={updateDragState}
-                    />
+                    updateDragState={updateDragState} />
                 ))}
               </ul>
             </div>
@@ -280,8 +278,7 @@ export default class TodoList extends Component {
         <IconButton
           path={IconPath.SWAP}
           className="todoList__toggle"
-          onClick={toggleShowingList}
-          />
+          onClick={toggleShowingList} />
       </div>
     )
   }

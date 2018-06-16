@@ -58,8 +58,7 @@ const Dropdown = ({ courseId, index, gdriveFolderId, otherLinks }) => (
           <SidebarLink
             name={name}
             href={href}
-            inDropdown={true}
-            />
+            inDropdown={true} />
         </li>
       ))}
   </ul>
@@ -150,21 +149,19 @@ export default class Links extends Component {
     const { className } = this.props
     return (
       <div className={`links__collection collection ${className}`}>
-        {courses.map(({ id, gdriveFolderId, otherLinks, isCalPolyCourse }, index) => (
+        {courses.map(({ id, gdriveFolderId, otherLinks }, index) => (
           <Dropdown
             key={gdriveFolderId}
             index={index}
             courseId={id}
             gdriveFolderId={gdriveFolderId}
-            otherLinks={otherLinks}
-            />
+            otherLinks={otherLinks} />
         ))}
         {courses.map(({ name }, index) => (
           <DropdownActivator
             key={name}
             index={index}
-            courseName={name}
-            />
+            courseName={name} />
         ))}
         <div className="divider" />
         <Link
@@ -176,8 +173,7 @@ export default class Links extends Component {
           <SidebarLink
             key={name}
             name={name}
-            href={href}
-            />
+            href={href} />
         ))}
       </div>
     )

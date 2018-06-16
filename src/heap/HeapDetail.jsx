@@ -36,8 +36,7 @@ export default class HeapDetail extends Component {
         <div className="heapDetail__treeWrapper">
           <div
             dangerouslySetInnerHTML={this.getTreeString()}
-            className="heapDetail__tree"
-            />
+            className="heapDetail__tree" />
         </div>
       </div>
     )

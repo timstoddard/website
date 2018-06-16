@@ -184,8 +184,7 @@ export default class Board extends Component {
             key={index}
             title={items[index]}
             status={board[index]}
-            onClick={() => this.onClick(index)}
-            />
+            onClick={() => this.onClick(index)} />
         )
       }
       tableRows.push(<tr key={`r${i}`}>{tableRow}</tr>)
@@ -200,8 +199,7 @@ export default class Board extends Component {
           moveCount={moveCount}
           selectedCells={selectedCells}
           buttonText={buttonText}
-          onSubmit={onSubmit}
-          />
+          onSubmit={onSubmit} />
       </div>
     )
   }
@@ -210,4 +208,9 @@ export default class Board extends Component {
 Board.propTypes = {
   className: PropTypes.string,
   onSubmit: PropTypes.func,
+}
+
+Board.defaultProps = {
+  className: '',
+  onSubmit: () => {},
 }

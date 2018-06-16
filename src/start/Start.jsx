@@ -4,7 +4,7 @@ import * as Utils from './Utils'
 
 import InfoBar from './InfoBar'
 import Links from './Links'
-import MainContent from './MainContent'
+import MainContent from './content/MainContent'
 
 export default class Start extends Component {
   constructor(props) {
@@ -48,14 +48,12 @@ export default class Start extends Component {
         <InfoBar
           currentObservation={currentObservation}
           reloading={reloading}
-          setReloading={this.setReloading}
-          />
+          setReloading={this.setReloading} />
         <div className="start row">
           <Links className="col s12 m3 l2" />
           <MainContent
             className="col s12 m9 l10"
-            forecast={forecast}
-            />
+            forecast={forecast} />
         </div>
       </div>
     )

@@ -43,8 +43,7 @@ const AssemblerDirectives = () => {
     <CustomTable
       title="Assembler Directives"
       headers={headers}
-      body={rows}
-      />
+      body={rows} />
   )
 }
 

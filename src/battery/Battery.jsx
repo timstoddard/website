@@ -140,8 +140,7 @@ export default class Battery extends Component {
         <div className="battery__level">
           <div
             className={`battery__level__background battery__level__background--${batteryColor}`}
-            style={{ width: percentage }}
-            />
+            style={{ width: percentage }} />
           <div className="battery__level__text">
             {hasGetBattery ? percentage : '??'}
           </div>

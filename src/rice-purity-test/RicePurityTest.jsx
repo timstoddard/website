@@ -199,8 +199,7 @@ export default class RicePurityTest extends Component {
                     type="checkbox"
                     onChange={handleCheckboxChange}
                     id={`checkbox${index}`}
-                    className="rpt__checkbox"
-                    />
+                    className="rpt__checkbox" />
                   <label htmlFor={`checkbox${index}`}>
                     {index + 1}. {question}
                   </label>
@@ -210,8 +209,7 @@ export default class RicePurityTest extends Component {
                 <input
                   type="submit"
                   value="Calculate My Score"
-                  className="waves-effect waves-light btn"
-                  />
+                  className="waves-effect waves-light btn" />
                 <button
                   onClick={clearCheckboxes}
                   className="waves-effect waves-light btn">

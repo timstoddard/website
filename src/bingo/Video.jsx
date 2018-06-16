@@ -88,8 +88,7 @@ export default class Video extends Component {
         <h5>{currentVideoTitle}</h5>
         <div
           ref={(div) => this.videoDiv = div}
-          dangerouslySetInnerHTML={{ __html: currentVideoHtml }}
-          />
+          dangerouslySetInnerHTML={{ __html: currentVideoHtml }} />
       </div>
     )
   }
@@ -97,4 +96,8 @@ export default class Video extends Component {
 
 Video.propTypes = {
   className: PropTypes.string,
+}
+
+Video.defaultProps = {
+  className: '',
 }

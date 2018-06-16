@@ -100,8 +100,7 @@ const formatTimeOfDay = (now) => {
   return 'Night'
 }
 
-export const createWelcomeMessage = (now) => {
-  const name = localStorage.getItem('name')
+export const createWelcomeMessage = (now, name) => {
   const timeOfDay = formatTimeOfDay(now)
   return name
     ? `Good ${timeOfDay}, ${name}!`

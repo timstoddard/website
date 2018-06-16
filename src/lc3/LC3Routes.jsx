@@ -1,6 +1,6 @@
 // react-router
 import React from 'react'
-import { Route, IndexRoute } from 'react-router'
+import { Route, Switch } from 'react-router-dom'
 
 // not found route
 import NotFound from '../not-found/NotFound'
@@ -20,44 +20,42 @@ const LC3Routes = (
   <Route
     path="/lc3"
     component={LC3}>
-    <IndexRoute component={LC3Home} />
-    <Route
-      path="/lc3/ref"
-      component={LC3Ref}
-      />
-    <Route
-      path="/lc3/sim"
-      component={LC3Sim}
-      />
-    <Route
-      path="/lc3/tables"
-      component={LC3Tables}>
+    <Switch>
       <Route
-        path="/lc3/tables/assembler-directives"
-        component={AssemblerDirectives}
-        />
+        path="/"
+        component={LC3Home} />
       <Route
-        path="/lc3/tables/trap-service-routines"
-        component={TrapServiceRoutines}
-        />
+        path="/lc3/ref"
+        component={LC3Ref} />
       <Route
-        path="/lc3/tables/device-register-assignments"
-        component={DeviceRegisterAssignments}
-        />
+        path="/lc3/sim"
+        component={LC3Sim} />
       <Route
-        path="/lc3/tables/memory-map"
-        component={MemoryMap}
-        />
-    </Route>
-    <Route
-      path="/lc3/*"
-      component={() => (
-        <NotFound
-          to="/lc3"
-          destination="the LC3 homepage"
-          />
-      )}
-      />
+        path="/lc3/tables"
+        component={LC3Tables}>
+        <Switch>
+          <Route
+            path="/lc3/tables/assembler-directives"
+            component={AssemblerDirectives} />
+          <Route
+            path="/lc3/tables/trap-service-routines"
+            component={TrapServiceRoutines} />
+          <Route
+            path="/lc3/tables/device-register-assignments"
+            component={DeviceRegisterAssignments} />
+          <Route
+            path="/lc3/tables/memory-map"
+            component={MemoryMap} />
+        </Switch>
+      </Route>
+      <Route
+        path="/lc3/*"
+        component={() => (
+          <NotFound
+            to="/lc3"
+            destination="the LC3 homepage" />
+        )} />
+    </Switch>
   </Route>
 )
 

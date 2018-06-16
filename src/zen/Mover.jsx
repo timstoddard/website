@@ -67,16 +67,14 @@ export default class Mover extends Component {
             'top': y,
             boxShadow,
           }}
-          className="zen__block"
-          />
+          className="zen__block" />
         <div
           style={{
             'right': x,
             'bottom': y,
             boxShadow,
           }}
-          className="zen__block"
-          />
+          className="zen__block" />
       </div>
     )
   }

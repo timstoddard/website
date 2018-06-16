@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 export default class HeapInput extends Component {
   constructor(props) {
@@ -16,7 +17,7 @@ export default class HeapInput extends Component {
     try {
       const { generateHeaps } = this.props
       const hashData = decodeURIComponent(window.location.hash.substr(1))
-      if (/\d(\,\d+)*/.test(hashData)) {
+      if (/\d(,\d+)*/.test(hashData)) {
         this.input.value = hashData
         const ints = hashData.split(',').map(num => parseInt(num, 10))
         generateHeaps(ints)
@@ -69,8 +70,7 @@ export default class HeapInput extends Component {
           <input
             ref={(input) => this.input = input}
             type="text"
-            className="heapInput__form--textbox"
-            />
+            className="heapInput__form--textbox" />
           <a
             onClick={this.processInput}
             className="btn">
@@ -90,4 +90,12 @@ export default class HeapInput extends Component {
       </div>
     )
   }
+}
+
+HeapInput.propTypes = {
+  generateHeaps: PropTypes.func,
+}
+
+HeapInput.defaultProps = {
+  generateHeaps: () => {},
 }

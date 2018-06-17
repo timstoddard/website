@@ -5,7 +5,7 @@ const autoprefixer = require('autoprefixer')
 module.exports = {
   config: {
     entry: [
-      './src/index.jsx',
+      './src/index.tsx',
       './src/index.scss',
     ],
     output: {
@@ -16,7 +16,18 @@ module.exports = {
     module: {
       rules: [
         {
-          test: /\.jsx?$/,
+          test: /\.tsx?$/,
+          loader: 'awesome-typescript-loader',
+          exclude: /node_modules/,
+        },
+        {
+          test: /\.js$/,
+          loader: 'source-map-loader',
+          enforce: 'pre',
+        },
+        // TODO remove this rule once LC3 is converted to ts
+        {
+          test: /\.js$/,
           loader: 'babel-loader',
           exclude: /node_modules/,
         },
@@ -38,7 +49,7 @@ module.exports = {
       ],
     },
     resolve: {
-      extensions: ['.js', '.jsx'],
+      extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
     },
   },
   sharedPlugins: (mode) => {

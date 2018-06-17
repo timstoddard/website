@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 
 import NavLink from '../_shared/NavLink'
 
+// TODO convert LC3 pages to ts
+
 const LC3 = ({ children }) => {
   document.title = 'LC3 Info'
   return (

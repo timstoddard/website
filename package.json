@@ -33,6 +33,13 @@
     "xml2js": "^0.4.19"
   },
   "devDependencies": {
+    "@types/jquery": "^3.3.2",
+    "@types/prop-types": "^15.5.3",
+    "@types/react": "^16.3.18",
+    "@types/react-dom": "^16.0.6",
+    "@types/react-loadable": "^5.4.0",
+    "@types/react-router-dom": "^4.2.7",
+    "awesome-typescript-loader": "^5.0.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.3",
@@ -50,7 +57,10 @@
     "node-sass": "^4.8.3",
     "postcss-loader": "^2.1.4",
     "sass-loader": "^6.0.7",
+    "source-map-loader": "^0.2.3",
     "style-loader": "^0.20.3",
+    "tslint": "^5.10.0",
+    "typescript": "^2.9.2",
     "webpack-cli": "^2.0.15",
     "webpack-dev-server": "^3.1.3"
   }

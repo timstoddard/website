@@ -8,7 +8,7 @@ interface Props {
 }
 
 const WeatherForecastDay: React.StatelessComponent<Props> = ({ day }: Props): JSX.Element => (
-  <div className='sweatherForecastDay'>
+  <div className='weatherForecastDay'>
     <img
       src={Utils.secureImg(day.icon)}
       alt={day.icon} />

@@ -83,11 +83,15 @@ WeatherForecastHeader.propTypes = {
     display_location: PropTypes.shape({
       city: PropTypes.string,
     }),
-    temp_f: PropTypes.string,
+    temp_f: PropTypes.number,
     feelslike_f: PropTypes.string,
-  }).isRequired,
+  }),
   reloading: PropTypes.bool.isRequired,
   setReloading: PropTypes.func.isRequired,
+}
+
+WeatherForecastHeader.defaultProps = {
+  currentObservation: {},
 }
 
 interface Props {
@@ -96,7 +100,7 @@ interface Props {
     display_location: {
       city: string,
     },
-    temp_f: string,
+    temp_f: number,
     feelslike_f: string,
   }
   reloading: boolean
@@ -115,7 +119,7 @@ export default class InfoBar extends React.Component<Props, State> {
       display_location: PropTypes.shape({
         city: PropTypes.string,
       }),
-      temp_f: PropTypes.string,
+      temp_f: PropTypes.number,
       feelslike_f: PropTypes.string,
     }),
     reloading: PropTypes.bool,
@@ -128,7 +132,7 @@ export default class InfoBar extends React.Component<Props, State> {
       display_location: {
         city: '',
       },
-      temp_f: '',
+      temp_f: 0,
       feelslike_f: '',
     },
     reloading: false,

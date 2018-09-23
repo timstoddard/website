@@ -36,6 +36,10 @@ const routes: LoadableRoute[] = [
     loader: (): Promise<any> => import('./e85/E85'),
   },
   {
+    path: '/flicker',
+    loader: (): Promise<any> => import('./flicker/Flicker'),
+  },
+  {
     path: '/heap',
     loader: (): Promise<any> => import('./heap/Heap'),
   },

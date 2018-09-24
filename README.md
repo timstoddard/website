@@ -10,4 +10,4 @@ Technologies used:
 * SCSS
 * ESLint
 * Express (for production server)
-* Hosted on Heroku
+* Heroku

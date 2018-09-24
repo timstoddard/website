@@ -159,8 +159,8 @@ const links: HomePageLink[] = [
     href: 'http://flowcharts.calpoly.edu/downloads/mymap/15-17.52CSCBSU.pdf',
   },
   {
-    name: '17-18 Calendar',
-    href: 'http://registrar.calpoly.edu/2017-18-academic-calendar',
+    name: '18-19 Calendar',
+    href: 'http://registrar.calpoly.edu/2018-19-academic-calendar',
   },
   {
     name: 'Floor Plans',

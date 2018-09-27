@@ -77,6 +77,11 @@ const projectSections: Section[] = [
         inProgress: false,
       },
       {
+        name: 'Candle Simulation',
+        link: '/flicker',
+        inProgress: false,
+      },
+      {
         name: 'Screen Strobe',
         link: '/strobe',
         inProgress: false,

@@ -4,7 +4,7 @@ import * as React from 'react'
 interface Props {
   id: string
   label: string
-  value: number
+  value: number | string
   usePrecision?: boolean
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }

@@ -106,7 +106,7 @@ const Routes = (
             loading: LoadingPage,
             delay: 1000, // 1 second
             timeout: 5000, // 5 seconds
-          })
+          } as Loadable.OptionsWithoutRender<any>)
         } />
     ))}
     {/* {LC3Routes} */}

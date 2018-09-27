@@ -34,7 +34,11 @@ SidebarLink.defaultProps = {
   inDropdown: false,
 }
 
-const setupDropdownLinks = (courseId: number, gdriveFolderId: string, otherLinks: HomePageLink[]): HomePageLink[] => {
+const setupDropdownLinks = (
+  courseId: number,
+  gdriveFolderId: string,
+  otherLinks: HomePageLink[] = [],
+): HomePageLink[] => {
   const dropdownItems: HomePageLink[] = []
   if (courseId > 0) {
     dropdownItems.push(
@@ -90,7 +94,7 @@ Dropdown.propTypes = {
   courseId: PropTypes.number,
   index: PropTypes.number.isRequired,
   gdriveFolderId: PropTypes.string.isRequired,
-  otherLinks: PropTypes.arrayOf(PropTypes.object),
+  otherLinks: PropTypes.array,
 }
 
 Dropdown.defaultProps = {

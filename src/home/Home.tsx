@@ -4,21 +4,21 @@ import { Link } from 'react-router-dom'
 import Dots from './Dots'
 
 interface HomepageLink {
-  to: string
+  pathname: string
   text: string
 }
 
 const links: HomepageLink[] = [
   {
-    to: '/about',
+    pathname: '/about',
     text: 'about',
   },
   {
-    to: '/projects',
+    pathname: '/projects',
     text: 'projects',
   },
   {
-    to: 'https://drive.google.com/file/d/0B9dz0Ddcl3ESV28wLVZzd2RFNkU/view?usp=sharing',
+    pathname: 'https://drive.google.com/file/d/0B9dz0Ddcl3ESV28wLVZzd2RFNkU/view?usp=sharing',
     text: 'resume',
   },
 ]
@@ -34,13 +34,13 @@ const Home: React.StatelessComponent<{}> = (): JSX.Element => {
           tim stoddard
         </h1>
         <ul className='home__links'>
-          {links.map(({ to, text }: HomepageLink) => (
+          {links.map(({ pathname, text }: HomepageLink) => (
             <li
               key={text}
               className='home__link'>
               <Link
-                to={to}
-                target={to[0] !== '/' ? '_blank' : ''}
+                to={{ pathname }}
+                target={pathname[0] !== '/' ? '_blank' : ''}
                 className='home__linkText'>
                 {text}
               </Link>

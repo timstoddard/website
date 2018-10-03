@@ -44,11 +44,11 @@ const setupDropdownLinks = (
     dropdownItems.push(
       {
         name: 'Home',
-        href: `https://polylearn.calpoly.edu/AY_2017-2018/course/view.php?id=${courseId}`,
+        href: `https://polylearn.calpoly.edu/AY_2018-2019/course/view.php?id=${courseId}`,
       },
       {
         name: 'Grades',
-        href: `https://polylearn.calpoly.edu/AY_2017-2018/grade/report/user/index.php?id=${courseId}`,
+        href: `https://polylearn.calpoly.edu/AY_2018-2019/grade/report/user/index.php?id=${courseId}`,
       },
     )
   }

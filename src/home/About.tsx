@@ -36,7 +36,7 @@ const About: React.StatelessComponent<{}> = (): JSX.Element => (
         Tim Stoddard
       </h4>
       <p className='about__text'>
-        Hi! I am a 3rd year student at&nbsp;
+        Hi! I am a 4th year student at&nbsp;
         <a
           className='about__link'
           href='http://calpoly.edu'

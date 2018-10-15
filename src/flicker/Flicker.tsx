@@ -46,15 +46,15 @@ export default class Flicker extends React.Component<{}, State> {
     this.setState(setStateVars, () => {
       setTimeout(() => {
         this.run()
-      }, Math.random() * 15 + 10)
+      }, Math.random() < 0.8 ? Math.random() * 40 + 20 : Math.random() * 80 + 20)
     })
   }
 
   getNewMax = (): number => {
-    const maxHeight = 80
-    return Math.random() > 0.8
-      ? Math.random() * (maxHeight * 0.3) + (maxHeight * 0.7)
-      : Math.random() * (maxHeight * 0.3) + (maxHeight * 0.2)
+    const maxHeight = 60
+    return Math.random() < 0.8
+      ? Math.random() * (maxHeight * 0.3) + (maxHeight * 0.2)
+      : Math.random() * (maxHeight * 0.3) + (maxHeight * 0.7)
   }
 
   render(): JSX.Element {

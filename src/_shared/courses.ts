@@ -34,6 +34,10 @@ const courses: Course[] = [
         href: 'https://users.csc.calpoly.edu/~pnico/class/2018-04/cpe453',
       },
       {
+        name: 'Piazza',
+        href: 'https://piazza.com/class/jnc9em6a1d85h',
+      },
+      {
         name: 'Textbook',
         // tslint:disable-next-line:max-line-length
         href: 'https://mcdtu.files.wordpress.com/2017/03/tanenbaum_woodhull_operating-systems-design-implementation-3rd-edition.pdf',

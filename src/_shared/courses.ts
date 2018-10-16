@@ -33,6 +33,11 @@ const courses: Course[] = [
         name: 'Course Home',
         href: 'https://users.csc.calpoly.edu/~pnico/class/2018-04/cpe453',
       },
+      {
+        name: 'Textbook',
+        // tslint:disable-next-line:max-line-length
+        href: 'https://mcdtu.files.wordpress.com/2017/03/tanenbaum_woodhull_operating-systems-design-implementation-3rd-edition.pdf',
+      },
     ],
   },
   {

@@ -28,7 +28,7 @@ const Home: React.StatelessComponent<{}> = (): JSX.Element => {
 
   return (
     <div className='home'>
-      <Dots delay={2000} />
+      <Dots delay={200} />
       <div className='home__content'>
         <h1 className='home__headerName'>
           tim stoddard

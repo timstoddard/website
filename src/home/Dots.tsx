@@ -45,7 +45,7 @@ export default class Dots extends React.Component<Props, State> {
   componentDidMount(): void {
     // generate the dots
     this.dots = []
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 40; i++) {
       this.dots.push(this.generateNewDot())
     }
 

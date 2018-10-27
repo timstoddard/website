@@ -1,76 +1,76 @@
-$deg: 8deg; // used for wiggle animation
-
 .about {
-  color: white;
-  height: 100%;
-  min-height: 100vh;
-  width: 100%;
-
-  &__container {
-    background: $homeContentBlue;
-    box-shadow: 0px 0px 40px 10px rgba(0,0,0,0.2);
-    height: 100%;
-    margin: 0 auto;
-    max-width: 800px;
-    min-height: 100vh;
-    padding: 0 8vw;
-    text-align: center;
-    width: 70%;
-  }
+  @include aboutAndProjectsLayout;
 
   &__title {
+    @include aboutAndProjectsTitleFont;
     margin-top: 0;
     padding-top: 2rem;
   }
 
-  &__text {
-    line-height: 150%;
-    margin: 0;
-    margin-top: 1.5rem;
+  &__details {
+    margin: 0 0 20px;
+    max-width: 500px;
+    padding: 0 20px;
+    text-align: left;
 
-    &:last-of-type {
-      margin-bottom: 1.5rem;
+    &__detailWrapper {
+      @include aboutAndProjectsListItem;
+      display: flex;
+
+      @media screen and (max-width: 400px) {
+        flex-direction: column;
+      }
     }
-  }
 
-  &__link {
-    color: rgb(225,225,225);
-    text-decoration: underline;
+    &__field {
+      float: left;
+      font-weight: bold;
+      margin: 0;
+      padding: 0;
+      width: 25%;
+    }
 
-    &:hover {
-      color: black;
+    &__value {
+      float: left;
+      margin: 0;
+      padding: 0;
+      width: 75%;
     }
   }
 
   &__icons {
     align-content: center;
-    display: inline-flex;
+    display: flex;
     justify-content: center;
-    padding: 10px 0;
     width: 100%;
-  }
 
-  &__icon {
-    height: auto;
-    margin: 0 1rem;
-    max-width: 3.5rem;
-    min-width: 2.5rem;
-    opacity: 0.6;
-    transition: opacity .35s ease;
-
-    &:hover {
-      animation: shake 0.25s linear both;
-      opacity: 1;
+    &__icon {
+      @include defaultTransition(all);
+      background: $lightGray;
+      border: 1px solid $lightGray;
+      border-radius: 10px;
+      margin: 1rem;
+      width: 3rem;
+  
+      &:hover {
+        animation: shake 0.25s linear both;
+        background: $homeContentBlue;
+        border-color: $homeContentBlue;
+      }
     }
-  }
 
-  @media screen and (max-width: 600px) {
-    &__container {
-      width: 100%;
+    @media screen and (max-width: 400px) {
+      align-items: center;
+      flex-direction: column;
+
+      &__icon {
+        width: 6rem;
+      }
     }
   }
 }
 
+$deg: 8deg;
 @keyframes shake {
   25% { transform: rotate($deg); }
   75% { transform: rotate(-$deg); }

@@ -5,11 +5,59 @@ interface Icon {
   href: string
 }
 
+interface Detail {
+  field: string
+  value: string
+}
+
 const icons: Icon[] = [
-  { name: 'Github', href: 'https://github.com/timstoddard' },
-  { name: 'LinkedIn', href: 'https://linkedin.com/in/timstoddard200' },
-  { name: 'Portfolium', href: 'https://portfolium.com/timstoddard' },
-  { name: 'Facebook', href: 'https://facebook.com/timstoddard200' },
+  {
+    name: 'Github',
+    href: 'https://github.com/timstoddard',
+ },
+  {
+    name: 'LinkedIn',
+    href: 'https://linkedin.com/in/timstoddard200',
+ },
+  {
+    name: 'Portfolium',
+    href: 'https://portfolium.com/timstoddard',
+ },
+  {
+    name: 'Facebook',
+    href: 'https://facebook.com/timstoddard200',
+ },
+]
+
+const details: Detail[] = [
+  {
+    field: 'School',
+    value: 'Cal Poly SLO',
+  },
+  {
+    field: 'Major',
+    value: 'Computer Science',
+  },
+  {
+    field: 'Minor',
+    value: 'Entrepreneurship',
+  },
+  {
+    field: 'Company',
+    value: 'SoCreate',
+  },
+  {
+    field: 'Role',
+    value: 'Software Engineering Intern',
+  },
+  {
+    field: 'Skills',
+    value: 'Angular, React, Typescript, Node.js, Java, Python, C, PHP, SQL',
+  },
+  {
+    field: 'Hobbies',
+    value: 'Lifting weights, cars',
+  },
 ]
 
 const IconLinks: React.StatelessComponent<{}> = (): JSX.Element => (
@@ -19,59 +67,41 @@ const IconLinks: React.StatelessComponent<{}> = (): JSX.Element => (
         href={href}
         target='_blank'
         rel='noopener noreferrer'
-        key={name}>
+        key={name}
+        className='about__icons__link'>
         <img
           src={`../../media/logos/${name.toLowerCase()}.png`}
           alt={name}
-          className='about__icon' />
+          className={'about__icons__icon'} />
       </a>
     ))}
   </div>
 )
 
+const Details: React.StatelessComponent<{}> = (): JSX.Element => (
+  <dl className='about__details'>
+    {details.map(({ field, value }: Detail) => (
+      <div
+        key={field}
+        className='about__details__detailWrapper'>
+        <dt className='about__details__field'>
+          {field}
+        </dt>
+        <dd className='about__details__value'>
+          {value}
+        </dd>
+      </div>
+    ))}
+  </dl>
+)
+
 const About: React.StatelessComponent<{}> = (): JSX.Element => (
   <div className='about'>
-    <div className='about__container'>
       <h4 className='about__title'>
         Tim Stoddard
       </h4>
-      <p className='about__text'>
-        Hi! I am a 4th year student at&nbsp;
-        <a
-          className='about__link'
-          href='http://calpoly.edu'
-          target='_blank'
-          rel='noopener noreferrer'>
-          Cal Poly, San Luis Obispo
-        </a>
-        &nbsp;majoring Computer Science and minoring in Entrepreneurship.
-      </p>
-      <p className='about__text'>
-        I am currently a software engineering intern at&nbsp;
-        <a
-          className='about__link'
-          href='https://socreate.it'
-          target='_blank'
-          rel='noopener noreferrer'>
-          SoCreate
-        </a>
-        , where I regularly work with Angular 2, PHP, and MS SQL.
-        Other technologies I use there include Git, Jira, and BitBucket.
-      </p>
-      <p className='about__text'>
-        I also lift weights several times a week, a passion that I have enjoyed since my sophomore year of high school.
-      </p>
-      <p className='about__text'>
-        Feel free to have a look around the site and/or&nbsp;
-        <a
-          className='about__link'
-          href='mailto:tstoddar@calpoly.edu?subject=Hello!'>
-          contact me
-        </a>
-        &nbsp;if you are interested in working together!
-      </p>
+      <Details />
       <IconLinks />
-    </div>
   </div>
 )
 

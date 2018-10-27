@@ -104,32 +104,30 @@ const Projects: React.StatelessComponent<{}> = (): JSX.Element => {
   document.title = 'Tim\'s Projects'
   return (
     <div className='projects'>
-      <div className='projects__container'>
-        <h4 className='projects__mainTitle'>
-          Tim&rsquo;s Projects
-        </h4>
-        <hr className='projects__divider' />
-        {projectSections.map(({ name: sectionName, projects }: Section) => (
-          <div key={sectionName}>
-            <h5 className='projects__title'>
-              {sectionName}
-            </h5>
-            <ul className='collection'>
-              {projects.map(({ name: projectName, link, inProgress }: Project) => (
-                <li
-                  className='collection-item projects__linkWrapper'
-                  key={projectName}>
-                  <Link to={link}>
-                    <span className={`projects__link ${inProgress ? 'projects__link--inProgress' : ''}`}>
-                      {projectName}
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
+      <h4 className='projects__mainTitle'>
+        Tim&rsquo;s Javascript Projects
+      </h4>
+      <hr className='projects__divider' />
+      {projectSections.map(({ name: sectionName, projects }: Section) => (
+        <React.Fragment key={sectionName}>
+          <h5 className='projects__title'>
+            {sectionName}
+          </h5>
+          <ul className='projects__section'>
+            {projects.map(({ name: projectName, link, inProgress }: Project) => (
+              <li
+                className='projects__linkWrapper'
+                key={projectName}>
+                <Link to={link}>
+                  <span className={`projects__link ${inProgress ? 'projects__link--inProgress' : ''}`}>
+                    {projectName}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </React.Fragment>
+      ))}
     </div>
   )
 }

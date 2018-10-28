@@ -61,7 +61,7 @@ const routes: LoadableRoute[] = [
   },
   {
     path: '/projects',
-    loader: (): Promise<any> => import('./projects/Projects'),
+    loader: (): Promise<any> => import('./home/Projects'),
   },
   {
     path: '/rice-purity-test',

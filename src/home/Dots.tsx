@@ -17,6 +17,12 @@ interface Dot {
   dy: number
   radius: number
   opacity: number
+  color: Color
+}
+
+enum Color {
+  RED,
+  BLUE,
 }
 
 export default class Dots extends React.Component<Props, State> {
@@ -32,6 +38,8 @@ export default class Dots extends React.Component<Props, State> {
   canvas: HTMLCanvasElement
   moveInterval: number
   visibleTimer: number
+  averageRGBCache: { [key: string]: string } = {}
+  twoPiRadians: number = 2 * Math.PI
 
   constructor(props: Props) {
     super(props)
@@ -46,7 +54,7 @@ export default class Dots extends React.Component<Props, State> {
     // generate the dots
     this.dots = []
     for (let i = 0; i < 40; i++) {
-      this.dots.push(this.generateNewDot())
+      this.dots.push(this.generateNewDot(i === 0 ? Color.RED : Color.BLUE))
     }
 
     // start the interval to move the dots
@@ -65,7 +73,7 @@ export default class Dots extends React.Component<Props, State> {
       } = document.documentElement
       this.canvas.width = viewportWidth
       this.canvas.height = viewportHeight
-      const threshold = Math.min(viewportWidth, viewportHeight) / 6
+      const threshold = Math.min(viewportWidth, viewportHeight) / 5
       this.setState({ drawLineThresholdSquared: threshold * threshold })
     }
     trackWindowSize()
@@ -83,16 +91,14 @@ export default class Dots extends React.Component<Props, State> {
       clientWidth: viewportWidth,
       clientHeight: viewportHeight,
     } = document.documentElement
-    this.dots = this.dots.map(({ x, y, dx, dy, radius, opacity }: Dot) => {
+    this.dots = this.dots.map(({ x, y, dx, dy, radius, opacity, color }: Dot) => {
       const newX = x + dx
       const newY = y + dy
-      const outOfBounds = newX < 0 ||
-        newX > viewportWidth ||
-        newY < 0 ||
-        newY > viewportHeight
+      const outOfBounds = newX < 0 || newX > viewportWidth ||
+        newY < 0 || newY > viewportHeight
       return outOfBounds
-        ? this.generateNewDot()
-        : { x: newX, y: newY, dx, dy, radius, opacity }
+        ? this.generateNewDot(color)
+        : { x: newX, y: newY, dx, dy, radius, opacity, color }
     })
     const canvas = this.canvas.getContext('2d')
     canvas.clearRect(0, 0, viewportWidth, viewportHeight)
@@ -106,16 +112,16 @@ export default class Dots extends React.Component<Props, State> {
         const distSquared = a * a + b * b
         if (distSquared < drawLineThresholdSquared) {
           const opacity = Math.min(drawLineThresholdSquared / distSquared - 1, 1)
-          this.drawLine(canvas, dot1.x, dot1.y, dot2.x, dot2.y, opacity)
+          this.drawLine(canvas, dot1, dot2, opacity)
         }
       }
     }
-    this.dots.forEach(({ x, y, radius, opacity }: Dot) => {
-      this.drawDot(canvas, x, y, radius, opacity)
+    this.dots.forEach(({ x, y, radius, opacity, color }: Dot) => {
+      this.drawDot(canvas, x, y, radius, opacity, color)
     })
   }
 
-  generateNewDot = (): Dot => {
+  generateNewDot = (color: Color): Dot => {
     const {
       clientWidth: viewportWidth,
       clientHeight: viewportHeight,
@@ -158,28 +164,64 @@ export default class Dots extends React.Component<Props, State> {
       dx = randomPositive(lowerBound, upperBound)
       dy = randomNumber(lowerBound, upperBound)
     }
-    return { x, y, dx, dy, radius, opacity }
+    return { x, y, dx, dy, radius, opacity, color }
   }
 
-  drawDot = (canvas: CanvasRenderingContext2D, x: number, y: number, radius: number, opacity: number): void => {
+  getRGB = (color: Color): string => {
+    switch (color) {
+      case Color.RED:
+        return '255,0,0'
+      case Color.BLUE:
+        return '66,133,244'
+    }
+  }
+
+  averageRGB = (color1: Color, color2: Color): string => {
+    const rgb1 = this.getRGB(color1)
+    const rgb2 = this.getRGB(color2)
+
+    // check the cache
+    if (this.averageRGBCache[`${rgb1}-${rgb2}`]) {
+      return this.averageRGBCache[`${rgb1}-${rgb2}`]
+    } else if (this.averageRGBCache[`${rgb2}-${rgb1}`]) {
+      return this.averageRGBCache[`${rgb2}-${rgb1}`]
+    }
+
+    // not found in cache, generate new entry and store it
+    const [_1, r1, g1, b1] = rgb1.match(/(\d+),(\d+),(\d+)/)
+    const [_2, r2, g2, b2] = rgb2.match(/(\d+),(\d+),(\d+)/)
+    const r = Math.floor((parseInt(r1, 10) + parseInt(r2, 10)) / 2)
+    const g = Math.floor((parseInt(g1, 10) + parseInt(g2, 10)) / 2)
+    const b = Math.floor((parseInt(b1, 10) + parseInt(b2, 10)) / 2)
+    const newRGB = `${r},${g},${b}`
+    this.averageRGBCache[`${rgb1}-${rgb2}`] = newRGB
+    return newRGB
+  }
+
+  drawDot = (
+    canvas: CanvasRenderingContext2D,
+    x: number,
+    y: number,
+    radius: number,
+    opacity: number,
+    color: Color,
+  ): void => {
     canvas.beginPath()
-    canvas.arc(x, y, radius, 0, 2 * Math.PI, false)
-    canvas.fillStyle = `rgba(66,133,244,${opacity})`
+    canvas.arc(x, y, radius, 0, this.twoPiRadians)
+    canvas.fillStyle = `rgba(${this.getRGB(color)},${opacity})`
     canvas.fill()
   }
 
   drawLine = (
     canvas: CanvasRenderingContext2D,
-    x1: number,
-    y1: number,
-    x2: number,
-    y2: number,
+    dot1: Dot,
+    dot2: Dot,
     opacity: number,
   ): void => {
     canvas.beginPath()
-    canvas.moveTo(x1, y1)
-    canvas.lineTo(x2, y2)
-    canvas.strokeStyle = `rgba(66,133,244,${opacity})`
+    canvas.moveTo(dot1.x, dot1.y)
+    canvas.lineTo(dot2.x, dot2.y)
+    canvas.strokeStyle = `rgba(${this.averageRGB(dot1.color, dot2.color)},${opacity})`
     canvas.stroke()
   }
 

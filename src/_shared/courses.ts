@@ -55,6 +55,12 @@ const courses: Course[] = [
     name: 'ENGR 463',
     fullName: 'Interdisciplinary Entrepreneurial Senior Design Project I',
     gdriveFolderId: '15aoJYPvtzzQaigftDEiZ7PTlv3WyQj2A',
+    otherLinks: [
+      {
+        name: 'LaunchBoard',
+        href: 'https://dashboard.launchboard.io/teams/7d344cc2-ced5-4681-8461-c67a0c67b3d7',
+      },
+    ],
   },
   {
     id: 3728,

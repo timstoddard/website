@@ -32,6 +32,14 @@ const routes: LoadableRoute[] = [
     loader: (): Promise<any> => import('./current-courses/CurrentCourses'),
   },
   {
+    path: '/dots-black',
+    loader: (): Promise<any> => import('./dots-experiments/DotsBlack'),
+  },
+  {
+    path: '/dots-xmas',
+    loader: (): Promise<any> => import('./dots-experiments/DotsXmas'),
+  },
+  {
     path: '/e85',
     loader: (): Promise<any> => import('./e85/E85'),
   },

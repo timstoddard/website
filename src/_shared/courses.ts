@@ -26,7 +26,7 @@ const courses: Course[] = [
   {
     name: 'ENGR 464',
     fullName: 'Interdisciplinary Entrepreneurial Senior Design Project II',
-    id: -1,
+    id: 7814,
     gdriveFolderId: '1SYEy35nfU65TqwZsAKS-jYEoXecOAivS',
     otherLinks: [
       {
@@ -44,7 +44,7 @@ const courses: Course[] = [
   {
     name: 'CSC 436',
     fullName: 'Mobile Application Development',
-    id: -1,
+    id: 10293,
     gdriveFolderId: '1opKR2hxful3qD9AvGSCBRDzteGq7Nt7v',
   },
   {

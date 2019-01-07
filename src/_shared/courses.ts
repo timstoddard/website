@@ -24,37 +24,10 @@ export interface Course {
 
 const courses: Course[] = [
   {
+    name: 'ENGR 464',
+    fullName: 'Interdisciplinary Entrepreneurial Senior Design Project II',
     id: -1,
-    name: 'CSC 453',
-    fullName: 'Introduction to Operating Systems',
-    gdriveFolderId: '1ftK5GS7Vb31TGWKpDdvSE0l0MkDPpXs-',
-    otherLinks: [
-      {
-        name: 'Course Home',
-        href: 'https://users.csc.calpoly.edu/~pnico/class/2018-04/cpe453',
-      },
-      {
-        name: 'Piazza',
-        href: 'https://piazza.com/class/jnc9em6a1d85h',
-      },
-      {
-        name: 'Textbook',
-        // tslint:disable-next-line:max-line-length
-        href: 'https://mcdtu.files.wordpress.com/2017/03/tanenbaum_woodhull_operating-systems-design-implementation-3rd-edition.pdf',
-      },
-    ],
-  },
-  {
-    id: 1544,
-    name: 'CSC 480',
-    fullName: 'Introduction to Artificial Intelligence',
-    gdriveFolderId: '1N4cIw2venlmavlGhfmWISUbTLQir0UMQ',
-  },
-  {
-    id: 802,
-    name: 'ENGR 463',
-    fullName: 'Interdisciplinary Entrepreneurial Senior Design Project I',
-    gdriveFolderId: '15aoJYPvtzzQaigftDEiZ7PTlv3WyQj2A',
+    gdriveFolderId: '1SYEy35nfU65TqwZsAKS-jYEoXecOAivS',
     otherLinks: [
       {
         name: 'LaunchBoard',
@@ -63,22 +36,22 @@ const courses: Course[] = [
     ],
   },
   {
-    id: 3728,
-    name: 'BUS 458',
-    fullName: 'Solving Big World Challenges',
-    gdriveFolderId: '16b06HooS4KpIwWPVf7OK5r8QxIez7JWo',
+    name: 'CPE 321',
+    fullName: 'Introduction to Computer Security',
+    id: 12792,
+    gdriveFolderId: '1urC_Ngyf6EaR0lE8SAhKm_0wVnV-URav',
   },
   {
-    id: -2,
-    name: 'MDIA 2B',
-    fullName: 'History of Film, 1945 - Current',
-    gdriveFolderId: '1RNFcOPGWjOdp3mwWsw678-HvpcP0RGd9',
-    otherLinks: [
-      {
-        name: 'Course Home',
-        href: 'https://foothillcollege.instructure.com/courses/7310/modules',
-      },
-    ],
+    name: 'CSC 436',
+    fullName: 'Mobile Application Development',
+    id: -1,
+    gdriveFolderId: '1opKR2hxful3qD9AvGSCBRDzteGq7Nt7v',
+  },
+  {
+    name: 'CSC 445',
+    fullName: 'Computational Theory',
+    id: -1,
+    gdriveFolderId: '1aPjdNMIfHkoPUnzcD3I2X3UfARQUF7mf',
   },
 ]
 

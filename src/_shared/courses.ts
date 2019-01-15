@@ -42,12 +42,6 @@ const courses: Course[] = [
     gdriveFolderId: '1urC_Ngyf6EaR0lE8SAhKm_0wVnV-URav',
   },
   {
-    name: 'CSC 436',
-    fullName: 'Mobile Application Development',
-    id: 10293,
-    gdriveFolderId: '1opKR2hxful3qD9AvGSCBRDzteGq7Nt7v',
-  },
-  {
     name: 'CSC 445',
     fullName: 'Computational Theory',
     id: -1,

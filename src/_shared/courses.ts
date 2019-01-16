@@ -46,6 +46,13 @@ const courses: Course[] = [
     fullName: 'Computational Theory',
     id: -1,
     gdriveFolderId: '1aPjdNMIfHkoPUnzcD3I2X3UfARQUF7mf',
+    otherLinks: [
+      {
+        name: 'Textbook',
+        // tslint:disable-next-line:max-line-length
+        href: 'https://theswissbay.ch/pdf/Book/Introduction%20to%20the%20theory%20of%20computation_third%20edition%20-%20Michael%20Sipser.pdf',
+      },
+    ],
   },
 ]
 

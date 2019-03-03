@@ -111,7 +111,7 @@ export default class Perf extends React.Component<{}, State> {
     this.setState({ runningTests: true }, () => {
       const results: Result[] = []
       const sixDecimalPlaces = (n: number): string => n.toFixed(6)
-      window.setTimeout(() => {
+      setTimeout(() => {
         let bestAvg = Infinity
         let bestAvgIndex = -1
         let worstAvg = -Infinity

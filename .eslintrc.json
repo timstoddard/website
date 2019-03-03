@@ -9,8 +9,7 @@
     "plugin:react/recommended"
   ],
   "globals": {
-    "React": true,
-    "$": true
+    "React": true
   },
   "parser": "babel-eslint",
   "parserOptions": {

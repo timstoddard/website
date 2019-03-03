@@ -45,12 +45,12 @@ export default class DotsBlack extends React.Component<{}, State> {
     }
 
     // start the interval to move the dots
-    this.moveInterval = window.setInterval(this.moveDots, 5)
+    this.moveInterval = setInterval(this.moveDots, 5) as unknown as number
 
     // timer to make dots visible
-    this.visibleTimer = window.setTimeout(() => {
+    this.visibleTimer = setTimeout(() => {
       this.setState({ visible: true })
-    }, 200)
+    }, 200) as unknown as number
 
     // track the window size
     const trackWindowSize = (): void => {

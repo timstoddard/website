@@ -89,12 +89,12 @@ export default class IncrGame extends React.Component<{}, State> {
 
   run = (): void => {
     this.addMoney()
-    this.runTimeout = window.setTimeout(() => this.run(), this.state.timer)
+    this.runTimeout = setTimeout(() => this.run(), this.state.timer) as unknown as number
   }
 
   handleHover = (): void => {
     this.addMoney() // temporary
-    this.hoverMoneyTimeout = window.setTimeout(() => this.handleHover())
+    this.hoverMoneyTimeout = setTimeout(() => this.handleHover()) as unknown as number
   }
 
   stopHovering = (): void => {

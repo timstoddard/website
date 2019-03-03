@@ -1,3 +1,4 @@
+import axios, { AxiosResponse } from 'axios'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
@@ -37,24 +38,14 @@ export default class Video extends React.Component<Props, State> {
   }
 
   componentDidMount(): void {
-    $.ajax({
-      url: 'https://www.reddit.com/r/Roadcam.json',
-      type: 'GET',
-      dataType: 'json',
-      cache: false,
-      success: ({ data }: any): void => {
-        this.setState({ videos: data.children })
+    axios.get('https://www.reddit.com/r/Roadcam.json')
+      .then((response: AxiosResponse) => {
+        this.setState({ videos: response.data.data.children })
         this.loadNewVideo()
-      },
-      error: (xhr: any, status: string, errorThrown: string): void => {
-        alert('Sorry, there was a problem loading the data!\nTry refreshing the page.')
-        // tslint:disable:no-console
-        console.log(`Error: ${errorThrown}`)
-        console.log(`Status: ${status}`)
-        console.dir(xhr)
-        // tslint:enable:no-console
-      },
-    })
+      })
+      .catch((error: Error) => {
+        console.error(error) // tslint:disable-line:no-console
+      })
     $(() => {
       $(window).on('resize keyup', this.onResize)
     })

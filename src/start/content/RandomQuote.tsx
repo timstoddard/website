@@ -1,3 +1,4 @@
+import axios, { AxiosResponse } from 'axios'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
@@ -23,11 +24,9 @@ export default class RandomQuote extends React.Component<Props, State> {
   }
 
   componentDidMount(): void {
-    $.ajax({
-      url: 'https://www.reddit.com/r/quotes/top.json?sort=top&t=month',
-      type: 'GET',
-      success: (response: any): void => {
-        const { children } = response.data
+    axios.get('https://www.reddit.com/r/quotes/top.json?sort=top&t=month')
+      .then((response: AxiosResponse) => {
+        const { children } = response.data.data
         const index = Math.floor(Math.random() * children.length)
         const quote = children[index].data.title
           .replace(/[“”"]/g, '') // remove quotation marks
@@ -35,13 +34,10 @@ export default class RandomQuote extends React.Component<Props, State> {
           .replace(/\s+/g, ' ') // normalize spaces
           .trim()
         this.setState({ quote })
-      },
-      error: (error: any): void => {
-        // tslint:disable-next-line:no-console
-        console.error(error)
-      },
-      timeout: 10000,
-    })
+      })
+      .catch((error: Error) => {
+        console.error(error) // tslint:disable-line:no-console
+      })
   }
 
   render(): JSX.Element {

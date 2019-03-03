@@ -1,3 +1,4 @@
+import axios, { AxiosResponse } from 'axios'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
@@ -6,7 +7,7 @@ interface Props {
 }
 
 interface State {
-  data: any[]
+  items: any[]
 }
 
 interface NewsItem {
@@ -24,32 +25,26 @@ export default class CNN extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
 
-    this.state = { data: [] }
+    this.state = { items: [] }
   }
 
   componentDidMount(): void {
-    $.ajax({
-      url: '/cnn-rss-feed',
-      type: 'GET',
-      success: (response: string): void => {
-        const data = JSON.parse(response)
-        this.setState({ data: data.items })
-      },
-      error: (error: any): void => {
-        // tslint:disable-next-line:no-console
-        console.error(error)
-      },
-      timeout: 10000,
-    })
+    axios.get('https://n1wveabtqc.execute-api.us-east-2.amazonaws.com/default/cnn-current-top-stories')
+      .then((response: AxiosResponse) => {
+        this.setState({ items: response.data.items })
+      })
+      .catch((error: Error) => {
+        console.error(error) // tslint:disable-line:no-console
+      })
   }
 
   render(): JSX.Element {
     const { className } = this.props
-    const { data } = this.state
+    const { items } = this.state
 
     return (
       <div className={`blue-grey lighten-3 z-depth-1 ${className}`}>
-        {data.map(({ link, origLink, title, description }: NewsItem) => (
+        {items.map(({ link, origLink, title, description }: NewsItem) => (
           <a
             key={link}
             href={origLink}

@@ -21,8 +21,13 @@ interface Alias {
 }
 
 export default class Imports extends React.Component<{}, State> {
+  input: React.Ref<HTMLTextAreaElement>
+  output: React.Ref<HTMLTextAreaElement>
+
   constructor(props: {}) {
     super(props)
+    this.input = React.createRef();
+    this.output = React.createRef();
 
     this.state = {
       rawValue: '',
@@ -32,7 +37,7 @@ export default class Imports extends React.Component<{}, State> {
   }
 
   componentDidMount(): void {
-    document.getElementById('input').focus()
+    (this.input as any).current.focus()
   }
 
   onChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
@@ -68,8 +73,8 @@ export default class Imports extends React.Component<{}, State> {
     this.setState({ rawValue: pastedData }, () => {
       // TODO is this needed?
       const { rawValue } = this.state
-      const input = document.getElementById('input') as any
-      input.value = rawValue
+      const textareaInput = (this.input as any).current
+      textareaInput.value = rawValue
     })
   }
 
@@ -97,16 +102,16 @@ import 'code';`,
     }, () => {
       // TODO is this needed?
       const { rawValue } = this.state
-      const input = document.getElementById('input') as any
-      input.value = rawValue
+      const textareaInput = (this.input as any).current
+      textareaInput.value = rawValue
     })
   }
 
   fix = (): void => {
-    const { value } = (document.getElementById('input') as any)
+    const { value } = (this.input as any).current
     const result = fixImports(value)
     this.setState({ formattedValue: result }, () => {
-      document.getElementById('output').focus()
+      (this.output as any).current.focus()
     })
   }
 
@@ -114,12 +119,11 @@ import 'code';`,
     document.title = 'Import Fixer'
     const { onChange, checkKeyDown, checkKeyUp, replaceText, loadMockImports, fix } = this
     const { rawValue, formattedValue } = this.state
-    // TODO: use `ref`s to interact with textareas
     return (
       <div className='center-align'>
         <h3 className='import__title'>Import Fixer</h3>
         <textarea
-          id='input'
+          ref={this.input}
           className='import__textarea'
           value={rawValue}
           onChange={onChange}
@@ -139,8 +143,9 @@ import 'code';`,
           </a>
         </div>
         <textarea
-          id='output'
+          ref={this.output}
           value={formattedValue}
+          readOnly={true}
           className='import__textarea' />
       </div>
     )

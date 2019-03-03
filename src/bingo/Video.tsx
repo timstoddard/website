@@ -46,23 +46,22 @@ export default class Video extends React.Component<Props, State> {
       .catch((error: Error) => {
         console.error(error) // tslint:disable-line:no-console
       })
-    $(() => {
-      $(window).on('resize keyup', this.onResize)
-    })
+    window.addEventListener('resize', this.onResize)
+    window.addEventListener('keyup', this.onResize)
     this.videoDiv.addEventListener('dblclick', this.onResize)
   }
 
   componentWillUnmount(): void {
-    $(() => {
-      $(window).off('resize keyup', this.onResize)
-    })
+    window.removeEventListener('resize', this.onResize)
+    window.removeEventListener('keyup', this.onResize)
     this.videoDiv.removeEventListener('dblclick', this.onResize)
   }
 
   onResize = (): void => {
     const { currentVideoAspectRatio } = this.state
-    const iframe = $(('iframe[src*="www.youtube.com"]'))
-    window.setTimeout(() => iframe.height(iframe.width() / currentVideoAspectRatio))
+    const iframe: HTMLIFrameElement = document.querySelector('iframe[src*="www.youtube.com"]')
+    const iframeHeight = iframe.getBoundingClientRect().width / currentVideoAspectRatio
+    setTimeout(() => iframe.style.height = `${iframeHeight}px`)
   }
 
   loadNewVideo = (): void => {
@@ -87,9 +86,7 @@ export default class Video extends React.Component<Props, State> {
       currentVideoAspectRatio: videoAspectRatio,
     })
     this.setState({ previousVideoIndex: newIndex })
-    $(() => {
-      $(window).resize() // trigger a resize event to make the embedded video fit
-    })
+    this.onResize() // trigger a resize to make the embedded video fit
   }
 
   render(): JSX.Element {

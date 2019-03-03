@@ -34,7 +34,8 @@ export default class Time extends React.Component<{}, State> {
     timeString += (hours >= 12) ? ' PM' : ' AM'
     this.setState({ timeString })
     const millis = now.getMilliseconds()
-    this.updateTimer = window.setTimeout(() => this.showTime(), 1000 - millis < 10 ? 1000 : 1000 - millis)
+    this.updateTimer = setTimeout(
+      () => this.showTime(), 1000 - millis < 10 ? 1000 : 1000 - millis) as unknown as number
   }
 
   render(): JSX.Element {

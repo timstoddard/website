@@ -189,10 +189,6 @@ export default class Links extends React.Component<Props, {}> {
     super(props)
   }
 
-  componentDidMount(): void {
-    ($('.dropdown-button') as any).dropdown()
-  }
-
   render(): JSX.Element {
     const { className } = this.props
     return (

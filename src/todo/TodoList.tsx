@@ -166,9 +166,9 @@ export default class TodoList extends React.Component<{}, State> {
 
   toggleShowingList = (): void => {
     this.setState({ transitionState: TransitionState.OUT }, () => {
-      window.setTimeout(() => {
+      setTimeout(() => {
         this.setState({ transitionState: TransitionState.IN }, () => {
-          window.setTimeout(() => {
+          setTimeout(() => {
             this.setState({
               showingList: !this.state.showingList,
               transitionState: TransitionState.STOPPED,

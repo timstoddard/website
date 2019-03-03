@@ -182,7 +182,7 @@ export default class InfoBar extends React.Component<Props, State> {
     const now = new Date()
     this.setState({ now })
     const millis = now.getMilliseconds()
-    this.nowTimer = window.setTimeout(this.updateTime, 1000 - millis)
+    this.nowTimer = setTimeout(this.updateTime, 1000 - millis) as unknown as number
   }
 
   render(): JSX.Element {

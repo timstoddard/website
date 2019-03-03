@@ -136,10 +136,9 @@ export default class RicePurityTest extends React.Component<{}, State> {
   clearCheckboxes = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault()
     this.setState({ purity: 100 })
-    const checkboxes = Array.prototype.slice.call(document.querySelectorAll('.rpt__checkbox'))
-    for (const checkbox of checkboxes) {
+    document.querySelectorAll('.rpt__checkbox').forEach((checkbox: HTMLInputElement) => {
       checkbox.checked = false
-    }
+    })
   }
 
   normalize = (min: number, max: number, value: number): number => {

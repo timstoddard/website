@@ -81,8 +81,8 @@ export default class Dots extends React.Component<Props, State> {
   }
 
   componentWillUnmount(): void {
-    window.clearInterval(this.moveInterval)
-    window.clearTimeout(this.visibleTimer)
+    clearInterval(this.moveInterval)
+    clearTimeout(this.visibleTimer)
     window.onresize = (): void => {}
   }
 

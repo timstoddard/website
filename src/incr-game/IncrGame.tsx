@@ -36,8 +36,8 @@ export default class IncrGame extends React.Component<{}, State> {
   }
 
   componentWillUnmount(): void {
-    window.clearTimeout(this.runTimeout)
-    window.clearTimeout(this.hoverMoneyTimeout)
+    clearTimeout(this.runTimeout)
+    clearTimeout(this.hoverMoneyTimeout)
   }
 
   getMoneyAdder = (moneyAdderLevel: number): number => {
@@ -98,7 +98,7 @@ export default class IncrGame extends React.Component<{}, State> {
   }
 
   stopHovering = (): void => {
-    window.clearTimeout(this.hoverMoneyTimeout)
+    clearTimeout(this.hoverMoneyTimeout)
   }
 
   render(): JSX.Element {

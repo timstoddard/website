@@ -23,7 +23,7 @@ export default class Zen extends React.Component<{}, State> {
     this.colorChanger1 = new ColorChanger()
     this.colorChanger2 = new ColorChanger()
     this.colorChanger2.setRGB(0, 255, 255, false, 'g')
-    this.moveInterval = window.setInterval(this.updateBlock, 5)
+    this.moveInterval = setInterval(this.updateBlock, 5) as unknown as number
 
     this.state = {
       screenCenterX: 0,
@@ -39,7 +39,7 @@ export default class Zen extends React.Component<{}, State> {
   }
 
   componentWillUnmount(): void {
-    window.clearInterval(this.moveInterval)
+    clearInterval(this.moveInterval)
     window.removeEventListener('resize', this.onWindowResize)
   }
 

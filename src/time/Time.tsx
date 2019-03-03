@@ -20,7 +20,7 @@ export default class Time extends React.Component<{}, State> {
   }
 
   componentWillUnmount(): void {
-    window.clearTimeout(this.updateTimer)
+    clearTimeout(this.updateTimer)
   }
 
   showTime = (): void => {

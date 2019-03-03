@@ -64,8 +64,8 @@ export default class DotsBlack extends React.Component<{}, State> {
   }
 
   componentWillUnmount(): void {
-    window.clearInterval(this.moveInterval)
-    window.clearTimeout(this.visibleTimer)
+    clearInterval(this.moveInterval)
+    clearTimeout(this.visibleTimer)
     window.onresize = (): void => {}
   }
 

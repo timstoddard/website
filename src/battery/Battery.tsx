@@ -57,7 +57,7 @@ export default class Battery extends React.Component<{}, State> {
         level: 1,
         decreasing: true,
       })
-      this.batteryAnimationInterval = window.setInterval(() => {
+      this.batteryAnimationInterval = setInterval(() => {
         if (this.state.decreasing && this.state.level <= 0) {
           this.updateAnimation({
             level: 0,
@@ -72,12 +72,12 @@ export default class Battery extends React.Component<{}, State> {
         const delta = 0.002
         const amountToAdd = this.state.decreasing ? -delta : delta
         this.updateAnimation({ level: this.state.level + amountToAdd })
-      }, 4)
+      }, 4) as unknown as number
     }
   }
 
   componentWillUnmount(): void {
-    window.clearInterval(this.batteryAnimationInterval)
+    clearInterval(this.batteryAnimationInterval)
   }
 
   updateStats = (battery: BatteryStats): void => {

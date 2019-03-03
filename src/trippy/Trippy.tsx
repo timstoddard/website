@@ -41,13 +41,13 @@ export default class Trippy extends React.Component<{}, State> {
   }
 
   componentDidMount(): void {
-    this.interval = window.setInterval(() => {
+    this.interval = setInterval(() => {
       this.moveColor()
-    }, REFRESH_DELAY)
+    }, REFRESH_DELAY) as unknown as number
   }
 
   componentWillUnmount(): void {
-    window.clearInterval(this.interval)
+    clearInterval(this.interval)
   }
 
   getColor = (i: number): string => {

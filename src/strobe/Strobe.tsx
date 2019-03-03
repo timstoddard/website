@@ -28,11 +28,11 @@ export default class Strobe extends React.Component<{}, State> {
   componentDidMount(): void {
     const { ms } = this.state
     this.colorChanger = new ColorChanger()
-    this.moveInterval = window.setInterval(this.updateStrobe, ms)
+    this.moveInterval = setInterval(this.updateStrobe, ms) as unknown as number
   }
 
   componentWillUnmount(): void {
-    window.clearInterval(this.moveInterval)
+    clearInterval(this.moveInterval)
   }
 
   updateStrobe = (): void => {
@@ -41,8 +41,8 @@ export default class Strobe extends React.Component<{}, State> {
 
   updateMs = (ms: number): void => {
     this.setState({ ms }, () => {
-      window.clearInterval(this.moveInterval)
-      this.moveInterval = window.setInterval(this.updateStrobe, ms)
+      clearInterval(this.moveInterval)
+      this.moveInterval = setInterval(this.updateStrobe, ms)
     })
   }
 
@@ -67,12 +67,12 @@ export default class Strobe extends React.Component<{}, State> {
         this.setState({ showOptions: true })
       }
       if (!paused) {
-        window.clearInterval(this.moveInterval)
+        clearInterval(this.moveInterval)
         if (background === 'rgb(0,0,0)') {
           this.updateStrobe()
         }
       } else {
-        this.moveInterval = window.setInterval(this.updateStrobe, ms)
+        this.moveInterval = setInterval(this.updateStrobe, ms) as unknown as number
       }
       this.setState({ paused: !paused })
     }

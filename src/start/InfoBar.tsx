@@ -156,7 +156,7 @@ export default class InfoBar extends React.Component<Props, State> {
   }
 
   componentWillUnmount(): void {
-    window.clearTimeout(this.nowTimer)
+    clearTimeout(this.nowTimer)
   }
 
   checkForSavedName = (): void => {

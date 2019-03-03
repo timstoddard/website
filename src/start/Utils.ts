@@ -52,10 +52,10 @@ const getWeatherData = (locationData: string): void => {
   locationData = 'autoip' // TODO: add ability to switch to navigator.geolocation instead
   getWeatherDataHttp(
     `https://api.wunderground.com/api/8d7d14e295f9150a/conditions/forecast10day/astronomy/q/${locationData}.json`)
-  reloadWeatherTimer = window.setInterval(() => {
+  reloadWeatherTimer = setInterval(() => {
     getWeatherDataHttp(
       `https://api.wunderground.com/api/8d7d14e295f9150a/conditions/forecast10day/astronomy/q/${locationData}.json`)
-  }, 900000 /* 15 mins */)
+  }, 900000 /* 15 mins */) as unknown as number
 }
 
 const getWeatherDataHttp = (url: string): void => {
@@ -89,7 +89,7 @@ export const showWeather = (success: (_: any) => void): void => {
 export const get = (key: string): any => JSON.parse(localStorage.getItem(key))
 export const set = (key: string, item: any): void => localStorage.setItem(key, JSON.stringify(item))
 export const secureImg = (img: string): string => `https://icons.wxug.com/i/c/v4/${img}.svg`
-export const cancelReloadWeatherTimer = (): void => window.clearInterval(reloadWeatherTimer)
+export const cancelReloadWeatherTimer = (): void => clearInterval(reloadWeatherTimer)
 
 const formatTimeOfDay = (now: Date): string => {
   const hours = now.getHours()

@@ -1,3 +1,5 @@
+import axios, { AxiosResponse } from 'axios'
+
 let successFn = (_: any): void => {}
 let reloadWeatherTimer: number = null
 
@@ -48,23 +50,23 @@ const getZipCode = (): void => {
 
 const getWeatherData = (locationData: string): void => {
   locationData = 'autoip' // TODO: add ability to switch to navigator.geolocation instead
-  getWeatherDataAjax(
+  getWeatherDataHttp(
     `https://api.wunderground.com/api/8d7d14e295f9150a/conditions/forecast10day/astronomy/q/${locationData}.json`)
   reloadWeatherTimer = window.setInterval(() => {
-    getWeatherDataAjax(
+    getWeatherDataHttp(
       `https://api.wunderground.com/api/8d7d14e295f9150a/conditions/forecast10day/astronomy/q/${locationData}.json`)
-  }, 900000)
+  }, 900000 /* 15 mins */)
 }
 
-const getWeatherDataAjax = (url: string): void => {
-  $.ajax({
-    url,
-    type: 'GET',
-    success: successFn,
-    // tslint:disable-next-line:no-console
-    error: (): void => console.log('weather data failed to load'),
-    timeout: 30000,
-  })
+const getWeatherDataHttp = (url: string): void => {
+  axios.get(url)
+    .then((response: AxiosResponse) => {
+      successFn(response.data)
+    })
+    .catch((error: Error) => {
+      alert('Weather data failed to load.')
+      console.error(error) // tslint:disable-line:no-console
+    })
 }
 
 export const showWeather = (success: (_: any) => void): void => {

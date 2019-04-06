@@ -24,10 +24,10 @@ export interface Course {
 
 const courses: Course[] = [
   {
-    name: 'ENGR 464',
-    fullName: 'Interdisciplinary Entrepreneurial Senior Design Project II',
-    id: 7814,
-    gdriveFolderId: '1SYEy35nfU65TqwZsAKS-jYEoXecOAivS',
+    name: 'ENGR 465',
+    fullName: 'Interdisciplinary Entrepreneurial Senior Design Project III',
+    id: 16056,
+    gdriveFolderId: '14exYt6K3KgweH6OfjEF6tP0W3A-hU0iV',
     otherLinks: [
       {
         name: 'LaunchBoard',
@@ -36,23 +36,22 @@ const courses: Course[] = [
     ],
   },
   {
-    name: 'CPE 321',
-    fullName: 'Introduction to Computer Security',
-    id: 12792,
-    gdriveFolderId: '1urC_Ngyf6EaR0lE8SAhKm_0wVnV-URav',
-  },
-  {
-    name: 'CSC 445',
-    fullName: 'Computational Theory',
+    name: 'CSC 431',
+    fullName: 'Programming Languages II',
     id: -1,
-    gdriveFolderId: '1aPjdNMIfHkoPUnzcD3I2X3UfARQUF7mf',
+    gdriveFolderId: '1mihVveBOFhAIww6zz5XRhbwZmbGRBvKJ',
     otherLinks: [
       {
-        name: 'Textbook',
-        // tslint:disable-next-line:max-line-length
-        href: 'https://theswissbay.ch/pdf/Book/Introduction%20to%20the%20theory%20of%20computation_third%20edition%20-%20Michael%20Sipser.pdf',
+        name: 'Course Home',
+        href: 'https://www.brinckerhoff.org/clements/2194-csc431',
       },
     ],
+  },
+  {
+    name: 'CSC 466',
+    fullName: 'Knowledge Discovery From Data',
+    id: 19923,
+    gdriveFolderId: '1uibgKGz_cWOTAOP6bs7QkFuNku-php9X',
   },
 ]
 

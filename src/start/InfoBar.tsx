@@ -199,11 +199,11 @@ export default class InfoBar extends React.Component<Props, State> {
         <div className='infoBar__item'>
           {Utils.formatTime(now)}
         </div>
-        <WeatherForecastHeader
+        {/* <WeatherForecastHeader
           currentObservation={currentObservation}
           reloading={reloading}
           setReloading={setReloading}
-          className='infoBar__item' />
+          className='infoBar__item' /> */}
       </div>
     )
   }

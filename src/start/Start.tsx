@@ -22,7 +22,7 @@ export default class Start extends React.Component<{}, State> {
   }
 
   componentDidMount(): void {
-    Utils.showWeather((response: any): void => {
+    /*Utils.showWeather((response: any): void => {
       this.setState({
         currentObservation: response.current_observation,
         forecast: response.forecast.simpleforecast.forecastday,
@@ -30,11 +30,11 @@ export default class Start extends React.Component<{}, State> {
       })
       Utils.set('weatherData', response)
       Utils.set('weatherDataTimestamp', Date.now())
-    })
+    })*/
   }
 
   componentWillUnmount(): void {
-    Utils.cancelReloadWeatherTimer()
+    // Utils.cancelReloadWeatherTimer()
   }
 
   setReloading = (value: boolean): void => {

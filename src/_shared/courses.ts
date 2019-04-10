@@ -45,6 +45,10 @@ const courses: Course[] = [
         name: 'Course Home',
         href: 'https://www.brinckerhoff.org/clements/2194-csc431',
       },
+      {
+        name: 'Piazza',
+        href: 'https://piazza.com/class/jtzeda5kdq939s',
+      },
     ],
   },
   {

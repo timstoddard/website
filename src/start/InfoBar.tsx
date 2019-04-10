@@ -95,7 +95,7 @@ WeatherForecastHeader.defaultProps = {
 }
 
 interface Props {
-  currentObservation: {
+  currentObservation?: {
     icon: string,
     display_location: {
       city: string,
@@ -103,8 +103,8 @@ interface Props {
     temp_f: number,
     feelslike_f: string,
   }
-  reloading: boolean
-  setReloading: (reloading: boolean) => void
+  reloading?: boolean
+  setReloading?: (reloading: boolean) => void
 }
 
 interface State {

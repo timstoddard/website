@@ -3,18 +3,16 @@
 $iconAndTextSize: calc(1rem + 0.8vw);
 
 .infoBar {
+  align-items: flex-end;
   display: flex;
+  flex-direction: column;
   font-family: 'PT Sans Narrow', sans-serif !important;
-  margin: 0;
   justify-content: space-around;
+  margin: 0;
+  padding: 10px;
 
   &__item {
     font-size: $iconAndTextSize;
-  }
-
-  @media only screen and (max-width: 900px) {
-    align-items: center;
-    flex-direction: column;
   }
 }
 

@@ -1,8 +1,6 @@
 import * as React from 'react'
 import MainContent from './content/MainContent'
-import InfoBar from './InfoBar'
 import Links from './Links'
-import * as Utils from './Utils'
 
 interface State {
   currentObservation: any
@@ -43,19 +41,12 @@ export default class Start extends React.Component<{}, State> {
 
   render(): JSX.Element {
     document.title = 'Start'
-    const { currentObservation, reloading, forecast } = this.state
+    // const { currentObservation, reloading, forecast } = this.state
+
     return (
-      <div>
-        <InfoBar
-          currentObservation={currentObservation}
-          reloading={reloading}
-          setReloading={this.setReloading} />
-        <div className='start row'>
-          <Links className='col s12 m3 l2' />
-          <MainContent
-            className='col s12 m9 l10'
-            forecast={forecast} />
-        </div>
+      <div className='start row'>
+        <Links className='col s12 m3 l2' />
+        <MainContent className='col s12 m9 l10' />
       </div>
     )
   }

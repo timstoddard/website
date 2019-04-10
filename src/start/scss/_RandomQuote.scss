@@ -1,0 +1,12 @@
+.randomQuote {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  font-size: calc(1rem + 0.8vw);
+  padding: 1.8rem;
+
+  > * {
+    // needed to make centering/scrolling work properly
+    margin: auto;
+  }
+}

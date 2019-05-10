@@ -5,6 +5,7 @@ npm-debug.log
 # apple files
 .DS_Store
 
-# production files in dist folder
+# generated files
 dist/*
 index.html
+website.zip

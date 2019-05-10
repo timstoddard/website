@@ -15,6 +15,10 @@ const routes: LoadableRoute[] = [
     path: '/',
     loader: (): Promise<any> => import('./home/Home'),
   },
+  // {
+  //   path: '/2048',
+  //   loader: (): Promise<any> => import('./2048/2048'),
+  // },
   {
     path: '/about',
     loader: (): Promise<any> => import('./home/About'),

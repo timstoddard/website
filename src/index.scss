@@ -21,6 +21,7 @@
 
 // direct imports
 @import '../src/battery/scss/Battery';
+@import '../src/2048/scss/2048';
 @import '../src/bingo/scss/Bingo';
 @import '../src/current-courses/scss/CurrentCourses';
 @import '../src/e85/scss/E85';
@@ -45,5 +46,7 @@ html {
 
 body {
   height: 100vh;
+  margin: 0;
+  padding: 0;
   width: 100vw;
 }

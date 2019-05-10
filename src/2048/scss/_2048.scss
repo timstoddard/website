@@ -1,0 +1,31 @@
+.game2048 {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+.board {
+  background: rgb(200,200,200);
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+}
+
+.boardRow {
+  display: flex;
+}
+
+.boardTile {
+  border-radius: 3px;
+  height: 20px;
+  margin: 2px;
+  padding: 10px;
+  text-align: center;
+  width: 20px;
+
+  &--hasValue {
+    background: rgba(150,250,255,1);
+  }
+}

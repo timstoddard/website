@@ -5,9 +5,9 @@ You can visit the live site [here](https://timstoddard.me).
 Technologies used:
 * ReactJS
 * React Router
-* Node/NPM
+* TypeScript
+* NodeJS
 * Webpack
 * SCSS
 * ESLint
-* Express (for production server)
-* Heroku
+* Hosted on S3

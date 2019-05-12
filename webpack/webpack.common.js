@@ -9,9 +9,10 @@ module.exports = {
       './src/index.scss',
     ],
     output: {
-      filename: 'bundle.js',
       path: `${__dirname}/../dist`,
       publicPath: '/dist/',
+      filename: 'bundle.js',
+      chunkFilename: '[name].[chunkhash:8].chunk.js',
     },
     module: {
       rules: [

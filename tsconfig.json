@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "module": "esnext",
     "moduleResolution": "node",
     "sourceMap": true,
-    "removeComments": true,
     "noImplicitAny": true,
     "outDir": "build",
     "jsx": "react",

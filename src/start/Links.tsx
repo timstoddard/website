@@ -1,5 +1,6 @@
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
+// import Dropdown from 'react-bootstrap/Dropdown'
+// import DropdownButton from 'react-bootstrap/DropdownButton'
 import { Link } from 'react-router-dom'
 
 import courses, { Course } from '../_shared/courses'
@@ -11,28 +12,18 @@ interface SidebarLinkProps {
 }
 
 const SidebarLink: React.StatelessComponent<SidebarLinkProps> = ({
-  inDropdown,
+  inDropdown = false,
   href,
   name,
 }: SidebarLinkProps): JSX.Element => (
   <a
-    className={`black-text ${inDropdown ? '' : 'links__collectionItem collection-item'}`}
     href={href}
     target='_blank'
-    rel='noopener noreferrer'>
+    rel='noopener noreferrer'
+    className={`black-text links__collectionItem collection-item ${inDropdown ? 'blue lighten-5' : ''}`}>
     {name}
   </a>
 )
-
-SidebarLink.propTypes = {
-  inDropdown: PropTypes.bool,
-  href: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-}
-
-SidebarLink.defaultProps = {
-  inDropdown: false,
-}
 
 const setupDropdownLinks = (
   courseId: number,
@@ -62,65 +53,65 @@ const setupDropdownLinks = (
   return dropdownItems
 }
 
-interface DropdownProps {
+interface DropdownActivatorProps {
   courseId: number
-  index: number
+  courseName: string
   gdriveFolderId: string
   otherLinks: HomePageLink[]
 }
 
-const Dropdown: React.StatelessComponent<DropdownProps> = ({
-  courseId,
-  index,
-  gdriveFolderId,
-  otherLinks,
-}: DropdownProps): JSX.Element => (
-  <ul
-    id={`dropdown${index}`}
-    className='dropdown-content'>
-    {setupDropdownLinks(courseId, gdriveFolderId, otherLinks)
-      .map(({ name, href }: HomePageLink) => (
-        <li key={href}>
-          <SidebarLink
-            name={name}
-            href={href}
-            inDropdown={true} />
-        </li>
-      ))}
-  </ul>
-)
-
-Dropdown.propTypes = {
-  courseId: PropTypes.number,
-  index: PropTypes.number.isRequired,
-  gdriveFolderId: PropTypes.string.isRequired,
-  otherLinks: PropTypes.array,
+interface DropdownActivatorState {
+  isOpen: boolean
 }
 
-Dropdown.defaultProps = {
-  courseId: 0,
-  otherLinks: [],
-}
+class CourseDropdownActivator extends React.Component<DropdownActivatorProps, DropdownActivatorState> {
+  constructor(props: DropdownActivatorProps) {
+    super(props)
 
-interface DropdownActivatorProps {
-  index: number
-  courseName: string
-}
+    this.state = {
+      isOpen: false,
+    }
+  }
 
-const DropdownActivator: React.StatelessComponent<DropdownActivatorProps> = ({
-  index,
-  courseName,
-}: DropdownActivatorProps): JSX.Element => (
-  <a
-    className='links__collectionItem collection-item dropdown-button black-text'
-    data-activates={`dropdown${index}`}>
-    {courseName}
-  </a>
-)
+  onClick = (): void => {
+    const { isOpen } = this.state
+    this.setState({ isOpen: !isOpen })
+  }
 
-DropdownActivator.propTypes = {
-  courseName: PropTypes.string.isRequired,
-  index: PropTypes.number.isRequired,
+  render(): JSX.Element {
+    const {
+      onClick,
+    } = this
+    const {
+      courseId,
+      courseName,
+      gdriveFolderId,
+      otherLinks,
+    } = this.props
+    const {
+      isOpen,
+    } = this.state
+
+    return (
+      <>
+        <a
+          onClick={onClick}
+          className='links__collectionItem collection-item black-text'>
+          {courseName}
+        </a>
+        {isOpen && (
+          setupDropdownLinks(courseId, gdriveFolderId, otherLinks)
+            .map(({ name, href }: HomePageLink) => (
+              <SidebarLink
+                key={href}
+                name={name}
+                href={href}
+                inDropdown={true} />
+            ))
+        )}
+      </>
+    )
+  }
 }
 
 interface HomePageLink {
@@ -181,10 +172,6 @@ interface Props {
 }
 
 export default class Links extends React.Component<Props, {}> {
-  static propTypes: any = {
-    className: PropTypes.string.isRequired,
-  }
-
   constructor(props: Props) {
     super(props)
   }
@@ -193,20 +180,34 @@ export default class Links extends React.Component<Props, {}> {
     const { className } = this.props
     return (
       <div className={`links__collection collection ${className}`}>
-        {courses.map(({ id, gdriveFolderId, otherLinks }: Course, index: number) => (
-          <Dropdown
-            key={gdriveFolderId}
-            index={index}
+        {courses.map(({ id, name, gdriveFolderId, otherLinks }: Course) => (
+          <CourseDropdownActivator
+            key={name}
             courseId={id}
+            courseName={name}
             gdriveFolderId={gdriveFolderId}
             otherLinks={otherLinks} />
         ))}
-        {courses.map(({ name }: Course, index: number) => (
-          <DropdownActivator
+        {/* {courses.map(({ name: courseName, id: courseId, gdriveFolderId, otherLinks }: Course, index: number) => (
+          <DropdownButton
             key={name}
-            index={index}
-            courseName={name} />
-        ))}
+            id={gdriveFolderId}
+            title={name}>
+            <Dropdown.Menu>
+              {setupDropdownLinks(courseId, gdriveFolderId, otherLinks)
+                // tslint:disable-next-line:no-shadowed-variable
+                .map(({ name, href }: HomePageLink) => (
+                  <Dropdown.Item
+                    key={name}
+                    href={href}
+                    target='_blank'
+                    rel='noopener noreferrer'>
+                    {name}
+                  </Dropdown.Item>
+                ))}
+            </Dropdown.Menu>
+          </DropdownButton>
+        ))} */}
         <div className='divider' />
         <Link
           className='links__collectionItem collection-item black-text'

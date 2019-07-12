@@ -60,8 +60,10 @@ export default class Video extends React.Component<Props, State> {
   onResize = (): void => {
     const { currentVideoAspectRatio } = this.state
     const iframe: HTMLIFrameElement = document.querySelector('iframe[src*="www.youtube.com"]')
-    const iframeHeight = iframe.getBoundingClientRect().width / currentVideoAspectRatio
-    setTimeout(() => iframe.style.height = `${iframeHeight}px`)
+    if (iframe) { // some videos aren't from youtube
+      const iframeHeight = iframe.getBoundingClientRect().width / currentVideoAspectRatio
+      setTimeout(() => iframe.style.height = `${iframeHeight}px`)
+    }
   }
 
   loadNewVideo = (): void => {

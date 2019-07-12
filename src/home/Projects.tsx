@@ -87,6 +87,11 @@ const projectSections: Section[] = [
         inProgress: false,
       },
       {
+        name: 'Fun Text Tools',
+        link: '/text-tools',
+        inProgress: false,
+      },
+      {
         name: 'Trippy Animation',
         link: '/trippy',
         inProgress: false,

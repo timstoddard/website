@@ -121,7 +121,9 @@ import 'code';`,
     const { rawValue, formattedValue } = this.state
     return (
       <div className='center-align'>
-        <h3 className='import__title'>Import Fixer</h3>
+        <h3 className='import__title'>
+          Import Fixer
+        </h3>
         <textarea
           ref={this.input}
           className='import__textarea'

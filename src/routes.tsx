@@ -93,16 +93,20 @@ const routes: LoadableRoute[] = [
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Strobe' */ './strobe/Strobe')),
   },
   {
+    path: '/text-tools',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'TextTools' */ './text-tools/TextTools')),
+  },
+  {
+    path: '/time',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Time' */ './time/Time')),
+  },
+  {
     path: '/todo',
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'TodoList' */ './todo/TodoList')),
   },
   {
     path: '/trippy',
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Trippy' */ './trippy/Trippy')),
-  },
-  {
-    path: '/time',
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Time' */ './time/Time')),
   },
   {
     path: '/zen',

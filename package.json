@@ -10,7 +10,7 @@
     "webpack:prod": "webpack -p --config webpack/webpack.prod.js",
     "build:s3": "npm run clean && npm run webpack:prod",
     "clean": "rm -rf dist index.html website.zip",
-    "lint": "eslint --ext .jsx,.js --ignore-pattern '/dist/*' --fix ."
+    "lint": "tslint src/**/*.ts --fix"
   },
   "author": "Tim Stoddard",
   "repository": {

@@ -42,7 +42,7 @@ export default class Strobe extends React.Component<{}, State> {
   updateMs = (ms: number): void => {
     this.setState({ ms }, () => {
       clearInterval(this.moveInterval)
-      this.moveInterval = setInterval(this.updateStrobe, ms)
+      this.moveInterval = setInterval(this.updateStrobe, ms) as unknown as number
     })
   }
 

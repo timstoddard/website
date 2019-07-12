@@ -44,15 +44,15 @@ const details: Detail[] = [
   },
   {
     field: 'Company',
-    value: 'SoCreate',
+    value: 'Amazon Web Services',
   },
   {
     field: 'Role',
-    value: 'Software Engineering Intern',
+    value: 'SDE Intern',
   },
   {
     field: 'Skills',
-    value: 'Angular, React, Typescript, Node.js, Java, Python, C, PHP, SQL',
+    value: 'Angular, React, Typescript, Node.js, Java, Python, SQL, C++',
   },
   {
     field: 'Hobbies',

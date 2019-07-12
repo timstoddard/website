@@ -15,11 +15,20 @@ interface BatteryStats {
   chargingTime: number
   dischargingTime: number
   level: number
-  addEventListener: (listener: string, callback: () => any) => void
+  addEventListener: (listener: string, callback: (_: unknown) => void) => void
+  removeEventListener: (listener: string, callback: (_: unknown) => void) => void
 }
+
+const batteryListeners = [
+  'levelchange',
+  'chargingchange',
+  'chargingtimechange',
+  'dischargingtimechange',
+]
 
 export default class Battery extends React.Component<{}, State> {
   batteryAnimationInterval: number
+  removeEventListeners: () => void
 
   constructor(props: {}) {
     super(props)
@@ -40,17 +49,15 @@ export default class Battery extends React.Component<{}, State> {
       (navigator as any).getBattery().then((battery: BatteryStats) => {
         this.updateStats(battery)
 
-        const listeners = [
-          'levelchange',
-          'chargingchange',
-          'chargingtimechange',
-          'dischargingtimechange',
-        ]
-        listeners.forEach((listener: string) => {
-          battery.addEventListener(listener, () => {
-            this.updateStats(battery)
-          })
-        })
+        for (const listener of batteryListeners) {
+          battery.addEventListener(listener, this.updateStats)
+        }
+
+        this.removeEventListeners = (): void => {
+          for (const listener of batteryListeners) {
+            battery.removeEventListener(listener, this.updateStats)
+          }
+        }
       })
     } else {
       this.updateAnimation({
@@ -78,6 +85,7 @@ export default class Battery extends React.Component<{}, State> {
 
   componentWillUnmount(): void {
     clearInterval(this.batteryAnimationInterval)
+    this.removeEventListeners()
   }
 
   updateStats = (battery: BatteryStats): void => {

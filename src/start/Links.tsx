@@ -208,7 +208,8 @@ export default class Links extends React.Component<Props, {}> {
             </Dropdown.Menu>
           </DropdownButton>
         ))} */}
-        <div className='divider' />
+        {/* TODO add this back after adding fall courses */}
+        {/* <div className='divider' /> */}
         <Link
           className='links__collectionItem collection-item black-text'
           to=''>

@@ -9,6 +9,8 @@ interface State {
 const MIN_FLAME_HEIGHT = 30
 
 export default class Flicker extends React.Component<{}, State> {
+  flickerTimeout: number
+
   constructor(props: {}) {
     super(props)
 
@@ -19,8 +21,12 @@ export default class Flicker extends React.Component<{}, State> {
     }
   }
 
-  componentDidMount(): void {
+  componentDidMount = (): void => {
     this.run()
+  }
+
+  componentWillUnmount = (): void => {
+    clearTimeout(this.flickerTimeout)
   }
 
   run = (): void => {
@@ -44,9 +50,9 @@ export default class Flicker extends React.Component<{}, State> {
     }
     setStateVars.currentHeight = newHeight
     this.setState(setStateVars, () => {
-      setTimeout(() => {
+      this.flickerTimeout = setTimeout(() => {
         this.run()
-      }, Math.random() < 0.8 ? Math.random() * 40 + 20 : Math.random() * 80 + 20)
+      }, Math.random() < 0.8 ? Math.random() * 40 + 20 : Math.random() * 80 + 20) as unknown as number
     })
   }
 

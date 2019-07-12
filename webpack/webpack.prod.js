@@ -11,11 +11,8 @@ module.exports = merge(common.config, {
       parallel: true,
       sourceMap: true,
       uglifyOptions: {
-        compress: {
-          warnings: true,
-        },
+        warnings: true,
         toplevel: true,
-        keep_classnames: true,
       },
     }),
     new webpack.optimize.AggressiveMergingPlugin(),

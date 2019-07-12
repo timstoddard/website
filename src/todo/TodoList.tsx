@@ -50,9 +50,9 @@ export default class TodoList extends React.Component<{}, State> {
     if (e.key === 'Enter') {
       const editedTodoIndex = todos.findIndex((todo: TodoItem) => todo.isEditing)
       if (editedTodoIndex === -1) {
-        this.updateTodo(editedTodoIndex, currentTodoMessage)
-      } else {
         this.addTodo()
+      } else {
+        this.updateTodo(editedTodoIndex, currentTodoMessage)
       }
     }
   }

@@ -1,10 +1,13 @@
 import * as React from 'react'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
+import alternatingCapsTransform from './transformers/alternating-caps'
+import partyParrotTransform from './transformers/party-parrot';
 
 interface State {
   rawValue: string
-  transformedValue: string
+  alternatingCapsText: string
+  partyParrotText: string[][]
 }
 
 export default class TextTools extends React.Component<{}, State> {
@@ -13,7 +16,8 @@ export default class TextTools extends React.Component<{}, State> {
 
     this.state = {
       rawValue: '',
-      transformedValue: '',
+      alternatingCapsText: '',
+      partyParrotText: [],
     }
   }
 
@@ -23,24 +27,17 @@ export default class TextTools extends React.Component<{}, State> {
 
   handleSubmit = (event: React.FormEvent): void => {
     event.preventDefault()
-    this.foo()
+    this.transform()
   }
 
-  foo = (): void => {
+  transform = (): void => {
     const { rawValue } = this.state
-    let result = ''
-    let lastWasUpper = true // make first char lowercase
-    const alphabetRegex = /[a-z]/i
-
-    for (const c of rawValue) {
-      if (alphabetRegex.test(c)) {
-        result += lastWasUpper ? c.toLowerCase() : c.toUpperCase()
-        lastWasUpper = !lastWasUpper
-      } else {
-        result += c
-      }
-    }
-    this.setState({ transformedValue: result })
+    const alternatingCapsText = alternatingCapsTransform(rawValue)
+    const partyParrotText = partyParrotTransform(rawValue)
+    this.setState({
+      alternatingCapsText,
+      partyParrotText,
+    })
   }
 
   render(): JSX.Element {
@@ -51,7 +48,8 @@ export default class TextTools extends React.Component<{}, State> {
     } = this
     const {
       rawValue,
-      transformedValue,
+      alternatingCapsText,
+      partyParrotText,
     } = this.state
 
     return (
@@ -76,9 +74,30 @@ export default class TextTools extends React.Component<{}, State> {
             Transform
           </Button>
         </Form>
-        <div className='textTools__output'>
-          {transformedValue}
-        </div>
+        <ul className='textTools__output'>
+          <li>
+            {alternatingCapsText}
+          </li>
+          <li>
+            {partyParrotText.map((row: string[], i: number) => (
+              <div
+                key={i}
+                className='textTools__partyParrot__row'>
+                {row.map((value: string, i2: number) => !!value
+                  ? (
+                    <img
+                      key={i2}
+                      className='textTools__partyParrot__img'
+                      src={value} />
+                  ) : (
+                    <div
+                      key={i2}
+                      className='textTools__partyParrot__img' />
+                  ))}
+              </div>
+            ))}
+          </li>
+        </ul>
       </div>
     )
   }

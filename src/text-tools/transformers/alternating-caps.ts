@@ -1,6 +1,6 @@
-const alternatingCapsTransform = (rawValue: string): string => {
+const alternatingCapsTransform = (rawValue: string, firstIsUpper: boolean): string => {
   let result = ''
-  let lastWasUpper = true // make first char lowercase
+  let lastWasUpper = !firstIsUpper // make first char lowercase
   const alphabetRegex = /[a-z]/i
 
   for (const c of rawValue) {

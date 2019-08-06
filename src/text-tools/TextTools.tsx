@@ -7,7 +7,9 @@ import partyParrotTransform from './transformers/party-parrot';
 interface State {
   rawValue: string
   alternatingCapsText: string
+  alternatingCaps2Text: string
   partyParrotText: string[][]
+  hasText: boolean
 }
 
 export default class TextTools extends React.Component<{}, State> {
@@ -17,7 +19,9 @@ export default class TextTools extends React.Component<{}, State> {
     this.state = {
       rawValue: '',
       alternatingCapsText: '',
+      alternatingCaps2Text: '',
       partyParrotText: [],
+      hasText: false,
     }
   }
 
@@ -32,11 +36,14 @@ export default class TextTools extends React.Component<{}, State> {
 
   transform = (): void => {
     const { rawValue } = this.state
-    const alternatingCapsText = alternatingCapsTransform(rawValue)
+    const alternatingCapsText = alternatingCapsTransform(rawValue, false)
+    const alternatingCaps2Text = alternatingCapsTransform(rawValue, true)
     const partyParrotText = partyParrotTransform(rawValue)
     this.setState({
       alternatingCapsText,
+      alternatingCaps2Text,
       partyParrotText,
+      hasText: !!rawValue,
     })
   }
 
@@ -49,7 +56,9 @@ export default class TextTools extends React.Component<{}, State> {
     const {
       rawValue,
       alternatingCapsText,
+      alternatingCaps2Text,
       partyParrotText,
+      hasText,
     } = this.state
 
     return (
@@ -74,30 +83,35 @@ export default class TextTools extends React.Component<{}, State> {
             Transform
           </Button>
         </Form>
-        <ul className='textTools__output'>
-          <li>
-            {alternatingCapsText}
-          </li>
-          <li>
-            {partyParrotText.map((row: string[], i: number) => (
-              <div
-                key={i}
-                className='textTools__partyParrot__row'>
-                {row.map((value: string, i2: number) => !!value
-                  ? (
-                    <img
-                      key={i2}
-                      className='textTools__partyParrot__img'
-                      src={value} />
-                  ) : (
-                    <div
-                      key={i2}
-                      className='textTools__partyParrot__img' />
-                  ))}
-              </div>
-            ))}
-          </li>
-        </ul>
+        {hasText && (
+          <ul className='textTools__output'>
+            <li>
+              <h4>Alternating Caps Text</h4>
+              <p>{alternatingCapsText}</p>
+              <p>{alternatingCaps2Text}</p>
+            </li>
+            <li>
+              <h4>Party Parrot Text</h4>
+              {partyParrotText.map((row: string[], i: number) => (
+                <div
+                  key={i}
+                  className='textTools__partyParrot__row'>
+                  {row.map((value: string, i2: number) => !!value
+                    ? (
+                      <img
+                        key={i2}
+                        className='textTools__partyParrot__img'
+                        src={value} />
+                    ) : (
+                      <div
+                        key={i2}
+                        className='textTools__partyParrot__img' />
+                    ))}
+                </div>
+              ))}
+            </li>
+          </ul>
+        )}
       </div>
     )
   }

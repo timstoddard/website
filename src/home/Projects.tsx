@@ -82,6 +82,11 @@ const projectSections: Section[] = [
         inProgress: false,
       },
       {
+        name: 'Pride Flag',
+        link: '/pride',
+        inProgress: false,
+      },
+      {
         name: 'Screen Strobe',
         link: '/strobe',
         inProgress: false,

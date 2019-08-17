@@ -7,7 +7,8 @@
 // font for js clock
 @import url(https://fonts.googleapis.com/css?family=Inconsolata);
 
-// shared mixins and variables
+// shared functions, mixins, and variables
+@import '../src/scss/functions';
 @import '../src/scss/mixins';
 @import '../src/scss/variables';
 
@@ -32,6 +33,7 @@
 @import '../src/loading-page/scss/LoadingPage';
 @import '../src/not-found/scss/NotFound';
 @import '../src/perf/scss/Perf';
+@import '../src/pride/scss/Pride';
 @import '../src/rice-purity-test/scss/RicePurityTest';
 @import '../src/text-tools/scss/TextTools';
 @import '../src/time/scss/Time';

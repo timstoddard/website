@@ -1,0 +1,41 @@
+.pride {
+  align-items: center;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  width: 100vw;
+
+  &__flag {
+    &Column {
+      @include forceWidth(1px);
+      $animationDuration: 2;
+      animation: flagWave #{$animationDuration}s infinite;
+      animation-timing-function: ease-in-out;
+      display: inline-block;
+    }
+
+    &Row {
+      min-height: 50px;
+
+      $backgrounds: 'red' 'orange' 'yellow' 'green' 'blue' 'purple';
+      @each $background in $backgrounds {
+        $i: index($backgrounds, $background) - 1;
+        &#{$i} {
+          background: #{$background};
+        }
+      }
+    }
+  }
+}
+
+@keyframes flagWave {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

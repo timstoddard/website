@@ -21,7 +21,7 @@ interface PrideColumnProps { n: number }
 const PrideColumn: React.StatelessComponent<PrideColumnProps> = ({ n }: PrideColumnProps): JSX.Element => {
   return (
     <div
-      style={{ animationDelay : `${ANIMATION_DURATION * 1000 * ((n / PERIOD) % PERIOD)}ms` }}
+      style={{ animationDelay : `${ANIMATION_DURATION * 1000 * (n / PERIOD)}ms` }}
       className='pride__flagColumn'>
       {arr(ROWS).map((_: unknown, i: number) => (
       <PrideRow
@@ -32,19 +32,44 @@ const PrideColumn: React.StatelessComponent<PrideColumnProps> = ({ n }: PrideCol
   )
 }
 
-const Pride: React.StatelessComponent<{}> = (): JSX.Element => {
-  document.title = 'We Are Proud'
-  return (
-    <div className='pride'>
-      <div className='pride__flag'>
-        {arr(COLUMNS).map((_: unknown, i: number) => (
-          <PrideColumn
-            key={i}
-            n={i} />
-        ))}
-      </div>
-    </div>
-  )
+interface State {
+  showingBorder: boolean
 }
 
-export default Pride
+export default class Pride extends React.Component<{}, State> {
+  constructor(props: {}) {
+    super(props)
+
+    this.state = {
+      showingBorder: false,
+    }
+  }
+
+  toggleShowingBorder = (): void => {
+    this.setState({ showingBorder: !this.state.showingBorder })
+  }
+
+  render(): JSX.Element {
+    document.title = 'We Are Proud'
+
+    const { toggleShowingBorder } = this
+    const { showingBorder } = this.state
+
+    return (
+      <div className='pride'>
+        <div
+          onClick={toggleShowingBorder}
+          className={`
+            pride__border
+            ${showingBorder ? 'pride__border--visible' : ''}`} />
+        <div className='pride__flag'>
+          {arr(COLUMNS).map((_: unknown, i: number) => (
+            <PrideColumn
+              key={i}
+              n={i} />
+          ))}
+        </div>
+      </div>
+    )
+  }
+}

@@ -9,6 +9,7 @@
     "webpack:dev": "webpack --config webpack/webpack.dev.js && webpack-dev-server --config webpack/webpack.dev.js --open",
     "webpack:prod": "webpack -p --config webpack/webpack.prod.js",
     "build:s3": "npm run clean && npm run webpack:prod",
+    "s3": "npm run build:s3 && ./upload.sh",
     "clean": "rm -rf dist index.html website.zip",
     "lint": "tslint src/**/*.ts --fix"
   },

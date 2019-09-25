@@ -35,11 +35,11 @@ const setupDropdownLinks = (
     dropdownItems.push(
       {
         name: 'Home',
-        href: `https://polylearn.calpoly.edu/AY_2018-2019/course/view.php?id=${courseId}`,
+        href: `https://polylearn.calpoly.edu/AY_2019-2020/course/view.php?id=${courseId}`,
       },
       {
         name: 'Grades',
-        href: `https://polylearn.calpoly.edu/AY_2018-2019/grade/report/user/index.php?id=${courseId}`,
+        href: `https://polylearn.calpoly.edu/AY_2019-2020/grade/report/user/index.php?id=${courseId}`,
       },
     )
   }
@@ -154,8 +154,8 @@ const links: HomePageLink[] = [
     href: 'http://flowcharts.calpoly.edu/downloads/mymap/15-17.52CSCBSU.pdf',
   },
   {
-    name: '18-19 Calendar',
-    href: 'http://registrar.calpoly.edu/2018-19-academic-calendar',
+    name: '19-20 Calendar',
+    href: 'https://registrar.calpoly.edu/2019-20-academic-calendar',
   },
   {
     name: 'Floor Plans',

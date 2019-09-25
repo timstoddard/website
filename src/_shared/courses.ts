@@ -23,19 +23,24 @@ export interface Course {
 }
 
 const courses: Course[] = [
-  // TODO update for fall
-  // {
-  //   name: 'CSC 482',
-  //   fullName: 'Natural Language Processing',
-  //   id: 16056,
-  //   gdriveFolderId: '14exYt6K3KgweH6OfjEF6tP0W3A-hU0iV',
-  // },
-  // {
-  //   name: 'BOT 121',
-  //   fullName: 'Botany',
-  //   id: 19923,
-  //   gdriveFolderId: '1uibgKGz_cWOTAOP6bs7QkFuNku-php9X',
-  // },
+  {
+    name: 'CSC 482',
+    fullName: 'Natural Language Processing',
+    id: 1564,
+    gdriveFolderId: '11NWY4eKCT-jQ2Xp4tu71HxZ3aSplXOdF',
+  },
+  {
+    name: 'CHEM 124',
+    fullName: 'General Chemistry I',
+    id: 5122,
+    gdriveFolderId: '1GQTTPI6tRtg2ItXZJgaVBHmtIeEOamkw',
+    otherLinks: [
+      {
+        name: 'LabPal',
+        href: 'https://labpal.atom.calpoly.edu/course/99/landing',
+      },
+    ],
+  },
 ]
 
 export default courses

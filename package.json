@@ -9,9 +9,10 @@
     "webpack:dev": "webpack --config webpack/webpack.dev.js && webpack-dev-server --config webpack/webpack.dev.js --open",
     "webpack:prod": "webpack -p --config webpack/webpack.prod.js",
     "build:s3": "npm run clean && npm run webpack:prod",
-    "s3": "npm run build:s3 && ./upload.sh",
+    "s3": "npm run build:s3 && ./upload.sh && npm run purge-cache",
     "clean": "rm -rf dist index.html website.zip",
-    "lint": "tslint src/**/*.ts --fix"
+    "lint": "tslint src/**/*.ts --fix",
+    "purge-cache": "node utils/cloudflare-purge-cache.js"
   },
   "author": "Tim Stoddard",
   "repository": {
@@ -27,6 +28,7 @@
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.6.0",
     "prop-types": "^15.7.2",
+    "r2": "^2.0.1",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.9",
     "react-dom": "^16.8.6",

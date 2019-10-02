@@ -9,3 +9,6 @@ npm-debug.log
 dist/*
 index.html
 website.zip
+
+# secrets
+utils/cloudflare-secrets.js

@@ -39,6 +39,10 @@ const courses: Course[] = [
         name: 'LabPal',
         href: 'https://labpal.atom.calpoly.edu/course/99/landing',
       },
+      {
+        name: 'Periodic Table',
+        href: 'https://www.ptable.com',
+      },
     ],
   },
 ]

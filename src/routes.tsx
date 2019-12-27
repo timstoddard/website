@@ -31,11 +31,6 @@ const routes: LoadableRoute[] = [
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Bingo' */ './bingo/Bingo')),
   },
   {
-    path: '/courses',
-    // tslint:disable-next-line:max-line-length
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'CurrentCourses' */ './current-courses/CurrentCourses')),
-  },
-  {
     path: '/dots-black',
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'DotsBlack' */ './dots-experiments/DotsBlack')),
   },

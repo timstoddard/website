@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
-import NavLink from '../_shared/NavLink'
+import NavLink from './NavLink'
 
 // TODO convert LC3 pages to ts
 

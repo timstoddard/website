@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import NavLink from '../../_shared/NavLink'
+import NavLink from '../NavLink'
 
 const LC3Tables = ({ children }) => (
   <div className="container">

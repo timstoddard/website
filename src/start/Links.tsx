@@ -3,8 +3,6 @@ import * as React from 'react'
 // import DropdownButton from 'react-bootstrap/DropdownButton'
 import { Link } from 'react-router-dom'
 
-import courses, { Course } from '../_shared/courses'
-
 interface SidebarLinkProps {
   inDropdown?: boolean
   href: string
@@ -180,36 +178,6 @@ export default class Links extends React.Component<Props, {}> {
     const { className } = this.props
     return (
       <div className={`links__collection collection ${className}`}>
-        {courses.map(({ id, name, gdriveFolderId, otherLinks }: Course) => (
-          <CourseDropdownActivator
-            key={name}
-            courseId={id}
-            courseName={name}
-            gdriveFolderId={gdriveFolderId}
-            otherLinks={otherLinks} />
-        ))}
-        {/* {courses.map(({ name: courseName, id: courseId, gdriveFolderId, otherLinks }: Course, index: number) => (
-          <DropdownButton
-            key={name}
-            id={gdriveFolderId}
-            title={name}>
-            <Dropdown.Menu>
-              {setupDropdownLinks(courseId, gdriveFolderId, otherLinks)
-                // tslint:disable-next-line:no-shadowed-variable
-                .map(({ name, href }: HomePageLink) => (
-                  <Dropdown.Item
-                    key={name}
-                    href={href}
-                    target='_blank'
-                    rel='noopener noreferrer'>
-                    {name}
-                  </Dropdown.Item>
-                ))}
-            </Dropdown.Menu>
-          </DropdownButton>
-        ))} */}
-        {/* TODO add this back after adding fall courses */}
-        {/* <div className='divider' /> */}
         <Link
           className='links__collectionItem collection-item black-text'
           to=''>

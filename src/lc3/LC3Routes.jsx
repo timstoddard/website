@@ -3,7 +3,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 
 // not found route
-import NotFound from '../not-found/NotFound'
+// import NotFound from '../not-found/NotFound'
 
 // lc3 components
 import LC3 from './LC3'
@@ -48,13 +48,13 @@ const LC3Routes = (
             component={MemoryMap} />
         </Switch>
       </Route>
-      <Route
+      {/* <Route
         path="/lc3/*"
         component={() => (
           <NotFound
             to="/lc3"
             destination="the LC3 homepage" />
-        )} />
+        )} /> */}
     </Switch>
   </Route>
 )

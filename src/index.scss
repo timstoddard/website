@@ -25,7 +25,6 @@
 @import '../src/battery/scss/Battery';
 @import '../src/2048/scss/2048';
 @import '../src/bingo/scss/Bingo';
-@import '../src/current-courses/scss/CurrentCourses';
 @import '../src/e85/scss/E85';
 @import '../src/flicker/scss/Flicker';
 @import '../src/imports/scss/Imports';
@@ -40,9 +39,6 @@
 @import '../src/time/scss/Time';
 @import '../src/trippy/scss/Trippy';
 @import '../src/zen/scss/Zen';
-
-// other
-@import '../src/_shared/NavLink';
 
 html {
   font-size: 18px;

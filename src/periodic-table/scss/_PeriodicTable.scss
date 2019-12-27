@@ -1,0 +1,18 @@
+.pTable {
+  $size: $elementCardDimension + $elementCardBorderWidth * 2 + $elementCardMargin * 2 + $elementCardPadding * 2;
+  align-items: center;
+  background: rgb(25,25,25);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  overflow: auto;
+  width: 100vw;
+
+  &__table {
+    display: grid;
+    grid-template-columns: repeat(18, $size);
+    grid-template-rows: repeat(10, $size);
+    line-height: 1.15;
+  }
+}

@@ -76,6 +76,10 @@ const routes: LoadableRoute[] = [
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Perf' */ './perf/Perf')),
   },
   {
+    path: '/periodic-table',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'PeriodicTable' */ './periodic-table/PeriodicTable')),
+  },
+  {
     path: '/pride',
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Pride' */ './pride/Pride')),
   },

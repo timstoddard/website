@@ -1,13 +1,14 @@
 .pTable {
+  @include forceHeight(100vh);
+  @include forceWidth(100vw);
   $size: $elementCardDimension + $elementCardBorderWidth * 2 + $elementCardMargin * 2 + $elementCardPadding * 2;
   align-items: center;
-  background: rgb(25,25,25);
+  background: $offBlack;
   display: flex;
   flex-direction: column;
-  height: 100vh;
   justify-content: center;
-  overflow: auto;
-  width: 100vw;
+  overflow: hidden;
+  position: relative;
 
   &__table {
     display: grid;

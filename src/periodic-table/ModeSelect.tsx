@@ -34,10 +34,10 @@ const ModeSelect: React.StatelessComponent<Props> = ({
           value={mode}
           className='mode__select'>
           <option value={Mode.NORMAL}>
-            NORMAL
+            Normal
           </option>
           <option value={Mode.ELECTRON_AFFINITY_TREND}>
-            ELECTRON_AFFINITY_TREND
+            Electron Affinity Trend
           </option>
         </select>
       </div>

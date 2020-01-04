@@ -2,6 +2,11 @@
   transition: $propertyName 0.35s ease;
 }
 
+@mixin forceHeight($height) {
+  max-height: $height;
+  min-height: $height;
+}
+
 @mixin forceWidth($width) {
   max-width: $width;
   min-width: $width;

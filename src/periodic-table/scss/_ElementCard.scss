@@ -14,8 +14,11 @@
 
   &,
   &Placeholder {
-    background: rgb(35,35,35);
     color: white;
+  }
+
+  &Simple {
+    background: white;
   }
 
   & {
@@ -58,10 +61,6 @@
       justify-content: center;
       width: 100%;
     }
-  }
-
-  &Simple {
-    background: white;
   }
 
   &Placeholder {

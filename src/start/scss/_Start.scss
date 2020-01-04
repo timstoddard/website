@@ -1,3 +1,98 @@
+// colors
+$backgroundNormal: rgba(white,0.6);
+$backgroundHover: rgba(black,0.6);
+$headerBackground: rgba(10,10,10,0.9);
+$borderNormal: white;
+$textNormal: rgba(black,1);
+$textHover: rgba(white,1);
+
+// proportions
+$linksWidth: 15%;
+$linksHeight: 70%;
+$newsWidth: 40%;
+
 .start {
-  margin-bottom: 0;
+  @include forceHeight(100vh);
+  @include forceWidth(100vw);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  transition: background-image 0.333s linear;
+
+  &--contentHidden > * {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  &__links,
+  &__news,
+  &__info,
+  &__quote {
+    position: absolute;
+  }
+
+  &__links,
+  &__news,
+  &__quote {
+    background: $backgroundNormal;
+    border: 1px solid $borderNormal;
+    color: $textNormal;
+    overflow: auto;
+  }
+
+  &__links,
+  &__news {
+    &__item {
+      border-bottom: 1px solid $borderNormal;
+      text-align: center;
+
+      &:hover {
+        background: $backgroundHover;
+        color: $textHover;
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__links {
+    border-bottom: 0;
+    bottom: #{100% - $linksHeight};
+    left: 0;
+    right: #{100% - $linksWidth};
+    top: 0;
+  }
+
+  &__news {
+    bottom: 0;
+    left: 0;
+    right: #{100% - $newsWidth};
+    top: $linksHeight;
+  }
+
+  &__info {
+    background: $headerBackground;
+    border-bottom: 1px solid $borderNormal;
+    color: $textHover;
+    left: $linksWidth;
+    right: 0;
+    top: 0;
+  }
+
+  &__quote {
+    bottom: 0;
+    left: #{100% - $newsWidth};
+    right: 0;
+    top: $linksHeight;
+  }
+
+  &__backgroundImagePreload {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 1px;
+    height: 1px;
+  }
 }

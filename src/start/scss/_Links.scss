@@ -1,15 +1,10 @@
-.links__collection {
-  margin: 0;
-  margin-top: 10px;
-  padding: 0.5rem !important;
+.links {
+  box-shadow: inset 0 -20px 15px -10px rgba(50,50,50,0.5);
+  display: flex;
+  flex-direction: column;
 
-  .links__collectionItem {
-    cursor: pointer;
-    padding: 0.3rem !important;
-
-    &.active {
-      background-color: initial;
-      color: initial;
-    }
+  &__item {
+    color: inherit;
+    padding: 5px;
   }
 }

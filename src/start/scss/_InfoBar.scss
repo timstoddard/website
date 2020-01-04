@@ -1,65 +1,58 @@
-@import url(https://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700);
-
-$iconAndTextSize: calc(1rem + 0.8vw);
+$rainbowBackground: linear-gradient(-60deg,
+  #b10dc9 8.33%,
+  #0074d9 8.33%,
+  #0074d9 16.67%,
+  #2ecc40 16.67%,
+  #2ecc40 25%,
+  #ffdc00 25%,
+  #ffdc00 33.33%,
+  #ff851b 33.33%,
+  #ff851b 41.67%,
+  #ff4136 41.67%,
+  #ff4136 50%,
+  #b10dc9 50%,
+  #b10dc9 58.33%,
+  #0074d9 58.33%,
+  #0074d9 66.67%,
+  #2ecc40 66.67%,
+  #2ecc40 75%,
+  #ffdc00 75%,
+  #ffdc00 83.33%,
+  #ff851b 83.33%,
+  #ff851b 91.67%,
+  #ff4136 91.67%,
+  #ff4136 100%
+);
 
 .infoBar {
-  align-items: flex-end;
-  display: flex;
-  flex-direction: column;
-  font-family: 'PT Sans Narrow', sans-serif !important;
-  justify-content: space-around;
-  margin: 0;
-  padding: 10px;
-
-  &__item {
-    font-size: $iconAndTextSize;
-  }
-}
-
-.weatherForecastHeader {
   align-items: center;
   display: flex;
-  font-size: $iconAndTextSize;
-  justify-content: center;
+  justify-content: space-around;
+  overflow: auto;
+  padding: 8px;
+  white-space: nowrap;
 
-  &__city {
-    margin-left: 0.5rem;
-  }
+  &__item {
+    font-size: calc(1rem + 0.8vw);
+    margin: 0 10px;
 
-  &__feelsLike {
-    white-space: nowrap;
-  }
-
-  &__icon {
-    &--weather, &--reload {
-      max-width: calc(1.2rem + 0.8vw);
-      min-width: calc(1.2rem + 0.8vw);
+    &--rainbow {
+      background-image: $rainbowBackground;
     }
 
-    &--reload {
-      filter: FlipH;
-      -ms-filter: "FlipH";
-      opacity: 0.2;
-      transform: scaleX(-1);
-      transition: opacity .25s;
+    &:nth-child(1) {
+      background-clip: text;
+      background-color: white;
+      grid-area: 1 / 1 / 2 / 2;
+      -webkit-text-fill-color: transparent;
+    }
 
-      &:hover {
-        opacity: 0.5;
-      }
+    &:nth-child(2) {
+      grid-area: 1 / 2 / 2 / 3;
+    }
 
-      &::selection {
-        opacity: 1;
-      }
+    &:nth-child(3) {
+      grid-area: 1 / 3 / 2 / 4;
     }
   }
-
-  &__loading {
-    display: inline-block;
-  }
-}
-
-.loading__icon {
-  height: $iconAndTextSize !important;
-  margin-left: 0.5rem;
-  width: $iconAndTextSize !important;
 }

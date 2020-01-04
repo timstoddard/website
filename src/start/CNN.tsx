@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from 'axios'
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 interface Props {
@@ -7,7 +6,7 @@ interface Props {
 }
 
 interface State {
-  items: any[]
+  items: NewsItem[]
 }
 
 interface NewsItem {
@@ -18,10 +17,6 @@ interface NewsItem {
 }
 
 export default class CNN extends React.Component<Props, State> {
-  static propTypes: any = {
-    className: PropTypes.string.isRequired,
-  }
-
   constructor(props: Props) {
     super(props)
 
@@ -43,18 +38,18 @@ export default class CNN extends React.Component<Props, State> {
     const { items } = this.state
 
     return (
-      <div className={`blue-grey lighten-3 z-depth-1 ${className}`}>
+      <div className={`cnn ${className}`}>
         {items.map(({ link, origLink, title, description }: NewsItem) => (
           <a
             key={link}
             href={origLink}
             target='_blank'
             rel='noopener noreferrer'
-            className='rssItem'>
-            <div className='rssItem__title'>
+            className='cnn__item start__news__item'>
+            <div className='cnn__item__title'>
               {title}
             </div>
-            <div className='rssItem__description'>
+            <div className='cnn__item__description'>
               {description}
             </div>
           </a>

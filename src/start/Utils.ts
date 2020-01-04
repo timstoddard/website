@@ -115,7 +115,7 @@ export const createDateString = (now: Date): string => {
     .split('|')[now.getDay()]
   const month = 'January|February|March|April|May|June|July|August|September|October|November|December'
     .split('|')[now.getMonth()]
-  return `${day} ${month} ${now.getDate()}, ${now.getFullYear()}`
+  return `${day}, ${month} ${now.getDate()}, ${now.getFullYear()}`
 }
 
 export const formatTime = (now: Date): string => {

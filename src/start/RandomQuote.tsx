@@ -1,12 +1,16 @@
 import axios, { AxiosResponse } from 'axios'
 import * as React from 'react'
 
+interface Props {
+  className: string
+}
+
 interface State {
   quote: string
 }
 
-export default class RandomQuote extends React.Component<{}, State> {
-  constructor(props: {}) {
+export default class RandomQuote extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props)
 
     this.state = {
@@ -32,11 +36,14 @@ export default class RandomQuote extends React.Component<{}, State> {
   }
 
   render(): JSX.Element {
+    const { className } = this.props
     const { quote } = this.state
 
     return (
-      <div className='randomQuote center-align blue-grey lighten-3 z-depth-1'>
-        <div>{quote}</div>
+      <div className={`randomQuote ${className}`}>
+        <div className='randomQuote__text'>
+          {quote}
+        </div>
       </div>
     )
   }

@@ -7,6 +7,7 @@ $textNormal: rgba(black,1);
 $textHover: rgba(white,1);
 
 // proportions
+$infobarHeight: 60px;
 $linksWidth: 15%;
 $linksHeight: 70%;
 $newsWidth: 40%;
@@ -18,22 +19,27 @@ $newsWidth: 40%;
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
-  transition: background-image 0.333s linear;
+  transition: background-image 0.333s ease;
+
+  & > * {
+    transition: opacity 0.25s ease;
+  }
 
   &--contentHidden > * {
     opacity: 0;
-    visibility: hidden;
   }
 
   &__links,
   &__news,
   &__info,
+  &__weather,
   &__quote {
     position: absolute;
   }
 
   &__links,
   &__news,
+  &__weather,
   &__quote {
     background: $backgroundNormal;
     border: 1px solid $borderNormal;
@@ -57,10 +63,11 @@ $newsWidth: 40%;
 
   &__links {
     border-bottom: 0;
+    border-top: 0;
     bottom: #{100% - $linksHeight};
     left: 0;
     right: #{100% - $linksWidth};
-    top: 0;
+    top: $infobarHeight;
   }
 
   &__news {
@@ -73,10 +80,20 @@ $newsWidth: 40%;
   &__info {
     background: $headerBackground;
     border-bottom: 1px solid $borderNormal;
+    bottom: calc(100% - #{$infobarHeight});
     color: $textHover;
-    left: $linksWidth;
+    left: 0;
     right: 0;
     top: 0;
+  }
+
+  &__weather {
+    border-bottom: 0;
+    border-top: 0;
+    bottom: #{100% - $linksHeight};
+    left: #{100% - $linksWidth};
+    right: 0;
+    top: $infobarHeight;
   }
 
   &__quote {
@@ -87,12 +104,12 @@ $newsWidth: 40%;
   }
 
   &__backgroundImagePreload {
+    height: 1px;
+    left: -1px;
     opacity: 0;
-    visibility: hidden;
     position: absolute;
     top: -1px;
-    left: -1px;
+    visibility: hidden;
     width: 1px;
-    height: 1px;
   }
 }

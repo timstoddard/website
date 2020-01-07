@@ -3,6 +3,7 @@ import CNN from './CNN'
 import InfoBar from './InfoBar'
 import Links from './Links'
 import RandomQuote from './RandomQuote'
+import Weather from './Weather'
 
 const BACKGROUND_IMAGE_CLASS = 'start__backgroundImagePreload'
 
@@ -39,6 +40,7 @@ export default class Start extends React.Component<{}, State> {
   componentDidMount = (): void => {
     // preload background images
     for (const url of backgroundUrls) {
+      // TODO preload images with service worker
       const img = new Image()
       img.src = url
       img.classList.add(BACKGROUND_IMAGE_CLASS)
@@ -46,7 +48,7 @@ export default class Start extends React.Component<{}, State> {
     }
 
     // add window key listener
-    window.addEventListener('keydown', this.toggleShowContent)
+    window.addEventListener('keydown', this.onKeyDown)
 
     // start background change timer
     this.changeBackgroundTimer = setInterval(this.changeBackground, 5000) as unknown as number
@@ -58,7 +60,7 @@ export default class Start extends React.Component<{}, State> {
       .forEach((element: HTMLImageElement) => element.parentElement.removeChild(element))
 
     // remove window key listener
-    window.removeEventListener('keydown', this.toggleShowContent)
+    window.removeEventListener('keydown', this.onKeyDown)
 
     // stop background change timer
     clearInterval(this.changeBackgroundTimer)
@@ -69,14 +71,21 @@ export default class Start extends React.Component<{}, State> {
     this.setState({ backgroundUrlIndex })
   }
 
-  toggleShowContent = (e: KeyboardEvent): void => {
+  onKeyDown = (e: KeyboardEvent): void => {
     if (e.key === ' ') {
-      this.setState({ showContent: !this.state.showContent })
+      this.toggleShowContent()
     }
+  }
+
+  toggleShowContent = (): void => {
+    this.setState({ showContent: !this.state.showContent })
   }
 
   render(): JSX.Element {
     document.title = 'Start'
+    const {
+      toggleShowContent,
+    } = this
     const {
       backgroundUrlIndex,
       showContent,
@@ -85,11 +94,13 @@ export default class Start extends React.Component<{}, State> {
 
     return (
       <div
+        onDoubleClick={toggleShowContent}
         className={`start ${showContent ? '' : 'start--contentHidden'}`}
         style={{ backgroundImage: `url('${backgroundUrl}')` }}>
         <Links className='start__links' />
         <CNN className='start__news' />
         <InfoBar className='start__info' />
+        <Weather className='start__weather' />
         <RandomQuote className='start__quote' />
       </div>
     )

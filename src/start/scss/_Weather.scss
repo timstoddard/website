@@ -1,0 +1,79 @@
+@mixin iconBackground() {
+  background: rgba(128,128,128,0.6);
+  border-radius: 4px;
+}
+
+.weather {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+
+  &__icon {
+    @include iconBackground;
+    height: auto;
+    margin: 5px 0;
+    width: 50%;
+  }
+
+  &__temp {
+    $currentTempFontSize: 1.25rem;
+    $textShadowProps: 1px 1px 10px;
+    display: grid;
+    grid-template-columns: 60% 40%;
+    grid-template-rows: 50% 50%;
+
+    &--current,
+    &--high,
+    &--low {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    &--current {
+      font-size: $currentTempFontSize;
+      grid-area: 1 / 1 / 3 / 2;
+      padding-right: 6px;
+    }
+
+    &--high {
+      font-size: #{$currentTempFontSize * 0.6};
+      grid-area: 1 / 2 / 2 / 3;
+      text-shadow: $textShadowProps red;
+    }
+
+    &--low {
+      font-size: #{$currentTempFontSize * 0.6};
+      grid-area: 2 / 2 / 3 / 3;
+      text-shadow: $textShadowProps blue;
+    }
+  }
+
+  &__forecastItem {
+    border-top: 1px solid white;
+    margin-bottom: 8px;
+    width: 100%;
+
+    & > * {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+    }
+
+    &__dt {
+      text-decoration: underline;
+    }
+
+    &__temp {
+      margin-right: 6px;
+    }
+
+    &__icon {
+      @include iconBackground;
+      height: 40px;
+      width: auto;
+    }
+  }
+}

@@ -55,6 +55,22 @@ const links: HomePageLink[] = [
     name: 'Link 12',
     href: 'https://google.com',
   },
+  {
+    name: 'Link 13',
+    href: 'https://google.com',
+  },
+  {
+    name: 'Link 14',
+    href: 'https://google.com',
+  },
+  {
+    name: 'Link 15',
+    href: 'https://google.com',
+  },
+  {
+    name: 'Link 16',
+    href: 'https://google.com',
+  },
 ]
 
 interface Props {

@@ -121,23 +121,31 @@ export const createDateString = (date: Date): string => {
   return `${day}, ${month} ${date.getDate()}, ${date.getFullYear()}`
 }
 
-export const formatTime = (date: Date, includeSeconds: boolean = true): string => {
+export const formatTime = (date: Date): string => {
   const hours = date.getHours()
   const h = hours > 12 ? hours - 12 : (hours > 0 ? hours : 12)
   const minutes = date.getMinutes()
   const m = `${minutes < 10 ? '0' : ''}${minutes}`
   const seconds = date.getSeconds()
   const s = `${seconds < 10 ? '0' : ''}${seconds}`
-  const ampm = `${hours >= 12 ? 'PM' : 'AM'}`
-  return includeSeconds
-    ? `${h}:${m}:${s} ${ampm}`
-    : `${h}:${m} ${ampm}`
+  const ampm = hours >= 12 ? 'PM' : 'AM'
+  return `${h}:${m}:${s} ${ampm}`
 }
 
-export const getDateTimeShort = (date: Date): string => {
+export const getDateTimeShort = (date: Date): {
+  date: string,
+  hour: number,
+  ampm: 'a' | 'p',
+} => {
   const day = date.getDate()
   const month = date.getMonth() + 1
-  return `${month}/${day} ${formatTime(date, false)}`
+  const hours = date.getHours()
+  const ampm = hours >= 12 ? 'p' : 'a'
+  return {
+    date: `${month}/${day}`,
+    hour: hours > 12 ? hours - 12 : (hours > 0 ? hours : 12),
+    ampm,
+  }
 }
 
 /*export const reloadWeatherData = (setReloading: (reloading: boolean) => void): void => {

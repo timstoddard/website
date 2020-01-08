@@ -3,6 +3,8 @@
   border-radius: 4px;
 }
 
+$currentTempPadding: 20px;
+
 .weather {
   align-items: center;
   display: flex;
@@ -12,6 +14,7 @@
     @include iconBackground;
     height: auto;
     margin: 5px 0;
+    margin-top: $currentTempPadding;
     width: 50%;
   }
 
@@ -21,6 +24,7 @@
     display: grid;
     grid-template-columns: 60% 40%;
     grid-template-rows: 50% 50%;
+    padding-bottom: $currentTempPadding;
 
     &--current,
     &--high,
@@ -52,27 +56,30 @@
   }
 
   &__forecastItem {
+    align-items: center;
     border-top: 1px solid white;
-    margin-bottom: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 8px 10px;
     width: 100%;
 
-    & > * {
-      align-items: center;
-      display: flex;
-      justify-content: center;
+    &__dt,
+    &__temp {
+      font-size: 0.95rem;
     }
 
     &__dt {
       text-decoration: underline;
-    }
 
-    &__temp {
-      margin-right: 6px;
+      &__ampm {
+        font-variant: small-caps;
+      }
     }
 
     &__icon {
       @include iconBackground;
-      height: 40px;
+      height: 35px;
       width: auto;
     }
   }

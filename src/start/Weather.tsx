@@ -109,8 +109,23 @@ export default class Weather extends React.Component<Props, State> {
     })
   }
 
+  getForecastItemDt = (dt: number): JSX.Element => {
+    const dateAndTime = Utils.getDateTimeShort(new Date(dt * 1000))
+    return (<>
+      <span>{dateAndTime.date} {dateAndTime.hour}</span>
+      <span className='weather__forecastItem__dt__ampm'>
+        {dateAndTime.ampm}
+      </span>
+    </>)
+  }
+
   render(): JSX.Element {
-    const { className } = this.props
+    const {
+      getForecastItemDt,
+    } = this
+    const {
+      className,
+    } = this.props
     const {
       currentWeather,
       forecast,
@@ -123,6 +138,7 @@ export default class Weather extends React.Component<Props, State> {
             <img
               src={Utils.secureImg(currentWeather.weather[0].icon)}
               alt={currentWeather.weather[0].description}
+              title={currentWeather.weather[0].description}
               className='weather__icon' />
             <div className='weather__temp'>
               <div className='weather__temp--current'>
@@ -140,17 +156,16 @@ export default class Weather extends React.Component<Props, State> {
                 key={data.dt}
                 className='weather__forecastItem'>
                 <div className='weather__forecastItem__dt'>
-                  {Utils.getDateTimeShort(new Date(data.dt * 1000))}
+                  {getForecastItemDt(data.dt)}
                 </div>
-                <div>
-                  <div className='weather__forecastItem__temp'>
-                    {Utils.formatTemp(data.main.temp)}
-                  </div>
-                  <img
-                    src={Utils.secureImg(data.weather[0].icon)}
-                    alt={data.weather[0].description}
-                    className='weather__forecastItem__icon' />
+                <div className='weather__forecastItem__temp'>
+                  {Utils.formatTemp(data.main.temp)}
                 </div>
+                <img
+                  src={Utils.secureImg(data.weather[0].icon)}
+                  alt={data.weather[0].description}
+                  title={data.weather[0].description}
+                  className='weather__forecastItem__icon' />
               </div>
             ))}
           </>

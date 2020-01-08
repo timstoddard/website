@@ -18,15 +18,36 @@ $newsWidth: 40%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  overflow: hidden;
   position: relative;
   transition: background-image 0.333s ease;
 
   & > * {
-    transition: opacity 0.25s ease;
+    transition: all 0.25s ease;
   }
 
-  &--contentHidden > * {
-    opacity: 0;
+  &--contentHidden {
+    cursor: none;
+
+    & > .start__info {
+      transform: translate(0,-100%);
+    }
+
+    & > .start__links {
+      transform: translate(-100%,0);
+    }
+
+    & > .start__weather {
+      transform: translate(100%,0);
+    }
+
+    & > .start__news {
+      transform: translate(-100%,100%);
+    }
+
+    & > .start__quote {
+      transform: translate(100%,100%);
+    }
   }
 
   &__links,

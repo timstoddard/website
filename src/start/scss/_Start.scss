@@ -21,8 +21,13 @@ $newsWidth: 40%;
   overflow: hidden;
   position: relative;
   transition: background-image 0.333s ease;
+  user-select: none;
 
   & > * {
+    border: 1px solid $borderNormal;
+    border-radius: 4px;
+    margin: 5px;
+    position: absolute;
     transition: all 0.25s ease;
   }
 
@@ -30,32 +35,24 @@ $newsWidth: 40%;
     cursor: none;
 
     & > .start__info {
-      transform: translate(0,-100%);
+      transform: translate(0,-120%);
     }
 
     & > .start__links {
-      transform: translate(-100%,0);
+      transform: translate(-120%,0);
     }
 
     & > .start__weather {
-      transform: translate(100%,0);
+      transform: translate(120%,0);
     }
 
     & > .start__news {
-      transform: translate(-100%,100%);
+      transform: translate(-120%,120%);
     }
 
     & > .start__quote {
-      transform: translate(100%,100%);
+      transform: translate(120%,120%);
     }
-  }
-
-  &__links,
-  &__news,
-  &__info,
-  &__weather,
-  &__quote {
-    position: absolute;
   }
 
   &__links,
@@ -63,7 +60,6 @@ $newsWidth: 40%;
   &__weather,
   &__quote {
     background: $backgroundNormal;
-    border: 1px solid $borderNormal;
     color: $textNormal;
     overflow: auto;
   }
@@ -82,9 +78,13 @@ $newsWidth: 40%;
     }
   }
 
+  &__links,
+  &__weather {
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+
   &__links {
-    border-bottom: 0;
-    border-top: 0;
     bottom: #{100% - $linksHeight};
     left: 0;
     right: #{100% - $linksWidth};
@@ -109,8 +109,6 @@ $newsWidth: 40%;
   }
 
   &__weather {
-    border-bottom: 0;
-    border-top: 0;
     bottom: #{100% - $linksHeight};
     left: #{100% - $linksWidth};
     right: 0;

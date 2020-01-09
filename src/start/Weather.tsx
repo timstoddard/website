@@ -119,9 +119,19 @@ export default class Weather extends React.Component<Props, State> {
     </>)
   }
 
+  formatTemp = (degrees: number): JSX.Element => {
+    return (<span style={{ alignItems: 'baseline' }}>
+      <span>{degrees.toFixed(1)}</span>
+      <span style={{ fontSize: '0.7em' }}>
+        &deg;F
+      </span>
+    </span>)
+  }
+
   render(): JSX.Element {
     const {
       getForecastItemDt,
+      formatTemp,
     } = this
     const {
       className,
@@ -142,13 +152,13 @@ export default class Weather extends React.Component<Props, State> {
               className='weather__icon' />
             <div className='weather__temp'>
               <div className='weather__temp--current'>
-                {Utils.formatTemp(currentWeather.main.temp)}
+                {formatTemp(currentWeather.main.temp)}
               </div>
               <div className='weather__temp--high'>
-                {Utils.formatTemp(currentWeather.main.temp_max)}
+                {formatTemp(currentWeather.main.temp_max)}
               </div>
               <div className='weather__temp--low'>
-                {Utils.formatTemp(currentWeather.main.temp_min)}
+                {formatTemp(currentWeather.main.temp_min)}
               </div>
             </div>
             {forecast.map((data: Forecast) => (
@@ -159,7 +169,7 @@ export default class Weather extends React.Component<Props, State> {
                   {getForecastItemDt(data.dt)}
                 </div>
                 <div className='weather__forecastItem__temp'>
-                  {Utils.formatTemp(data.main.temp)}
+                  {formatTemp(data.main.temp)}
                 </div>
                 <img
                   src={Utils.secureImg(data.weather[0].icon)}

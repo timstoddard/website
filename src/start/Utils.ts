@@ -90,10 +90,6 @@ export const set = (key: string, item: unknown): void => localStorage.setItem(ke
 export const secureImg = (iconId: string): string => `https://openweathermap.org/img/wn/${iconId}@2x.png`
 // export const cancelReloadWeatherTimer = (): void => clearInterval(reloadWeatherTimer)
 
-export const formatTemp = (degrees: number): string => {
-  return `${degrees.toFixed(1)}ºF`
-}
-
 const formatTimeOfDay = (date: Date): string => {
   const hours = date.getHours()
   if (hours < 12) {

@@ -1,0 +1,29 @@
+.basicController {
+  &__name {
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  &__controls {
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+
+    > * {
+      margin: 0 8px;
+    }
+  }
+
+  &__toggle {
+    white-space: nowrap;
+  }
+
+  &__colorPicker {
+    //
+  }
+
+  &__brightness {
+    //
+  }
+}

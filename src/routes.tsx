@@ -55,6 +55,10 @@ const routes: LoadableRoute[] = [
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Heap' */ './heap/Heap')),
   },
   {
+    path: '/hue',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Hue' */ './hue/Hue')),
+  },
+  {
     path: '/imports',
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Imports' */ './imports/Imports')),
   },

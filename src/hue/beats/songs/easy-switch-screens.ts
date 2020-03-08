@@ -1,6 +1,8 @@
-import { UIColor } from '../hue-color-conversion'
-import { BeatStep, BeatTypes, LightState } from './beat-types'
-import { Song } from './song'
+import { UIColor } from '../../hue-color-conversion'
+import { BeatStep, BeatTypes } from '../beat-types'
+import { Song } from '../song'
+import { flashLights } from './utils/basic-routines'
+import { allLightsOff, allLightsState, createNote, lightOff, lightState } from './utils/utils'
 
 const RED = new UIColor(255, 0, 0)
 const RED_ORANGE = new UIColor(255, 60, 0)
@@ -11,39 +13,6 @@ const BLUE = new UIColor(0, 0, 255)
 const PURPLE = new UIColor(255, 0, 255)
 const WHITE = new UIColor(255, 255, 255)
 const BLACK = new UIColor(0, 0, 0)
-
-// a note in a measure
-const createNote = (beat: number, lights: LightState[]): BeatStep => ({ beat, lights })
-
-// control single light
-const lightState = (
-  color: UIColor,
-  brightness: number = 100,
-): LightState => ({
-  on: true,
-  color,
-  brightness,
-})
-const lightOff = (): any => ({ on: false })
-
-// controls all lights
-const allLightsState = (
-  color: UIColor,
-  brightness: number = 100,
-): LightState[] => [
-  lightState(color, brightness),
-  lightState(color, brightness),
-]
-const allLightsOff = (): LightState[] => ([
-  lightOff(),
-  lightOff(),
-])
-
-// flash lights on and off
-const flashLights = (color: UIColor, startBeat: number, endBeat: number): BeatStep[] => [
-  createNote(startBeat, allLightsState(color)),
-  createNote(endBeat, allLightsOff()),
-]
 
 const chorusIntro1 = (): BeatStep[] => [
   createNote(0, [

@@ -3,11 +3,11 @@ import { colorFromXy, makeCGPoint, UIColor } from './hue-color-conversion'
 import { LightData, Lights } from './Light'
 
 export class HueApi {
-  apiUrl: string
-  lights: Lights = {}
-  groups: any // TODO type
-  scenes: any // TODO type
-  headers: HeadersInit = {
+  private apiUrl: string
+  private lights: Lights = {}
+  private groups: any // TODO type
+  private scenes: any // TODO type
+  private headers: HeadersInit = {
     'Content-Type': 'application/json',
   }
 
@@ -139,7 +139,7 @@ export class HueApi {
 
   fetchLights = async (): Promise<void> => {
     const url = `${this.apiUrl}/lights`
-    const response = await fetch(url, {
+    const response = await fetchWithTimeout(url, {
       method: 'GET',
       headers: this.headers,
     })
@@ -149,7 +149,7 @@ export class HueApi {
 
   fetchGroups = async (): Promise<void> => {
     const url = `${this.apiUrl}/groups`
-    const response = await fetch(url, {
+    const response = await fetchWithTimeout(url, {
       method: 'GET',
       headers: this.headers,
     })
@@ -159,7 +159,7 @@ export class HueApi {
 
   fetchScenes = async (): Promise<void> => {
     const url = `${this.apiUrl}/scenes`
-    const response = await fetch(url, {
+    const response = await fetchWithTimeout(url, {
       method: 'GET',
       headers: this.headers,
     })
@@ -190,3 +190,25 @@ export const getLightColor = (light: LightData): string => {
 }
 
 export const stringToInt = (id: string): number => parseInt(id, 10)
+
+const fetchWithTimeout = (url: string, options: RequestInit = {}, timeoutMs: number = 3000): Promise<Response> => {
+  const controller = new AbortController()
+  const config = {
+    ...options,
+    signal: controller.signal,
+  }
+  setTimeout(() => controller.abort(), timeoutMs)
+  return fetch(url, config)
+    .then((response: Response) => {
+      // Because _any_ response is considered a success to `fetch`,
+      // we need to manually check that the response is in the 200 range.
+      if (!response.ok) {
+        throw new Error(`${response.status}: ${response.statusText}`)
+      }
+      return response
+    })
+    .catch((error: Error) => {
+      const message = error.name === 'AbortError' ? 'Response timed out' : error.message
+      throw new Error(message)
+    })
+}

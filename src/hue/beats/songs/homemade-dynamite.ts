@@ -1,5 +1,5 @@
-import { UIColor } from '../hue-color-conversion'
-import { BeatTypes } from './beat-types'
+import { UIColor } from '../../hue-color-conversion'
+import { BeatTypes } from '../beat-types'
 
 const song = [
   {

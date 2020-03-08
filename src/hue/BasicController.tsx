@@ -81,6 +81,8 @@ export default class BasicController extends React.Component<Props, {}> {
             className='basicController__toggle'>
             {isOn ? 'Turn off' : 'Turn on'}
           </button>
+          {/* TODO use color picker component */}
+          {/* https://casesandberg.github.io/react-color */}
           <input
             type='color'
             value={color}

@@ -2,6 +2,8 @@ import * as React from 'react'
 import Button from 'react-bootstrap/Button'
 import { LightState, MsStep } from './beats/beat-types'
 import BeatCanvas from './beats/BeatCanvas'
+import beezInTheTrap from './beats/songs/beez-in-the-trap'
+import bitingDown from './beats/songs/biting-down'
 import easySwitchScreens from './beats/songs/easy-switch-screens'
 import mercy from './beats/songs/mercy'
 import { calculateXY, getValueFromPoint, UIColor } from './hue-color-conversion'
@@ -170,6 +172,8 @@ export default class Beats extends React.Component<Props, State> {
   private songs: { [key: number]: MsStep[] } = {
     1: mercy,
     2: easySwitchScreens,
+    3: bitingDown,
+    4: beezInTheTrap,
   }
   private beatCanvas: BeatCanvas
 
@@ -177,7 +181,7 @@ export default class Beats extends React.Component<Props, State> {
     super(props)
 
     this.state = {
-      songId: 2,
+      songId: 4,
       lights: [],
       startTimeMs: 0,
       currentMs: 0,
@@ -198,15 +202,15 @@ export default class Beats extends React.Component<Props, State> {
     const { songId } = this.state
 
     this.resetRoutine()
-    for (const step of this.songs[songId]) {
-      this.beatTimers.push(
-        this.createBeatTimer(step))
+    const song = this.songs[songId]
+    for (let i = 0; i < song.length; i++) {
+      this.beatTimers.push(this.createBeatTimer(song[i], i === song.length - 1))
     }
     this.beatCanvas.start()
     this.setState({ startTimeMs: Date.now() })
   }
 
-  createBeatTimer = (data: MsStep): number => {
+  createBeatTimer = (data: MsStep, isLast: boolean): number => {
     const { hueApi } = this.props
     const {
       shouldUpdateHueLights,
@@ -215,6 +219,8 @@ export default class Beats extends React.Component<Props, State> {
     const lights = hueApi.getLights()
     return setTimeout(() => {
       console.log('lights', data.lights)
+
+      // update lights with current state
       for (let i = 0; i < data.lights.length; i++) {
         const settings = data.lights[i]
         const lightIds = lightTrackToLightIdMap[i]
@@ -232,11 +238,16 @@ export default class Beats extends React.Component<Props, State> {
           const options = Object.assign({}, ...settingsList)
           console.log(data.ms, options)
           if (shouldUpdateHueLights) {
-            hueApi.updateLightState(lightId, options)
+            hueApi.updateLightState(lightId, options, data.transitionMs / 100 || 0)
           }
         }
       }
       this.setState({ lights: data.lights })
+
+      // stop player if last timer
+      if (isLast) {
+        this.stopRoutine()
+      }
     }, data.ms) as unknown as number
   }
 
@@ -297,12 +308,24 @@ export default class Beats extends React.Component<Props, State> {
     } = this.state
     const songItems = [
       {
-        name: 'Mercy',
         id: 1, // TODO better id system
+        name: 'Mercy',
+        artist: 'Kanye West',
       },
       {
-        name: 'Easy (Switch Screens)',
         id: 2,
+        name: 'Easy (Switch Screens)',
+        artisti: 'Lorde',
+      },
+      {
+        id: 3,
+        name: 'Biting Down',
+        artisti: 'Lorde',
+      },
+      {
+        id: 4,
+        name: 'Beez In The Trap',
+        artisti: 'Nicki Minaj',
       },
     ]
 

@@ -15,13 +15,10 @@ export interface LightState {
   on: boolean
 }
 
-// TODO remove
-// export interface LightStateMap {
-//   [key: number]: LightState
-// }
-
 interface Step { // TODO rename?
-  lights: LightState[],
+  lights: LightState[]
+  // must be in increments of 100ms
+  transitionMs: number // TODO should be in LightState?
 }
 
 export interface BeatStep extends Step {

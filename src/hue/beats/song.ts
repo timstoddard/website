@@ -25,6 +25,7 @@ export class Song {
       this.steps.push({
         lights: step.lights,
         ms: totalMs + (msPerBeat * step.beat),
+        transitionMs: step.transitionMs,
       })
     }
     return this
@@ -34,7 +35,7 @@ export class Song {
     return this.steps
   }
 
-  getTimeSignature = (): number => {
-    return this.timeSignature
-  }
+  // getTimeSignature = (): number => {
+  //   return this.timeSignature
+  // }
 }

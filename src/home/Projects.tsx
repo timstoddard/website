@@ -1,5 +1,8 @@
+import classNames from 'classnames'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
+
+const styles = require('./scss/Projects.scss') // tslint:disable-line no-var-requires
 
 interface Section {
   name: string
@@ -113,23 +116,26 @@ const projectSections: Section[] = [
 const Projects: React.StatelessComponent<{}> = (): JSX.Element => {
   document.title = 'Tim\'s Projects'
   return (
-    <div className='projects'>
-      <h4 className='projects__mainTitle'>
+    <div className={styles.projects}>
+      <h4 className={styles.projects__mainTitle}>
         Tim&rsquo;s Javascript Projects
       </h4>
-      <hr className='projects__divider' />
+      <hr className={styles.projects__divider} />
       {projectSections.map(({ name: sectionName, projects }: Section) => (
         <React.Fragment key={sectionName}>
-          <h5 className='projects__title'>
+          <h5 className={styles.projects__title}>
             {sectionName}
           </h5>
-          <ul className='projects__section'>
+          <ul className={styles.projects__section}>
             {projects.map(({ name: projectName, link, inProgress }: Project) => (
               <li
-                className='projects__linkWrapper'
+                className={styles.projects__linkWrapper}
                 key={projectName}>
                 <Link to={link}>
-                  <span className={`projects__link ${inProgress ? 'projects__link--inProgress' : ''}`}>
+                  {/* tslint:disable-next-line:max-line-length */}
+                  <span className={classNames(
+                    styles.projects__link,
+                    { [styles['projects__link--inProgress']]: inProgress })}>
                     {projectName}
                   </span>
                 </Link>

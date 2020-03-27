@@ -1,6 +1,8 @@
 import * as React from 'react'
 import Form from 'react-bootstrap/Form'
 
+const styles = require('./scss/E85.scss') // tslint:disable-line no-var-requires
+
 interface Props {
   id: string
   label: string
@@ -18,12 +20,12 @@ const FormInput: React.StatelessComponent<Props> = ({
 }: Props): JSX.Element => (
   <Form.Group
     controlId={id}
-    className='e85__inputWrapper'>
+    className={styles.e85__inputWrapper}>
     <Form.Label>
       {label}
     </Form.Label>
     <Form.Control
-      className='e85__input'
+      className={styles.e85__input}
       type='number'
       step={usePrecision ? '0.01' : '1'}
       value={value.toString()}

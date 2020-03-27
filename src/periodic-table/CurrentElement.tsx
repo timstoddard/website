@@ -1,7 +1,9 @@
+import classNames from 'classnames'
 import * as React from 'react'
-
 import { Element } from './elements'
 import { Mode } from './PeriodicTable'
+
+const styles = require('./scss/CurrentElement.scss') // tslint:disable-line no-var-requires
 
 interface Props {
   element: Element
@@ -12,24 +14,23 @@ const CurrentElement: React.StatelessComponent<Props> = ({
   element,
   mode,
 }: Props): JSX.Element => (
-  <div className='currentElement'>
-    <div className='currentElement__symbol'>
+  <div className={styles.currentElement}>
+    <div className={styles.currentElement__symbol}>
       {element.symbol}
     </div>
-    <div className='currentElement__number'>
+    <div className={styles.currentElement__number}>
       {element.number}
     </div>
-    <div className='currentElement__name'>
+    <div className={styles.currentElement__name}>
       {element.name}
     </div>
-    <div className='currentElement__electrons'>
+    <div className={styles.currentElement__electrons}>
       {getElectrons(element).map((shell: string) => (
         <div
           key={shell}
-          className={[
-            'currentElement__electron',
-            `currentElement__electron--${mode === Mode.NORMAL ? shell[1] : 'plain'}`,
-          ].join(' ')}>
+          className={classNames(
+            styles.currentElement__electron,
+            styles[`currentElement__electron--${mode === Mode.NORMAL ? shell[1] : 'plain'}`])}>
           {shell}
         </div>
       ))}

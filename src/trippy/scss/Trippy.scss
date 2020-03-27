@@ -1,0 +1,13 @@
+@import 'src/scss/globals';
+
+.trippy {
+  cursor: none;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  width: 100vw;
+
+  &__disk {
+    position: absolute;
+  }
+}

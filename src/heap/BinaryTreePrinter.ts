@@ -1,5 +1,7 @@
 import BinaryHeap from './BinaryHeap'
 
+const styles = require('./scss/Heap.scss') // tslint:disable-line no-var-requires
+
 class Node {
   data: number
   left: Node
@@ -37,7 +39,7 @@ const printTreeInternal = (nodes: Node[], level: number, maxLevel: number): stri
   for (let i = 0; i < nodes.length; i++) {
     const value = nodes[i]
     if (!DNE(value)) {
-      treeString += `<span class="heap__value">${value.data}</span>`
+      treeString += `<span class="${styles.heap__value}">${value.data}</span>`
       newNodes.push(value.left)
       newNodes.push(value.right)
     } else {

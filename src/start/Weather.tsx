@@ -1,5 +1,8 @@
+import classNames from 'classnames'
 import * as React from 'react'
 import * as Utils from './Utils'
+
+const styles = require('./scss/Weather.scss') // tslint:disable-line no-var-requires
 
 interface CurrentWeather {
   coord: {
@@ -113,7 +116,7 @@ export default class Weather extends React.Component<Props, State> {
     const dateAndTime = Utils.getDateTimeShort(new Date(dt * 1000))
     return (<>
       <span>{dateAndTime.date} {dateAndTime.hour}</span>
-      <span className='weather__forecastItem__dt__ampm'>
+      <span className={styles.weather__forecastItem__dt__ampm}>
         {dateAndTime.ampm}
       </span>
     </>)
@@ -142,40 +145,40 @@ export default class Weather extends React.Component<Props, State> {
     } = this.state
 
     return (
-      <div className={`weather ${className}`}>
+      <div className={classNames(styles.weather, className)}>
         {currentWeather ? (
           <>
             <img
               src={Utils.secureImg(currentWeather.weather[0].icon)}
               alt={currentWeather.weather[0].description}
               title={currentWeather.weather[0].description}
-              className='weather__icon' />
-            <div className='weather__temp'>
-              <div className='weather__temp--current'>
+              className={styles.weather__icon} />
+            <div className={styles.weather__temp}>
+              <div className={styles['weather__temp--current']}>
                 {formatTemp(currentWeather.main.temp)}
               </div>
-              <div className='weather__temp--high'>
+              <div className={styles['weather__temp--high']}>
                 {formatTemp(currentWeather.main.temp_max)}
               </div>
-              <div className='weather__temp--low'>
+              <div className={styles['weather__temp--low']}>
                 {formatTemp(currentWeather.main.temp_min)}
               </div>
             </div>
             {forecast.map((data: Forecast) => (
               <div
                 key={data.dt}
-                className='weather__forecastItem'>
-                <div className='weather__forecastItem__dt'>
+                className={styles.weather__forecastItem}>
+                <div className={styles.weather__forecastItem__dt}>
                   {getForecastItemDt(data.dt)}
                 </div>
-                <div className='weather__forecastItem__temp'>
+                <div className={styles.weather__forecastItem__temp}>
                   {formatTemp(data.main.temp)}
                 </div>
                 <img
                   src={Utils.secureImg(data.weather[0].icon)}
                   alt={data.weather[0].description}
                   title={data.weather[0].description}
-                  className='weather__forecastItem__icon' />
+                  className={styles.weather__forecastItem__icon} />
               </div>
             ))}
           </>

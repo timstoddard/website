@@ -1,4 +1,7 @@
+import classNames from 'classnames'
 import * as React from 'react'
+
+const styles = require('./scss/Infinity.scss') // tslint:disable-line no-var-requires
 
 const getProps = (
   name: NodeName,
@@ -39,20 +42,18 @@ const Infinity: React.StatelessComponent<Props> = ({
   handleClick,
   showingBorders,
 }: Props): JSX.Element => {
-  const classNames = [
-    'infinity__child',
-    !(data.a || data.b) ? 'infinity__child--end' : '',
-    !(data.a || data.b) && showingBorders
-      ? 'infinity__child--end--bordered'
-      : '',
-    link.length % 2 === 1 ? 'infinity--vertical' : '',
-    `infinity--level${link.length}`,
-  ]
 
   return (
     <div
       onClick={onClick}
-      className={classNames.join(' ')}>
+      className={classNames(
+        styles.infinity__child,
+        styles[`infinity--level${link.length}`],
+        {
+          [styles['infinity__child--end']]: !(data.a || data.b),
+          [styles['infinity__child--end--bordered']]: !(data.a || data.b) && showingBorders,
+          [styles['infinity--vertical']]: link.length % 2 === 1,
+        })}>
       {data.a && <Infinity {...getProps('a', data, link, handleClick, showingBorders)} />}
       {data.b && <Infinity {...getProps('b', data, link, handleClick, showingBorders)} />}
     </div>
@@ -123,14 +124,20 @@ export default class InfinityWrapper extends React.Component<{}, State> {
   render(): JSX.Element {
     document.title = 'Infinity Demo'
 
-    const { handleClick, handleKeyDown } = this
-    const { data, showingBorders } = this.state
+    const {
+      handleClick,
+      handleKeyDown,
+    } = this
+    const {
+      data,
+      showingBorders,
+    } = this.state
 
     return (
       <div
         onKeyDown={handleKeyDown}
         tabIndex={0}
-        className='infinity'>
+        className={styles.infinity}>
         {(data.a && data.b) ? (
           <Infinity
             data={data}
@@ -141,7 +148,9 @@ export default class InfinityWrapper extends React.Component<{}, State> {
         ) : (
           <div
             onClick={handleClick()}
-            className='infinity__child infinity__child--landing'>
+            className={classNames(
+              styles.infinity__child,
+              styles['infinity__child--landing'])}>
             Click to get started!
           </div>
         )}

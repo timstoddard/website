@@ -1,5 +1,7 @@
 import * as React from 'react'
 
+const styles = require('./scss/About.scss') // tslint:disable-line no-var-requires
+
 interface Icon {
   name: string
   href: string
@@ -61,33 +63,33 @@ const details: Detail[] = [
 ]
 
 const IconLinks: React.StatelessComponent<{}> = (): JSX.Element => (
-  <div className='about__icons'>
+  <div className={styles.about__icons}>
     {icons.map(({ href, name }: Icon) => (
       <a
         href={href}
         target='_blank'
         rel='noopener noreferrer'
         key={name}
-        className='about__icons__link'>
+        className={styles.about__icons__link}>
         <img
           src={`../../media/logos/${name.toLowerCase()}.png`}
           alt={name}
-          className={'about__icons__icon'} />
+          className={styles.about__icons__icon} />
       </a>
     ))}
   </div>
 )
 
 const Details: React.StatelessComponent<{}> = (): JSX.Element => (
-  <dl className='about__details'>
+  <dl className={styles.about__details}>
     {details.map(({ field, value }: Detail) => (
       <div
         key={field}
-        className='about__details__detailWrapper'>
-        <dt className='about__details__field'>
+        className={styles.about__details__detailWrapper}>
+        <dt className={styles.about__details__field}>
           {field}
         </dt>
-        <dd className='about__details__value'>
+        <dd className={styles.about__details__value}>
           {value}
         </dd>
       </div>
@@ -96,8 +98,8 @@ const Details: React.StatelessComponent<{}> = (): JSX.Element => (
 )
 
 const About: React.StatelessComponent<{}> = (): JSX.Element => (
-  <div className='about'>
-      <h4 className='about__title'>
+  <div className={styles.about}>
+      <h4 className={styles.about__title}>
         Tim Stoddard
       </h4>
       <Details />

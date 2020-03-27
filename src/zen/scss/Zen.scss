@@ -1,0 +1,14 @@
+@import 'src/scss/globals';
+
+.zen {
+  height: 100%;
+
+  &__block {
+    position: absolute;
+    transition: none;
+
+    &--hasTransition {
+      transition: box-shadow 1s ease;
+    }
+  }
+}

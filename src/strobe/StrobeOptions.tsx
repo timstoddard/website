@@ -2,6 +2,8 @@ import * as React from 'react'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
+const styles = require('./scss/StrobeOptions.scss') // tslint:disable-line no-var-requires
+
 interface Props {
   ms: number
   updateMs: (ms: number) => void
@@ -51,21 +53,21 @@ export default class StrobeOptions extends React.Component<Props, State> {
     } = this.state
 
     return (
-      <div className='options'>
-        <h5 className='options__title'>
+      <div className={styles.options}>
+        <h5 className={styles.options__title}>
           Options
         </h5>
-        <Form className='options__form'>
-          <div className='options__form__sliderWrapper'>
+        <Form className={styles.options__form}>
+          <div className={styles.options__form__sliderWrapper}>
             <div>
-              <span className='options__ms'>
+              <span className={styles.options__ms}>
                 {ms}
               </span>
               &nbsp;milliseconds between strobes
             </div>
-            <div className='options__form__slider'>
+            <div className={styles.options__form__slider}>
               <Form.Group controlId='strobe-ms'>
-                <span className='options__form--min'>{min}</span>
+                <span className={styles['options__form--min']}>{min}</span>
                 <Form.Control
                   // TODO why can't use custom element here?
                   // custom
@@ -75,13 +77,13 @@ export default class StrobeOptions extends React.Component<Props, State> {
                   min={min}
                   max={max}
                   step='5' />
-                <span className='options__form--max'>{max}</span>
+                <span className={styles['options__form--max']}>{max}</span>
               </Form.Group>
             </div>
           </div>
           <Button
             onClick={onCloseClick}
-            className='options__button'>
+            className={styles.options__button}>
             Close
           </Button>
         </Form>

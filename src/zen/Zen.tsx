@@ -1,7 +1,8 @@
 import * as React from 'react'
-
 import ColorChanger from './ColorChanger'
 import Mover from './Mover'
+
+const styles = require('./scss/Zen.scss') // tslint:disable-line no-var-requires
 
 interface State {
   screenCenterX: number
@@ -63,10 +64,14 @@ export default class Zen extends React.Component<{}, State> {
 
   render(): JSX.Element {
     document.title = 'Zen Mode'
-    const { screenCenterX, screenCenterY, maxRadius } = this.state
+    const {
+      screenCenterX,
+      screenCenterY,
+      maxRadius,
+    } = this.state
 
     return (
-      <div className='zen'>
+      <div className={styles.zen}>
         <Mover
           ref={(mover: Mover): void => { this.mover1 = mover }}
           direction={1}

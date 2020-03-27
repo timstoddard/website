@@ -1,5 +1,7 @@
 import * as React from 'react'
 
+const styles = require('./scss/Trippy.scss') // tslint:disable-line no-var-requires
+
 const REFRESH_DELAY = 200
 
 interface State {
@@ -179,27 +181,25 @@ export default class Trippy extends React.Component<{}, State> {
 
     return (
       <div
-        className='trippy'
+        className={styles.trippy}
         onMouseMove={handleMouseMove}
         onKeyDown={handleKeyDown}
         tabIndex={0}>
-        {pairGroups.map((pairGroup: PairGroup[], i: number) => {
-          const background = getColor(i)
-          return pairGroup.map(({ x, y, radius }: PairGroup) => (
+        {pairGroups.map((pairGroup: PairGroup[], i: number) =>
+          pairGroup.map(({ x, y, radius }: PairGroup) => (
             <div
               key={`${x}-${y}-${radius}`}
-              className='trippy__disk'
+              className={styles.trippy__disk}
               style={{
-                background,
-                width: radius * 2,
-                height: radius * 2,
-                top: y - radius,
-                left: x - radius,
+                background: getColor(i),
                 borderRadius: radius,
+                height: radius * 2,
+                left: x - radius,
                 transition: `background ${REFRESH_DELAY / 1000}s ease`,
+                top: y - radius,
+                width: radius * 2,
               }} />
-          ))
-        })}
+          )))}
       </div>
     )
   }

@@ -1,6 +1,9 @@
+import classNames from 'classnames'
 import * as React from 'react'
 import Form from 'react-bootstrap/Form'
 import IconButton, { IconPath } from './IconButton'
+
+const styles = require('./scss/Todo.scss') // tslint:disable-line no-var-requires
 
 interface Props {
   message: string
@@ -100,7 +103,9 @@ export default class Todo extends React.Component<Props, State> {
 
     return (
       <li
-        className={`todo ${isDropTarget ? 'todo__dropZone' : ''}`}
+        className={classNames(
+          styles.todo,
+          { [styles.todo__dropZone]: isDropTarget })}
         onDragEnter={onDragEnter}
         onDragLeave={onDragLeave}
         onDragOver={onDragOver}
@@ -117,7 +122,9 @@ export default class Todo extends React.Component<Props, State> {
                 type='checkbox'
                 onChange={toggleTodo(index)}
                 checked={completed} />
-              <Form.Check.Label className={`todo__label ${completed ? 'todo__label--completed' : ''}`}>
+              <Form.Check.Label className={classNames(
+                styles.todo__label,
+                { [styles['todo__label--completed']]: completed })}>
                 {message}
               </Form.Check.Label>
             </Form.Check>
@@ -125,19 +132,19 @@ export default class Todo extends React.Component<Props, State> {
           {isEditing &&
             <Form.Control
               type='text'
-              className='todo__input'
+              className={styles.todo__input}
               onInput={handleInput}
               onKeyDown={handleKeyDown}
               value={currentTodoMessage} />
           }
         </Form>
-        <div className='todo__buttons'>
+        <div className={styles.todo__buttons}>
           <IconButton
             path={IconPath.EDIT}
             hidden={hideIcons}
             onClick={editTodo(index)} />
           <IconButton
-            className='todo__button--drag'
+            className={styles['todo__button--drag']}
             path={IconPath.DRAG}
             hidden={hideIcons && !isDraggable}
             onDragStart={onDragStart}

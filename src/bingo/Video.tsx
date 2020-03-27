@@ -58,7 +58,6 @@ export default class Video extends React.Component<Props, State> {
   }
 
   loadNewVideo = (): void => {
-    const { className } = this.props
     const {
       videos,
       previousVideoIndex,

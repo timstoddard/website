@@ -1,0 +1,71 @@
+@import 'src/scss/globals';
+
+.home {
+  align-items: center;
+  color: transparent;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  margin: 0;
+  text-align: center;
+
+  &--visible {
+    color: black;
+  }
+
+  &__content {
+    background: white;
+    border: 0;
+    border-radius: 8px;
+    box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.4);
+    padding: 5vw;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__headerName,
+  &__linkText {
+    color: black;
+    text-transform: capitalize;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+  }
+
+  &__headerName {
+    @include homeTitleFont(calc(16px + 5vw));
+    margin: 0;
+  }
+
+  &__links {
+    display: flex;
+    margin: 0;
+    margin-top: 30px;
+  }
+
+  &__link {
+    margin: 0 calc(8px + 0.8vw);
+  }
+
+  &__linkText {
+    @include homeTitleFont(calc(14px + 2vw));
+    border-bottom: 1px solid black;
+    border-top: 1px solid transparent;
+    transition: all 0.35s ease;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  @media all and (max-width: 700px) {
+    &__links {
+      flex-direction: column;
+      margin-top: 0;
+    }
+
+    &__link {
+      margin-top: 10px;
+    }
+  }
+}

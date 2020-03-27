@@ -1,4 +1,7 @@
+import classNames from 'classnames'
 import * as React from 'react'
+
+const styles = require('../home/scss/Dots.scss') // tslint:disable-line no-var-requires
 
 interface State {
   visible: boolean
@@ -35,7 +38,7 @@ export default class DotsBlack extends React.Component<{}, State> {
   componentDidMount(): void {
     // generate the dots
     this.dots = []
-    for (let i = 0; i < 80; i++) {
+    for (let i = 0; i < 30; i++) {
       this.dots.push(this.generateNewDot())
     }
 
@@ -55,7 +58,7 @@ export default class DotsBlack extends React.Component<{}, State> {
       } = document.documentElement
       this.canvas.width = viewportWidth
       this.canvas.height = viewportHeight
-      const threshold = Math.min(viewportWidth, viewportHeight) / 5
+      const threshold = Math.min(viewportWidth, viewportHeight) / 2.5
       this.setState({ drawLineThresholdSquared: threshold * threshold })
     }
     trackWindowSize()
@@ -156,10 +159,14 @@ export default class DotsBlack extends React.Component<{}, State> {
     radius: number,
     opacity: number,
   ): void => {
-    const width = 100;
-    const height = width * 0.85;
+    const height = radius * 20;
+    const width = height * 2.5;
+    canvas.globalAlpha = opacity
     canvas.drawImage(
       this.ref,
+      // source coords
+      100, 820, 1850, 650,
+      // dest coords
       x - width / 2, y - height / 2, width, height);
   }
 
@@ -172,7 +179,7 @@ export default class DotsBlack extends React.Component<{}, State> {
     canvas.beginPath()
     canvas.moveTo(dot1.x, dot1.y)
     canvas.lineTo(dot2.x, dot2.y)
-    canvas.strokeStyle = `rgba(0,0,0,${opacity})`
+    canvas.strokeStyle = `rgba(0,0,255,${opacity})`
     canvas.stroke()
   }
 
@@ -181,7 +188,9 @@ export default class DotsBlack extends React.Component<{}, State> {
 
     return (
       <canvas
-        className={`dots ${visible ? 'dots--visible' : ''}`}
+        className={classNames(
+          styles.dots,
+          visible ? styles['dots--visible'] : '')}
         ref={(canvas: HTMLCanvasElement): void => { this.canvas = canvas }}>
         <img
           src='http://www.rssportscars.com/photos/cars/2016-ford-focus-rs/focus-rs-usa-08-nyc-skyline.jpg'

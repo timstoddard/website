@@ -1,7 +1,8 @@
 import * as React from 'react'
-
 import elements, { Element, ElementType } from './elements'
 import { Mode } from './PeriodicTable'
+
+const styles = require('./scss/ElementCard.scss') // tslint:disable-line no-var-requires
 
 const maxElectronAffinity = elements.reduce(
   (prev: number, curr: Element) => curr.electronAffinity > prev ? curr.electronAffinity : prev, 0)
@@ -52,13 +53,13 @@ const ElementCard: React.StatelessComponent<Props> = ({
   switch (mode) {
     case Mode.NORMAL:
       cardLayout = (<>
-        <div className='element__number'>
+        <div className={styles.element__number}>
           {e.number}
         </div>
-        <div className='element__symbol'>
+        <div className={styles.element__symbol}>
           {e.symbol}
         </div>
-        <div className='element__atomicWeight'>
+        <div className={styles.element__atomicWeight}>
           {(typeof e.atomicWeight === 'number') ? (
             e.atomicWeight
           ) : (
@@ -66,21 +67,21 @@ const ElementCard: React.StatelessComponent<Props> = ({
           )}
         </div>
         <div
-          className='element__type'
+          className={styles.element__type}
           style={{ backgroundColor: getTypeColor(e.type) }} />
       </>)
-      cardClass = 'element'
+      cardClass = styles.element
       break
     case Mode.ELECTRON_AFFINITY_TREND:
       const opacity = e.electronAffinity / maxElectronAffinity
       cardLayout = (<>
         <div
-          className='element__simpleMode'
+          className={styles.element__simpleMode}
           style={{ background: `rgba(255,0,0,${opacity})` }}>
           {e.symbol}
         </div>
       </>)
-      cardClass = 'elementSimple'
+      cardClass = styles.elementSimple
       break
   }
   return (

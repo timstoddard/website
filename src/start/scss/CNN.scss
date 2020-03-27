@@ -1,0 +1,20 @@
+@import 'src/scss/globals';
+
+.cnn {
+  &__item {
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px;
+
+    &:hover {
+      .cnn__item__title {
+        text-decoration: underline;
+      }
+    }
+  
+    &__description {
+      font-size: 0.9rem;
+    }
+  }
+}

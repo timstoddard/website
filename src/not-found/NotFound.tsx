@@ -1,4 +1,3 @@
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 
@@ -24,11 +23,6 @@ const NotFound: React.StatelessComponent<Props> = ({ destination, to }: Props): 
         alt='Page Not Found' />
     </div>
   )
-}
-
-NotFound.propTypes = {
-  destination: PropTypes.string.isRequired,
-  to: PropTypes.string.isRequired,
 }
 
 export default NotFound

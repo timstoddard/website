@@ -1,17 +1,18 @@
 .heapInput {
-  &__form{
+  &__form {
     align-items: baseline;
     display: flex;
     justify-content: space-around;
 
     &--textbox {
-      margin-bottom: 0.5em !important;
-      width: 40% !important;
+      width: 40%;
     }
   }
 
   &__sample {
+    color: blue !important;
     cursor: pointer;
+    text-decoration: underline !important;
 
     &:hover {
       text-decoration: underline;

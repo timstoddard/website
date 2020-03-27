@@ -6,6 +6,13 @@ $rowHeight: $imageDimension * 5 / 4;
   max-width: 800px;
   padding: 0 10px;
 
+  &__title {
+    @include mediumHeader;
+    margin-top: 0;
+    padding-top: 18px;
+    text-align: center;
+  }
+
   &__form {
     margin-bottom: 20px;
   }

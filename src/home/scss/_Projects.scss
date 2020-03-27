@@ -4,14 +4,15 @@
 
   &__mainTitle {
     @include aboutAndProjectsTitleFont;
+    @include mediumHeader;
     color: black;
     margin-top: 0;
     padding-top: 2rem;
   }
 
   &__divider  {
-    border: none !important;
-    border-top: 1px solid black !important;
+    border: none;
+    border-top: 1px solid black;
     margin: 1rem 0;
     padding: 0;
     width: 100%;
@@ -19,6 +20,7 @@
 
   &__title {
     @include aboutAndProjectsTitleFont;
+    @include smallHeader;
     color: black;
     margin-top: 0;
     padding-top: 1rem;
@@ -26,6 +28,7 @@
 
   &__section {
     @include forceWidth(400px);
+    line-height: 1.5;
     padding: 0 20px;
 
     @media screen and (max-width: 400px) {

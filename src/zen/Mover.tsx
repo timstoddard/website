@@ -1,4 +1,3 @@
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 interface Props {
@@ -22,16 +21,6 @@ interface State {
 }
 
 export default class Mover extends React.Component<Props, State> {
-  static propTypes: any = {
-    radiusChangeSpeed: PropTypes.number.isRequired,
-    maxRadius: PropTypes.number.isRequired,
-    minRadius: PropTypes.number.isRequired,
-    direction: PropTypes.number.isRequired,
-    offset: PropTypes.number.isRequired,
-    centerX: PropTypes.number.isRequired,
-    centerY: PropTypes.number.isRequired,
-  }
-
   constructor(props: Props) {
     super(props)
 

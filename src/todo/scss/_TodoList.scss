@@ -9,6 +9,14 @@
     justify-content: flex-start;
   }
 
+  &__title {
+    @include mediumHeader;
+  }
+
+  &__subtitle {
+    @include smallHeader;
+  }
+
   &__contentWrapper {
     max-width: 600px;
     width: 80%;
@@ -20,6 +28,25 @@
 
     &--transitioningInput {
       transform: scale(0, 1);
+    }
+  }
+
+  &__input {
+    border: 0;
+    border-bottom: 1px solid black;
+    border-radius: 0;
+    line-height: 1.5;
+    padding: 10px;
+    width: 100%;
+
+    &:hover {
+      background: rgb(240,240,240);
+    }
+
+    &:focus {
+      border: 0;
+      box-shadow: none;
+      outline: 0;
     }
   }
 

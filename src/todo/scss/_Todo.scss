@@ -17,6 +17,10 @@
     text-decoration: inherit;
     transition: all 0.2s ease-out;
 
+    &:hover {
+      cursor: pointer;
+    }
+
     &--completed {
       color: rgb(145,145,145);
       font-style: italic;

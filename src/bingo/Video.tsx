@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from 'axios'
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 interface Props {
@@ -15,14 +14,6 @@ interface State {
 }
 
 export default class Video extends React.Component<Props, State> {
-  static propTypes: any = {
-    className: PropTypes.string,
-  }
-
-  static defaultProps: any = {
-    className: '',
-  }
-
   videoDiv: HTMLDivElement
 
   constructor(props: Props) {
@@ -67,8 +58,13 @@ export default class Video extends React.Component<Props, State> {
   }
 
   loadNewVideo = (): void => {
-    const { videos, previousVideoIndex } = this.state
+    const { className } = this.props
+    const {
+      videos,
+      previousVideoIndex,
+    } = this.state
     let newIndex = previousVideoIndex
+
     while (newIndex === previousVideoIndex || !videos[newIndex].data.media_embed.content) {
       newIndex = Math.floor(videos.length * Math.random())
     }
@@ -80,7 +76,7 @@ export default class Video extends React.Component<Props, State> {
     const videoHtml = videoRawHtml
       .replace(/&lt;/g, '<') // fix opening tags
       .replace(/&gt;/g, '>') // fix closing tags
-      .replace(/width="\d+"/, 'class="video"') // remove fixed width
+      .replace(/width="\d+"/, `style="width:100%;height:auto"`) // remove fixed width
       .replace(/height="\d+"/, '') // remove fixed height
     this.setState({
       currentVideoTitle: video.title,
@@ -93,7 +89,11 @@ export default class Video extends React.Component<Props, State> {
 
   render(): JSX.Element {
     const { className } = this.props
-    const { currentVideoTitle, currentVideoHtml } = this.state
+    const {
+      currentVideoTitle,
+      currentVideoHtml,
+    } = this.state
+
     return (
       <div className={className}>
         <h5>{currentVideoTitle}</h5>

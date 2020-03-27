@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Button from 'react-bootstrap/Button'
 
 const moneyFormat = (n: number): string => n.toFixed(2)
 const moneyAmount = (n: number): number => parseFloat(moneyFormat(n))
@@ -122,33 +123,35 @@ export default class IncrGame extends React.Component<{}, State> {
     } = this.state
 
     return (
-      <div>
+      <div className='incrGame'>
         <div>Money: ${moneyFormat(money)}</div>
         <div>Money to add: ${moneyFormat(moneyAdder)}</div>
         <div>Time between adds: {timer} ms</div>
         <div>
           <div>Money Adder Level: {moneyAdderLevel}</div>
-          <button
-            className='btn'
+          <Button
+            className='incrGame__button'
             disabled={money < moneyAdderCost}
             onClick={incrementMoneyAdderLevel}>
             [incr] (${moneyFormat(moneyAdderCost)})
-          </button>
+          </Button>
         </div>
         <div>
           <div>Timer Level: {timerLevel}</div>
-          <button
-            className='btn'
+          <Button
+            className='incrGame__button'
             disabled={money < timerCost}
             onClick={incrementTimerLevel}>
             [incr] (${moneyFormat(timerCost)})
-          </button>
+          </Button>
         </div>
         <div
           onClick={addMoney}
           onMouseEnter={handleHover}
           onMouseLeave={stopHovering}
-          style={{ width: '100px', height: '100px', background: 'red' }} />
+          style={{ width: '100px', height: '100px', background: 'red' }}>
+          [dev mode]: hover over me
+        </div>
       </div>
     )
   }

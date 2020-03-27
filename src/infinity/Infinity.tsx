@@ -1,4 +1,3 @@
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 const getProps = (
@@ -58,17 +57,6 @@ const Infinity: React.StatelessComponent<Props> = ({
       {data.b && <Infinity {...getProps('b', data, link, handleClick, showingBorders)} />}
     </div>
   )
-}
-
-Infinity.propTypes = {
-  data: PropTypes.shape({
-    a: PropTypes.object,
-    b: PropTypes.object,
-  }).isRequired,
-  link: PropTypes.arrayOf(PropTypes.string).isRequired,
-  onClick: PropTypes.func.isRequired,
-  handleClick: PropTypes.func.isRequired,
-  showingBorders: PropTypes.bool.isRequired,
 }
 
 interface State {

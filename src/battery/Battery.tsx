@@ -156,7 +156,9 @@ export default class Battery extends React.Component<{}, State> {
 
     return (
       <div className='battery'>
-        <h3>Battery Stats</h3>
+        <h3 className='battery__title'>
+          Battery Stats
+        </h3>
         {!hasGetBattery &&
           <h5 className='battery__warning'>
             ERROR: Your browser does not share your battery info.

@@ -1,5 +1,6 @@
 import * as React from 'react'
-
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 import FormInput from './FormInput'
 
 interface State {
@@ -121,7 +122,7 @@ export default class E85 extends React.Component<{}, State> {
 
     return (
       <div className='e85'>
-        <form
+        <Form
           className='e85__form'
           onSubmit={handleSubmit}>
           <div className='e85__form__row'>
@@ -162,12 +163,10 @@ export default class E85 extends React.Component<{}, State> {
               value={desiredEthanolPercentage}
               onChange={handleInput('desiredEthanolPercentage')} />
           </div>
-          <button
-            className='btn waves-effect waves-light'
-            type='submit'>
+          <Button type='submit'>
             Calculate
-          </button>
-        </form>
+          </Button>
+        </Form>
         {showResults &&
           <div className='e85__results'>
             <div>You need <span className='e85__resultGallons'>{fuel1Gallons.toFixed(2)}</span> gallons of fuel 1</div>

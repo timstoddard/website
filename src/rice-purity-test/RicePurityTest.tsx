@@ -1,4 +1,6 @@
 import * as React from 'react'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 
 const questions = [
   'Held hands romantically?',
@@ -153,34 +155,42 @@ export default class RicePurityTest extends React.Component<{}, State> {
       showResult,
       clearCheckboxes,
     } = this
-    const { purity, showingResult } = this.state
+    const {
+      purity,
+      showingResult,
+    } = this.state
+
     return (
       <div className='rpt'>
-        <h1 className='rpt__header'>
-          <div>Rice Purity Test</div>
-          <div className='rpt__header--small'>
+        <header className='rpt__header'>
+          <h2 className='rpt__title'>
+            Rice Purity Test
+          </h2>
+          <span>
             (based on&nbsp;
             <a
-              href='http://ricepuritytest.com/'
+              href='http://ricepuritytest.com'
               target='_blank'
-              rel='noopener noreferrer'>
+              rel='noopener noreferrer'
+              className='rpt__header--link'>
               the original
             </a>
             )
-          </div>
-        </h1>
+          </span>
+        </header>
         {showingResult ? (
           <div className='rpt__result'>
-            <h4>Your result</h4>
+            <h4>
+              Your result
+            </h4>
             <div className='rpt__purity'>
               {purity}
             </div>
             <div className='rpt__buttons'>
-              <button
-                onClick={showTest}
-                className='waves-effect waves-light btn'>
+              <Button
+                onClick={showTest}>
                 Take it again!
-              </button>
+              </Button>
             </div>
           </div>
         ) : (
@@ -189,32 +199,33 @@ export default class RicePurityTest extends React.Component<{}, State> {
               Caution: This is not a bucket list. Completion of all items on this test will likely result in death.
             </div>
             <div>Click on every item you have done. MPS stands for Member of the Preferred Sex.</div>
-            <h4>Have you ever...</h4>
-            <form onSubmit={showResult}>
+            <h4 className='rpt__subtitle'>
+              Have you ever...
+            </h4>
+            <Form onSubmit={showResult}>
               {questions.map((question: string, index: number) => (
-                <p key={question}>
-                  <input
+                <Form.Check
+                  key={question}
+                  custom
+                  type='checkbox'
+                  id={`rpt-checkbox-${index}`}
+                  onChange={handleCheckboxChange}
+                  className='rpt__question'>
+                  <Form.Check.Input
                     type='checkbox'
-                    onChange={handleCheckboxChange}
-                    id={`checkbox${index}`}
                     className='rpt__checkbox' />
-                  <label htmlFor={`checkbox${index}`}>
-                    {index + 1}. {question}
-                  </label>
-                </p>
+                  <Form.Check.Label>{index + 1}. {question}</Form.Check.Label>
+                </Form.Check>
               ))}
               <div className='rpt__buttons'>
-                <input
-                  type='submit'
-                  value='Calculate My Score'
-                  className='waves-effect waves-light btn' />
-                <button
-                  onClick={clearCheckboxes}
-                  className='waves-effect waves-light btn'>
+                <Button type='submit'>
+                  Calculate My Score
+                </Button>
+                <Button onClick={clearCheckboxes}>
                   Clear checkboxes
-                </button>
+                </Button>
               </div>
-            </form>
+            </Form>
           </div>
         )}
       </div>

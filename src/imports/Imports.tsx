@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Button from 'react-bootstrap/Button';
 
 interface State {
   rawValue: string
@@ -20,6 +21,7 @@ interface Alias {
   alias?: string
 }
 
+// TODO needs logic fixed to follow actual js conventions
 export default class Imports extends React.Component<{}, State> {
   input: React.Ref<HTMLTextAreaElement>
   output: React.Ref<HTMLTextAreaElement>
@@ -120,7 +122,7 @@ import 'code';`,
     const { onChange, checkKeyDown, checkKeyUp, replaceText, loadMockImports, fix } = this
     const { rawValue, formattedValue } = this.state
     return (
-      <div className='center-align'>
+      <div className='import'>
         <h3 className='import__title'>
           Import Fixer
         </h3>
@@ -133,16 +135,16 @@ import 'code';`,
           onKeyUp={checkKeyUp}
           onPaste={replaceText} />
         <div>
-          <a
-            className='import__button waves-effect waves-light btn light-blue accent-2'
+          <Button
+            className='import__button'
             onClick={loadMockImports}>
             load sample
-          </a>
-          <a
-            className='import__button waves-effect waves-light btn light-blue accent-2'
+          </Button>
+          <Button
+            className='import__button'
             onClick={fix}>
             fix imports
-          </a>
+          </Button>
         </div>
         <textarea
           ref={this.output}

@@ -1,5 +1,5 @@
 import * as React from 'react'
-
+import Form from 'react-bootstrap/Form'
 import IconButton, { IconPath } from './IconButton'
 import Todo from './Todo'
 import { TRANSITION_MS, TransitionState } from './transition'
@@ -211,7 +211,7 @@ export default class TodoList extends React.Component<{}, State> {
   }
 
   render(): JSX.Element {
-    document.title = 'TodoItem List'
+    document.title = 'Todo List'
 
     const {
       handleInput,
@@ -243,17 +243,21 @@ export default class TodoList extends React.Component<{}, State> {
             transform,
           }}>
           {!showingList &&
-            <input
+            <Form.Control
               type='text'
               className='todoList__input'
-              onChange={handleInput}
+              onInput={handleInput}
               onKeyDown={handleKeyDown}
               value={currentTodoMessage} />
           }
           {showingList &&
             <div className='todoList__listWrapper'>
-              <h2>Todo List</h2>
-              <h5>{todos.length} item{todos.length !== 1 && 's'}, {todosRemaining} remaining</h5>
+              <h2 className='todoList__title'>
+                Todo List
+              </h2>
+              <h5 className='todoList__subtitle'>
+                {todos.length} item{todos.length !== 1 && 's'}, {todosRemaining} remaining
+              </h5>
               <ul className='todoList__list'>
                 {todos.map(({ message, completed, isEditing }: TodoItem, i: number) => (
                   <Todo

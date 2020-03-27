@@ -1,19 +1,33 @@
 .rpt {
+  line-height: 1.5;
   margin: 0 auto;
   max-width: 800px;
   padding: 20px;
 
   &__header {
+    margin-bottom: 10px;
     text-align: center;
 
-    &--small {
-      font-size: initial;
+    &--link,
+    &--link:hover {
+      text-decoration: underline;
     }
+  }
+  
+  &__title {
+    @include mediumHeader;
+  }
+
+  &__subtitle {
+    @include smallHeader;
   }
 
   &__caution {
     color: red;
-    font-weight: 500;
+  }
+
+  &__question {
+    margin-bottom: 10px;
   }
 
   &__result {
@@ -25,7 +39,6 @@
   &__purity {
     color: red;
     font-size: 40px;
-    font-weight: 500;
   }
 
   &__buttons {

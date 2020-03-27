@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Button from 'react-bootstrap/Button'
 
 /*
 const sampleSnippets = [
@@ -42,7 +43,7 @@ export default class Perf extends React.Component<{}, State> {
 
     this.state = {
       snippetsToTest: ['', ''],
-      numberOfRuns: 10000,
+      numberOfRuns: 1000,
       runningTests: false,
       results: [],
     }
@@ -250,11 +251,11 @@ export default class Perf extends React.Component<{}, State> {
                 rows={10} />
             </div>
           ))}
-          <a
-            className='perf__button btn light-blue'
+          <Button
+            className='perf__button'
             onClick={addSnippet}>
             Add New Code Snippet
-          </a>
+          </Button>
           <div className='perf__form__numberOfRuns'>
             <div className='perf__form__numberOfRuns__title'>
               Number of Tests to Run:
@@ -266,10 +267,9 @@ export default class Perf extends React.Component<{}, State> {
               onChange={updateNumberOfRuns} />
           </div>
           {!runningTests &&
-            <input
-              className='perf__button btn red'
-              type='submit'
-              value='Run Tests' />
+            <Button type='submit'>
+              Run tests
+            </Button>
           }
           {runningTests &&
             <div>Running tests...</div>

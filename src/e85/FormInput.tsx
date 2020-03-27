@@ -1,46 +1,36 @@
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import Form from 'react-bootstrap/Form'
 
 interface Props {
   id: string
   label: string
   value: number | string
   usePrecision?: boolean
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onChange: (e: React.FormEvent) => void
 }
 
 const FormInput: React.StatelessComponent<Props> = ({
   id,
   label,
   value,
-  usePrecision,
-  onChange,
+  usePrecision = false,
+  onChange = (): void => {},
 }: Props): JSX.Element => (
-  <label
-    className='e85__inputWrapper'
-    htmlFor={id}>
-    <div>{label}</div>
-    <input
+  <Form.Group
+    controlId={id}
+    className='e85__inputWrapper'>
+    <Form.Label>
+      {label}
+    </Form.Label>
+    <Form.Control
       className='e85__input'
-      id={id}
       type='number'
       step={usePrecision ? '0.01' : '1'}
-      value={value}
+      value={value.toString()}
       onChange={onChange}
-      required={true} />
-  </label>
+      required={true}
+      />
+  </Form.Group>
 )
-
-FormInput.propTypes = {
-  id: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-  usePrecision: PropTypes.bool,
-  onChange: PropTypes.func.isRequired,
-}
-
-FormInput.defaultProps = {
-  usePrecision: false,
-}
 
 export default FormInput

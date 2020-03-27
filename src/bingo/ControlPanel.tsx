@@ -1,5 +1,5 @@
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import Button from 'react-bootstrap/Button'
 
 interface Props {
   buttonText: string
@@ -9,38 +9,23 @@ interface Props {
 }
 
 const ControlPanel: React.StatelessComponent<Props> = ({
-  buttonText,
-  moveCount,
-  selectedCells,
-  onSubmit,
+  buttonText = '',
+  moveCount = 0,
+  selectedCells = 0,
+  onSubmit = (): void => {},
 }: Props): JSX.Element => (
-  <div className='board__controls row'>
-    <div className='col s6'>
+  <div className='board__controls'>
+    <div className='board__controls__section'>
       <div>Moves: {moveCount}</div>
       <div>Selected cells: {selectedCells}</div>
     </div>
-    <div className='col s6'>
-      <a
-        className='waves-effect waves-light btn light-blue accent-2'
+    <div className='board__controls__section'>
+      <Button
         onClick={onSubmit}>
         {buttonText}
-      </a>
+      </Button>
     </div>
   </div>
 )
-
-ControlPanel.propTypes = {
-  buttonText: PropTypes.string,
-  moveCount: PropTypes.number,
-  selectedCells: PropTypes.number,
-  onSubmit: PropTypes.func,
-}
-
-ControlPanel.defaultProps = {
-  buttonText: '',
-  moveCount: 0,
-  selectedCells: 0,
-  onSubmit: (): void => {},
-}
 
 export default ControlPanel

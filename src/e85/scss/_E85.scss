@@ -48,11 +48,9 @@ $largePad: 20px;
   }
 
   &__input {
-    background: rgb(245,245,245) !important;
-    border: 0 !important;
-    margin: 0 !important;
-    padding: 0 $mediumPad !important;
-    width: 80% !important;
+    background: rgb(245,245,245);
+    padding: 0 $mediumPad;
+    width: 80%;
   }
 
   &__results {

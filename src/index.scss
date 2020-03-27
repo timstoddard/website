@@ -1,11 +1,14 @@
-// font for home page
-@import url(https://fonts.googleapis.com/css?family=Roboto);
+/*
+FONTS
 
-// font for about/projects headers
-@import url(https://fonts.googleapis.com/css?family=Fredericka+the+Great);
+Roboto: Home
+Frederick the Great: About/Projects
+Inconsolata: JS Clock
+*/
+@import url(https://fonts.googleapis.com/css?family=Roboto:100,400,700|Fredericka+the+Great|Inconsolata&display=swap);
 
-// font for js clock
-@import url(https://fonts.googleapis.com/css?family=Inconsolata);
+// bootstrap styles
+@import '~bootstrap/scss/bootstrap';
 
 // shared functions, mixins, and variables
 @import '../src/scss/functions';
@@ -15,7 +18,7 @@
 // index files
 @import '../src/heap/scss/index';
 @import '../src/home/scss/index';
-// @import '../src/lc3/scss/index';
+// @import '../src/hue/scss/index';
 @import '../src/periodic-table/scss/index';
 @import '../src/start/scss/index';
 @import '../src/strobe/scss/index';
@@ -40,13 +43,35 @@
 @import '../src/trippy/scss/Trippy';
 @import '../src/zen/scss/Zen';
 
-html {
-  font-size: 18px;
-}
-
 body {
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
   height: 100vh;
   margin: 0;
   padding: 0;
   width: 100vw;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+a, a:active, a:visited, a:hover {
+  color: initial;
+  text-decoration: none;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+ul li {
+  list-style-type: none;
+}
+
+* {
+  box-sizing: inherit;
 }

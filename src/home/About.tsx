@@ -12,21 +12,21 @@ interface Detail {
 
 const icons: Icon[] = [
   {
-    name: 'Github',
-    href: 'https://github.com/timstoddard',
- },
-  {
     name: 'LinkedIn',
     href: 'https://linkedin.com/in/timstoddard200',
  },
   {
-    name: 'Portfolium',
-    href: 'https://portfolium.com/timstoddard',
+    name: 'Github',
+    href: 'https://github.com/timstoddard',
  },
-  {
-    name: 'Facebook',
-    href: 'https://facebook.com/timstoddard200',
- },
+//   {
+//     name: 'Portfolium',
+//     href: 'https://portfolium.com/timstoddard',
+//  },
+//   {
+//     name: 'Facebook',
+//     href: 'https://facebook.com/timstoddard200',
+//  },
 ]
 
 const details: Detail[] = [

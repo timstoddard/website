@@ -1,4 +1,3 @@
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 interface Props {
@@ -34,24 +33,6 @@ const IconButton: React.StatelessComponent<Props> = ({
     </svg>
   </div>
 )
-
-IconButton.propTypes = {
-  onClick: PropTypes.func,
-  onDragStart: PropTypes.func,
-  path: PropTypes.string,
-  hidden: PropTypes.bool,
-  className: PropTypes.string,
-  isDraggable: PropTypes.bool,
-}
-
-IconButton.defaultProps = {
-  onClick: (): void => {},
-  onDragStart: (): void => {},
-  path: '',
-  hidden: false,
-  className: '',
-  isDraggable: false,
-}
 
 export const IconPath = {
   // tslint:disable-next-line:max-line-length

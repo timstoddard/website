@@ -1,6 +1,5 @@
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
-
+import Form from 'react-bootstrap/Form'
 import IconButton, { IconPath } from './IconButton'
 
 interface Props {
@@ -25,22 +24,6 @@ interface State {
 }
 
 export default class Todo extends React.Component<Props, State> {
-  static propTypes: any = {
-    message: PropTypes.string.isRequired,
-    completed: PropTypes.bool.isRequired,
-    isEditing: PropTypes.bool.isRequired,
-    hideIcons: PropTypes.bool.isRequired,
-    index: PropTypes.number.isRequired,
-    toggleTodo: PropTypes.func.isRequired,
-    editTodo: PropTypes.func.isRequired,
-    deleteTodo: PropTypes.func.isRequired,
-    handleInput: PropTypes.func.isRequired,
-    handleKeyDown: PropTypes.func.isRequired,
-    currentTodoMessage: PropTypes.string.isRequired,
-    updateOrder: PropTypes.func.isRequired,
-    updateDragState: PropTypes.func.isRequired,
-  }
-
   dropTarget: HTMLLIElement
 
   constructor(props: Props) {
@@ -114,7 +97,6 @@ export default class Todo extends React.Component<Props, State> {
       isDraggable,
       isDropTarget,
     } = this.state
-    const checkboxId = `checkbox${index}`
 
     return (
       <li
@@ -125,29 +107,30 @@ export default class Todo extends React.Component<Props, State> {
         onDrop={onDrop}
         draggable={isDraggable}
         ref={(elem: HTMLLIElement): void => { this.dropTarget = elem }}>
-        <div>
-          <input
-            type='checkbox'
-            className='todo__checkbox'
-            onChange={toggleTodo(index)}
-            id={checkboxId}
-            checked={completed} />
+        <Form>
           {!isEditing &&
-            <label
-              htmlFor={checkboxId}
-              className={`todo__label ${completed ? 'todo__label--completed' : ''}`}>
-              {message}
-            </label>
+            <Form.Check
+              custom
+              type='checkbox'
+              id={`todo-checkbox-${index}`}>
+              <Form.Check.Input
+                type='checkbox'
+                onChange={toggleTodo(index)}
+                checked={completed} />
+              <Form.Check.Label className={`todo__label ${completed ? 'todo__label--completed' : ''}`}>
+                {message}
+              </Form.Check.Label>
+            </Form.Check>
           }
           {isEditing &&
-            <input
+            <Form.Control
               type='text'
               className='todo__input'
-              onChange={handleInput}
+              onInput={handleInput}
               onKeyDown={handleKeyDown}
               value={currentTodoMessage} />
           }
-        </div>
+        </Form>
         <div className='todo__buttons'>
           <IconButton
             path={IconPath.EDIT}

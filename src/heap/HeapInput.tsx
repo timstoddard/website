@@ -1,19 +1,11 @@
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import Button from 'react-bootstrap/Button'
 
 interface Props {
   generateHeaps: (ints: number[]) => void
 }
 
 export default class HeapInput extends React.Component<Props, {}> {
-  static propTypes: any = {
-    generateHeaps: PropTypes.func,
-  }
-
-  static defaultProps: any = {
-    generateHeaps: (): void => {},
-  }
-
   input: HTMLInputElement
 
   constructor(props: Props) {
@@ -82,11 +74,9 @@ export default class HeapInput extends React.Component<Props, {}> {
             ref={(input: HTMLInputElement): void => { this.input = input }}
             type='text'
             className='heapInput__form--textbox' />
-          <a
-            onClick={this.processInput}
-            className='btn'>
+          <Button onClick={this.processInput}>
             Generate tree
-          </a>
+          </Button>
         </div>
         <p>
           Accepted format example:&nbsp;

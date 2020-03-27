@@ -1,5 +1,4 @@
 import * as React from 'react'
-
 import Board from './Board'
 import Video from './Video'
 
@@ -17,13 +16,13 @@ export default class Bingo extends React.Component<{}, {}> {
   render(): JSX.Element {
     document.title = 'Bingo'
     return (
-      <div className='bingo center-align row'>
+      <div className='bingo'>
         <h3 className='bingo__title'>Car Crash Bingo</h3>
         <Video
-          className='video col s12 m12 l6'
+          className='bingo__video'
           ref={(ref: Video): void => { this.videoPlayer = ref }} />
         <Board
-          className='board col s12 m12 l6'
+          className='bingo__board'
           onSubmit={this.loadNewVideo} />
       </div>
     )

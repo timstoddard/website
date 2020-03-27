@@ -6,7 +6,9 @@
     justify-content: center;
   }
 
+  // TODO make button mixin to share with options screen
   &__button {
+    background: transparent;
     border: 1px solid black;
     color: black;
     cursor: pointer;
@@ -16,8 +18,12 @@
     text-align: center;
     transition: all 0.3s ease;
 
-    &:hover {
+    &:hover,
+    &:focus,
+    &:active {
+      background: transparent;
       border: 1px solid white;
+      box-shadow: none;
       color: white;
       opacity: 1;
     }

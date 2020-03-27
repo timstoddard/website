@@ -1,4 +1,3 @@
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 export class CellState {
@@ -14,18 +13,6 @@ interface Props {
 }
 
 export default class Cell extends React.Component<Props, {}> {
-  static propTypes: any = {
-    onClick: PropTypes.func,
-    status: PropTypes.number,
-    title: PropTypes.string,
-  }
-
-  static defaultProps: any = {
-    onClick: (): void => {},
-    status: 0,
-    title: '',
-  }
-
   constructor(props: Props) {
     super(props)
   }
@@ -33,9 +20,9 @@ export default class Cell extends React.Component<Props, {}> {
   getModifierClassName = (): string => {
     switch (this.props.status) {
       case CellState.SUBMITTED:
-        return 'green accent-3'
+        return 'board__cell--green'
       case CellState.SELECTED:
-        return 'yellow lighten-1'
+        return 'board__cell--yellow'
       default:
         return ''
     }

@@ -1,6 +1,4 @@
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
-
 import Cell, { CellState } from './Cell'
 import ControlPanel from './ControlPanel'
 
@@ -27,21 +25,11 @@ interface State {
   board: number[]
   moveCount: number
   selectedCells: number
-  buttonText: string
+  buttonText: 'Submit' | 'Play Again'
   userWon: boolean
 }
 
 export default class Board extends React.Component<Props, State> {
-  static propTypes: any = {
-    className: PropTypes.string,
-    onSubmit: PropTypes.func,
-  }
-
-  static defaultProps: any = {
-    className: '',
-    onSubmit: (): void => {},
-  }
-
   constructor(props: Props) {
     super(props)
 
@@ -49,7 +37,11 @@ export default class Board extends React.Component<Props, State> {
   }
 
   onClick = (index: number): void => {
-    const { userWon, board } = this.state
+    const {
+      userWon,
+      board,
+    } = this.state
+
     if (!userWon) {
       const newBoard = board.slice()
       let { selectedCells } = this.state
@@ -179,7 +171,7 @@ export default class Board extends React.Component<Props, State> {
       board,
       moveCount: 0,
       selectedCells: 1, // middle square is a freebie
-      buttonText: 'submit',
+      buttonText: 'Submit',
       userWon: false,
     }
   }
@@ -188,7 +180,7 @@ export default class Board extends React.Component<Props, State> {
     if (status) {
       this.setState({
         userWon: true,
-        buttonText: 'play again',
+        buttonText: 'Play Again',
       })
     }
     return status
@@ -197,7 +189,13 @@ export default class Board extends React.Component<Props, State> {
   render(): JSX.Element {
     const { onSubmit } = this
     const { className } = this.props
-    const { board, items, moveCount, selectedCells, buttonText } = this.state
+    const {
+      board,
+      items,
+      moveCount,
+      selectedCells,
+      buttonText,
+    } = this.state
     const tableRows = []
 
     for (let i = 0; i < 5; i++) {
@@ -216,7 +214,7 @@ export default class Board extends React.Component<Props, State> {
 
     return (
       <div className={className}>
-        <table className='centered'>
+        <table className='board__table'>
           <tbody>{tableRows}</tbody>
         </table>
         <ControlPanel

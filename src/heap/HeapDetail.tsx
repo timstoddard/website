@@ -1,6 +1,5 @@
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
-
+import Button from 'react-bootstrap/Button'
 import BinaryHeap from './BinaryHeap'
 import printTree from './BinaryTreePrinter'
 
@@ -11,12 +10,6 @@ interface Props {
 }
 
 export default class HeapDetail extends React.Component<Props, {}> {
-  static propTypes: any = {
-    heap: PropTypes.instanceOf(BinaryHeap).isRequired,
-    showInputHeap: PropTypes.func.isRequired,
-    showSortedHeap: PropTypes.func.isRequired,
-  }
-
   constructor(props: Props) {
     super(props)
   }
@@ -30,18 +23,18 @@ export default class HeapDetail extends React.Component<Props, {}> {
     const { heap, showInputHeap, showSortedHeap } = this.props
 
     return (
-      <div className='heapDetail blue-grey lighten-4'>
+      <div className='heapDetail'>
         <hr />
-        <a
+        <Button
           onClick={showInputHeap}
-          className='heapDetail__button btn'>
+          className='heapDetail__button'>
           show your input heap
-        </a>
-        <a
+        </Button>
+        <Button
           onClick={showSortedHeap}
-          className='heapDetail__button btn'>
+          className='heapDetail__button'>
           show sorted heap
-        </a>
+        </Button>
         <p>Number of elements: {heap.heapSize()}</p>
         <p>Number of levels: {heap.treeHeight()}</p>
         <p>Heap in array form: {heap.toString()}</p>

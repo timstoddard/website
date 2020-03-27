@@ -1,4 +1,3 @@
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 interface Props {
@@ -26,14 +25,6 @@ enum Color {
 }
 
 export default class Dots extends React.Component<Props, State> {
-  static propTypes: any = {
-    delay: PropTypes.number,
-  }
-
-  static defaultProps: any = {
-    delay: 0,
-  }
-
   dots: Dot[]
   canvas: HTMLCanvasElement
   moveInterval: number

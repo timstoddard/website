@@ -111,7 +111,7 @@ $headerHeight: 60px;
       max-width: 100%;
       min-height: 120px;
       min-width: 100%;
-      outline: 0 !important;
+      outline: 0;
       padding: 10px;
       transition: .2s ease-out;
 
@@ -186,9 +186,5 @@ $headerHeight: 60px;
         @include resultDetail;
       }
     }
-  }
-
-  &__button {
-    min-height: 36px;
   }
 }

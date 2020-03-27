@@ -29,8 +29,8 @@ export default class Time extends React.Component<{}, State> {
     const minutes = now.getMinutes()
     const seconds = now.getSeconds()
     let timeString = `${(hours > 12) ? hours - 12 : (hours > 0 ? hours : 12)}`
-    timeString += `${(minutes < 10) ? ':0' : ':'}${minutes}`
-    timeString += `${(seconds < 10) ? ':0' : ':'}${seconds}`
+    timeString += ':' + `0${minutes}`.slice(-2)
+    timeString += ':' + `0${seconds}`.slice(-2)
     timeString += (hours >= 12) ? ' PM' : ' AM'
     this.setState({ timeString })
     const millis = now.getMilliseconds()

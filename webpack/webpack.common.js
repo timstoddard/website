@@ -26,12 +26,6 @@ module.exports = {
           loader: 'source-map-loader',
           enforce: 'pre',
         },
-        // TODO remove this rule once LC3 is converted to ts
-        {
-          test: /\.js$/,
-          loader: 'babel-loader',
-          exclude: /node_modules/,
-        },
         {
           test: /\.scss$/,
           use: [

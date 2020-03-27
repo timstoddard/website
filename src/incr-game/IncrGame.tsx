@@ -1,6 +1,8 @@
 import * as React from 'react'
 import Button from 'react-bootstrap/Button'
 
+const styles = require('./scss/IncrGame.scss') // tslint:disable-line no-var-requires
+
 const moneyFormat = (n: number): string => n.toFixed(2)
 const moneyAmount = (n: number): number => parseFloat(moneyFormat(n))
 
@@ -123,14 +125,14 @@ export default class IncrGame extends React.Component<{}, State> {
     } = this.state
 
     return (
-      <div className='incrGame'>
+      <div className={styles.incrGame}>
         <div>Money: ${moneyFormat(money)}</div>
         <div>Money to add: ${moneyFormat(moneyAdder)}</div>
         <div>Time between adds: {timer} ms</div>
         <div>
           <div>Money Adder Level: {moneyAdderLevel}</div>
           <Button
-            className='incrGame__button'
+            className={styles.incrGame__button}
             disabled={money < moneyAdderCost}
             onClick={incrementMoneyAdderLevel}>
             [incr] (${moneyFormat(moneyAdderCost)})
@@ -139,7 +141,7 @@ export default class IncrGame extends React.Component<{}, State> {
         <div>
           <div>Timer Level: {timerLevel}</div>
           <Button
-            className='incrGame__button'
+            className={styles.incrGame__button}
             disabled={money < timerCost}
             onClick={incrementTimerLevel}>
             [incr] (${moneyFormat(timerCost)})

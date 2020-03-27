@@ -1,5 +1,7 @@
 import * as React from 'react'
 
+const styles = require('./scss/Dots.scss') // tslint:disable-line no-var-requires
+
 interface Props {
   delay: number
 }
@@ -221,7 +223,7 @@ export default class Dots extends React.Component<Props, State> {
 
     return (
       <canvas
-        className={`dots ${visible ? 'dots--visible' : ''}`}
+        className={`${styles.dots} ${visible ? styles['dots--visible'] : ''}`}
         ref={(canvas: HTMLCanvasElement): void => { this.canvas = canvas }} />
     )
   }

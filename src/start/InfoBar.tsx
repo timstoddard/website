@@ -1,6 +1,7 @@
 import * as React from 'react'
-
 import * as Utils from './Utils'
+
+const styles = require('./scss/InfoBar.scss') // tslint:disable-line no-var-requires
 
 interface Props {
   className: string
@@ -83,14 +84,14 @@ export default class InfoBar extends React.Component<Props, State> {
     } = this.state
 
     return (
-      <div className={`infoBar ${className}`}>
-        <div className={`infoBar__item ${isRainbowMode ? 'infoBar__item--rainbow' : ''}`}>
+      <div className={`${styles.infoBar} ${className}`}>
+        <div className={`${styles.infoBar__item} ${isRainbowMode ? styles['infoBar__item--rainbow'] : ''}`}>
           {Utils.createWelcomeMessage(now, name)}
         </div>
-        <div className='infoBar__item'>
+        <div className={styles.infoBar__item}>
           {Utils.createDateString(now)}
         </div>
-        <div className='infoBar__item'>
+        <div className={styles.infoBar__item}>
           {Utils.formatTime(now)}
         </div>
       </div>

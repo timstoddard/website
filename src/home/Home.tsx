@@ -1,7 +1,8 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-
 import Dots from './Dots'
+
+const styles = require('./scss/Home.scss') // tslint:disable-line no-var-requires
 
 interface HomepageLink {
   pathname: string
@@ -27,21 +28,21 @@ const Home: React.StatelessComponent<{}> = (): JSX.Element => {
   document.title = 'Tim Stoddard'
 
   return (
-    <div className='home'>
+    <div className={styles.home}>
       <Dots delay={200} />
-      <div className='home__content'>
-        <h1 className='home__headerName'>
+      <div className={styles.home__content}>
+        <h1 className={styles.home__headerName}>
           tim stoddard
         </h1>
-        <ul className='home__links'>
+        <ul className={styles.home__links}>
           {links.map(({ pathname, text }: HomepageLink) => (
             <li
               key={text}
-              className='home__link'>
+              className={styles.home__link}>
               <Link
                 to={{ pathname }}
                 target={pathname[0] !== '/' ? '_blank' : ''}
-                className='home__linkText'>
+                className={styles.home__linkText}>
                 {text}
               </Link>
             </li>

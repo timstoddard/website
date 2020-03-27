@@ -1,5 +1,7 @@
 import * as React from 'react'
 
+const styles = require('./scss/Time.scss') // tslint:disable-line no-var-requires
+
 interface State {
   timeString: string
 }
@@ -43,7 +45,7 @@ export default class Time extends React.Component<{}, State> {
     const { timeString } = this.state
 
     return (
-      <div className='time'>
+      <div className={styles.time}>
         {timeString}
       </div>
     )

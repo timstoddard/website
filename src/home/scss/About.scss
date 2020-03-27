@@ -1,3 +1,6 @@
+@import 'src/scss/mixins';
+@import 'src/scss/variables';
+
 .about {
   @include aboutAndProjectsLayout;
 

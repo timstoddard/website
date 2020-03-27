@@ -1,6 +1,9 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 
+const styles = require('./scss/Links.scss') // tslint:disable-line no-var-requires
+const styles2 = require('./scss/Start.scss') // tslint:disable-line no-var-requires
+
 interface HomePageLink {
   name: string
   href: string
@@ -85,9 +88,9 @@ export default class Links extends React.Component<Props, {}> {
   render(): JSX.Element {
     const { className } = this.props
     return (
-      <div className={`links ${className}`}>
+      <div className={`${styles.links} ${className}`}>
         <Link
-          className='links__item start__links__item'
+          className={`${styles.links__item} ${styles2.start__links__item}`}
           to=''>
           Home
         </Link>
@@ -97,7 +100,7 @@ export default class Links extends React.Component<Props, {}> {
             href={href}
             target='_blank'
             rel='noopener noreferrer'
-            className='links__item start__links__item'>
+            className={`${styles.links__item} ${styles2.start__links__item}`}>
             {name}
           </a>
         ))}

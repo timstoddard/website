@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const autoprefixer = require('autoprefixer')
 
 module.exports = {
-  config: {
+  config: (mode) => ({
     entry: [
       './src/index.tsx',
       './src/index.scss',
@@ -30,7 +30,14 @@ module.exports = {
           test: /\.scss$/,
           use: [
             MiniCssExtractPlugin.loader,
-            'css-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                modules: true,
+                sourceMap: true,
+                localIdentName: mode === 'prod' ? '[hash:base64:5]' : '[local]__[hash:base64:5]',
+              },
+            },
             {
               loader: 'postcss-loader',
               options: {
@@ -46,7 +53,7 @@ module.exports = {
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
     },
-  },
+  }),
   sharedPlugins: (mode) => {
     const htmlWebpackPluginOptions = {
       template: 'src/app.html',

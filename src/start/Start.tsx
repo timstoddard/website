@@ -5,7 +5,9 @@ import Links from './Links'
 import RandomQuote from './RandomQuote'
 import Weather from './Weather'
 
-const BACKGROUND_IMAGE_CLASS = 'start__backgroundImagePreload'
+const styles = require('./scss/Start.scss') // tslint:disable-line no-var-requires
+
+const BACKGROUND_IMAGE_CLASS = styles.start__backgroundImagePreload
 
 const backgroundUrls = [
   'https://www.wsupercars.com/wallpapers/Tesla/2020-Tesla-Roadster-V1-2000.jpg',
@@ -91,17 +93,18 @@ export default class Start extends React.Component<{}, State> {
       showContent,
     } = this.state
     const backgroundUrl = backgroundUrls[backgroundUrlIndex]
+    const startClasses = `${styles.start} ${showContent ? '' : styles['start--contentHidden']}`
 
     return (
       <div
         onDoubleClick={toggleShowContent}
-        className={`start ${showContent ? '' : 'start--contentHidden'}`}
+        className={startClasses}
         style={{ backgroundImage: `url('${backgroundUrl}')` }}>
-        <Links className='start__links' />
-        <CNN className='start__news' />
-        <InfoBar className='start__info' />
-        <Weather className='start__weather' />
-        <RandomQuote className='start__quote' />
+        <Links className={styles.start__links} />
+        <CNN className={styles.start__news} />
+        <InfoBar className={styles.start__info} />
+        <Weather className={styles.start__weather} />
+        <RandomQuote className={styles.start__quote} />
       </div>
     )
   }

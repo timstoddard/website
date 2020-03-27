@@ -1,5 +1,7 @@
 import * as React from 'react'
 
+const styles = require('./scss/RandomQuote.scss') // tslint:disable-line no-var-requires
+
 const quotes = [
   'Breathe.',
   'Take a deep breath.',
@@ -31,8 +33,8 @@ export default class RandomQuote extends React.Component<Props, State> {
     const { quote } = this.state
 
     return (
-      <div className={`randomQuote ${className}`}>
-        <div className='randomQuote__text'>
+      <div className={`${styles.randomQuote} ${className}`}>
+        <div className={styles.randomQuote__text}>
           {quote}
         </div>
       </div>

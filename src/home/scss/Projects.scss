@@ -1,3 +1,6 @@
+@import 'src/scss/mixins';
+@import 'src/scss/variables';
+
 .projects {
   @include aboutAndProjectsLayout;
   text-align: center;

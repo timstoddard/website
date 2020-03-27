@@ -1,8 +1,11 @@
+import classNames from 'classnames'
 import * as React from 'react'
 import Form from 'react-bootstrap/Form'
 import IconButton, { IconPath } from './IconButton'
 import Todo from './Todo'
 import { TRANSITION_MS, TransitionState } from './transition'
+
+const styles = require('./scss/TodoList.scss') // tslint:disable-line no-var-requires
 
 interface State {
   todos: TodoItem[],
@@ -41,12 +44,16 @@ export default class TodoList extends React.Component<{}, State> {
     this.toggleShowingList()
   }
 
-  handleInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    this.setState({ currentTodoMessage: e.target.value })
+  handleInput = (e: React.FormEvent): void => {
+    this.setState({ currentTodoMessage: (e.target as HTMLInputElement).value })
   }
 
   handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
-    const { todos, currentTodoMessage } = this.state
+    const {
+      todos,
+      currentTodoMessage,
+    } = this.state
+
     if (e.key === 'Enter') {
       const editedTodoIndex = todos.findIndex((todo: TodoItem) => todo.isEditing)
       if (editedTodoIndex === -1) {
@@ -235,9 +242,12 @@ export default class TodoList extends React.Component<{}, State> {
     const transition = this.currentTransition()
 
     return (
-      <div className={`todoList ${showingList ? 'todoList--showingList' : ''}`}>
+      <div
+        className={classNames(
+          styles.todoList,
+          { [styles['todoList--showingList']]: showingList })}>
         <div
-          className='todoList__contentWrapper'
+          className={styles.todoList__contentWrapper}
           style={{
             transition,
             transform,
@@ -245,20 +255,21 @@ export default class TodoList extends React.Component<{}, State> {
           {!showingList &&
             <Form.Control
               type='text'
-              className='todoList__input'
-              onInput={handleInput}
+              className={styles.todoList__input}
+              // onInput={handleInput}
+              onChange={handleInput}
               onKeyDown={handleKeyDown}
               value={currentTodoMessage} />
           }
           {showingList &&
-            <div className='todoList__listWrapper'>
-              <h2 className='todoList__title'>
+            <div className={styles.todoList__listWrapper}>
+              <h2 className={styles.todoList__title}>
                 Todo List
               </h2>
-              <h5 className='todoList__subtitle'>
+              <h5 className={styles.todoList__subtitle}>
                 {todos.length} item{todos.length !== 1 && 's'}, {todosRemaining} remaining
               </h5>
-              <ul className='todoList__list'>
+              <ul className={styles.todoList__list}>
                 {todos.map(({ message, completed, isEditing }: TodoItem, i: number) => (
                   <Todo
                     key={`${message}~${i + 1}`}
@@ -282,7 +293,7 @@ export default class TodoList extends React.Component<{}, State> {
         </div>
         <IconButton
           path={IconPath.SWAP}
-          className='todoList__toggle'
+          className={styles.todoList__toggle}
           onClick={toggleShowingList} />
       </div>
     )

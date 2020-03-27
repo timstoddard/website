@@ -1,8 +1,9 @@
 import * as React from 'react'
-
 import BinaryHeap from './BinaryHeap'
 import HeapDetail from './HeapDetail'
 import HeapInput from './HeapInput'
+
+const styles = require('./scss/Heap.scss') // tslint:disable-line no-var-requires
 
 interface State {
   showTree: boolean
@@ -50,12 +51,19 @@ export default class Heap extends React.Component<{}, State> {
 
   render(): JSX.Element {
     document.title = 'Heap'
-    const { generateHeaps, showInputHeap, showSortedHeap } = this
-    const { showTree, heap } = this.state
+    const {
+      generateHeaps,
+      showInputHeap,
+      showSortedHeap,
+    } = this
+    const {
+      showTree,
+      heap,
+    } = this.state
 
     return (
-      <div className='heap container'>
-        <h5 className='heap__title'>
+      <div className={styles.heap}>
+        <h5 className={styles.heap__title}>
           Max-Heap Tree Generator
         </h5>
         <HeapInput generateHeaps={generateHeaps} />

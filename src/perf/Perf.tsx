@@ -1,5 +1,8 @@
+import classNames from 'classnames'
 import * as React from 'react'
 import Button from 'react-bootstrap/Button'
+
+const styles = require('./scss/Perf.scss') // tslint:disable-line no-var-requires
 
 /*
 const sampleSnippets = [
@@ -189,12 +192,12 @@ export default class Perf extends React.Component<{}, State> {
   }
 
   getResultClasses = (isBest: boolean, isWorst: boolean): string => {
-    const classNames = [
-      'perf__results__details',
-      `${isBest ? 'perf__results__details--best' : ''}`,
-      `${isWorst ? 'perf__results__details--worst' : ''}`,
-    ]
-    return classNames.join(' ')
+    return classNames(
+      styles.perf__results__details,
+      {
+        [styles['perf__results__details--best']]: isBest,
+        [styles['perf__results__details--worst']]: isWorst,
+      })
   }
 
   render(): JSX.Element {
@@ -215,22 +218,22 @@ export default class Perf extends React.Component<{}, State> {
       results,
     } = this.state
     return (
-      <div className='perf'>
-        <h4 className='perf__header'>
+      <div className={styles.perf}>
+        <h4 className={styles.perf__header}>
           JavaScript Performance Testing
         </h4>
         <form
-          className='perf__form'
+          className={styles.perf__form}
           onSubmit={runTests}>
           {snippetsToTest.map((snippet: string, index: number) => (
             <div key={`${index + 1}`}>
-              <div className='perf__form__snippetHeader'>
-                <div className='perf__form__snippetHeader__title'>
+              <div className={styles.perf__form__snippetHeader}>
+                <div className={styles.perf__form__snippetHeader__title}>
                   Snippet {index + 1}
                 </div>
-                <div className='perf__form__snippetHeader__spacer' />
+                <div className={styles.perf__form__snippetHeader__spacer} />
                 <div
-                  className='perf__form__snippetHeader__delete'
+                  className={styles.perf__form__snippetHeader__delete}
                   onClick={removeSnippet(index)}>
                   <svg viewBox='0 0 24 24'>
                     <g>
@@ -243,7 +246,7 @@ export default class Perf extends React.Component<{}, State> {
                 </div>
               </div>
               <textarea
-                className='perf__form__snippetText'
+                className={styles.perf__form__snippetText}
                 value={snippet}
                 onChange={updateSnippet(index)}
                 onKeyDown={ignoreTab(index)}
@@ -252,16 +255,16 @@ export default class Perf extends React.Component<{}, State> {
             </div>
           ))}
           <Button
-            className='perf__button'
+            className={styles.perf__button}
             onClick={addSnippet}>
             Add New Code Snippet
           </Button>
-          <div className='perf__form__numberOfRuns'>
-            <div className='perf__form__numberOfRuns__title'>
+          <div className={styles.perf__form__numberOfRuns}>
+            <div className={styles.perf__form__numberOfRuns__title}>
               Number of Tests to Run:
             </div>
             <input
-              className='perf__form__numberOfRuns__input'
+              className={styles.perf__form__numberOfRuns__input}
               type='number'
               value={numberOfRuns}
               onChange={updateNumberOfRuns} />
@@ -276,8 +279,8 @@ export default class Perf extends React.Component<{}, State> {
           }
         </form>
         {!!results.length &&
-          <div className='perf__results'>
-            <h3 className='perf__results__header'>
+          <div className={styles.perf__results}>
+            <h3 className={styles.perf__results__header}>
               Results
             </h3>
             {results.map((result: Result, index: number) => (
@@ -291,11 +294,16 @@ export default class Perf extends React.Component<{}, State> {
                   }
                 </h5>
                 {(result as ErrorResult).error ? (
-                  <div className='perf__results__details'>
+                  <div className={styles.perf__results__details}>
                     This code snippet encountered an error: <strong>{(result as ErrorResult).error}</strong>
                   </div>
                 ) : (
-                  <dl className={getResultClasses((result as SuccessResult).isBest, (result as SuccessResult).isWorst)}>
+                  <dl className={classNames(
+                    styles.perf__results__details,
+                    {
+                      [styles['perf__results__details--best']]: (result as SuccessResult).isBest,
+                      [styles['perf__results__details--worst']]: (result as SuccessResult).isWorst,
+                    })}>
                     <dt>
                       <strong>Avg</strong>
                     </dt>

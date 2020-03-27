@@ -2,6 +2,8 @@ import * as React from 'react'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 
+const styles = require('./scss/RicePurityTest.scss') // tslint:disable-line no-var-requires
+
 const questions = [
   'Held hands romantically?',
   'Been on a date?',
@@ -138,7 +140,7 @@ export default class RicePurityTest extends React.Component<{}, State> {
   clearCheckboxes = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault()
     this.setState({ purity: 100 })
-    document.querySelectorAll('.rpt__checkbox').forEach((checkbox: HTMLInputElement) => {
+    document.querySelectorAll('input[type="checkbox"]').forEach((checkbox: HTMLInputElement) => {
       checkbox.checked = false
     })
   }
@@ -161,9 +163,9 @@ export default class RicePurityTest extends React.Component<{}, State> {
     } = this.state
 
     return (
-      <div className='rpt'>
-        <header className='rpt__header'>
-          <h2 className='rpt__title'>
+      <div className={styles.rpt}>
+        <header className={styles.rpt__header}>
+          <h2 className={styles.rpt__title}>
             Rice Purity Test
           </h2>
           <span>
@@ -172,21 +174,21 @@ export default class RicePurityTest extends React.Component<{}, State> {
               href='http://ricepuritytest.com'
               target='_blank'
               rel='noopener noreferrer'
-              className='rpt__header--link'>
+              className={styles['rpt__header--link']}>
               the original
             </a>
             )
           </span>
         </header>
         {showingResult ? (
-          <div className='rpt__result'>
+          <div className={styles.rpt__result}>
             <h4>
               Your result
             </h4>
-            <div className='rpt__purity'>
+            <div className={styles.rpt__purity}>
               {purity}
             </div>
-            <div className='rpt__buttons'>
+            <div className={styles.rpt__buttons}>
               <Button
                 onClick={showTest}>
                 Take it again!
@@ -195,11 +197,11 @@ export default class RicePurityTest extends React.Component<{}, State> {
           </div>
         ) : (
           <div>
-            <div className='rpt__caution'>
+            <div className={styles.rpt__caution}>
               Caution: This is not a bucket list. Completion of all items on this test will likely result in death.
             </div>
             <div>Click on every item you have done. MPS stands for Member of the Preferred Sex.</div>
-            <h4 className='rpt__subtitle'>
+            <h4 className={styles.rpt__subtitle}>
               Have you ever...
             </h4>
             <Form onSubmit={showResult}>
@@ -210,14 +212,14 @@ export default class RicePurityTest extends React.Component<{}, State> {
                   type='checkbox'
                   id={`rpt-checkbox-${index}`}
                   onChange={handleCheckboxChange}
-                  className='rpt__question'>
+                  className={styles.rpt__question}>
                   <Form.Check.Input
                     type='checkbox'
-                    className='rpt__checkbox' />
+                    className={styles.rpt__checkbox} />
                   <Form.Check.Label>{index + 1}. {question}</Form.Check.Label>
                 </Form.Check>
               ))}
-              <div className='rpt__buttons'>
+              <div className={styles.rpt__buttons}>
                 <Button type='submit'>
                   Calculate My Score
                 </Button>

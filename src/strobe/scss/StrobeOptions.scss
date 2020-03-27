@@ -1,3 +1,5 @@
+@import 'src/scss/globals';
+
 .options {
   background: white;
   height: 100%;
@@ -7,7 +9,6 @@
 
   &__title {
     @include smallHeader;
-    margin: 0 auto;
   }
 
   &__form {
@@ -33,7 +34,7 @@
       align-items: center;
       display: flex;
 
-      .form-group {
+      :global(.form-group) {
         align-items: center;
         display: flex;
       }

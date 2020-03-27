@@ -2,18 +2,7 @@ import * as React from 'react'
 import Cell, { CellState } from './Cell'
 import ControlPanel from './ControlPanel'
 
-const shuffle = (array: any[]): any[] => {
-  let m = array.length
-  let i: number
-  let temp
-  while (m) {
-    i = Math.floor(Math.random() * m--)
-    temp = array[m]
-    array[m] = array[i]
-    array[i] = temp
-  }
-  return array
-}
+const styles = require('./scss/Bingo.scss') // tslint:disable-line no-var-requires
 
 interface Props {
   className: string
@@ -45,15 +34,16 @@ export default class Board extends React.Component<Props, State> {
     if (!userWon) {
       const newBoard = board.slice()
       let { selectedCells } = this.state
-      // TODO don't allow unselecting submitted cells
-      if (newBoard[index] === CellState.UNSELECTED) {
-        newBoard[index] = CellState.SELECTED
-        selectedCells++
-      } else {
-        newBoard[index] = CellState.UNSELECTED
-        selectedCells--
+      if (newBoard[index] !== CellState.SUBMITTED) {
+        if (newBoard[index] === CellState.UNSELECTED) {
+          newBoard[index] = CellState.SELECTED
+          selectedCells++
+        } else {
+          newBoard[index] = CellState.UNSELECTED
+          selectedCells--
+        }
+        this.setState({ board: newBoard, selectedCells })
       }
-      this.setState({ board: newBoard, selectedCells })
     }
   }
 
@@ -214,7 +204,7 @@ export default class Board extends React.Component<Props, State> {
 
     return (
       <div className={className}>
-        <table className='board__table'>
+        <table className={styles.board__table}>
           <tbody>{tableRows}</tbody>
         </table>
         <ControlPanel
@@ -225,4 +215,17 @@ export default class Board extends React.Component<Props, State> {
       </div>
     )
   }
+}
+
+const shuffle = (array: any[]): any[] => {
+  let m = array.length
+  let i: number
+  let temp
+  while (m) {
+    i = Math.floor(Math.random() * m--)
+    temp = array[m]
+    array[m] = array[i]
+    array[i] = temp
+  }
+  return array
 }

@@ -1,3 +1,6 @@
+@import 'src/scss/globals';
+@import './variables';
+
 .currentElement {
   border: $elementCardBorderWidth solid $elementCardBorderColor;
   color: white;

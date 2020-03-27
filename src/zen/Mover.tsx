@@ -1,5 +1,7 @@
 import * as React from 'react'
 
+const styles = require('./scss/Zen.scss') // tslint:disable-line no-var-requires
+
 interface Props {
   radiusChangeSpeed: number
   maxRadius: number
@@ -78,7 +80,11 @@ export default class Mover extends React.Component<Props, State> {
 
   render(): JSX.Element {
     document.title = 'Zen Mode'
-    const { x, y, boxShadow } = this.state
+    const {
+      x,
+      y,
+      boxShadow,
+    } = this.state
 
     return (
       <div>
@@ -88,14 +94,14 @@ export default class Mover extends React.Component<Props, State> {
             top: y,
             boxShadow,
           }}
-          className='zen__block' />
+          className={styles.zen__block} />
         <div
           style={{
             right: x,
             bottom: y,
             boxShadow,
           }}
-          className='zen__block' />
+          className={styles.zen__block} />
       </div>
     )
   }

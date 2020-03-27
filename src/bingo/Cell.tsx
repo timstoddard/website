@@ -1,9 +1,12 @@
+import classNames from 'classnames'
 import * as React from 'react'
 
-export class CellState {
-  static get UNSELECTED(): number { return 0 }
-  static get SELECTED(): number { return 1 }
-  static get SUBMITTED(): number { return 2 }
+const styles = require('./scss/Bingo.scss') // tslint:disable-line no-var-requires
+
+export enum CellState {
+  UNSELECTED,
+  SELECTED,
+  SUBMITTED,
 }
 
 interface Props {
@@ -20,9 +23,9 @@ export default class Cell extends React.Component<Props, {}> {
   getModifierClassName = (): string => {
     switch (this.props.status) {
       case CellState.SUBMITTED:
-        return 'board__cell--green'
+        return styles['board__cell--green']
       case CellState.SELECTED:
-        return 'board__cell--yellow'
+        return styles['board__cell--yellow']
       default:
         return ''
     }
@@ -32,7 +35,9 @@ export default class Cell extends React.Component<Props, {}> {
     const { onClick, title } = this.props
     return (
       <td
-        className={`board__cell ${this.getModifierClassName()}`}
+        className={classNames(
+          styles.board__cell,
+          this.getModifierClassName())}
         onClick={onClick}>
         {title}
       </td>

@@ -3,6 +3,8 @@ import Button from 'react-bootstrap/Button'
 import BinaryHeap from './BinaryHeap'
 import printTree from './BinaryTreePrinter'
 
+const styles = require('./scss/HeapDetail.scss') // tslint:disable-line no-var-requires
+
 interface Props {
   heap: BinaryHeap
   showInputHeap: () => void
@@ -20,28 +22,32 @@ export default class HeapDetail extends React.Component<Props, {}> {
   }
 
   render(): JSX.Element {
-    const { heap, showInputHeap, showSortedHeap } = this.props
+    const {
+      heap,
+      showInputHeap,
+      showSortedHeap,
+    } = this.props
 
     return (
-      <div className='heapDetail'>
+      <div className={styles.heapDetail}>
         <hr />
         <Button
           onClick={showInputHeap}
-          className='heapDetail__button'>
+          className={styles.heapDetail__button}>
           show your input heap
         </Button>
         <Button
           onClick={showSortedHeap}
-          className='heapDetail__button'>
+          className={styles.heapDetail__button}>
           show sorted heap
         </Button>
         <p>Number of elements: {heap.heapSize()}</p>
         <p>Number of levels: {heap.treeHeight()}</p>
         <p>Heap in array form: {heap.toString()}</p>
-        <div className='heapDetail__treeWrapper'>
+        <div className={styles.heapDetail__treeWrapper}>
           <div
             dangerouslySetInnerHTML={this.getTreeString()}
-            className='heapDetail__tree' />
+            className={styles.heapDetail__tree} />
         </div>
       </div>
     )

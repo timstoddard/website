@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import * as React from 'react'
 import * as Utils from './Utils'
 
@@ -144,7 +145,7 @@ export default class Weather extends React.Component<Props, State> {
     } = this.state
 
     return (
-      <div className={`${styles.weather} ${className}`}>
+      <div className={classNames(styles.weather, className)}>
         {currentWeather ? (
           <>
             <img

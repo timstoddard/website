@@ -1,6 +1,8 @@
 import * as React from 'react'
 import Button from 'react-bootstrap/Button'
 
+const styles = require('./scss/HeapInput.scss') // tslint:disable-line no-var-requires
+
 interface Props {
   generateHeaps: (ints: number[]) => void
 }
@@ -67,13 +69,13 @@ export default class HeapInput extends React.Component<Props, {}> {
 
   render(): JSX.Element {
     return (
-      <div className='heapInput'>
-        <div className='heapInput__form'>
+      <div className={styles.heapInput}>
+        <div className={styles.heapInput__form}>
           <p>Paste your heap contents here:</p>
           <input
             ref={(input: HTMLInputElement): void => { this.input = input }}
             type='text'
-            className='heapInput__form--textbox' />
+            className={styles['heapInput__form--textbox']} />
           <Button onClick={this.processInput}>
             Generate tree
           </Button>
@@ -82,7 +84,7 @@ export default class HeapInput extends React.Component<Props, {}> {
           Accepted format example:&nbsp;
           <a
             onClick={this.showSample}
-            className='heapInput__sample'>
+            className={styles.heapInput__sample}>
             1,2,3
           </a>
           &nbsp;(no enclosing brackets, spaces optional)

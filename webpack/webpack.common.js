@@ -2,6 +2,31 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const autoprefixer = require('autoprefixer')
 
+const getCssLoaders = (useCssModules, mode) => {
+  const cssLoader = useCssModules
+    ? {
+        loader: 'css-loader',
+        options: {
+          modules: true,
+          sourceMap: true,
+          localIdentName: mode === 'prod' ? '[hash:base64:5]' : '[local]__[hash:base64:5]',
+        },
+      }
+    : 'css-loader'
+  return [
+    MiniCssExtractPlugin.loader,
+    cssLoader,
+    {
+      loader: 'postcss-loader',
+      options: {
+        ident: 'postcss',
+        plugins: [autoprefixer],
+      },
+    },
+    'sass-loader',
+  ]
+}
+
 module.exports = {
   config: (mode) => ({
     entry: [
@@ -26,27 +51,17 @@ module.exports = {
           loader: 'source-map-loader',
           enforce: 'pre',
         },
+        // use css modules for most styles
         {
           test: /\.scss$/,
-          use: [
-            MiniCssExtractPlugin.loader,
-            {
-              loader: 'css-loader',
-              options: {
-                modules: true,
-                sourceMap: true,
-                localIdentName: mode === 'prod' ? '[hash:base64:5]' : '[local]__[hash:base64:5]',
-              },
-            },
-            {
-              loader: 'postcss-loader',
-              options: {
-                ident: 'postcss',
-                plugins: [autoprefixer],
-              },
-            },
-            'sass-loader',
-          ],
+          exclude: /(index.scss|node_modules)/,
+          use: getCssLoaders(true, mode),
+        },
+        // load global styles normally
+        {
+          test: /\.scss$/,
+          include: /(index.scss|node_modules)/,
+          use: getCssLoaders(false, mode),
         },
       ],
     },

@@ -3,6 +3,8 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import FormInput from './FormInput'
 
+const styles = require('./scss/E85.scss') // tslint:disable-line no-var-requires
+
 interface State {
   currentGallons: number
   currentEthanolPercentage: number
@@ -121,11 +123,11 @@ export default class E85 extends React.Component<{}, State> {
     } = this.state
 
     return (
-      <div className='e85'>
+      <div className={styles.e85}>
         <Form
-          className='e85__form'
+          className={styles.e85__form}
           onSubmit={handleSubmit}>
-          <div className='e85__form__row'>
+          <div className={styles.e85__form__row}>
             <FormInput
               id='currentGallons'
               label='Current Gallons'
@@ -138,7 +140,7 @@ export default class E85 extends React.Component<{}, State> {
               value={currentEthanolPercentage}
               onChange={handleInput('currentEthanolPercentage')} />
           </div>
-          <div className='e85__form__row'>
+          <div className={styles.e85__form__row}>
             <FormInput
               id='fuel1EthanolPercentage'
               label='Fuel 1 Ethanol %'
@@ -150,7 +152,7 @@ export default class E85 extends React.Component<{}, State> {
               value={fuel2EthanolPercentage}
               onChange={handleInput('fuel2EthanolPercentage')} />
           </div>
-          <div className='e85__form__row'>
+          <div className={styles.e85__form__row}>
             <FormInput
               id='desiredTotalGallons'
               label='Total Gallons'
@@ -168,13 +170,17 @@ export default class E85 extends React.Component<{}, State> {
           </Button>
         </Form>
         {showResults &&
-          <div className='e85__results'>
-            <div>You need <span className='e85__resultGallons'>{fuel1Gallons.toFixed(2)}</span> gallons of fuel 1</div>
-            <div>You need <span className='e85__resultGallons'>{fuel2Gallons.toFixed(2)}</span> gallons of fuel 2</div>
+          <div className={styles.e85__results}>
+            <div>You need <span className={styles.e85__resultGallons}>
+              {fuel1Gallons.toFixed(2)}
+            </span> gallons of fuel 1</div>
+            <div>You need <span className={styles.e85__resultGallons}>
+              {fuel2Gallons.toFixed(2)}
+            </span> gallons of fuel 2</div>
           </div>
         }
         {showError &&
-          <div className='e85__error'>
+          <div className={styles.e85__error}>
             {errorMessage}
           </div>
         }

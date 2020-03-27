@@ -1,6 +1,8 @@
 import * as React from 'react'
 import Button from 'react-bootstrap/Button';
 
+const styles = require('./scss/Imports.scss') // tslint:disable-line no-var-requires
+
 interface State {
   rawValue: string
   formattedValue: string
@@ -122,13 +124,13 @@ import 'code';`,
     const { onChange, checkKeyDown, checkKeyUp, replaceText, loadMockImports, fix } = this
     const { rawValue, formattedValue } = this.state
     return (
-      <div className='import'>
-        <h3 className='import__title'>
+      <div className={styles.import}>
+        <h3 className={styles.import__title}>
           Import Fixer
         </h3>
         <textarea
           ref={this.input}
-          className='import__textarea'
+          className={styles.import__textarea}
           value={rawValue}
           onChange={onChange}
           onKeyDown={checkKeyDown}
@@ -136,12 +138,12 @@ import 'code';`,
           onPaste={replaceText} />
         <div>
           <Button
-            className='import__button'
+            className={styles.import__button}
             onClick={loadMockImports}>
             load sample
           </Button>
           <Button
-            className='import__button'
+            className={styles.import__button}
             onClick={fix}>
             fix imports
           </Button>
@@ -150,7 +152,7 @@ import 'code';`,
           ref={this.output}
           value={formattedValue}
           readOnly={true}
-          className='import__textarea' />
+          className={styles.import__textarea} />
       </div>
     )
   }

@@ -1,4 +1,7 @@
+import classNames from 'classnames'
 import * as React from 'react'
+
+const styles = require('./scss/IconButton.scss') // tslint:disable-line no-var-requires
 
 interface Props {
   onClick?: () => void
@@ -18,7 +21,10 @@ const IconButton: React.StatelessComponent<Props> = ({
   isDraggable,
 }: Props): JSX.Element => (
   <div
-    className={`iconButton ${hidden ? 'iconButton--hidden' : ''} ${className}`}
+    className={classNames(
+      styles.iconButton,
+      className,
+      { [styles['iconButton--hidden']]: hidden })}
     onDragStart={onDragStart}
     draggable={isDraggable}>
     <svg

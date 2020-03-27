@@ -3,6 +3,8 @@ import Button from 'react-bootstrap/Button'
 import ColorChanger from './ColorChanger'
 import StrobeOptions from './StrobeOptions'
 
+const styles = require('./scss/Strobe.scss') // tslint:disable-line no-var-requires
+
 interface State {
   background: string
   ms: number
@@ -40,10 +42,7 @@ export default class Strobe extends React.Component<{}, State> {
   }
 
   updateMs = (ms: number): void => {
-    this.setState({ ms }, () => {
-      clearInterval(this.moveInterval)
-      this.moveInterval = setInterval(this.updateStrobe, ms) as unknown as number
-    })
+    this.setState({ ms })
   }
 
   showOptions = (): void => {
@@ -78,18 +77,18 @@ export default class Strobe extends React.Component<{}, State> {
 
     return (
       <div
-        className='strobe'
+        className={styles.strobe}
         style={{ background }}>
         {!showingOptions &&
-          <div className='strobe__buttons'>
+          <div className={styles.strobe__buttons}>
             <Button
               onClick={togglePause}
-              className='strobe__button'>
+              className={styles.strobe__button}>
               { paused ? 'Play' : 'Pause' }
             </Button>
             <Button
               onClick={showOptions}
-              className='strobe__button'>
+              className={styles.strobe__button}>
               Options
             </Button>
           </div>
@@ -111,10 +110,10 @@ export default class Strobe extends React.Component<{}, State> {
       ms,
     } = this.state
 
-    // paused and on   -> start
-    // paused and off  -> do nothing
-    // playing and on  -> do nothing
-    // playing and off -> stop
+    // paused and should turn on   -> start
+    // paused and should turn off  -> do nothing
+    // playing and should turn on  -> do nothing
+    // playing and should turn off -> stop
     if (paused && shouldTurnOn) {
       this.moveInterval = setInterval(this.updateStrobe, ms) as unknown as number
     } else if (!paused && !shouldTurnOn) {

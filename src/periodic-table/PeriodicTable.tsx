@@ -1,9 +1,11 @@
+import classNames from 'classnames'
 import * as React from 'react'
-
 import CurrentElement from './CurrentElement'
 import ElementCard from './ElementCard'
 import elements, { Element } from './elements'
 import ModeSelect from './ModeSelect'
+
+const styles = require('./scss/PeriodicTable.scss') // tslint:disable-line no-var-requires
 
 export enum Mode {
   NORMAL = 'NORMAL',
@@ -70,8 +72,8 @@ export default class PeriodicTable extends React.Component<{}, State> {
     } = this.state
 
     return (
-      <div className='pTable'>
-        <div className='pTable__table'>
+      <div className={styles.pTable}>
+        <div className={styles.pTable__table}>
           {/* main elements */}
           {columnElements.map((e: Element) => (
             <ElementCard
@@ -81,11 +83,15 @@ export default class PeriodicTable extends React.Component<{}, State> {
               mode={mode} />
           ))}
           {/* lanthanoids placeholder */}
-          <div className='elementPlaceholder elementPlaceholder--1'>
+          <div className={classNames(
+              styles.elementPlaceholder,
+              styles['elementPlaceholder--1'])}>
             57-71
           </div>
           {/* actinoids placeholder */}
-          <div className='elementPlaceholder elementPlaceholder--2'>
+          <div className={classNames(
+              styles.elementPlaceholder,
+              styles['elementPlaceholder--2'])}>
             89-103
           </div>
           {/* lanthanoids */}

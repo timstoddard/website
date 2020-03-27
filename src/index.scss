@@ -1,48 +1,16 @@
 /*
-FONTS
-
-Roboto: Home, most of the other pages
-Frederick the Great: About/Projects
-Inconsolata: JS Clock
+* FONTS
+*
+* Roboto: Home, most of the other pages
+* Frederick the Great: About/Projects
+* Inconsolata: JS Clock
 */
 @import url(https://fonts.googleapis.com/css?family=Roboto:100,400,700|Fredericka+the+Great|Inconsolata&display=swap);
 
 // bootstrap styles
 @import '~bootstrap/scss/bootstrap';
 
-// TODO delete imports: shared functions, mixins, and variables
-@import '../src/scss/functions';
-@import '../src/scss/mixins';
-@import '../src/scss/variables';
-
-// index files
-@import '../src/heap/scss/index';
-// @import '../src/home/scss/index';
-// @import '../src/hue/scss/index';
-@import '../src/periodic-table/scss/index';
-// @import '../src/start/scss/index';
-@import '../src/strobe/scss/index';
-@import '../src/todo/scss/index';
-
-// direct imports
-@import '../src/battery/scss/Battery';
-@import '../src/2048/scss/2048';
-@import '../src/bingo/scss/Bingo';
-@import '../src/e85/scss/E85';
-@import '../src/flicker/scss/Flicker';
-@import '../src/imports/scss/Imports';
-// @import '../src/incr-game/scss/IncrGame';
-@import '../src/infinity/scss/Infinity';
-@import '../src/loading-page/scss/LoadingPage';
-@import '../src/not-found/scss/NotFound';
-@import '../src/perf/scss/Perf';
-@import '../src/pride/scss/Pride';
-@import '../src/rice-purity-test/scss/RicePurityTest';
-@import '../src/text-tools/scss/TextTools';
-// @import '../src/time/scss/Time';
-@import '../src/trippy/scss/Trippy';
-@import '../src/zen/scss/Zen';
-
+// global styles
 body {
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;

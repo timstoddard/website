@@ -1,6 +1,8 @@
+import classNames from 'classnames'
 import * as React from 'react'
-
 import { Mode } from './PeriodicTable'
+
+const styles = require('./scss/ModeSelect.scss') // tslint:disable-line no-var-requires
 
 interface Props {
   mode: Mode
@@ -18,21 +20,20 @@ const ModeSelect: React.StatelessComponent<Props> = ({
   <>
     <div
       onClick={toggleMode}
-      className={[
-        'mode__toggle',
-        showModeSelect ? 'mode__toggle--open' : '',
-      ].join(' ')}>
+      className={classNames(
+        styles.mode__toggle,
+        { [styles['mode__toggle--open' ]]: showModeSelect })}>
       Mode
     </div>
     {showModeSelect && (<>
       <div
         onClick={toggleMode}
-        className='mode__shield' />
-      <div className='mode__wrapper'>
+        className={styles.mode__shield} />
+      <div className={styles.mode__wrapper}>
         <select
           onChange={handleSelectChange}
           value={mode}
-          className='mode__select'>
+          className={styles.mode__select}>
           <option value={Mode.NORMAL}>
             Normal
           </option>

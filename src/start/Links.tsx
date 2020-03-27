@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 
@@ -88,9 +89,11 @@ export default class Links extends React.Component<Props, {}> {
   render(): JSX.Element {
     const { className } = this.props
     return (
-      <div className={`${styles.links} ${className}`}>
+      <div className={classNames(styles.links, className)}>
         <Link
-          className={`${styles.links__item} ${styles2.start__links__item}`}
+          className={classNames(
+            styles.links__item,
+            styles2.start__links__item)}
           to=''>
           Home
         </Link>
@@ -100,7 +103,9 @@ export default class Links extends React.Component<Props, {}> {
             href={href}
             target='_blank'
             rel='noopener noreferrer'
-            className={`${styles.links__item} ${styles2.start__links__item}`}>
+            className={classNames(
+              styles.links__item,
+              styles2.start__links__item)}>
             {name}
           </a>
         ))}

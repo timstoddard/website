@@ -1,3 +1,6 @@
+@import 'src/scss/globals';
+@import './variables';
+
 .pTable {
   @include forceHeight(100vh);
   @include forceWidth(100vw);

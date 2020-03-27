@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 
@@ -132,7 +133,9 @@ const Projects: React.StatelessComponent<{}> = (): JSX.Element => {
                 key={projectName}>
                 <Link to={link}>
                   {/* tslint:disable-next-line:max-line-length */}
-                  <span className={`${styles.projects__link} ${inProgress ? styles['projects__link--inProgress'] : ''}`}>
+                  <span className={classNames(
+                    styles.projects__link,
+                    { [styles['projects__link--inProgress']]: inProgress })}>
                     {projectName}
                   </span>
                 </Link>

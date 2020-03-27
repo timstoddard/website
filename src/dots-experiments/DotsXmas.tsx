@@ -1,4 +1,7 @@
+import classNames from 'classnames'
 import * as React from 'react'
+
+const styles = require('../home/scss/Dots.scss') // tslint:disable-line no-var-requires
 
 interface State {
   visible: boolean
@@ -223,7 +226,9 @@ export default class DotsXmas extends React.Component<{}, State> {
 
     return (
       <canvas
-        className={`dots ${visible ? 'dots--visible' : ''}`}
+        className={classNames(
+          styles.dots,
+          visible ? styles['dots--visible'] : '')}
         ref={(canvas: HTMLCanvasElement): void => { this.canvas = canvas }} />
     )
   }

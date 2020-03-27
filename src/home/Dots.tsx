@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import * as React from 'react'
 
 const styles = require('./scss/Dots.scss') // tslint:disable-line no-var-requires
@@ -223,7 +224,9 @@ export default class Dots extends React.Component<Props, State> {
 
     return (
       <canvas
-        className={`${styles.dots} ${visible ? styles['dots--visible'] : ''}`}
+        className={classNames(
+          styles.dots,
+          visible ? styles['dots--visible'] : '')}
         ref={(canvas: HTMLCanvasElement): void => { this.canvas = canvas }} />
     )
   }

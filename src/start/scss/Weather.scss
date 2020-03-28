@@ -5,18 +5,45 @@
   border-radius: 4px;
 }
 
-$currentTempPadding: 20px;
+$headerPadding: 25px;
 
 .weather {
   align-items: center;
   display: flex;
   flex-direction: column;
 
+  &__header {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding: $headerPadding 10px;
+    position: relative;
+    width: 100%;
+  }
+
+  &__title {
+    text-align: center;
+  }
+
+  &__reload {
+    @include defaultTransition(background);
+    $reloadButtonMargin: 4px;
+    border-radius: 5px;
+    cursor: pointer;
+    position: absolute;
+    top: $reloadButtonMargin;
+    right: $reloadButtonMargin;
+    width: $headerPadding;
+
+    &:hover {
+      background: rgb(240,240,240);
+    }
+  }
+
   &__icon {
     @include iconBackground;
     height: auto;
     margin: 5px 0;
-    margin-top: $currentTempPadding;
     width: 50%;
   }
 
@@ -26,7 +53,6 @@ $currentTempPadding: 20px;
     display: grid;
     grid-template-columns: 60% 40%;
     grid-template-rows: 50% 50%;
-    padding-bottom: $currentTempPadding;
 
     &--current,
     &--high,

@@ -2,69 +2,107 @@ import axios from 'axios'
 
 // TODO make these global shared functions?
 export const get = <T>(key: string): T => JSON.parse(localStorage.getItem(key))
-export const set = (key: string, item: unknown): void => localStorage.setItem(key, JSON.stringify(item))
+export const set = (key: string, item: unknown) => localStorage.setItem(key, JSON.stringify(item))
 
-export default class StartUtils {
-  // WEATHER
+export class WeatherUtils {
+  loadStoredAssets: () => void
 
-  /**
-   * Fetches the latest weather data.
-   */
-  static getWeatherData = async (): Promise<void> => {
-    // update data if needed
-    if (StartUtils.needNewWeatherData()) {
-      const options = {
-        q: 'Sunnyvale,us',
-        units: 'imperial',
+  constructor(loadStoredAssets: () => void) {
+    this.loadStoredAssets = loadStoredAssets
+  }
+
+  initWeather = (forceUpdate: boolean) => {
+    // this.reloadWeatherData()
+
+    // TODO use a service worker for managing this
+    if (this.hasWeatherDataInLocalStorage()) {
+      // use old data to have something painted on the screen
+      // this.loadStoredAssets()
+
+      if (forceUpdate) {
+        this.reloadWeatherData()
+      } else if (this.needNewWeatherData()) {
+        if (this.hasLocationDataInLocalStorage()) {
+          this.getWeatherData(get('locationData'))
+        } else {
+          this.reloadWeatherData()
+        }
+      } else {
+        this.loadStoredAssets()
       }
-
-      // load current weather
-      try {
-        const response = await axios.get(StartUtils.getWeatherUrl('weather', options))
-        set('weatherData', response.data)
-        set('weatherTimestamp', Date.now())
-      } catch (error) {
-        console.error(error) // tslint:disable-line:no-console
-      }
-
-      // load weather forecast
-      try {
-        const response = await axios.get(StartUtils.getWeatherUrl('forecast', options))
-        set('weatherForecast', response.data.list)
-        set('weatherTimestamp', Date.now())
-      } catch (error) {
-        console.error(error) // tslint:disable-line:no-console
-      }
+    } else {
+      this.reloadWeatherData()
     }
   }
 
   /**
-   * Returns true if there is existing data in local storage.
+   * Fetches the latest weather data.
    */
-  static hasWeatherDataInLocalStorage = (): boolean =>
+  private getWeatherData = async (locationData: { [key: string]: unknown }): Promise<void> => {
+    const options = {
+      // q: 'Sunnyvale,us',
+      units: 'imperial',
+      ...locationData,
+    }
+    const getResponse = async (path: string) =>
+      await axios.get(this.getWeatherUrl(path, options))
+
+    // load current weather
+    try {
+      const response = await getResponse('weather')
+      set('weatherData', response.data)
+    } catch (error) {
+      console.error(error) // tslint:disable-line:no-console
+    }
+
+    // load weather forecast
+    try {
+      const response = await getResponse('forecast')
+      set('weatherForecast', response.data.list)
+    } catch (error) {
+      console.error(error) // tslint:disable-line:no-console
+    }
+
+    // set weather timestamp
+    set('weatherTimestamp', Date.now())
+
+    // weather is now loaded, so let the component know
+    this.loadStoredAssets()
+  }
+
+  /**
+   * Returns true if there is existing weather data in local storage.
+   */
+  private hasWeatherDataInLocalStorage = () =>
     !!get('weatherData') &&
     !!get('weatherForecast') &&
     !!get('weatherTimestamp')
+
+  /**
+   * Returns true if there is existing location data in local storage.
+   */
+  private hasLocationDataInLocalStorage = () =>
+    !!get('locationData')
 
   /**
    * Returns true if the timestamp is more than an
    * 10 mins old, or if a new hour has started since
    * the timestamp was set; false otherwise.
    */
- static needNewWeatherData = (): boolean => {
-   if (StartUtils.hasWeatherDataInLocalStorage()) {
+  private needNewWeatherData = (): boolean => {
+   if (this.hasWeatherDataInLocalStorage()) {
      const time1 = new Date()
      const time2 = new Date(parseInt(get('weatherTimestamp'), 10))
      const timeDifferenceInMinutes = Math.floor(Math.abs(time2.valueOf() - time1.valueOf()) / (60 * 1000))
      return timeDifferenceInMinutes > 10 ? true : time1.getHours() !== time2.getHours()
    } else {
-    return false
+    return true
    }
  }
 
-  static getWeatherUrl = (path: string, params: { [key: string]: string }): string => {
+ private getWeatherUrl = (path: string, params: { [key: string]: string }): string => {
     const baseUrl = 'https://api.openweathermap.org/data/2.5'
-    // TODO dont commit this
+    // TODO do this in lambda function to hide app id?
     const appId = "b3f6d7044a2fcd4f570c571be44776fe"
     const queryParams = [`APPID=${appId}`]
     for (const param in params) {
@@ -73,6 +111,56 @@ export default class StartUtils {
     return `${baseUrl}/${path}?${queryParams.join('&')}`
   }
 
+  private reloadWeatherData = () => {
+    localStorage.removeItem('locationData')
+    localStorage.removeItem('weatherData')
+    localStorage.removeItem('weatherForecast')
+    localStorage.removeItem('weatherTimestamp')
+    this.getLocation()
+  }
+
+  /**
+   * Gets the lat/long of a user, otherwise asks for their zip code. This
+   * location data is then used to fetch their local weather.
+   */
+  private getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (location: Position) => {
+          const locationData = {
+            lat: location.coords.latitude,
+            lon: location.coords.longitude,
+          }
+          this.getWeatherData(locationData)
+          set('locationData', locationData)
+        },
+        () => this.getZipCode(),
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 })
+    } else {
+      this.getZipCode()
+    }
+  }
+
+  /**
+   * Asks the user for their 5 digit zip code. Re-prompts while response is invalid.
+   */
+  private getZipCode = () => {
+    const zipCodeMessage = (message: string) => `${message}\nPlease enter your 5 digit zip code.`
+    let zipCode = prompt(zipCodeMessage('There was an error determining your location.'))
+    if (zipCode !== null) {
+      while (!zipCode.match(/^\d{5}$/)) {
+        zipCode = prompt(zipCodeMessage('The zip code you entered is invalid.'))
+      }
+      const locationData = {
+        zip: zipCode,
+      }
+      this.getWeatherData(locationData)
+      set('locationData', locationData)
+    }
+  }
+}
+
+export class StartUtils {
   // TIME/DATE
 
   static createDateString = (date: Date): string => {
@@ -133,41 +221,3 @@ export default class StartUtils {
       : `Good ${timeOfDay}!`
   }
 }
-
-// TODO add back in location detection
-// const hasLocationDataInLocalStorage = () =>
-  //   get('locationData')
-
-/*const getLocation = (): void => {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (location: Position): void => {
-        const locationData = `${location.coords.latitude},${location.coords.longitude}`
-        getWeatherData(locationData)
-        set('locationData', locationData)
-      },
-      (): void => getZipCode(),
-      { enableHighAccuracy: true, timeout: 30000, maximumAge: 0 })
-  } else {
-    getZipCode()
-  }
-}
-
-const getZipCode = (): void => {
-  let zipCode = prompt('There was an error determining your location.\nPlease enter your 5 digit zip code.')
-  if (zipCode !== null) {
-    while (!(zipCode.match(/\d{5}/) || zipCode.match(/\d{5}[- ]?\d{4}/))) {
-      zipCode = prompt('The zip code you entered is invalid.\nPlease enter your 5 digit zip code.')
-    }
-    getWeatherData(zipCode)
-    set('locationData', zipCode)
-  }
-}*/
-
-/*export const reloadWeatherData = (setReloading: (reloading: boolean) => void): void => {
-  localStorage.removeItem('locationData')
-  localStorage.removeItem('weatherData')
-  localStorage.removeItem('weatherTimestamp')
-  getLocation()
-  setReloading(true)
-}*/

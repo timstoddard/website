@@ -82,6 +82,7 @@ module.exports = {
         },
         removeComments: true,
       }
+      htmlWebpackPluginOptions.scriptLoading = 'defer'
     }
     return [
       new HtmlWebpackPlugin(htmlWebpackPluginOptions),

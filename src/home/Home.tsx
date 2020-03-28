@@ -27,6 +27,9 @@ const links: HomepageLink[] = [
 const Home: React.StatelessComponent<{}> = (): JSX.Element => {
   document.title = 'Tim Stoddard'
 
+  const setIfExternalPath = (pathname: string, tResult: string): string =>
+    pathname[0] !== '/' ? tResult : ''
+
   return (
     <div className={styles.home}>
       <Dots delay={200} />
@@ -41,7 +44,8 @@ const Home: React.StatelessComponent<{}> = (): JSX.Element => {
               className={styles.home__link}>
               <Link
                 to={{ pathname }}
-                target={pathname[0] !== '/' ? '_blank' : ''}
+                target={setIfExternalPath(pathname, '_blank')}
+                rel={setIfExternalPath(pathname, 'noopener noreferrer')}
                 className={styles.home__linkText}>
                 {text}
               </Link>

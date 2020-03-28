@@ -19,15 +19,18 @@ interface Dot {
 
 export default class DotsBlack extends React.Component<{}, State> {
   dots: Dot[]
-  canvas: HTMLCanvasElement
+  canvasElement: React.Ref<HTMLCanvasElement>
+  imgRef: React.Ref<HTMLImageElement>
   moveInterval: number
   visibleTimer: number
   averageRGBCache: { [key: string]: string } = {}
   twoPiRadians: number = 2 * Math.PI
-  ref: any; // TODO better type
 
   constructor(props: {}) {
     super(props)
+
+    this.canvasElement = React.createRef()
+    this.imgRef = React.createRef()
 
     this.state = {
       visible: false,
@@ -55,9 +58,9 @@ export default class DotsBlack extends React.Component<{}, State> {
       const {
         clientWidth: viewportWidth,
         clientHeight: viewportHeight,
-      } = document.documentElement
-      this.canvas.width = viewportWidth
-      this.canvas.height = viewportHeight
+      } = document.documentElement;
+      (this.canvasElement as any).current.width = viewportWidth;
+      (this.canvasElement as any).current.height = viewportHeight
       const threshold = Math.min(viewportWidth, viewportHeight) / 2.5
       this.setState({ drawLineThresholdSquared: threshold * threshold })
     }
@@ -85,7 +88,7 @@ export default class DotsBlack extends React.Component<{}, State> {
         ? this.generateNewDot()
         : { x: newX, y: newY, dx, dy, radius, opacity }
     })
-    const canvas = this.canvas.getContext('2d')
+    const canvas = (this.canvasElement as any).current.getContext('2d')
     canvas.clearRect(0, 0, viewportWidth, viewportHeight)
     const { drawLineThresholdSquared } = this.state
     for (let i = 0; i < this.dots.length; i++) {
@@ -163,7 +166,7 @@ export default class DotsBlack extends React.Component<{}, State> {
     const width = height * 2.5;
     canvas.globalAlpha = opacity
     canvas.drawImage(
-      this.ref,
+      (this.imgRef as any).current,
       // source coords
       100, 820, 1850, 650,
       // dest coords
@@ -188,13 +191,13 @@ export default class DotsBlack extends React.Component<{}, State> {
 
     return (
       <canvas
+        ref={this.canvasElement}
         className={classNames(
           styles.dots,
-          visible ? styles['dots--visible'] : '')}
-        ref={(canvas: HTMLCanvasElement): void => { this.canvas = canvas }}>
+          visible ? styles['dots--visible'] : '')}>
         <img
-          src='http://www.rssportscars.com/photos/cars/2016-ford-focus-rs/focus-rs-usa-08-nyc-skyline.jpg'
-          ref={(ref: any): void => { this.ref = ref }} />
+          ref={this.imgRef}
+          src='http://www.rssportscars.com/photos/cars/2016-ford-focus-rs/focus-rs-usa-08-nyc-skyline.jpg' />
       </canvas>
     )
   }

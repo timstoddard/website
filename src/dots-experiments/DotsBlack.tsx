@@ -24,7 +24,7 @@ enum Color {
 
 export default class DotsBlack extends React.Component<{}, State> {
   dots: Dot[]
-  canvas: HTMLCanvasElement
+  canvasElement: React.Ref<HTMLCanvasElement>
   moveInterval: number
   visibleTimer: number
   averageRGBCache: { [key: string]: string } = {}
@@ -32,6 +32,8 @@ export default class DotsBlack extends React.Component<{}, State> {
 
   constructor(props: {}) {
     super(props)
+
+    this.canvasElement = React.createRef()
 
     this.state = {
       visible: false,
@@ -59,9 +61,9 @@ export default class DotsBlack extends React.Component<{}, State> {
       const {
         clientWidth: viewportWidth,
         clientHeight: viewportHeight,
-      } = document.documentElement
-      this.canvas.width = viewportWidth
-      this.canvas.height = viewportHeight
+      } = document.documentElement;
+      (this.canvasElement as any).current.width = viewportWidth;
+      (this.canvasElement as any).current.height = viewportHeight
       const threshold = Math.min(viewportWidth, viewportHeight) / 5
       this.setState({ drawLineThresholdSquared: threshold * threshold })
     }
@@ -89,7 +91,7 @@ export default class DotsBlack extends React.Component<{}, State> {
         ? this.generateNewDot(color)
         : { x: newX, y: newY, dx, dy, radius, opacity, color }
     })
-    const canvas = this.canvas.getContext('2d')
+    const canvas = (this.canvasElement as any).current.getContext('2d')
     canvas.clearRect(0, 0, viewportWidth, viewportHeight)
     const { drawLineThresholdSquared } = this.state
     for (let i = 0; i < this.dots.length; i++) {
@@ -217,10 +219,10 @@ export default class DotsBlack extends React.Component<{}, State> {
 
     return (
       <canvas
+        ref={this.canvasElement}
         className={classNames(
           styles.dots,
-          visible ? styles['dots--visible'] : '')}
-        ref={(canvas: HTMLCanvasElement): void => { this.canvas = canvas }} />
+          visible ? styles['dots--visible'] : '')} />
     )
   }
 }

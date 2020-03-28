@@ -12,15 +12,17 @@ interface State {
 }
 
 export default class Zen extends React.Component<{}, State> {
+  mover1: React.Ref<Mover>
+  mover2: React.Ref<Mover>
   colorChanger1: ColorChanger
   colorChanger2: ColorChanger
-  mover1: Mover
-  mover2: Mover
   moveInterval: number
 
   constructor(props: {}) {
     super(props)
 
+    this.mover1 = React.createRef()
+    this.mover2 = React.createRef()
     this.colorChanger1 = new ColorChanger()
     this.colorChanger2 = new ColorChanger()
     this.colorChanger2.setRGB(0, 255, 255, false, 'g')
@@ -57,9 +59,9 @@ export default class Zen extends React.Component<{}, State> {
 
   updateBlock = (): void => {
     const nextColor1 = this.colorChanger1.nextColor()
-    const nextColor2 = this.colorChanger2.nextColor()
-    this.mover1.move(nextColor1)
-    this.mover2.move(nextColor2)
+    const nextColor2 = this.colorChanger2.nextColor();
+    (this.mover1 as any).current.move(nextColor1);
+    (this.mover2 as any).current.move(nextColor2)
   }
 
   render(): JSX.Element {
@@ -73,7 +75,7 @@ export default class Zen extends React.Component<{}, State> {
     return (
       <div className={styles.zen}>
         <Mover
-          ref={(mover: Mover): void => { this.mover1 = mover }}
+          ref={this.mover1}
           direction={1}
           offset={0}
           centerX={screenCenterX}
@@ -82,7 +84,7 @@ export default class Zen extends React.Component<{}, State> {
           maxRadius={maxRadius}
           radiusChangeSpeed={0.2} />
         <Mover
-          ref={(mover: Mover): void => { this.mover2 = mover }}
+          ref={this.mover2}
           direction={-1}
           offset={Math.PI / 2}
           centerX={screenCenterX}

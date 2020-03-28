@@ -27,10 +27,12 @@ interface State {
 }
 
 export default class Todo extends React.Component<Props, State> {
-  dropTarget: HTMLLIElement
+  dropTarget: React.Ref<HTMLLIElement>
 
   constructor(props: Props) {
     super(props)
+
+    this.dropTarget = React.createRef()
 
     this.state = {
       isDraggable: false,
@@ -111,7 +113,7 @@ export default class Todo extends React.Component<Props, State> {
         onDragOver={onDragOver}
         onDrop={onDrop}
         draggable={isDraggable}
-        ref={(elem: HTMLLIElement): void => { this.dropTarget = elem }}>
+        ref={this.dropTarget}>
         <Form>
           {!isEditing &&
             <Form.Check

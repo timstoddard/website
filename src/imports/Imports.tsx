@@ -30,8 +30,9 @@ export default class Imports extends React.Component<{}, State> {
 
   constructor(props: {}) {
     super(props)
-    this.input = React.createRef();
-    this.output = React.createRef();
+
+    this.input = React.createRef()
+    this.output = React.createRef()
 
     this.state = {
       rawValue: '',

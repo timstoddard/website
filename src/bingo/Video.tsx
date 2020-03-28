@@ -14,10 +14,12 @@ interface State {
 }
 
 export default class Video extends React.Component<Props, State> {
-  videoDiv: HTMLDivElement
+  videoWrapper: React.Ref<HTMLDivElement>
 
   constructor(props: Props) {
     super(props)
+
+    this.videoWrapper = React.createRef()
 
     this.state = {
       videos: [],
@@ -38,14 +40,14 @@ export default class Video extends React.Component<Props, State> {
         console.error(error) // tslint:disable-line:no-console
       })
     window.addEventListener('resize', this.onResize)
-    window.addEventListener('keyup', this.onResize)
-    this.videoDiv.addEventListener('dblclick', this.onResize)
+    window.addEventListener('keyup', this.onResize);
+    (this.videoWrapper as any).current.addEventListener('dblclick', this.onResize)
   }
 
   componentWillUnmount(): void {
     window.removeEventListener('resize', this.onResize)
-    window.removeEventListener('keyup', this.onResize)
-    this.videoDiv.removeEventListener('dblclick', this.onResize)
+    window.removeEventListener('keyup', this.onResize);
+    (this.videoWrapper as any).current.removeEventListener('dblclick', this.onResize)
   }
 
   onResize = (): void => {
@@ -97,7 +99,7 @@ export default class Video extends React.Component<Props, State> {
       <div className={className}>
         <h5>{currentVideoTitle}</h5>
         <div
-          ref={(div: HTMLDivElement): void => { this.videoDiv = div }}
+          ref={this.videoWrapper}
           dangerouslySetInnerHTML={{ __html: currentVideoHtml }} />
       </div>
     )

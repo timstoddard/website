@@ -5,14 +5,15 @@ import Video from './Video'
 const styles = require('./scss/Bingo.scss') // tslint:disable-line no-var-requires
 
 export default class Bingo extends React.Component<{}, {}> {
-  videoPlayer: Video
+  videoPlayer: React.Ref<Video>
 
   constructor(props: {}) {
     super(props)
+    this.videoPlayer = React.createRef()
   }
 
   loadNewVideo = (): void => {
-    this.videoPlayer.loadNewVideo()
+    (this.videoPlayer as any).current.loadNewVideo()
   }
 
   render(): JSX.Element {
@@ -23,8 +24,8 @@ export default class Bingo extends React.Component<{}, {}> {
           Car Crash Bingo
         </h3>
         <Video
-          className={styles.bingo__video}
-          ref={(ref: Video): void => { this.videoPlayer = ref }} />
+          ref={this.videoPlayer}
+          className={styles.bingo__video} />
         <Board
           className={styles.bingo__board}
           onSubmit={this.loadNewVideo} />

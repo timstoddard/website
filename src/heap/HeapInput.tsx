@@ -8,10 +8,11 @@ interface Props {
 }
 
 export default class HeapInput extends React.Component<Props, {}> {
-  input: HTMLInputElement
+  input: React.Ref<HTMLInputElement>
 
   constructor(props: Props) {
     super(props)
+    this.input = React.createRef()
   }
 
   componentDidMount(): void {
@@ -23,12 +24,12 @@ export default class HeapInput extends React.Component<Props, {}> {
       const { generateHeaps } = this.props
       const hashData = decodeURIComponent(window.location.hash.substr(1))
       if (/\d(,\d+)*/.test(hashData)) {
-        this.input.value = hashData
+        (this.input as any).current.value = hashData
         const ints = hashData.split(',').map((n: string) => parseInt(n, 10))
         generateHeaps(ints)
       } else {
-        window.location.hash = ''
-        this.input.value = ''
+        window.location.hash = '';
+        (this.input as any).current.value = ''
         generateHeaps([])
       }
     } catch (e) {
@@ -42,14 +43,14 @@ export default class HeapInput extends React.Component<Props, {}> {
   }
 
   processInput = (): void => {
-    const rawInput = this.input.value.replace(/\s/g, '')
+    const rawInput = (this.input as any).current.value.replace(/\s/g, '')
     if (rawInput.length === 0) {
-      this.input.value = ''
+      (this.input as any).current.value = ''
       return
     }
     const rawList = rawInput.split(',')
     if (rawList.length === 0 || (rawList.length === 1 && rawList[0].length === 0)) {
-      this.input.value = ''
+      (this.input as any).current.value = ''
       return
     }
     const ints = []
@@ -73,7 +74,7 @@ export default class HeapInput extends React.Component<Props, {}> {
         <div className={styles.heapInput__form}>
           <p>Paste your heap contents here:</p>
           <input
-            ref={(input: HTMLInputElement): void => { this.input = input }}
+            ref={this.input}
             type='text'
             className={styles['heapInput__form--textbox']} />
           <Button onClick={this.processInput}>

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Button from 'react-bootstrap/Button';
+import Button from 'react-bootstrap/Button'
 
 const styles = require('./scss/Imports.scss') // tslint:disable-line no-var-requires
 
@@ -25,14 +25,11 @@ interface Alias {
 
 // TODO needs logic fixed to follow actual js conventions
 export default class Imports extends React.Component<{}, State> {
-  input: React.Ref<HTMLTextAreaElement>
-  output: React.Ref<HTMLTextAreaElement>
+  input: React.RefObject<HTMLTextAreaElement> = React.createRef()
+  output: React.RefObject<HTMLTextAreaElement> = React.createRef()
 
   constructor(props: {}) {
     super(props)
-
-    this.input = React.createRef()
-    this.output = React.createRef()
 
     this.state = {
       rawValue: '',
@@ -42,7 +39,7 @@ export default class Imports extends React.Component<{}, State> {
   }
 
   componentDidMount(): void {
-    (this.input as any).current.focus()
+    this.input.current.focus()
   }
 
   onChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
@@ -71,14 +68,14 @@ export default class Imports extends React.Component<{}, State> {
     }
   }
 
-  replaceText = (event: React.ClipboardEvent<HTMLTextAreaElement>): void => {
+  replaceText = (event: React.ClipboardEvent): void => {
     event.preventDefault()
-    const clipboardData = (event as any).clipboardData || (window as any).clipboardData
+    const { clipboardData } = event
     const pastedData = clipboardData.getData('Text')
     this.setState({ rawValue: pastedData }, () => {
       // TODO is this needed?
       const { rawValue } = this.state
-      const textareaInput = (this.input as any).current
+      const textareaInput = this.input.current
       textareaInput.value = rawValue
     })
   }
@@ -107,17 +104,16 @@ import 'code';`,
     }, () => {
       // TODO is this needed?
       const { rawValue } = this.state
-      const textareaInput = (this.input as any).current
+      const textareaInput = this.input.current
       textareaInput.value = rawValue
     })
   }
 
   fix = (): void => {
-    const { value } = (this.input as any).current
+    const { value } = this.input.current
     const result = fixImports(value)
-    this.setState({ formattedValue: result }, () => {
-      (this.output as any).current.focus()
-    })
+    this.setState({ formattedValue: result },
+      () => this.output.current.focus())
   }
 
   render(): JSX.Element {
@@ -206,7 +202,7 @@ const fixImports = (value: string): string => {
   // create an object to hold of the module objects
   const modules: { [key: string]: ImportData } = {}
   lines.forEach((line: string) => {
-    // don't want any blank imports
+    // ignore empty lines
     if (line.trim().length > 0) {
       // need module name, as well as data about import
       const data = getData(line)

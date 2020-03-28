@@ -27,12 +27,10 @@ interface State {
 }
 
 export default class Todo extends React.Component<Props, State> {
-  dropTarget: React.Ref<HTMLLIElement>
+  dropTarget: React.RefObject<HTMLLIElement> = React.createRef()
 
   constructor(props: Props) {
     super(props)
-
-    this.dropTarget = React.createRef()
 
     this.state = {
       isDraggable: false,
@@ -40,7 +38,7 @@ export default class Todo extends React.Component<Props, State> {
     }
   }
 
-  onDragStart = (e: React.DragEvent<HTMLDivElement>): void => {
+  onDragStart = (e: React.DragEvent): void => {
     const { index, updateDragState } = this.props
     e.dataTransfer.setData('text/plain', `${index}`)
     e.dataTransfer.dropEffect = 'link'
@@ -52,19 +50,22 @@ export default class Todo extends React.Component<Props, State> {
     this.setState({ isDropTarget: true })
   }
 
-  onDragLeave = (e: React.DragEvent<HTMLLIElement>): void => {
-    const targetPath = (e.nativeEvent as any).path.slice(1)
-    if (!targetPath.includes(this.dropTarget)) {
-      this.setState({ isDropTarget: false })
+  onDragLeave = (e: React.DragEvent): void => {
+    const path = e.nativeEvent.composedPath()
+    if (path) {
+      const targetPath = path.slice(1)
+      if (!targetPath.includes(this.dropTarget.current)) {
+        this.setState({ isDropTarget: false })
+      }
     }
   }
 
-  onDragOver = (e: React.DragEvent<HTMLLIElement>): void => {
+  onDragOver = (e: React.DragEvent): void => {
     e.preventDefault()
     e.dataTransfer.dropEffect = 'link'
   }
 
-  onDrop = (e: React.DragEvent<HTMLLIElement>): void => {
+  onDrop = (e: React.DragEvent): void => {
     e.preventDefault()
     const { index, updateOrder, updateDragState } = this.props
     const data = e.dataTransfer.getData('text')

@@ -8,11 +8,10 @@ interface Props {
 }
 
 export default class HeapInput extends React.Component<Props, {}> {
-  input: React.Ref<HTMLInputElement>
+  input: React.RefObject<HTMLInputElement> = React.createRef()
 
   constructor(props: Props) {
     super(props)
-    this.input = React.createRef()
   }
 
   componentDidMount(): void {
@@ -24,12 +23,12 @@ export default class HeapInput extends React.Component<Props, {}> {
       const { generateHeaps } = this.props
       const hashData = decodeURIComponent(window.location.hash.substr(1))
       if (/\d(,\d+)*/.test(hashData)) {
-        (this.input as any).current.value = hashData
+        this.input.current.value = hashData
         const ints = hashData.split(',').map((n: string) => parseInt(n, 10))
         generateHeaps(ints)
       } else {
-        window.location.hash = '';
-        (this.input as any).current.value = ''
+        window.location.hash = ''
+        this.input.current.value = ''
         generateHeaps([])
       }
     } catch (e) {
@@ -43,14 +42,14 @@ export default class HeapInput extends React.Component<Props, {}> {
   }
 
   processInput = (): void => {
-    const rawInput = (this.input as any).current.value.replace(/\s/g, '')
+    const rawInput = this.input.current.value.replace(/\s/g, '')
     if (rawInput.length === 0) {
-      (this.input as any).current.value = ''
+      this.input.current.value = ''
       return
     }
     const rawList = rawInput.split(',')
     if (rawList.length === 0 || (rawList.length === 1 && rawList[0].length === 0)) {
-      (this.input as any).current.value = ''
+      this.input.current.value = ''
       return
     }
     const ints = []

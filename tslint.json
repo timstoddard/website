@@ -10,7 +10,7 @@
     "no-unused-expression": true,
     "object-literal-sort-keys": false,
     "quotemark": [true, "single"],
-    "semicolon": false,
+    "semicolon": [true, "never"],
     "typedef": {
       "options": [
         "call-signature",

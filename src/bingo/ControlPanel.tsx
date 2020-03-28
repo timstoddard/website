@@ -7,7 +7,7 @@ interface Props {
   buttonText: string
   moveCount: number
   selectedCells: number
-  onSubmit: () => any
+  onSubmit: () => void
 }
 
 const ControlPanel: React.StatelessComponent<Props> = ({

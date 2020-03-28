@@ -2,7 +2,7 @@ import * as React from 'react'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import alternatingCapsTransform from './transformers/alternating-caps'
-import partyParrotTransform from './transformers/party-parrot';
+import partyParrotTransform from './transformers/party-parrot'
 
 const styles = require('./scss/TextTools.scss') // tslint:disable-line no-var-requires
 

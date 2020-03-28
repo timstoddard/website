@@ -57,8 +57,7 @@ export default class E85 extends React.Component<{}, State> {
 
   handleInput = (field: keyof State): ((e: React.ChangeEvent<HTMLInputElement>) => void) => {
     return (e: React.ChangeEvent<HTMLInputElement>): void => {
-      // TODO try to find a less hacky way to make this work
-      this.setState({ [field]: e.target.value } as any)
+      this.setState({ [field]: e.target.value } as unknown as State)
     }
   }
 

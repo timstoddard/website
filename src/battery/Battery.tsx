@@ -3,15 +3,11 @@ import * as React from 'react'
 
 const styles = require('./scss/Battery.scss') // tslint:disable-line no-var-requires
 
-interface State {
-  hasGetBattery: boolean
-  charging: boolean
-  chargingTime: number
-  dischargingTime: number
-  level: number
-  batteryColor: string
-  decreasing: boolean
+interface Nav {
+  getBattery: () => BatteryStats
 }
+
+const getNav = (): Nav => navigator as unknown as Nav
 
 interface BatteryStats {
   charging: boolean
@@ -29,6 +25,16 @@ const batteryListeners = [
   'dischargingtimechange',
 ]
 
+interface State {
+  hasGetBattery: boolean
+  charging: boolean
+  chargingTime: number
+  dischargingTime: number
+  level: number
+  batteryColor: string
+  decreasing: boolean
+}
+
 export default class Battery extends React.Component<{}, State> {
   batteryAnimationInterval: number
   removeEventListeners: () => void
@@ -37,7 +43,7 @@ export default class Battery extends React.Component<{}, State> {
     super(props)
 
     this.state = {
-      hasGetBattery: !!(navigator && (navigator as any).getBattery),
+      hasGetBattery: !!(navigator && getNav().getBattery),
       charging: false,
       chargingTime: 0,
       dischargingTime: 0,
@@ -55,7 +61,7 @@ export default class Battery extends React.Component<{}, State> {
     } = this.state
 
     if (hasGetBattery) {
-      const battery: BatteryStats = await (navigator as any).getBattery()
+      const battery: BatteryStats = await getNav().getBattery()
       this.updateStats(battery)
 
       const onBatteryEvent = (e: Event): void => {

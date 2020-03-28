@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import * as React from 'react'
-import * as Utils from './Utils'
+import StartUtils, { get } from './Utils'
 
 const styles = require('./scss/Weather.scss') // tslint:disable-line no-var-requires
 
@@ -105,15 +105,15 @@ export default class Weather extends React.Component<Props, State> {
   }
 
   async componentDidMount(): Promise<void> {
-    await Utils.getWeatherData()
+    await StartUtils.getWeatherData()
     this.setState({
-      currentWeather: Utils.get('weatherData'),
-      forecast: Utils.get('weatherForecast'),
+      currentWeather: get('weatherData'),
+      forecast: get('weatherForecast'),
     })
   }
 
   getForecastItemDt = (dt: number): JSX.Element => {
-    const dateAndTime = Utils.getDateTimeShort(new Date(dt * 1000))
+    const dateAndTime = StartUtils.getDateTimeShort(new Date(dt * 1000))
     return (<>
       <span>{dateAndTime.date} {dateAndTime.hour}</span>
       <span className={styles.weather__forecastItem__dt__ampm}>
@@ -149,7 +149,7 @@ export default class Weather extends React.Component<Props, State> {
         {currentWeather ? (
           <>
             <img
-              src={Utils.secureImg(currentWeather.weather[0].icon)}
+              src={StartUtils.secureImg(currentWeather.weather[0].icon)}
               alt={currentWeather.weather[0].description}
               title={currentWeather.weather[0].description}
               className={styles.weather__icon} />
@@ -175,7 +175,7 @@ export default class Weather extends React.Component<Props, State> {
                   {formatTemp(data.main.temp)}
                 </div>
                 <img
-                  src={Utils.secureImg(data.weather[0].icon)}
+                  src={StartUtils.secureImg(data.weather[0].icon)}
                   alt={data.weather[0].description}
                   title={data.weather[0].description}
                   className={styles.weather__forecastItem__icon} />

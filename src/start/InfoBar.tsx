@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import * as React from 'react'
-import * as Utils from './Utils'
+import StartUtils from './Utils'
 
 const styles = require('./scss/InfoBar.scss') // tslint:disable-line no-var-requires
 
@@ -89,13 +89,13 @@ export default class InfoBar extends React.Component<Props, State> {
         <div className={classNames(
           styles.infoBar__item,
           { [styles['infoBar__item--rainbow']]: isRainbowMode })}>
-          {Utils.createWelcomeMessage(now, name)}
+          {StartUtils.createWelcomeMessage(now, name)}
         </div>
         <div className={styles.infoBar__item}>
-          {Utils.createDateString(now)}
+          {StartUtils.createDateString(now)}
         </div>
         <div className={styles.infoBar__item}>
-          {Utils.formatTime(now)}
+          {StartUtils.formatTime(now)}
         </div>
       </div>
     )

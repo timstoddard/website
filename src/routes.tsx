@@ -5,7 +5,7 @@ import NotFound from './not-found/NotFound'
 
 interface LoadableRoute {
   path: string
-  LazyComponent: React.LazyExoticComponent<any>
+  LazyComponent: React.LazyExoticComponent<React.ComponentType<unknown>>
 }
 
 const routes: LoadableRoute[] = [
@@ -134,7 +134,7 @@ const Routes = (
         <NotFound
         to=''
         destination='the homepage' />
-        )} />
+      )} />
   </Switch>
 )
 

@@ -36,23 +36,23 @@ export default class Flicker extends React.Component<{}, State> {
     const { currentHeight, currentMax, increasing } = this.state
     const delta = Math.random() * 100 + 20
     let newHeight
-    const setStateVars: any = {}
+    const newState: Partial<State> = {}
     if (increasing) {
       newHeight = currentHeight + delta
       if (newHeight > currentMax) {
         newHeight = currentMax
-        setStateVars.increasing = false
+        newState.increasing = false
       }
     } else {
       newHeight = currentHeight - delta
       if (newHeight < 0) {
         newHeight = MIN_FLAME_HEIGHT
-        setStateVars.increasing = true
-        setStateVars.currentMax = this.getNewMax()
+        newState.increasing = true
+        newState.currentMax = this.getNewMax()
       }
     }
-    setStateVars.currentHeight = newHeight
-    this.setState(setStateVars, () => {
+    newState.currentHeight = newHeight
+    this.setState(newState as State, () => {
       this.flickerTimeout = setTimeout(() => {
         this.run()
       }, Math.random() < 0.8 ? Math.random() * 40 + 20 : Math.random() * 80 + 20) as unknown as number

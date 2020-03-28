@@ -12,17 +12,15 @@ interface State {
 }
 
 export default class Zen extends React.Component<{}, State> {
-  mover1: React.Ref<Mover>
-  mover2: React.Ref<Mover>
   colorChanger1: ColorChanger
   colorChanger2: ColorChanger
   moveInterval: number
+  private mover1: React.RefObject<Mover> = React.createRef()
+  private mover2: React.RefObject<Mover> = React.createRef()
 
   constructor(props: {}) {
     super(props)
 
-    this.mover1 = React.createRef()
-    this.mover2 = React.createRef()
     this.colorChanger1 = new ColorChanger()
     this.colorChanger2 = new ColorChanger()
     this.colorChanger2.setRGB(0, 255, 255, false, 'g')
@@ -59,9 +57,9 @@ export default class Zen extends React.Component<{}, State> {
 
   updateBlock = (): void => {
     const nextColor1 = this.colorChanger1.nextColor()
-    const nextColor2 = this.colorChanger2.nextColor();
-    (this.mover1 as any).current.move(nextColor1);
-    (this.mover2 as any).current.move(nextColor2)
+    const nextColor2 = this.colorChanger2.nextColor()
+    this.mover1.current.move(nextColor1)
+    this.mover2.current.move(nextColor2)
   }
 
   render(): JSX.Element {

@@ -12,7 +12,7 @@ export enum CellState {
 interface Props {
   title: string
   status: number
-  onClick: () => any
+  onClick: () => void
 }
 
 export default class Cell extends React.Component<Props, {}> {

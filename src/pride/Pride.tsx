@@ -3,10 +3,10 @@ import * as React from 'react'
 
 const styles = require('./scss/Pride.scss') // tslint:disable-line no-var-requires
 
-const PERIOD = 225;
-const COLUMNS = 500;
-const ROWS = 6;
-const ANIMATION_DURATION = 2; // keep in sync with scss
+const PERIOD = 225
+const COLUMNS = 500
+const ROWS = 6
+const ANIMATION_DURATION = 2 // keep in sync with scss
 
 const arr = (n: number): null[] => new Array(n).fill(null)
 

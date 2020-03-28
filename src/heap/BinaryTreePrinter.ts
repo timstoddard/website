@@ -116,13 +116,13 @@ const convertToNodes = (arr: number[]): Node => {
   return data[1]
 }
 
-const DNE = (value: any): boolean => {
+const DNE = (value: unknown): boolean => {
   return value === null || value === undefined
 }
 
-const allElementsDNE = (list: any[]): boolean => {
+const allElementsDNE = (list: unknown[]): boolean => {
   let allDNE = true
-  list.forEach((value: any) => {
+  list.forEach((value: unknown) => {
     if (!DNE(value)) {
       allDNE = false
     }

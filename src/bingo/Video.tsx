@@ -1,12 +1,21 @@
 import axios, { AxiosResponse } from 'axios'
 import * as React from 'react'
 
+interface VideoData {
+  data: {
+    title: string
+    media_embed: {
+      content: string
+    }
+  }
+}
+
 interface Props {
   className: string
 }
 
 interface State {
-  videos: any[]
+  videos: VideoData[]
   currentVideoTitle: string
   currentVideoHtml: string
   previousVideoIndex: number
@@ -14,12 +23,10 @@ interface State {
 }
 
 export default class Video extends React.Component<Props, State> {
-  videoWrapper: React.Ref<HTMLDivElement>
+  videoWrapper: React.RefObject<HTMLDivElement> = React.createRef()
 
   constructor(props: Props) {
     super(props)
-
-    this.videoWrapper = React.createRef()
 
     this.state = {
       videos: [],
@@ -40,14 +47,14 @@ export default class Video extends React.Component<Props, State> {
         console.error(error) // tslint:disable-line:no-console
       })
     window.addEventListener('resize', this.onResize)
-    window.addEventListener('keyup', this.onResize);
-    (this.videoWrapper as any).current.addEventListener('dblclick', this.onResize)
+    window.addEventListener('keyup', this.onResize)
+    this.videoWrapper.current.addEventListener('dblclick', this.onResize)
   }
 
   componentWillUnmount(): void {
     window.removeEventListener('resize', this.onResize)
-    window.removeEventListener('keyup', this.onResize);
-    (this.videoWrapper as any).current.removeEventListener('dblclick', this.onResize)
+    window.removeEventListener('keyup', this.onResize)
+    this.videoWrapper.current.removeEventListener('dblclick', this.onResize)
   }
 
   onResize = (): void => {

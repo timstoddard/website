@@ -24,16 +24,14 @@ enum Color {
 
 export default class DotsBlack extends React.Component<{}, State> {
   dots: Dot[]
-  canvasElement: React.Ref<HTMLCanvasElement>
   moveInterval: number
   visibleTimer: number
   averageRGBCache: { [key: string]: string } = {}
   twoPiRadians: number = 2 * Math.PI
+  private canvasElement: React.RefObject<HTMLCanvasElement> = React.createRef()
 
   constructor(props: {}) {
     super(props)
-
-    this.canvasElement = React.createRef()
 
     this.state = {
       visible: false,
@@ -61,9 +59,9 @@ export default class DotsBlack extends React.Component<{}, State> {
       const {
         clientWidth: viewportWidth,
         clientHeight: viewportHeight,
-      } = document.documentElement;
-      (this.canvasElement as any).current.width = viewportWidth;
-      (this.canvasElement as any).current.height = viewportHeight
+      } = document.documentElement
+      this.canvasElement.current.width = viewportWidth
+      this.canvasElement.current.height = viewportHeight
       const threshold = Math.min(viewportWidth, viewportHeight) / 5
       this.setState({ drawLineThresholdSquared: threshold * threshold })
     }
@@ -91,7 +89,7 @@ export default class DotsBlack extends React.Component<{}, State> {
         ? this.generateNewDot(color)
         : { x: newX, y: newY, dx, dy, radius, opacity, color }
     })
-    const canvas = (this.canvasElement as any).current.getContext('2d')
+    const canvas = this.canvasElement.current.getContext('2d')
     canvas.clearRect(0, 0, viewportWidth, viewportHeight)
     const { drawLineThresholdSquared } = this.state
     for (let i = 0; i < this.dots.length; i++) {

@@ -7,7 +7,7 @@ const getProps = (
   name: NodeName,
   data: Node,
   link: string[],
-  handleClick: (links: string[]) => any,
+  handleClick: (links: string[]) => ((e: React.MouseEvent) => void),
   showingBorders: boolean,
 ): Props => {
   const newLink = [...link, name]
@@ -30,8 +30,8 @@ type NodeName = 'a' | 'b'
 interface Props {
   data: Node
   link: string[]
-  onClick: (e: React.MouseEvent<HTMLDivElement>) => void
-  handleClick: (link: string[]) => ((e: React.MouseEvent<HTMLDivElement>) => void)
+  onClick: (e: React.MouseEvent) => void
+  handleClick: (link: string[]) => ((e: React.MouseEvent) => void)
   showingBorders: boolean
 }
 
@@ -79,8 +79,8 @@ export default class InfinityWrapper extends React.Component<{}, State> {
     return { a: {}, b: {} }
   }
 
-  handleClick = (link?: string[]): ((e: React.MouseEvent<HTMLDivElement>) => void) => {
-    return (e: React.MouseEvent<HTMLDivElement>): void => {
+  handleClick = (link?: string[]): ((e: React.MouseEvent) => void) => {
+    return (e: React.MouseEvent): void => {
       e.stopPropagation()
       if (!link) {
         this.setState({ data: this.getBaseData() })
@@ -107,7 +107,7 @@ export default class InfinityWrapper extends React.Component<{}, State> {
     }
   }
 
-  handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>): void => {
+  handleKeyDown = (e: React.KeyboardEvent): void => {
     e.preventDefault()
     e.stopPropagation()
 

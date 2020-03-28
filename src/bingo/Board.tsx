@@ -6,7 +6,7 @@ const styles = require('./scss/Bingo.scss') // tslint:disable-line no-var-requir
 
 interface Props {
   className: string
-  onSubmit: () => any
+  onSubmit: () => void
 }
 
 interface State {
@@ -49,7 +49,11 @@ export default class Board extends React.Component<Props, State> {
 
   onSubmit = (): void => {
     const { onSubmit } = this.props
-    const { userWon, board, moveCount } = this.state
+    const {
+      userWon,
+      board,
+      moveCount,
+    } = this.state
 
     // load new game if user won
     if (userWon) {
@@ -217,7 +221,11 @@ export default class Board extends React.Component<Props, State> {
   }
 }
 
-const shuffle = (array: any[]): any[] => {
+/**
+ * Shuffles an array in place.
+ * @param array the array to be shuffled
+ */
+const shuffle = (array: unknown[]): unknown[] => {
   let m = array.length
   let i: number
   let temp

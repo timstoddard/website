@@ -10,6 +10,9 @@ const styles = require('./scss/PeriodicTable.scss') // tslint:disable-line no-va
 export enum Mode {
   NORMAL = 'NORMAL',
   ELECTRON_AFFINITY_TREND = 'ELECTRON_AFFINITY_TREND',
+  FIRST_IONIZATION_ENERGY = 'FIRST_IONIZATION_ENERGY',
+  SECOND_IONIZATION_ENERGY = 'SECOND_IONIZATION_ENERGY',
+  THIRD_IONIZATION_ENERGY = 'THIRD_IONIZATION_ENERGY',
 }
 
 const columnElements = elements.filter((e: Element) => e.column !== null)

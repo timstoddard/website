@@ -20,6 +20,11 @@ const projectSections: Section[] = [
     name: 'Utilities',
     projects: [
       {
+        name: 'Periodic Table',
+        link: 'periodic-table',
+        inProgress: false,
+      },
+      {
         name: 'Battery Status (Chrome only)',
         link: '/battery',
         inProgress: false,

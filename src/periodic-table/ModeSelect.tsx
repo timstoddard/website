@@ -40,6 +40,15 @@ const ModeSelect: React.StatelessComponent<Props> = ({
           <option value={Mode.ELECTRON_AFFINITY_TREND}>
             Electron Affinity Trend
           </option>
+          <option value={Mode.FIRST_IONIZATION_ENERGY}>
+            1st Ionization Energy
+          </option>
+          <option value={Mode.SECOND_IONIZATION_ENERGY}>
+            2nd Ionization Energy
+          </option>
+          <option value={Mode.THIRD_IONIZATION_ENERGY}>
+            3rd Ionization Energy
+          </option>
         </select>
       </div>
     </>)}

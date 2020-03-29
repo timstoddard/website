@@ -102,8 +102,7 @@ export class WeatherUtils {
 
  private getWeatherUrl = (path: string, params: { [key: string]: string }): string => {
     const baseUrl = 'https://api.openweathermap.org/data/2.5'
-    // TODO do this in lambda function to hide app id?
-    const appId = "b3f6d7044a2fcd4f570c571be44776fe"
+    const appId = 'b3f6d7044a2fcd4f570c571be44776fe'
     const queryParams = [`APPID=${appId}`]
     for (const param in params) {
       queryParams.push(`${param}=${encodeURIComponent(params[param])}`)

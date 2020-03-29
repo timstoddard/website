@@ -36,7 +36,7 @@ export default class TodoList extends React.Component<{}, State> {
     }
   }
 
-  componentWillMount(): void {
+  componentDidMount(): void {
     const todos = JSON.parse(localStorage.getItem('todos'))
     if (todos) {
       this.setState({ todos })

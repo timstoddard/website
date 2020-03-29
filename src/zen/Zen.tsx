@@ -34,7 +34,7 @@ export default class Zen extends React.Component<{}, State> {
     }
   }
 
-  componentWillMount(): void {
+  componentDidMount(): void {
     this.onWindowResize()
     window.addEventListener('resize', this.onWindowResize)
   }

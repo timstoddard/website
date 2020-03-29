@@ -122,13 +122,17 @@ export default class RicePurityTest extends React.Component<{}, State> {
     }
   }
 
-  handleCheckboxChange = ({ target }: React.ChangeEvent<HTMLInputElement>): void => {
-    const { purity } = this.state
-    const newPurity = this.normalize(0, 100, purity + (target.checked ? -1 : 1))
+  handleCheckboxChange = (): void => {
+    let newPurity = 0
+    document.querySelectorAll('input[type="checkbox"]').forEach((checkbox: HTMLInputElement) => {
+      if (!checkbox.checked) {
+        newPurity++
+      }
+    })
     this.setState({ purity: newPurity })
   }
 
-  showResult = (e: React.FormEvent<HTMLFormElement>): void => {
+  showResult = (e: React.FormEvent): void => {
     e.preventDefault()
     this.setState({ showingResult: true })
   }
@@ -137,7 +141,7 @@ export default class RicePurityTest extends React.Component<{}, State> {
     this.setState({ showingResult: false })
   }
 
-  clearCheckboxes = (e: React.MouseEvent<HTMLButtonElement>): void => {
+  clearCheckboxes = (e: React.MouseEvent): void => {
     e.preventDefault()
     this.setState({ purity: 100 })
     document.querySelectorAll('input[type="checkbox"]').forEach((checkbox: HTMLInputElement) => {
@@ -211,10 +215,10 @@ export default class RicePurityTest extends React.Component<{}, State> {
                   custom
                   type='checkbox'
                   id={`rpt-checkbox-${index}`}
-                  onChange={handleCheckboxChange}
                   className={styles.rpt__question}>
                   <Form.Check.Input
                     type='checkbox'
+                    onChange={handleCheckboxChange}
                     className={styles.rpt__checkbox} />
                   <Form.Check.Label>{index + 1}. {question}</Form.Check.Label>
                 </Form.Check>

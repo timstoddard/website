@@ -5,13 +5,13 @@ const autoprefixer = require('autoprefixer')
 const getCssLoaders = (useCssModules, mode) => {
   const cssLoader = useCssModules
     ? {
-        loader: 'css-loader',
-        options: {
-          modules: true,
-          sourceMap: true,
+      loader: 'css-loader',
+      options: {
+        modules: {
           localIdentName: mode === 'prod' ? '[hash:base64:5]' : '[local]__[hash:base64:5]',
         },
-      }
+      },
+    }
     : 'css-loader'
   return [
     MiniCssExtractPlugin.loader,

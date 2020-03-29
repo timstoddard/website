@@ -10,6 +10,6 @@ Technologies used:
 * Webpack
 * SCSS
 * CSS Modules
-* ESLint
+* TSLint
 * Protected by Cloudflare
 * Hosted on S3

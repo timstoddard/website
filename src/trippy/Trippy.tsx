@@ -186,9 +186,9 @@ export default class Trippy extends React.Component<{}, State> {
         onKeyDown={handleKeyDown}
         tabIndex={0}>
         {pairGroups.map((pairGroup: PairGroup[], i: number) =>
-          pairGroup.map(({ x, y, radius }: PairGroup) => (
+          pairGroup.map(({ x, y, radius }: PairGroup, i2: number) => (
             <div
-              key={`${x}-${y}-${radius}`}
+              key={`${x}-${y}-${radius}-${i2}`}
               className={styles.trippy__disk}
               style={{
                 background: getColor(i),

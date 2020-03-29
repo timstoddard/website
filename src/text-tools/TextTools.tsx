@@ -27,7 +27,7 @@ export default class TextTools extends React.Component<{}, State> {
     }
   }
 
-  handleChange = (event: React.ChangeEvent): void => {
+  handleChange = (event: React.FormEvent): void => {
     this.setState({ rawValue: (event.target as HTMLInputElement).value })
   }
 

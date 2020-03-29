@@ -6,6 +6,7 @@ import elements, { Element } from './elements'
 import ModeSelect from './ModeSelect'
 
 const styles = require('./scss/PeriodicTable.scss') // tslint:disable-line no-var-requires
+const styles2 = require('./scss/ElementCard.scss') // tslint:disable-line no-var-requires
 
 export enum Mode {
   NORMAL = 'NORMAL',
@@ -87,14 +88,14 @@ export default class PeriodicTable extends React.Component<{}, State> {
           ))}
           {/* lanthanoids placeholder */}
           <div className={classNames(
-              styles.elementPlaceholder,
-              styles['elementPlaceholder--1'])}>
+              styles2.elementPlaceholder,
+              styles2['elementPlaceholder--1'])}>
             57-71
           </div>
           {/* actinoids placeholder */}
           <div className={classNames(
-              styles.elementPlaceholder,
-              styles['elementPlaceholder--2'])}>
+              styles2.elementPlaceholder,
+              styles2['elementPlaceholder--2'])}>
             89-103
           </div>
           {/* lanthanoids */}

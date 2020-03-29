@@ -32,6 +32,9 @@ const minThirdIonizationEnergy = elements.reduce(getMin('thirdIonizationEnergy')
 const maxThirdIonizationEnergy = elements.reduce(getMax('thirdIonizationEnergy'), -Infinity)
 
 const percentInRange = (value: number, min: number, max: number) => {
+  if (value === null) {
+    return 0
+  }
   return (value - min) / (max - min)
 }
 

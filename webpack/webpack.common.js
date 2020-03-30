@@ -36,7 +36,7 @@ module.exports = {
     output: {
       path: `${__dirname}/../dist`,
       publicPath: '/dist/',
-      filename: 'bundle.js',
+      filename: '[name].[hash].js',
       chunkFilename: '[name].[chunkhash:8].chunk.js',
     },
     module: {
@@ -86,7 +86,7 @@ module.exports = {
     }
     return [
       new HtmlWebpackPlugin(htmlWebpackPluginOptions),
-      new MiniCssExtractPlugin({ filename: 'bundle.css' }),
+      new MiniCssExtractPlugin({ filename: '[name].[hash].css' }),
     ]
   },
 }

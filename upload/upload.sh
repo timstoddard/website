@@ -5,7 +5,7 @@ upload_to_s3 () {
   # upload built files to s3
 
   # index html
-  aws s3 cp index.html $1/index.html --content-type 'text/html; charset=utf-8'
+  aws s3 cp dist/index.html $1/index.html --content-type 'text/html; charset=utf-8'
 
   # remove old built files before uploading new ones
   aws s3 rm $1/dist --recursive

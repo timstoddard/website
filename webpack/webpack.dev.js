@@ -6,6 +6,8 @@ module.exports = merge(common.config('dev'), {
   devtool: 'eval', // fastest page reload time
   plugins: common.sharedPlugins('dev'),
   devServer: {
+    contentBase: './dist',
     historyApiFallback: true,
+    clientLogLevel: 'error',
   },
 })

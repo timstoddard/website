@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const autoprefixer = require('autoprefixer')
+const path = require('path')
 
 const getCssLoaders = (useCssModules, mode) => {
   const cssLoader = useCssModules
@@ -34,9 +35,9 @@ module.exports = {
       './src/index.scss',
     ],
     output: {
-      path: `${__dirname}/../dist`,
-      publicPath: '/dist/',
-      filename: '[name].[hash].js',
+      path: path.join(__dirname, '../dist'),
+      publicPath: mode === 'prod' ? '/dist/' : '/',
+      filename: '[name].[hash:8].js',
       chunkFilename: '[name].[chunkhash:8].chunk.js',
     },
     module: {
@@ -72,7 +73,7 @@ module.exports = {
   sharedPlugins: (mode) => {
     const htmlWebpackPluginOptions = {
       template: 'src/app.html',
-      filename: '../index.html',
+      filename: './index.html',
     }
     if (mode === 'prod') {
       htmlWebpackPluginOptions.minify = {
@@ -86,7 +87,10 @@ module.exports = {
     }
     return [
       new HtmlWebpackPlugin(htmlWebpackPluginOptions),
-      new MiniCssExtractPlugin({ filename: '[name].[hash].css' }),
+      new MiniCssExtractPlugin({
+        filename: '[name].[hash:8].css',
+        chunkFilename: '[name].[chunkhash:8].chunk.css',
+      }),
     ]
   },
 }

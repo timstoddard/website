@@ -9,4 +9,4 @@ npm-debug.log
 dist
 
 # secrets
-utils/cloudflare-secrets.js
+utils/cloudflare/cloudflare-secrets.js

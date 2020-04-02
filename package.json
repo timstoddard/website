@@ -8,12 +8,12 @@
     "webpack:dev": "webpack-dev-server --config webpack/webpack.dev.js --open",
     "webpack:prod": "webpack -p --config webpack/webpack.prod.js",
     "build:s3": "npm run clean && npm run webpack:prod",
-    "s3": "npm run build:s3 && ./upload/prod.sh && ./upload/dev.sh && npm run purge-cache",
-    "s3:prod": "npm run build:s3 && ./upload/prod.sh",
-    "s3:dev": "npm run build:s3 && ./upload/dev.sh",
+    "s3": "npm run build:s3 && ./utils/upload/prod.sh && ./utils/upload/dev.sh && npm run purge-cache",
+    "s3:prod": "npm run build:s3 && ./utils/upload/prod.sh",
+    "s3:dev": "npm run build:s3 && ./utils/upload/dev.sh",
     "clean": "rm -rf dist",
     "lint": "tslint src/**/*.tsx? --fix",
-    "purge-cache": "node utils/cloudflare-purge-cache.js"
+    "purge-cache": "node utils/cloudflare/cloudflare-purge-cache.js"
   },
   "author": "Tim Stoddard",
   "repository": {

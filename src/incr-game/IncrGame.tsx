@@ -2,158 +2,293 @@ import * as React from 'react'
 import { Button } from 'react-bootstrap'
 import styles from './scss/IncrGame.scss'
 
-const moneyFormat = (n: number): string => n.toFixed(2)
-const moneyAmount = (n: number): number => parseFloat(moneyFormat(n))
+/**
+ * ACRONYMS
+ *
+ * TPS: tears per second
+ * TPC: tears per click
+ */
+
+const PRODUCER_COST_EXPONENT = 1.3
+const CLICK_UPGRADE_COST_EXPONENT = 1.6
+const MAX_INCREMENTS_PER_SECOND = 13
+const BASE_TPS = 0
+const BASE_TPC = 1
+
+interface Producer {
+  name: string
+  baseCost: number
+  tps: number
+}
+
+const producers: Producer[] = [
+  {
+    name: 'Producer 1',
+    baseCost: 10,
+    tps: 2,
+  },
+  {
+    name: 'Producer 2',
+    baseCost: 100,
+    tps: 10,
+  },
+  {
+    name: 'Producer 3',
+    baseCost: 500,
+    tps: 80,
+  },
+]
+
+interface ClickUpgrade {
+  name: string
+  baseCost: number
+  tpc: number
+}
+
+const clickUpgrades: ClickUpgrade[] = [
+  {
+    name: 'Click Upgrade 1',
+    baseCost: 50,
+    tpc: 1,
+  },
+  {
+    name: 'Click Upgrade 2',
+    baseCost: 200,
+    tpc: 5,
+  },
+  {
+    name: 'Click Upgrade 3',
+    baseCost: 1000,
+    tpc: 12,
+  },
+]
 
 interface State {
-  money: number
-  moneyAdder: number
-  moneyAdderLevel: number
-  moneyAdderCost: number
-  timer: number
-  timerLevel: number
-  timerCost: number
+  tears: number
+  tps: number
+  tpc: number
+  producerCounts: number[]
+  clickUpgradeCounts: number[]
 }
 
 export default class IncrGame extends React.Component<{}, State> {
-  runTimeout: number
-  hoverMoneyTimeout: number
+  stepTimeout: number
 
   constructor(props: {}) {
     super(props)
 
     this.state = {
-      money: 10,
-      moneyAdder: 1,
-      moneyAdderLevel: 1,
-      moneyAdderCost: 10,
-      timer: 1000,
-      timerLevel: 1,
-      timerCost: 10,
+      tears: 10,
+      tps: BASE_TPS,
+      tpc: BASE_TPC,
+      producerCounts: new Array(producers.length).fill(0),
+      clickUpgradeCounts: new Array(clickUpgrades.length).fill(0),
     }
   }
 
-  componentDidMount(): void {
-    this.run()
+  componentDidMount = () => {
   }
 
-  componentWillUnmount(): void {
-    clearTimeout(this.runTimeout)
-    clearTimeout(this.hoverMoneyTimeout)
+  componentWillUnmount = () => {
+    clearTimeout(this.stepTimeout)
   }
 
-  getMoneyAdder = (moneyAdderLevel: number): number => {
-    return Math.pow(1.2, moneyAdderLevel)
-  }
-
-  getTimer = (timerLevel: number): number => {
-    return Math.pow(0.9, timerLevel) * 1000
-  }
-
-  incrementMoneyAdderLevel = (): void => {
+  step = () => {
     const {
-      money,
-      moneyAdderLevel: oldMoneyAdderLevel,
-      moneyAdderCost,
+      tears,
+      tps,
     } = this.state
-    if (money >= moneyAdderCost) {
-      const moneyAdderLevel = oldMoneyAdderLevel + 1
+
+    if (tps <= 0) {
+      // do nothing
+    } else if (tps < MAX_INCREMENTS_PER_SECOND) {
       this.setState({
-        money: money - moneyAdderCost,
-        moneyAdder: moneyAmount(this.getMoneyAdder(moneyAdderLevel)),
-        moneyAdderLevel,
-        moneyAdderCost: moneyAmount(Math.pow(1.4, moneyAdderLevel) * 10),
+        tears: tears + 1,
+      })
+      this.stepTimeout = setTimeout(this.step, 1000 / tps) as unknown as number
+    } else {
+      this.setState({
+        tears: tears + (tps / MAX_INCREMENTS_PER_SECOND),
+      })
+      this.stepTimeout = setTimeout(this.step, 100) as unknown as number
+    }
+  }
+
+  buyProducer = (index: number) => () => {
+    const {
+      tears,
+      producerCounts,
+    } = this.state
+    const cost = this.getProducerCost(index)
+    if (tears >= cost) {
+      const newCounts = [...producerCounts]
+      newCounts[index]++
+      this.setState({
+        tears: tears - cost,
+        tps: this.calculateTps(newCounts),
+        producerCounts: newCounts,
+      }, () => {
+        // if first item bought, start tps timer
+        if (!this.stepTimeout) {
+          this.step()
+        }
       })
     }
   }
 
-  incrementTimerLevel = (): void => {
+  buyClickUpgrade = (index: number) => () => {
     const {
-      money,
-      timerLevel: oldTimerLevel,
-      timerCost,
+      tears,
+      clickUpgradeCounts,
     } = this.state
-    if (money >= timerCost) {
-      const timerLevel = oldTimerLevel + 1
+    const cost = this.getClickUpgradeCost(index)
+    if (tears >= cost) {
+      const newCounts = [...clickUpgradeCounts]
+      newCounts[index]++
       this.setState({
-        money: money - timerCost,
-        timer: moneyAmount(this.getTimer(timerLevel)),
-        timerLevel,
-        timerCost: moneyAmount(Math.pow(1.4, timerLevel) * 10),
+        tears: tears - cost,
+        tpc: this.calculateTpc(newCounts),
+        clickUpgradeCounts: newCounts,
       })
     }
   }
 
-  addMoney = (): void => {
-    const { money, moneyAdder } = this.state
-    this.setState({ money: money + moneyAdder })
+  canBuyProducer = (index: number) => {
+    const { tears } = this.state
+    return tears >= this.getProducerCost(index)
   }
 
-  run = (): void => {
-    this.addMoney()
-    this.runTimeout = setTimeout(() => this.run(), this.state.timer) as unknown as number
+  canBuyClickUpgrade = (index: number) => {
+    const { tears } = this.state
+    return tears >= this.getClickUpgradeCost(index)
   }
 
-  handleHover = (): void => {
-    this.addMoney() // temporary
-    this.hoverMoneyTimeout = setTimeout(() => this.handleHover()) as unknown as number
+  calculateTps = (producerCounts: number[]) => {
+    if (producerCounts.length !== producers.length) {
+      throw new Error(`producerCounts expected length ${producers.length}, got ${producerCounts.length} (${producerCounts}).`)
+    }
+
+    let total = 0
+    for (let i = 0; i < producers.length; i++) {
+      total += producers[i].tps * producerCounts[i]
+    }
+    return total
   }
 
-  stopHovering = (): void => {
-    clearTimeout(this.hoverMoneyTimeout)
+  calculateTpc = (clickUpgradeCounts: number[]) => {
+    if (clickUpgradeCounts.length !== clickUpgrades.length) {
+      throw new Error(`clickUpgradeCounts expected length ${clickUpgrades.length}, got ${clickUpgradeCounts.length} (${clickUpgradeCounts}).`)
+    }
+
+    let total = 0
+    for (let i = 0; i < clickUpgrades.length; i++) {
+      total += clickUpgrades[i].tpc * clickUpgradeCounts[i]
+    }
+    return BASE_TPC + total
+  }
+
+  getProducerCost = (index: number) => {
+    const {
+      producerCounts,
+    } = this.state
+    const count = producerCounts[index]
+    const { baseCost } = producers[index]
+    return baseCost * Math.pow(PRODUCER_COST_EXPONENT, count)
+  }
+
+  getClickUpgradeCost = (index: number) => {
+    const {
+      clickUpgradeCounts,
+    } = this.state
+    const count = clickUpgradeCounts[index]
+    const { baseCost } = clickUpgrades[index]
+    return baseCost * Math.pow(CLICK_UPGRADE_COST_EXPONENT, count)
+  }
+
+  handleClick = () => {
+    const {
+      tears,
+      tpc,
+    } = this.state
+    this.setState({ tears: tears + tpc })
   }
 
   render(): JSX.Element {
-    document.title = 'Incremental Game'
+    document.title = `Make 'em Cry`
 
     const {
-      incrementMoneyAdderLevel,
-      incrementTimerLevel,
-      addMoney,
-      handleHover,
-      stopHovering,
+      buyProducer,
+      buyClickUpgrade,
+      canBuyProducer,
+      canBuyClickUpgrade,
+      getProducerCost,
+      getClickUpgradeCost,
+      handleClick,
     } = this
     const {
-      money,
-      moneyAdder,
-      moneyAdderLevel,
-      moneyAdderCost,
-      timer,
-      timerLevel,
-      timerCost,
+      tears,
+      tps,
+      tpc,
+      producerCounts,
+      clickUpgradeCounts,
     } = this.state
 
     return (
       <div className={styles.incrGame}>
-        <div>Money: ${moneyFormat(money)}</div>
-        <div>Money to add: ${moneyFormat(moneyAdder)}</div>
-        <div>Time between adds: {timer} ms</div>
-        <div>
-          <div>Money Adder Level: {moneyAdderLevel}</div>
-          <Button
-            className={styles.incrGame__button}
-            disabled={money < moneyAdderCost}
-            onClick={incrementMoneyAdderLevel}>
-            [incr] (${moneyFormat(moneyAdderCost)})
-          </Button>
+        <div
+          onClick={handleClick}
+          className={styles.incrGame__clickTarget}>
+          {'TODO <silly image here>'}
         </div>
-        <div>
-          <div>Timer Level: {timerLevel}</div>
-          <Button
-            className={styles.incrGame__button}
-            disabled={money < timerCost}
-            onClick={incrementTimerLevel}>
-            [incr] (${moneyFormat(timerCost)})
-          </Button>
+        <div className={styles.incrGame__stats}>
+          <div>Tears: {Math.round(tears)}</div>
+          <div>per second: {Math.round(tps)}</div>
+          <div>per click: {Math.round(tpc)}</div>
+        </div>
+        <div className={styles.incrGame__producers}>
+          {producers.map((producer: any, i: number) => (
+            <div key={producer.name}>
+              <div>{producer.name} ({producerCounts[i]})</div>
+              <Button
+                onClick={buyProducer(i)}
+                disabled={!canBuyProducer(i)}
+                className={styles.incrGame__button}>
+                <div>Cost: {Math.round(getProducerCost(i))}</div>
+              </Button>
+            </div>
+          ))}
+        </div>
+        <div className={styles.incrGame__clickUpgrades}>
+          {clickUpgrades.map((clickUpgrade: any, i: number) => (
+            <div key={clickUpgrade.name}>
+              <div>{clickUpgrade.name} ({clickUpgradeCounts[i]})</div>
+              <Button
+                onClick={buyClickUpgrade(i)}
+                disabled={!canBuyClickUpgrade(i)}
+                className={styles.incrGame__button}>
+                <div>Cost: {Math.round(getClickUpgradeCost(i))}</div>
+              </Button>
+            </div>
+          ))}
         </div>
         <div
-          onClick={addMoney}
-          onMouseEnter={handleHover}
-          onMouseLeave={stopHovering}
-          style={{ width: '100px', height: '100px', background: 'red' }}>
-          [dev mode]: hover over me
+          onClick={() => this.setState({ tears: tears + 1000000000 })}
+          className={styles.incrGame__devButton}>
+          [dev mode]: click me
         </div>
       </div>
     )
+  }
+
+  private formatNumber = (n: number) => {
+    const value = n
+    const suffixes = ['K', 'M', 'B', 'T']
+    let suffixIndex = 0
+    while (n >= 1000) {
+      n /= 1000
+      suffixIndex++
+    }
+    const suffix = suffixes[suffixIndex]
+    return `${value}${suffix}`
   }
 }

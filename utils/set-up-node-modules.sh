@@ -1,4 +1,6 @@
-dir=~/Downloads/node_modules-website
+# https://www.dropboxforum.com/t5/Dropbox-files-folders/How-to-make-Dropbox-ignore-node-modules-folder-with-symbolic/m-p/388949
+
+dir=~/node_modules_dropbox_hack/node_modules-website
 
 # install modules
 npm i

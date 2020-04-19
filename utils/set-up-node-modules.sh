@@ -2,6 +2,10 @@
 
 dir=~/node_modules_dropbox_hack/node_modules-website
 
+# unlink existing symlink & remove package lock file
+unlink node_modules
+rm package-lock.json
+
 # install modules
 npm i
 

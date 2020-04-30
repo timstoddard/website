@@ -1,5 +1,6 @@
 import * as React from 'react'
 import Button from 'react-bootstrap/Button'
+import Modal from 'react-bootstrap/Modal'
 import { LightState, MsStep } from './beats/beat-types'
 import BeatCanvas from './beats/BeatCanvas'
 import beezInTheTrap from './beats/songs/beez-in-the-trap'
@@ -19,10 +20,10 @@ interface BeatLightProps {
 
 const formatBgColor = (c: UIColor): string => c
   ? `rgb(${c.r},${c.g},${c.b})`
-  : 'transparent'
+  : 'black'
 const formatBrightness = (brightness: number): number => brightness
   ? brightness / 100
-  : 0
+  : 100
 const BeatLight = ({ id, on, color, brightness }: BeatLightProps): JSX.Element => (
   <div
     className={`beatLight ${on ? '' : 'beatLight--off'}`}
@@ -165,6 +166,7 @@ interface State {
   currentMs: number
   shouldUpdateHueLights: boolean
   lightTrackToLightIdMap: number[][]
+  areLightsFullScreen: boolean
 }
 
 export default class Beats extends React.Component<Props, State> {
@@ -190,6 +192,7 @@ export default class Beats extends React.Component<Props, State> {
         [4],
         [6],
       ],
+      areLightsFullScreen: false,
     }
   }
 
@@ -287,6 +290,15 @@ export default class Beats extends React.Component<Props, State> {
     this.setState({ lightTrackToLightIdMap: lightTrackMap })
   }
 
+  toggleLightsFullScreen = (): void => {
+    const { areLightsFullScreen } = this.state
+    this.setState({ areLightsFullScreen: !areLightsFullScreen })
+  }
+
+  closeFullScreenLights = (): void => {
+    this.setState({ areLightsFullScreen: false })
+  }
+
   render(): JSX.Element {
     const {
       playRoutine,
@@ -295,6 +307,8 @@ export default class Beats extends React.Component<Props, State> {
       toggleShouldUpdateHueLights,
       selectSong,
       updateLightTrackMap,
+      toggleLightsFullScreen,
+      closeFullScreenLights,
     } = this
     const {
       hueApi,
@@ -305,6 +319,7 @@ export default class Beats extends React.Component<Props, State> {
       startTimeMs,
       shouldUpdateHueLights,
       lightTrackToLightIdMap,
+      areLightsFullScreen,
     } = this.state
     const songItems = [
       {
@@ -343,49 +358,81 @@ export default class Beats extends React.Component<Props, State> {
             </li>
           ))}
         </ul>
+
         <div className='hueGroups__detail'>
+          <BeatCanvas
+            song={this.songs[songId]}
+            startTimeMs={startTimeMs}
+            lightsCount={lightTrackToLightIdMap.length}
+            isClippedMode={false}
+            ref={(beatCanvas: BeatCanvas): void => { this.beatCanvas = beatCanvas }} />
+
           <div className='beats__buttons'>
             <Button
               onClick={playRoutine}
-              variant='secondary'>
+              variant='secondary'
+              className='beats__buttons__button'>
               Play
             </Button>
             <Button
               onClick={stopRoutine}
-              variant='secondary'>
+              variant='secondary'
+              className='beats__buttons__button'>
               Stop
             </Button>
             <Button
               onClick={restartRoutine}
-              variant='secondary'>
+              variant='secondary'
+              className='beats__buttons__button'>
               Restart
             </Button>
-            <label className={`beats__checkbox ${shouldUpdateHueLights ? 'beats__checkbox--checked' : ''}`}>
-              <input
-                type='checkbox'
-                value={shouldUpdateHueLights ? 'checked' : ''}
-                onClick={toggleShouldUpdateHueLights}
-                style={{ position: 'initial', opacity: 1 }} />
-              <div>
-                {shouldUpdateHueLights ? 'Disable' : 'Enable'} hue lights
-              </div>
-            </label>
+            <Button
+              onClick={toggleLightsFullScreen}
+              variant='secondary'
+              className='beats__buttons__button'>
+              Toggle fullscreen mode
+            </Button>
           </div>
-          <BeatCanvas
-            song={this.songs[songId]}
-            startTimeMs={startTimeMs}
-            numOfLights={lightTrackToLightIdMap.length}
-            isClippedMode={false}
-            ref={(beatCanvas: BeatCanvas): void => { this.beatCanvas = beatCanvas }} />
+
+          <label className={`beats__checkbox ${shouldUpdateHueLights ? 'beats__checkbox--checked' : ''}`}>
+            <input
+              type='checkbox'
+              value={shouldUpdateHueLights ? 'checked' : ''}
+              onClick={toggleShouldUpdateHueLights}
+              style={{ position: 'initial', opacity: 1 }} />
+            <div>
+              {shouldUpdateHueLights ? 'Disable' : 'Enable'} hue lights
+            </div>
+          </label>
+
           <div className='beats__lights'>
-            {lights.map((light: LightState, i: number) => (
-              <BeatLight
-                key={i}
-                id={i + 1}
-                on={light.on}
-                color={light.color}
-                brightness={light.brightness} />
-            ))}
+
+            {/* beat lights fullscreen mode */}
+            <Modal
+              show={areLightsFullScreen}
+              onHide={closeFullScreenLights}
+              dialogClassName='beats__lights--fullScreen'>
+              {lights.map((light: LightState, i: number) => (
+                <BeatLight
+                  key={i}
+                  id={i + 1}
+                  on={light.on}
+                  color={light.color}
+                  brightness={light.brightness} />
+              ))}
+            </Modal>
+
+            {/* beat lights normal mode */}
+            {!areLightsFullScreen && (
+              lights.map((light: LightState, i: number) => (
+                <BeatLight
+                  key={i}
+                  id={i + 1}
+                  on={light.on}
+                  color={light.color}
+                  brightness={light.brightness} />
+              ))
+            )}
           </div>
           <LightTracksSettings
             hueApi={hueApi}

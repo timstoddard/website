@@ -3,12 +3,15 @@ import Form from 'react-bootstrap/Form'
 import { UIColor } from '../hue-color-conversion'
 import { MsStep } from './beat-types'
 
+const LINE_HEIGHT = 80
+const SPACING = 8
+
 const convertMs = (ms: number): number => ms / 10
 
 interface Props {
   song: MsStep[]
   startTimeMs: number
-  numOfLights: number
+  lightsCount: number
   isClippedMode: boolean
 }
 
@@ -80,7 +83,7 @@ export default class BeatCanvas extends React.Component<Props, {}> {
     const {
       song,
       startTimeMs,
-      numOfLights,
+      lightsCount,
       isClippedMode,
     } = this.props
     const getBackground = (c: UIColor, brightness: number): string => c
@@ -89,7 +92,7 @@ export default class BeatCanvas extends React.Component<Props, {}> {
 
     const canvas = this.canvas.getContext('2d')
     const canvasWidth = convertMs(this.getMaxSongLineWidth() + 1000)
-    const canvasHeight = numOfLights * 50 + (numOfLights - 1) * 5
+    const canvasHeight = (LINE_HEIGHT + SPACING) * lightsCount - SPACING
     const canvasWrapper = this.canvas.parentElement
     const wrapperWidth = canvasWrapper.clientWidth
     this.canvas.width = canvasWidth
@@ -106,20 +109,23 @@ export default class BeatCanvas extends React.Component<Props, {}> {
       const step = song[i]
       const nextStep = song[i + 1]
       const deltaMs = nextStep.ms - step.ms
-      for (let j = 0; j < numOfLights; j++) {
+      for (let j = 0; j < lightsCount; j++) {
         const x = convertMs(step.ms)
-        const y = (50 /* line height */ + 5 /* spacing */) * j
+        const y = (LINE_HEIGHT + SPACING) * j
         const width = convertMs(deltaMs)
-        const height = 50
 
-        const isVisible = x < maxX && x + width > minX
-        const shouldRender = (isClippedMode && isVisible) || (!isClippedMode)
+        const shouldRender = isClippedMode
+          ? x < maxX && x + width > minX
+          : true
+
         if (shouldRender) {
           const currLights = step.lights[j]
           canvas.fillStyle = getBackground(currLights.color, currLights.brightness)
-          canvas.fillRect(x, y, width, height)
+          canvas.fillRect(x, y, width, LINE_HEIGHT)
 
-          // TODO ensure sorted by ms and break loop after visible group is drawn
+          // TODO ensure sorted by ms increasing and:
+          // TODO  - use binary search to find first index faster
+          // TODO  - break loop after visible group is drawn
         }
       }
     }
@@ -128,7 +134,7 @@ export default class BeatCanvas extends React.Component<Props, {}> {
     const lineX = convertMs(elapsedMs)
     canvas.beginPath()
     canvas.moveTo(lineX, 0)
-    canvas.lineTo(lineX, 105)
+    canvas.lineTo(lineX, canvasHeight)
     canvas.strokeStyle = 'black'
     canvas.stroke()
 

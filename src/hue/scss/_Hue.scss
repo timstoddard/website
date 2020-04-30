@@ -101,8 +101,44 @@ $headerHeight: 120px;
 }
 
 .beats {
+  &__buttons {
+    display: flex;
+
+    &__button {
+      margin: 5px;
+    }
+  }
+
   &__lights {
     display: flex;
+
+    &--fullScreen {
+      bottom: 10px;
+      left: 10px;
+      margin: 0;
+      max-height: 100%;
+      max-width: 100%;
+      min-height: 0;
+      min-width: 0;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+
+      & .modal-content {
+        display: flex;
+        flex-direction: row;
+        min-height: 100%;
+      }
+
+      & .beatLight {
+        @include forceWidth(50%); // TODO tim make this variable
+        @include forceHeight(100%);
+        border: 0;
+        border-radius: 0;
+        margin: 0;
+        padding: 0;
+      }
+    }
   }
 
   &__checkbox {
@@ -124,7 +160,6 @@ $headerHeight: 120px;
 .beatCanvas {
   &__wrapper {
     background: rgb(220,220,220);
-    height: 105px;
     overflow-x: auto;
     overflow-y: hidden;
   }

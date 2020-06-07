@@ -4,24 +4,14 @@ import InfoBar from './InfoBar'
 import Links from './Links'
 import RandomQuote from './RandomQuote'
 import Weather from './Weather'
+import { getRandomBackgroundUrls } from './background-urls'
 
 const styles = require('./scss/Start.scss') // tslint:disable-line no-var-requires
 
 const BACKGROUND_IMAGE_CLASS = styles.start__backgroundImagePreload
 
-const backgroundUrls = [
-  'https://www.wsupercars.com/wallpapers/Tesla/2020-Tesla-Roadster-V1-2000.jpg',
-  'https://www.wsupercars.com/wallpapers/Tesla/2020-Tesla-Roadster-V2-2000.jpg',
-  'https://www.wsupercars.com/wallpapers/Tesla/2020-Tesla-Roadster-V3-2000.jpg',
-  'https://www.wsupercars.com/wallpapers/Tesla/2020-Tesla-Roadster-V4-2000.jpg',
-  'https://www.wsupercars.com/wallpapers/Tesla/2020-Tesla-Roadster-V5-2000.jpg',
-  'https://www.wsupercars.com/wallpapers/Tesla/2020-Tesla-Roadster-V6-2000.jpg',
-  'https://www.wsupercars.com/wallpapers/Tesla/2020-Tesla-Roadster-V7-2000.jpg',
-  'https://www.wsupercars.com/wallpapers/Tesla/2020-Tesla-Roadster-V8-2000.jpg',
-  'https://www.wsupercars.com/wallpapers/Tesla/2020-Tesla-Roadster-V10-2000.jpg',
-]
-
 interface State {
+  backgroundUrls: string[]
   backgroundUrlIndex: number
   showContent: boolean
 }
@@ -34,6 +24,7 @@ export default class Start extends React.Component<{}, State> {
     super(props)
 
     this.state = {
+      backgroundUrls: getRandomBackgroundUrls(),
       backgroundUrlIndex: 0,
       showContent: true,
     }
@@ -41,6 +32,7 @@ export default class Start extends React.Component<{}, State> {
 
   componentDidMount = (): void => {
     // preload background images
+    const { backgroundUrls } = this.state
     for (const url of backgroundUrls) {
       // TODO preload images with service worker
       const img = new Image()
@@ -69,8 +61,12 @@ export default class Start extends React.Component<{}, State> {
   }
 
   changeBackground = (): void => {
-    const backgroundUrlIndex = (this.state.backgroundUrlIndex + 1) % backgroundUrls.length
-    this.setState({ backgroundUrlIndex })
+    const {
+      backgroundUrls,
+      backgroundUrlIndex,
+    } = this.state
+    const newBackgroundUrlIndex = (backgroundUrlIndex + 1) % backgroundUrls.length
+    this.setState({ backgroundUrlIndex: newBackgroundUrlIndex })
   }
 
   onKeyDown = (e: KeyboardEvent): void => {
@@ -89,6 +85,7 @@ export default class Start extends React.Component<{}, State> {
       toggleShowContent,
     } = this
     const {
+      backgroundUrls,
       backgroundUrlIndex,
       showContent,
     } = this.state

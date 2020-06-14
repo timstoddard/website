@@ -8,12 +8,48 @@ export enum BackgroundUrlType {
   TESLA_CYBERTRUCK,
 }
 
-export const getRandomBackgroundUrls = (): string[] => {
+export interface StartPageCar {
+  type: BackgroundUrlType
+  name: string
+}
+
+export const carNamesForSelect: StartPageCar[] = [
+  {
+    type: BackgroundUrlType.BMW_M2_CS,
+    name: 'BMW M2 CS',
+  },
+  {
+    type: BackgroundUrlType.BUGATTI_CHIRON_PUR_SPORT,
+    name: 'Bugatti Chiron Pur Sport',
+  },
+  {
+    type: BackgroundUrlType.BUGATTI_CHIRON_SPORT,
+    name: 'Bugatti Chiron Sport',
+  },
+  {
+    type: BackgroundUrlType.MCLAREN_765LT,
+    name: 'McLaren 765LT',
+  },
+  {
+    type: BackgroundUrlType.PORSCHE_911_GT3_RS,
+    name: 'Porsche 911 GT3 RS',
+  },
+  {
+    type: BackgroundUrlType.TESLA_ROADSTER,
+    name: 'Tesla Roadster',
+  },
+  {
+    type: BackgroundUrlType.TESLA_CYBERTRUCK,
+    name: 'Tesla Cybertruck',
+  },
+]
+
+export const getRandomType = (): BackgroundUrlType => {
   const types = Object.keys(BackgroundUrlType)
     .map((key: string) => BackgroundUrlType[key as unknown as number])
     .filter((value: number | string) => typeof value === 'string')
   const index = Math.floor(Math.random() * types.length)
-  return backgroundUrls[index as BackgroundUrlType]
+  return index as BackgroundUrlType
 }
 
 export const backgroundUrls = {

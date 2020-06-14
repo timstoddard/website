@@ -4,14 +4,14 @@ import InfoBar from './InfoBar'
 import Links from './Links'
 import RandomQuote from './RandomQuote'
 import Weather from './Weather'
-import { getRandomBackgroundUrls } from './background-urls'
+import { BackgroundUrlType, getRandomType, backgroundUrls } from './background-urls'
 
 const styles = require('./scss/Start.scss') // tslint:disable-line no-var-requires
 
 const BACKGROUND_IMAGE_CLASS = styles.start__backgroundImagePreload
 
 interface State {
-  backgroundUrls: string[]
+  backgroundType: BackgroundUrlType
   backgroundUrlIndex: number
   showContent: boolean
 }
@@ -24,16 +24,30 @@ export default class Start extends React.Component<{}, State> {
     super(props)
 
     this.state = {
-      backgroundUrls: getRandomBackgroundUrls(),
+      backgroundType: getRandomType(),
       backgroundUrlIndex: 0,
       showContent: true,
     }
   }
 
   componentDidMount = (): void => {
+    this.start()
+
+    // add window key listener
+    window.addEventListener('keydown', this.onKeyDown)
+  }
+
+  componentWillUnmount = (): void => {
+    this.stop()
+
+    // remove window key listener
+    window.removeEventListener('keydown', this.onKeyDown)
+  }
+
+  start = () => {
     // preload background images
-    const { backgroundUrls } = this.state
-    for (const url of backgroundUrls) {
+    const { backgroundType } = this.state
+    for (const url of backgroundUrls[backgroundType]) {
       // TODO preload images with service worker
       const img = new Image()
       img.src = url
@@ -41,31 +55,36 @@ export default class Start extends React.Component<{}, State> {
       document.body.appendChild(img)
     }
 
-    // add window key listener
-    window.addEventListener('keydown', this.onKeyDown)
-
     // start background change timer
     this.changeBackgroundTimer = setInterval(this.changeBackground, 5000) as unknown as number
   }
 
-  componentWillUnmount = (): void => {
+  stop = () => {
     // remove preload background images
-    document.querySelectorAll(BACKGROUND_IMAGE_CLASS)
+    document.querySelectorAll(`.${BACKGROUND_IMAGE_CLASS}`)
       .forEach((element: HTMLImageElement) => element.parentElement.removeChild(element))
-
-    // remove window key listener
-    window.removeEventListener('keydown', this.onKeyDown)
 
     // stop background change timer
     clearInterval(this.changeBackgroundTimer)
   }
 
+  updateBackgroundUrls = (carType: BackgroundUrlType) => {
+    this.stop()
+    this.setState({
+      backgroundType: carType,
+      backgroundUrlIndex: 0,
+    }, () => {
+      this.start()
+    })
+  }
+
   changeBackground = (): void => {
     const {
-      backgroundUrls,
+      backgroundType,
       backgroundUrlIndex,
     } = this.state
-    const newBackgroundUrlIndex = (backgroundUrlIndex + 1) % backgroundUrls.length
+    const urls = backgroundUrls[backgroundType]
+    const newBackgroundUrlIndex = (backgroundUrlIndex + 1) % urls.length
     this.setState({ backgroundUrlIndex: newBackgroundUrlIndex })
   }
 
@@ -82,14 +101,15 @@ export default class Start extends React.Component<{}, State> {
   render(): JSX.Element {
     document.title = 'Start'
     const {
+      updateBackgroundUrls,
       toggleShowContent,
     } = this
     const {
-      backgroundUrls,
+      backgroundType,
       backgroundUrlIndex,
       showContent,
     } = this.state
-    const backgroundUrl = backgroundUrls[backgroundUrlIndex]
+    const backgroundUrl = backgroundUrls[backgroundType][backgroundUrlIndex]
     const startClasses = `${styles.start} ${showContent ? '' : styles['start--contentHidden']}`
 
     return (
@@ -97,7 +117,10 @@ export default class Start extends React.Component<{}, State> {
         onDoubleClick={toggleShowContent}
         className={startClasses}
         style={{ backgroundImage: `url('${backgroundUrl}')` }}>
-        <Links className={styles.start__links} />
+        <Links
+          backgroundUrlType={backgroundType}
+          updateBackgroundUrls={updateBackgroundUrls}
+          className={styles.start__links} />
         <CNN className={styles.start__news} />
         <InfoBar className={styles.start__info} />
         <Weather className={styles.start__weather} />

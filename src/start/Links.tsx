@@ -1,6 +1,8 @@
 import classNames from 'classnames'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
+import Form from 'react-bootstrap/Form'
+import { BackgroundUrlType, carNamesForSelect, StartPageCar } from './background-urls'
 
 const styles = require('./scss/Links.scss') // tslint:disable-line no-var-requires
 const styles2 = require('./scss/Start.scss') // tslint:disable-line no-var-requires
@@ -12,72 +14,90 @@ interface HomePageLink {
 
 const links: HomePageLink[] = [
   {
-    name: 'Link 1',
+    name: 'Link',
     href: 'https://google.com',
   },
   {
-    name: 'Link 2',
+    name: 'Link',
     href: 'https://google.com',
   },
   {
-    name: 'Link 3',
+    name: 'Link',
     href: 'https://google.com',
   },
   {
-    name: 'Link 4',
+    name: 'Link',
     href: 'https://google.com',
   },
   {
-    name: 'Link 5',
+    name: 'Link',
     href: 'https://google.com',
   },
   {
-    name: 'Link 6',
+    name: 'Link',
     href: 'https://google.com',
   },
   {
-    name: 'Link 7',
+    name: 'Link',
     href: 'https://google.com',
   },
   {
-    name: 'Link 8',
+    name: 'Link',
     href: 'https://google.com',
   },
   {
-    name: 'Link 9',
+    name: 'Link',
     href: 'https://google.com',
   },
   {
-    name: 'Link 10',
+    name: 'Link',
     href: 'https://google.com',
   },
   {
-    name: 'Link 11',
+    name: 'Link',
     href: 'https://google.com',
   },
   {
-    name: 'Link 12',
+    name: 'Link',
     href: 'https://google.com',
   },
   {
-    name: 'Link 13',
+    name: 'Link',
     href: 'https://google.com',
   },
   {
-    name: 'Link 14',
+    name: 'Link',
     href: 'https://google.com',
   },
   {
-    name: 'Link 15',
+    name: 'Link',
     href: 'https://google.com',
   },
   {
-    name: 'Link 16',
+    name: 'Link',
+    href: 'https://google.com',
+  },
+  {
+    name: 'Link',
+    href: 'https://google.com',
+  },
+  {
+    name: 'Link',
+    href: 'https://google.com',
+  },
+  {
+    name: 'Link',
+    href: 'https://google.com',
+  },
+  {
+    name: 'Link',
     href: 'https://google.com',
   },
 ]
 
 interface Props {
+  backgroundUrlType: BackgroundUrlType
+  updateBackgroundUrls: (carType: BackgroundUrlType) => void
   className: string
 }
 
@@ -86,10 +106,56 @@ export default class Links extends React.Component<Props, {}> {
     super(props)
   }
 
+  handleSelectChange = (e: React.ChangeEvent) => {
+    const { updateBackgroundUrls } = this.props
+    const selectElement = e.target as HTMLSelectElement
+    const type = parseInt(selectElement.value, 10) as BackgroundUrlType
+    updateBackgroundUrls(type)
+
+    // put selection on hidden element, otherwise if a selection is made
+    // and space if pressed, the links will scroll down
+    const HIDDEN_FOCUS_ELEMENT_CLASS = styles.links__hiddenFocus
+    if (document.querySelectorAll(`.${HIDDEN_FOCUS_ELEMENT_CLASS}`).length === 0) {
+      const div = document.createElement('div')
+      div.classList.add(HIDDEN_FOCUS_ELEMENT_CLASS)
+      div.tabIndex = -1
+      div.style.opacity = '0'
+      document.body.appendChild(div)
+    }
+    (document.querySelector(`.${HIDDEN_FOCUS_ELEMENT_CLASS}`) as HTMLDivElement).focus()
+  }
+
   render(): JSX.Element {
-    const { className } = this.props
+    const {
+      backgroundUrlType,
+      className,
+    } = this.props
+    const {
+      handleSelectChange,
+    } = this
+
     return (
       <div className={classNames(styles.links, className)}>
+        <Form
+          className={classNames(
+            styles.links__item,
+            styles2.start__links__item)}>
+          <Form.Group>
+            <Form.Control
+              as='select'
+              onChange={handleSelectChange}
+              value={backgroundUrlType}
+              custom>
+              {carNamesForSelect.map((car: StartPageCar) => (
+                <option
+                  key={car.type}
+                  value={car.type}>
+                  {car.name}
+                </option>
+              ))}
+            </Form.Control>
+          </Form.Group>
+        </Form>
         <Link
           className={classNames(
             styles.links__item,

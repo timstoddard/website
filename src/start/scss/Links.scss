@@ -9,14 +9,14 @@
     padding: 5px;
 
     :global(.form-group) {
-      cursor: pointer;
       margin: 0;
     }
-    
+
     :global(.custom-select) {
       background: 0;
       border: 0;
       color: inherit;
+      cursor: pointer;
       font-size: inherit;
       height: 28px;
       padding: 0;

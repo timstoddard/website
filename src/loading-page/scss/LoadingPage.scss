@@ -1,0 +1,9 @@
+@import 'src/scss/globals';
+
+.loadingPage {
+  align-items: center;
+  color: $homeContentBlue;
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}

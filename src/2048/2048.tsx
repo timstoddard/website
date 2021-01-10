@@ -1,4 +1,7 @@
+import classNames from 'classnames'
 import * as React from 'react'
+// import styles from './scss/2048.scss' // uncomment when working on this again
+const styles: any = {}
 
 // TODO finish this game
 
@@ -32,7 +35,7 @@ const Board = ({ tiles, boardWidth }: BoardProps): JSX.Element => {
     )
   }
   return (
-    <div className='board'>
+    <div className={styles.board}>
       {rows}
     </div>
   )
@@ -43,7 +46,7 @@ interface BoardGameProps {
 }
 
 const BoardRow = ({ tiles }: BoardGameProps): JSX.Element => (
-  <div className='boardRow'>
+  <div className={styles.boardRow}>
     {tiles.map(({ value }: Tile, i: number) => (
       <BoardTile
         key={i}
@@ -59,14 +62,16 @@ interface BoardTileProps {
 const BoardTile = ({ value }: BoardTileProps): JSX.Element => {
   if (value === null) {
     return (
-      <div className='boardTile'>
+      <div className={styles.boardTile}>
         {value}
       </div>
     )
   }
 
   return (
-    <div className='boardTile boardTile--hasValue'>
+    <div className={classNames(
+      styles.boardTile,
+      styles['boardTile--hasValue'])}>
       {value}
     </div>
   )
@@ -217,7 +222,7 @@ export default class Game2048 extends React.Component<{}, State> {
     } = this.state
 
     return (
-      <div className='game2048'>
+      <div className={styles.game2048}>
         <h1>2048</h1>
         <Board
           tiles={tiles}

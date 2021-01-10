@@ -1,14 +1,12 @@
+import classNames from 'classnames'
 import * as React from 'react'
+import styles from './scss/Battery.scss'
 
-interface State {
-  hasGetBattery: () => any
-  charging: boolean
-  chargingTime: number
-  dischargingTime: number
-  level: number
-  batteryColor: string
-  decreasing: boolean
+interface Nav {
+  getBattery: () => BatteryStats
 }
+
+const getNav = (): Nav => navigator as unknown as Nav
 
 interface BatteryStats {
   charging: boolean
@@ -26,6 +24,16 @@ const batteryListeners = [
   'dischargingtimechange',
 ]
 
+interface State {
+  hasGetBattery: boolean
+  charging: boolean
+  chargingTime: number
+  dischargingTime: number
+  level: number
+  batteryColor: string
+  decreasing: boolean
+}
+
 export default class Battery extends React.Component<{}, State> {
   batteryAnimationInterval: number
   removeEventListeners: () => void
@@ -34,7 +42,7 @@ export default class Battery extends React.Component<{}, State> {
     super(props)
 
     this.state = {
-      hasGetBattery: navigator && (navigator as any).getBattery,
+      hasGetBattery: !!(navigator && getNav().getBattery),
       charging: false,
       chargingTime: 0,
       dischargingTime: 0,
@@ -44,41 +52,50 @@ export default class Battery extends React.Component<{}, State> {
     }
   }
 
-  componentDidMount(): void {
-    if (this.state.hasGetBattery) {
-      (navigator as any).getBattery().then((battery: BatteryStats) => {
-        this.updateStats(battery)
+  async componentDidMount(): Promise<void> {
+    const {
+      hasGetBattery,
+      decreasing,
+      level,
+    } = this.state
 
+    if (hasGetBattery) {
+      const battery: BatteryStats = await getNav().getBattery()
+      this.updateStats(battery)
+
+      const onBatteryEvent = (e: Event): void => {
+        this.updateStats(e.target as unknown as BatteryStats)
+      }
+
+      for (const listener of batteryListeners) {
+        battery.addEventListener(listener, onBatteryEvent)
+      }
+
+      this.removeEventListeners = (): void => {
         for (const listener of batteryListeners) {
-          battery.addEventListener(listener, this.updateStats)
+          battery.removeEventListener(listener, onBatteryEvent)
         }
-
-        this.removeEventListeners = (): void => {
-          for (const listener of batteryListeners) {
-            battery.removeEventListener(listener, this.updateStats)
-          }
-        }
-      })
+      }
     } else {
       this.updateAnimation({
         level: 1,
         decreasing: true,
       })
       this.batteryAnimationInterval = setInterval(() => {
-        if (this.state.decreasing && this.state.level <= 0) {
+        if (decreasing && level <= 0) {
           this.updateAnimation({
             level: 0,
             decreasing: false,
           })
-        } else if (!this.state.decreasing && this.state.level >= 1) {
+        } else if (!decreasing && level >= 1) {
           this.updateAnimation({
             level: 1,
             decreasing: true,
           })
         }
         const delta = 0.002
-        const amountToAdd = this.state.decreasing ? -delta : delta
-        this.updateAnimation({ level: this.state.level + amountToAdd })
+        const amountToAdd = decreasing ? -delta : delta
+        this.updateAnimation({ level: level + amountToAdd })
       }, 4) as unknown as number
     }
   }
@@ -155,33 +172,37 @@ export default class Battery extends React.Component<{}, State> {
     const percentage = this.convertBatteryLevelToPercentage(level)
 
     return (
-      <div className='battery'>
-        <h3>Battery Stats</h3>
+      <div className={styles.battery}>
+        <h3 className={styles.battery__title}>
+          Battery Stats
+        </h3>
         {!hasGetBattery &&
-          <h5 className='battery__warning'>
+          <h5 className={styles.battery__warning}>
             ERROR: Your browser does not share your battery info.
           </h5>
         }
-        <div className='battery__level'>
+        <div className={styles.battery__level}>
           <div
-            className={`battery__level__background battery__level__background--${batteryColor}`}
+            className={classNames(
+              styles.battery__level__background,
+              (styles as any)[`battery__level__background--${batteryColor}`])}
             style={{ width: percentage }} />
-          <div className='battery__level__text'>
+          <div className={styles.battery__level__text}>
             {hasGetBattery ? percentage : '??'}
           </div>
         </div>
         {hasGetBattery &&
           <div>
-            <div className='battery__info'>
+            <div className={styles.battery__info}>
               You are {!charging && 'not'} connected to power.
             </div>
             {chargingTime !== Infinity &&
-              <div className='battery__info'>
+              <div className={styles.battery__info}>
                 Time until full: {formatTime(chargingTime)}
               </div>
             }
             {dischargingTime !== Infinity &&
-              <div className='battery__info'>
+              <div className={styles.battery__info}>
                 Time until dead: {formatTime(dischargingTime)}
               </div>
             }

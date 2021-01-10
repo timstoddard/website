@@ -1,10 +1,41 @@
 import * as React from 'react'
-
 import elements, { Element, ElementType } from './elements'
 import { Mode } from './PeriodicTable'
+import styles from './scss/ElementCard.scss'
 
-const maxElectronAffinity = elements.reduce(
-  (prev: number, curr: Element) => curr.electronAffinity > prev ? curr.electronAffinity : prev, 0)
+const getMin = (field: keyof Element) => (prev: number, curr: Element) => {
+  const value = curr[field] as number
+  if (value === null) {
+    return prev
+  }
+  return value < prev ? value : prev
+}
+const getMax = (field: keyof Element) => (prev: number, curr: Element) => {
+  const value = curr[field] as number
+  if (value === null) {
+    return prev
+  }
+  return value > prev ? value : prev
+}
+
+const minElectronAffinity = elements.reduce(getMin('electronAffinity'), Infinity)
+const maxElectronAffinity = elements.reduce(getMax('electronAffinity'), -Infinity)
+
+const minFirstIonizationEnergy = elements.reduce(getMin('firstIonizationEnergy'), Infinity)
+const maxFirstIonizationEnergy = elements.reduce(getMax('firstIonizationEnergy'), -Infinity)
+
+const minSecondIonizationEnergy = elements.reduce(getMin('secondIonizationEnergy'), Infinity)
+const maxSecondIonizationEnergy = elements.reduce(getMax('secondIonizationEnergy'), -Infinity)
+
+const minThirdIonizationEnergy = elements.reduce(getMin('thirdIonizationEnergy'), Infinity)
+const maxThirdIonizationEnergy = elements.reduce(getMax('thirdIonizationEnergy'), -Infinity)
+
+const percentInRange = (value: number, min: number, max: number) => {
+  if (value === null) {
+    return 0
+  }
+  return (value - min) / (max - min)
+}
 
 const getGridArea = (e: Element, column?: number): string =>
   column !== undefined
@@ -41,7 +72,7 @@ interface Props {
   mode: Mode
 }
 
-const ElementCard: React.StatelessComponent<Props> = ({
+const ElementCard: React.FunctionComponent<Props> = ({
   e,
   setCurrentElement,
   renderInColumn,
@@ -49,16 +80,24 @@ const ElementCard: React.StatelessComponent<Props> = ({
 }: Props): JSX.Element => {
   let cardLayout = null
   let cardClass = null
+  const simpleCard = (opacity: number) => (<>
+    <div
+      className={styles.element__simpleMode}
+      style={{ background: `rgba(255,0,0,${opacity})` }}>
+      {e.symbol}
+    </div>
+  </>)
+
   switch (mode) {
     case Mode.NORMAL:
       cardLayout = (<>
-        <div className='element__number'>
+        <div className={styles.element__number}>
           {e.number}
         </div>
-        <div className='element__symbol'>
+        <div className={styles.element__symbol}>
           {e.symbol}
         </div>
-        <div className='element__atomicWeight'>
+        <div className={styles.element__atomicWeight}>
           {(typeof e.atomicWeight === 'number') ? (
             e.atomicWeight
           ) : (
@@ -66,21 +105,30 @@ const ElementCard: React.StatelessComponent<Props> = ({
           )}
         </div>
         <div
-          className='element__type'
+          className={styles.element__type}
           style={{ backgroundColor: getTypeColor(e.type) }} />
       </>)
-      cardClass = 'element'
+      cardClass = styles.element
       break
     case Mode.ELECTRON_AFFINITY_TREND:
-      const opacity = e.electronAffinity / maxElectronAffinity
-      cardLayout = (<>
-        <div
-          className='element__simpleMode'
-          style={{ background: `rgba(255,0,0,${opacity})` }}>
-          {e.symbol}
-        </div>
-      </>)
-      cardClass = 'elementSimple'
+      cardLayout = simpleCard(percentInRange(
+        e.electronAffinity, minElectronAffinity, maxElectronAffinity))
+      cardClass = styles.elementSimple
+      break
+    case Mode.FIRST_IONIZATION_ENERGY:
+      cardLayout = simpleCard(percentInRange(
+        e.firstIonizationEnergy, minFirstIonizationEnergy, maxFirstIonizationEnergy))
+      cardClass = styles.elementSimple
+      break
+    case Mode.SECOND_IONIZATION_ENERGY:
+      cardLayout = simpleCard(percentInRange(
+        e.secondIonizationEnergy, minSecondIonizationEnergy, maxSecondIonizationEnergy))
+      cardClass = styles.elementSimple
+      break
+    case Mode.THIRD_IONIZATION_ENERGY:
+      cardLayout = simpleCard(percentInRange(
+        e.thirdIonizationEnergy, minThirdIonizationEnergy, maxThirdIonizationEnergy))
+      cardClass = styles.elementSimple
       break
   }
   return (

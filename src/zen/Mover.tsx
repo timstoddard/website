@@ -1,5 +1,5 @@
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import styles from './scss/Zen.scss'
 
 interface Props {
   radiusChangeSpeed: number
@@ -22,16 +22,6 @@ interface State {
 }
 
 export default class Mover extends React.Component<Props, State> {
-  static propTypes: any = {
-    radiusChangeSpeed: PropTypes.number.isRequired,
-    maxRadius: PropTypes.number.isRequired,
-    minRadius: PropTypes.number.isRequired,
-    direction: PropTypes.number.isRequired,
-    offset: PropTypes.number.isRequired,
-    centerX: PropTypes.number.isRequired,
-    centerY: PropTypes.number.isRequired,
-  }
-
   constructor(props: Props) {
     super(props)
 
@@ -89,7 +79,11 @@ export default class Mover extends React.Component<Props, State> {
 
   render(): JSX.Element {
     document.title = 'Zen Mode'
-    const { x, y, boxShadow } = this.state
+    const {
+      x,
+      y,
+      boxShadow,
+    } = this.state
 
     return (
       <div>
@@ -99,14 +93,14 @@ export default class Mover extends React.Component<Props, State> {
             top: y,
             boxShadow,
           }}
-          className='zen__block' />
+          className={styles.zen__block} />
         <div
           style={{
             right: x,
             bottom: y,
             boxShadow,
           }}
-          className='zen__block' />
+          className={styles.zen__block} />
       </div>
     )
   }

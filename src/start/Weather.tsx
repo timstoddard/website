@@ -1,5 +1,7 @@
+import classNames from 'classnames'
 import * as React from 'react'
-import * as Utils from './Utils'
+import { get, StartUtils, WeatherUtils } from './Utils'
+import styles from './scss/Weather.scss'
 
 interface CurrentWeather {
   coord: {
@@ -92,6 +94,8 @@ interface State {
 }
 
 export default class Weather extends React.Component<Props, State> {
+  weatherUtils: WeatherUtils
+
   constructor(props: Props) {
     super(props)
 
@@ -101,19 +105,15 @@ export default class Weather extends React.Component<Props, State> {
     }
   }
 
-  async componentDidMount(): Promise<void> {
-    await Utils.getWeatherData()
-    this.setState({
-      currentWeather: Utils.get('weatherData'),
-      forecast: Utils.get('weatherForecast'),
-    })
+  componentDidMount(): void {
+    this.load()
   }
 
   getForecastItemDt = (dt: number): JSX.Element => {
-    const dateAndTime = Utils.getDateTimeShort(new Date(dt * 1000))
+    const dateAndTime = StartUtils.getDateTimeShort(new Date(dt * 1000))
     return (<>
       <span>{dateAndTime.date} {dateAndTime.hour}</span>
-      <span className='weather__forecastItem__dt__ampm'>
+      <span className={styles.weather__forecastItem__dt__ampm}>
         {dateAndTime.ampm}
       </span>
     </>)
@@ -142,40 +142,50 @@ export default class Weather extends React.Component<Props, State> {
     } = this.state
 
     return (
-      <div className={`weather ${className}`}>
+      <div className={classNames(styles.weather, className)}>
         {currentWeather ? (
           <>
-            <img
-              src={Utils.secureImg(currentWeather.weather[0].icon)}
-              alt={currentWeather.weather[0].description}
-              title={currentWeather.weather[0].description}
-              className='weather__icon' />
-            <div className='weather__temp'>
-              <div className='weather__temp--current'>
-                {formatTemp(currentWeather.main.temp)}
+            <div className={styles.weather__header}>
+              <div className={styles.weather__title}>
+                {currentWeather.name}
               </div>
-              <div className='weather__temp--high'>
-                {formatTemp(currentWeather.main.temp_max)}
-              </div>
-              <div className='weather__temp--low'>
-                {formatTemp(currentWeather.main.temp_min)}
+              <img
+                src='../../media/icons/reload.svg'
+                alt='Reload'
+                onClick={() => this.load(false)}
+                className={styles.weather__reload} />
+              <img
+                src={StartUtils.secureImg(currentWeather.weather[0].icon)}
+                alt={currentWeather.weather[0].description}
+                title={currentWeather.weather[0].description}
+                className={styles.weather__icon} />
+              <div className={styles.weather__temp}>
+                <div className={styles['weather__temp--current']}>
+                  {formatTemp(currentWeather.main.temp)}
+                </div>
+                <div className={styles['weather__temp--high']}>
+                  {formatTemp(currentWeather.main.temp_max)}
+                </div>
+                <div className={styles['weather__temp--low']}>
+                  {formatTemp(currentWeather.main.temp_min)}
+                </div>
               </div>
             </div>
             {forecast.map((data: Forecast) => (
               <div
                 key={data.dt}
-                className='weather__forecastItem'>
-                <div className='weather__forecastItem__dt'>
+                className={styles.weather__forecastItem}>
+                <div className={styles.weather__forecastItem__dt}>
                   {getForecastItemDt(data.dt)}
                 </div>
-                <div className='weather__forecastItem__temp'>
+                <div className={styles.weather__forecastItem__temp}>
                   {formatTemp(data.main.temp)}
                 </div>
                 <img
-                  src={Utils.secureImg(data.weather[0].icon)}
+                  src={StartUtils.secureImg(data.weather[0].icon)}
                   alt={data.weather[0].description}
                   title={data.weather[0].description}
-                  className='weather__forecastItem__icon' />
+                  className={styles.weather__forecastItem__icon} />
               </div>
             ))}
           </>
@@ -184,5 +194,23 @@ export default class Weather extends React.Component<Props, State> {
         )}
       </div>
     )
+  }
+
+  private load = (isFirstLoad: boolean = true) => {
+    if (isFirstLoad) {
+      // init weather utils on first load
+      this.weatherUtils = new WeatherUtils(() => {
+        this.setState({
+          currentWeather: get('weatherData'),
+          forecast: get('weatherForecast'),
+        })
+      })
+    } else {
+      // display loading message when reloading
+      this.setState({ currentWeather: null })
+    }
+
+    // get updated weather info
+    this.weatherUtils.initWeather(!isFirstLoad)
   }
 }

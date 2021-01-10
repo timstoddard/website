@@ -1,7 +1,8 @@
-import * as PropTypes from 'prop-types'
+import classNames from 'classnames'
 import * as React from 'react'
-
+import Form from 'react-bootstrap/Form'
 import IconButton, { IconPath } from './IconButton'
+import styles from './scss/Todo.scss'
 
 interface Props {
   message: string
@@ -25,23 +26,7 @@ interface State {
 }
 
 export default class Todo extends React.Component<Props, State> {
-  static propTypes: any = {
-    message: PropTypes.string.isRequired,
-    completed: PropTypes.bool.isRequired,
-    isEditing: PropTypes.bool.isRequired,
-    hideIcons: PropTypes.bool.isRequired,
-    index: PropTypes.number.isRequired,
-    toggleTodo: PropTypes.func.isRequired,
-    editTodo: PropTypes.func.isRequired,
-    deleteTodo: PropTypes.func.isRequired,
-    handleInput: PropTypes.func.isRequired,
-    handleKeyDown: PropTypes.func.isRequired,
-    currentTodoMessage: PropTypes.string.isRequired,
-    updateOrder: PropTypes.func.isRequired,
-    updateDragState: PropTypes.func.isRequired,
-  }
-
-  dropTarget: HTMLLIElement
+  dropTarget: React.RefObject<HTMLLIElement> = React.createRef()
 
   constructor(props: Props) {
     super(props)
@@ -52,7 +37,7 @@ export default class Todo extends React.Component<Props, State> {
     }
   }
 
-  onDragStart = (e: React.DragEvent<HTMLDivElement>): void => {
+  onDragStart = (e: React.DragEvent): void => {
     const { index, updateDragState } = this.props
     e.dataTransfer.setData('text/plain', `${index}`)
     e.dataTransfer.dropEffect = 'link'
@@ -64,19 +49,22 @@ export default class Todo extends React.Component<Props, State> {
     this.setState({ isDropTarget: true })
   }
 
-  onDragLeave = (e: React.DragEvent<HTMLLIElement>): void => {
-    const targetPath = (e.nativeEvent as any).path.slice(1)
-    if (!targetPath.includes(this.dropTarget)) {
-      this.setState({ isDropTarget: false })
+  onDragLeave = (e: React.DragEvent): void => {
+    const path = e.nativeEvent.composedPath()
+    if (path) {
+      const targetPath = path.slice(1)
+      if (!targetPath.includes(this.dropTarget.current)) {
+        this.setState({ isDropTarget: false })
+      }
     }
   }
 
-  onDragOver = (e: React.DragEvent<HTMLLIElement>): void => {
+  onDragOver = (e: React.DragEvent): void => {
     e.preventDefault()
     e.dataTransfer.dropEffect = 'link'
   }
 
-  onDrop = (e: React.DragEvent<HTMLLIElement>): void => {
+  onDrop = (e: React.DragEvent): void => {
     e.preventDefault()
     const { index, updateOrder, updateDragState } = this.props
     const data = e.dataTransfer.getData('text')
@@ -114,47 +102,50 @@ export default class Todo extends React.Component<Props, State> {
       isDraggable,
       isDropTarget,
     } = this.state
-    const checkboxId = `checkbox${index}`
 
     return (
       <li
-        className={`todo ${isDropTarget ? 'todo__dropZone' : ''}`}
+        className={classNames(
+          styles.todo,
+          { [styles.todo__dropZone]: isDropTarget })}
         onDragEnter={onDragEnter}
         onDragLeave={onDragLeave}
         onDragOver={onDragOver}
         onDrop={onDrop}
         draggable={isDraggable}
-        ref={(elem: HTMLLIElement): void => { this.dropTarget = elem }}>
-        <div>
-          <input
-            type='checkbox'
-            className='todo__checkbox'
-            onChange={toggleTodo(index)}
-            id={checkboxId}
-            checked={completed} />
+        ref={this.dropTarget}>
+        <Form>
           {!isEditing &&
-            <label
-              htmlFor={checkboxId}
-              className={`todo__label ${completed ? 'todo__label--completed' : ''}`}>
-              {message}
-            </label>
+            <Form.Check
+              custom
+              type='checkbox'
+              id={`todo-checkbox-${index}`}>
+              <Form.Check.Input
+                type='checkbox'
+                onChange={toggleTodo(index)}
+                checked={completed} />
+              <Form.Check.Label className={classNames(
+                styles.todo__label,
+                { [styles['todo__label--completed']]: completed })}>
+                {message}
+              </Form.Check.Label>
+            </Form.Check>
           }
           {isEditing &&
-            <input
+            <Form.Control
               type='text'
-              className='todo__input'
-              onChange={handleInput}
+              onInput={handleInput}
               onKeyDown={handleKeyDown}
               value={currentTodoMessage} />
           }
-        </div>
-        <div className='todo__buttons'>
+        </Form>
+        <div className={styles.todo__buttons}>
           <IconButton
             path={IconPath.EDIT}
             hidden={hideIcons}
             onClick={editTodo(index)} />
           <IconButton
-            className='todo__button--drag'
+            className={styles['todo__button--drag']}
             path={IconPath.DRAG}
             hidden={hideIcons && !isDraggable}
             onDragStart={onDragStart}

@@ -1,0 +1,63 @@
+@import 'src/scss/globals';
+
+.rpt {
+  line-height: 1.5;
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 20px;
+
+  &__header {
+    margin-bottom: 10px;
+    text-align: center;
+
+    &--link,
+    &--link:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__title {
+    @include mediumHeader;
+  }
+
+  &__subtitle {
+    @include smallHeader;
+  }
+
+  &__caution {
+    color: red;
+  }
+
+  &__question {
+    margin-bottom: 10px;
+  }
+
+  &__result {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__purity {
+    color: red;
+    font-size: 40px;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 10px;
+  }
+
+  @media screen and (max-width: 700px) {
+    &__buttons {
+      flex-direction: column;
+
+      > * {
+        margin: 10px;
+        padding: 0;
+        text-align: center;
+      }
+    }
+  }
+}

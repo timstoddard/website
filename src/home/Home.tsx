@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-
 import Dots from './Dots'
+import styles from './scss/Home.scss'
 
 interface HomepageLink {
   pathname: string
@@ -23,25 +23,29 @@ const links: HomepageLink[] = [
   },
 ]
 
-const Home: React.StatelessComponent<{}> = (): JSX.Element => {
+const Home: React.FunctionComponent<{}> = (): JSX.Element => {
   document.title = 'Tim Stoddard'
 
+  const setIfExternalPath = (pathname: string, tResult: string): string =>
+    pathname[0] !== '/' ? tResult : ''
+
   return (
-    <div className='home'>
+    <div className={styles.home}>
       <Dots delay={200} />
-      <div className='home__content'>
-        <h1 className='home__headerName'>
+      <div className={styles.home__content}>
+        <h1 className={styles.home__headerName}>
           tim stoddard
         </h1>
-        <ul className='home__links'>
+        <ul className={styles.home__links}>
           {links.map(({ pathname, text }: HomepageLink) => (
             <li
               key={text}
-              className='home__link'>
+              className={styles.home__link}>
               <Link
                 to={{ pathname }}
-                target={pathname[0] !== '/' ? '_blank' : ''}
-                className='home__linkText'>
+                target={setIfExternalPath(pathname, '_blank')}
+                rel={setIfExternalPath(pathname, 'noopener noreferrer')}
+                className={styles.home__linkText}>
                 {text}
               </Link>
             </li>

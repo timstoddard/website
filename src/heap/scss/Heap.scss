@@ -1,0 +1,23 @@
+@import 'src/scss/globals';
+
+.heap {
+  padding-bottom: 20px;
+  text-align: center;
+
+  &__title {
+    @include smallHeader;
+    margin-top: 0;
+    padding-top: 15px;
+  }
+
+  p {
+    line-height: 1em;
+    margin: 0.5em;
+  }
+
+  &__value {
+    background: #00ff66;
+    border-radius: 2px;
+	  font-weight: bold;
+  }
+}

@@ -1,5 +1,6 @@
-import * as PropTypes from 'prop-types'
+import classNames from 'classnames'
 import * as React from 'react'
+import styles from './scss/IconButton.scss'
 
 interface Props {
   onClick?: () => void
@@ -10,7 +11,7 @@ interface Props {
   isDraggable?: boolean
 }
 
-const IconButton: React.StatelessComponent<Props> = ({
+const IconButton: React.FunctionComponent<Props> = ({
   onClick,
   onDragStart,
   path,
@@ -19,7 +20,10 @@ const IconButton: React.StatelessComponent<Props> = ({
   isDraggable,
 }: Props): JSX.Element => (
   <div
-    className={`iconButton ${hidden ? 'iconButton--hidden' : ''} ${className}`}
+    className={classNames(
+      styles.iconButton,
+      className,
+      { [styles['iconButton--hidden']]: hidden })}
     onDragStart={onDragStart}
     draggable={isDraggable}>
     <svg
@@ -34,24 +38,6 @@ const IconButton: React.StatelessComponent<Props> = ({
     </svg>
   </div>
 )
-
-IconButton.propTypes = {
-  onClick: PropTypes.func,
-  onDragStart: PropTypes.func,
-  path: PropTypes.string,
-  hidden: PropTypes.bool,
-  className: PropTypes.string,
-  isDraggable: PropTypes.bool,
-}
-
-IconButton.defaultProps = {
-  onClick: (): void => {},
-  onDragStart: (): void => {},
-  path: '',
-  hidden: false,
-  className: '',
-  isDraggable: false,
-}
 
 export const IconPath = {
   // tslint:disable-next-line:max-line-length

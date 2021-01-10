@@ -1,5 +1,6 @@
-import * as PropTypes from 'prop-types'
+import classNames from 'classnames'
 import * as React from 'react'
+import styles from '../home/scss/Dots.scss'
 
 interface State {
   visible: boolean
@@ -17,15 +18,18 @@ interface Dot {
 
 export default class DotsBlack extends React.Component<{}, State> {
   dots: Dot[]
-  canvas: HTMLCanvasElement
   moveInterval: number
   visibleTimer: number
   averageRGBCache: { [key: string]: string } = {}
   twoPiRadians: number = 2 * Math.PI
-  ref: any; // TODO better type
+  private canvasElement: React.RefObject<HTMLCanvasElement> = React.createRef()
+  private imgRef: React.RefObject<HTMLImageElement> = React.createRef()
 
   constructor(props: {}) {
     super(props)
+
+    this.canvasElement = React.createRef()
+    this.imgRef = React.createRef()
 
     this.state = {
       visible: false,
@@ -36,7 +40,7 @@ export default class DotsBlack extends React.Component<{}, State> {
   componentDidMount(): void {
     // generate the dots
     this.dots = []
-    for (let i = 0; i < 80; i++) {
+    for (let i = 0; i < 30; i++) {
       this.dots.push(this.generateNewDot())
     }
 
@@ -54,9 +58,9 @@ export default class DotsBlack extends React.Component<{}, State> {
         clientWidth: viewportWidth,
         clientHeight: viewportHeight,
       } = document.documentElement
-      this.canvas.width = viewportWidth
-      this.canvas.height = viewportHeight
-      const threshold = Math.min(viewportWidth, viewportHeight) / 5
+      this.canvasElement.current.width = viewportWidth
+      this.canvasElement.current.height = viewportHeight
+      const threshold = Math.min(viewportWidth, viewportHeight) / 2.5
       this.setState({ drawLineThresholdSquared: threshold * threshold })
     }
     trackWindowSize()
@@ -83,7 +87,7 @@ export default class DotsBlack extends React.Component<{}, State> {
         ? this.generateNewDot()
         : { x: newX, y: newY, dx, dy, radius, opacity }
     })
-    const canvas = this.canvas.getContext('2d')
+    const canvas = this.canvasElement.current.getContext('2d')
     canvas.clearRect(0, 0, viewportWidth, viewportHeight)
     const { drawLineThresholdSquared } = this.state
     for (let i = 0; i < this.dots.length; i++) {
@@ -157,11 +161,15 @@ export default class DotsBlack extends React.Component<{}, State> {
     radius: number,
     opacity: number,
   ): void => {
-    const width = 100;
-    const height = width * 0.85;
+    const height = radius * 20
+    const width = height * 2.5
+    canvas.globalAlpha = opacity
     canvas.drawImage(
-      this.ref,
-      x - width / 2, y - height / 2, width, height);
+      this.imgRef.current,
+      // source coords
+      100, 820, 1850, 650,
+      // dest coords
+      x - width / 2, y - height / 2, width, height)
   }
 
   drawLine = (
@@ -173,7 +181,7 @@ export default class DotsBlack extends React.Component<{}, State> {
     canvas.beginPath()
     canvas.moveTo(dot1.x, dot1.y)
     canvas.lineTo(dot2.x, dot2.y)
-    canvas.strokeStyle = `rgba(0,0,0,${opacity})`
+    canvas.strokeStyle = `rgba(0,0,255,${opacity})`
     canvas.stroke()
   }
 
@@ -182,11 +190,13 @@ export default class DotsBlack extends React.Component<{}, State> {
 
     return (
       <canvas
-        className={`dots ${visible ? 'dots--visible' : ''}`}
-        ref={(canvas: HTMLCanvasElement): void => { this.canvas = canvas }}>
+        ref={this.canvasElement}
+        className={classNames(
+          styles.dots,
+          visible ? styles['dots--visible'] : '')}>
         <img
-          src='http://www.rssportscars.com/photos/cars/2016-ford-focus-rs/focus-rs-usa-08-nyc-skyline.jpg'
-          ref={(ref: any): void => { this.ref = ref }} />
+          ref={this.imgRef}
+          src='http://www.rssportscars.com/photos/cars/2016-ford-focus-rs/focus-rs-usa-08-nyc-skyline.jpg' />
       </canvas>
     )
   }

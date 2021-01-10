@@ -1,20 +1,20 @@
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
+import styles from './scss/NotFound.scss'
 
 interface Props {
   destination: string
   to: string
 }
 
-const NotFound: React.StatelessComponent<Props> = ({ destination, to }: Props): JSX.Element => {
+const NotFound: React.FunctionComponent<Props> = ({ destination, to }: Props): JSX.Element => {
   document.title = 'Page Not Found'
   return (
-    <div className='notFound'>
+    <div className={styles.notFound}>
       <h4>The page you&rsquo;re looking for does not exist.</h4>
       <h4>
         <Link
-          className='notFound__link'
+          className={styles.notFound__link}
           to={to}>
           Click here to go to {destination}.
         </Link>
@@ -24,11 +24,6 @@ const NotFound: React.StatelessComponent<Props> = ({ destination, to }: Props): 
         alt='Page Not Found' />
     </div>
   )
-}
-
-NotFound.propTypes = {
-  destination: PropTypes.string.isRequired,
-  to: PropTypes.string.isRequired,
 }
 
 export default NotFound

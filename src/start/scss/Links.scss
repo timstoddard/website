@@ -1,0 +1,38 @@
+@import 'src/scss/globals';
+
+.links {
+  display: flex;
+  flex-direction: column;
+
+  &__item {
+    color: inherit;
+    padding: 5px;
+
+    :global(.form-group) {
+      margin: 0;
+    }
+
+    :global(.custom-select) {
+      background: 0;
+      border: 0;
+      color: inherit;
+      cursor: pointer;
+      font-size: inherit;
+      height: 28px;
+      padding: 0;
+      text-align: center;
+      text-align-last: center;
+
+      &:focus {
+        box-shadow: none;
+        outline: 0;
+      }
+    }
+  }
+
+  &__hiddenFocus {
+    left: -1000px;
+    position: absolute;
+    top: -1000px;
+  }
+}

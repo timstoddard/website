@@ -1,5 +1,6 @@
-import * as PropTypes from 'prop-types'
+import classNames from 'classnames'
 import * as React from 'react'
+import styles from '../home/scss/Dots.scss'
 
 interface State {
   visible: boolean
@@ -24,11 +25,11 @@ enum Color {
 
 export default class DotsXmas extends React.Component<{}, State> {
   dots: Dot[]
-  canvas: HTMLCanvasElement
   moveInterval: number
   visibleTimer: number
   averageRGBCache: { [key: string]: string } = {}
   twoPiRadians: number = 2 * Math.PI
+  private canvasElement: React.RefObject<HTMLCanvasElement> = React.createRef()
 
   constructor(props: {}) {
     super(props)
@@ -63,8 +64,8 @@ export default class DotsXmas extends React.Component<{}, State> {
         clientWidth: viewportWidth,
         clientHeight: viewportHeight,
       } = document.documentElement
-      this.canvas.width = viewportWidth
-      this.canvas.height = viewportHeight
+      this.canvasElement.current.width = viewportWidth
+      this.canvasElement.current.height = viewportHeight
       const threshold = Math.min(viewportWidth, viewportHeight) / 5
       this.setState({ drawLineThresholdSquared: threshold * threshold })
     }
@@ -92,7 +93,7 @@ export default class DotsXmas extends React.Component<{}, State> {
         ? this.generateNewDot(color)
         : { x: newX, y: newY, dx, dy, radius, opacity, color }
     })
-    const canvas = this.canvas.getContext('2d')
+    const canvas = this.canvasElement.current.getContext('2d')
     canvas.clearRect(0, 0, viewportWidth, viewportHeight)
     const { drawLineThresholdSquared } = this.state
     for (let i = 0; i < this.dots.length; i++) {
@@ -224,8 +225,10 @@ export default class DotsXmas extends React.Component<{}, State> {
 
     return (
       <canvas
-        className={`dots ${visible ? 'dots--visible' : ''}`}
-        ref={(canvas: HTMLCanvasElement): void => { this.canvas = canvas }} />
+        ref={this.canvasElement}
+        className={classNames(
+          styles.dots,
+          visible ? styles['dots--visible'] : '')} />
     )
   }
 }

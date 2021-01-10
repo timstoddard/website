@@ -1,4 +1,6 @@
+import classNames from 'classnames'
 import * as React from 'react'
+import styles from './scss/RandomQuote.scss'
 
 const quotes = [
   'Breathe.',
@@ -31,8 +33,8 @@ export default class RandomQuote extends React.Component<Props, State> {
     const { quote } = this.state
 
     return (
-      <div className={`randomQuote ${className}`}>
-        <div className='randomQuote__text'>
+      <div className={classNames(styles.randomQuote, className)}>
+        <div className={styles.randomQuote__text}>
           {quote}
         </div>
       </div>

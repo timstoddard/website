@@ -1,6 +1,8 @@
 import * as React from 'react'
-
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 import FormInput from './FormInput'
+import styles from './scss/E85.scss'
 
 interface State {
   currentGallons: number
@@ -54,8 +56,7 @@ export default class E85 extends React.Component<{}, State> {
 
   handleInput = (field: keyof State): ((e: React.ChangeEvent<HTMLInputElement>) => void) => {
     return (e: React.ChangeEvent<HTMLInputElement>): void => {
-      // TODO try to find a less hacky way to make this work
-      this.setState({ [field]: e.target.value } as any)
+      this.setState({ [field]: e.target.value } as unknown as State)
     }
   }
 
@@ -120,11 +121,11 @@ export default class E85 extends React.Component<{}, State> {
     } = this.state
 
     return (
-      <div className='e85'>
-        <form
-          className='e85__form'
+      <div className={styles.e85}>
+        <Form
+          className={styles.e85__form}
           onSubmit={handleSubmit}>
-          <div className='e85__form__row'>
+          <div className={styles.e85__form__row}>
             <FormInput
               id='currentGallons'
               label='Current Gallons'
@@ -137,7 +138,7 @@ export default class E85 extends React.Component<{}, State> {
               value={currentEthanolPercentage}
               onChange={handleInput('currentEthanolPercentage')} />
           </div>
-          <div className='e85__form__row'>
+          <div className={styles.e85__form__row}>
             <FormInput
               id='fuel1EthanolPercentage'
               label='Fuel 1 Ethanol %'
@@ -149,7 +150,7 @@ export default class E85 extends React.Component<{}, State> {
               value={fuel2EthanolPercentage}
               onChange={handleInput('fuel2EthanolPercentage')} />
           </div>
-          <div className='e85__form__row'>
+          <div className={styles.e85__form__row}>
             <FormInput
               id='desiredTotalGallons'
               label='Total Gallons'
@@ -162,20 +163,22 @@ export default class E85 extends React.Component<{}, State> {
               value={desiredEthanolPercentage}
               onChange={handleInput('desiredEthanolPercentage')} />
           </div>
-          <button
-            className='btn waves-effect waves-light'
-            type='submit'>
+          <Button type='submit'>
             Calculate
-          </button>
-        </form>
+          </Button>
+        </Form>
         {showResults &&
-          <div className='e85__results'>
-            <div>You need <span className='e85__resultGallons'>{fuel1Gallons.toFixed(2)}</span> gallons of fuel 1</div>
-            <div>You need <span className='e85__resultGallons'>{fuel2Gallons.toFixed(2)}</span> gallons of fuel 2</div>
+          <div className={styles.e85__results}>
+            <div>You need <span className={styles.e85__resultGallons}>
+              {fuel1Gallons.toFixed(2)}
+            </span> gallons of fuel 1</div>
+            <div>You need <span className={styles.e85__resultGallons}>
+              {fuel2Gallons.toFixed(2)}
+            </span> gallons of fuel 2</div>
           </div>
         }
         {showError &&
-          <div className='e85__error'>
+          <div className={styles.e85__error}>
             {errorMessage}
           </div>
         }

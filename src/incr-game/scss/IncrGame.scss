@@ -1,0 +1,9 @@
+@import 'src/scss/globals';
+
+.incrGame {
+  background: rgb(200,200,200);
+
+  &__button {
+    color: red;
+  }
+}

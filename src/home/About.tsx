@@ -1,4 +1,5 @@
 import * as React from 'react'
+import styles from './scss/About.scss'
 
 interface Icon {
   name: string
@@ -12,21 +13,21 @@ interface Detail {
 
 const icons: Icon[] = [
   {
-    name: 'Github',
-    href: 'https://github.com/timstoddard',
- },
-  {
     name: 'LinkedIn',
     href: 'https://linkedin.com/in/timstoddard200',
  },
   {
-    name: 'Portfolium',
-    href: 'https://portfolium.com/timstoddard',
+    name: 'Github',
+    href: 'https://github.com/timstoddard',
  },
-  {
-    name: 'Facebook',
-    href: 'https://facebook.com/timstoddard200',
- },
+//   {
+//     name: 'Portfolium',
+//     href: 'https://portfolium.com/timstoddard',
+//  },
+//   {
+//     name: 'Facebook',
+//     href: 'https://facebook.com/timstoddard200',
+//  },
 ]
 
 const details: Detail[] = [
@@ -60,34 +61,33 @@ const details: Detail[] = [
   },
 ]
 
-const IconLinks: React.StatelessComponent<{}> = (): JSX.Element => (
-  <div className='about__icons'>
+const IconLinks: React.FunctionComponent<{}> = (): JSX.Element => (
+  <div className={styles.about__icons}>
     {icons.map(({ href, name }: Icon) => (
       <a
         href={href}
         target='_blank'
         rel='noopener noreferrer'
-        key={name}
-        className='about__icons__link'>
+        key={name}>
         <img
           src={`../../media/logos/${name.toLowerCase()}.png`}
           alt={name}
-          className={'about__icons__icon'} />
+          className={styles.about__icons__icon} />
       </a>
     ))}
   </div>
 )
 
-const Details: React.StatelessComponent<{}> = (): JSX.Element => (
-  <dl className='about__details'>
+const Details: React.FunctionComponent<{}> = (): JSX.Element => (
+  <dl className={styles.about__details}>
     {details.map(({ field, value }: Detail) => (
       <div
         key={field}
-        className='about__details__detailWrapper'>
-        <dt className='about__details__field'>
+        className={styles.about__details__detailWrapper}>
+        <dt className={styles.about__details__field}>
           {field}
         </dt>
-        <dd className='about__details__value'>
+        <dd className={styles.about__details__value}>
           {value}
         </dd>
       </div>
@@ -95,9 +95,9 @@ const Details: React.StatelessComponent<{}> = (): JSX.Element => (
   </dl>
 )
 
-const About: React.StatelessComponent<{}> = (): JSX.Element => (
-  <div className='about'>
-      <h4 className='about__title'>
+const About: React.FunctionComponent<{}> = (): JSX.Element => (
+  <div className={styles.about}>
+      <h4 className={styles.about__title}>
         Tim Stoddard
       </h4>
       <Details />

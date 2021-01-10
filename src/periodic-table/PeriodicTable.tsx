@@ -1,13 +1,18 @@
+import classNames from 'classnames'
 import * as React from 'react'
-
 import CurrentElement from './CurrentElement'
 import ElementCard from './ElementCard'
 import elements, { Element } from './elements'
 import ModeSelect from './ModeSelect'
+import styles from './scss/PeriodicTable.scss'
+import styles2 from './scss/ElementCard.scss'
 
 export enum Mode {
   NORMAL = 'NORMAL',
   ELECTRON_AFFINITY_TREND = 'ELECTRON_AFFINITY_TREND',
+  FIRST_IONIZATION_ENERGY = 'FIRST_IONIZATION_ENERGY',
+  SECOND_IONIZATION_ENERGY = 'SECOND_IONIZATION_ENERGY',
+  THIRD_IONIZATION_ENERGY = 'THIRD_IONIZATION_ENERGY',
 }
 
 const columnElements = elements.filter((e: Element) => e.column !== null)
@@ -70,8 +75,8 @@ export default class PeriodicTable extends React.Component<{}, State> {
     } = this.state
 
     return (
-      <div className='pTable'>
-        <div className='pTable__table'>
+      <div className={styles.pTable}>
+        <div className={styles.pTable__table}>
           {/* main elements */}
           {columnElements.map((e: Element) => (
             <ElementCard
@@ -81,11 +86,15 @@ export default class PeriodicTable extends React.Component<{}, State> {
               mode={mode} />
           ))}
           {/* lanthanoids placeholder */}
-          <div className='elementPlaceholder elementPlaceholder--1'>
+          <div className={classNames(
+              styles2.elementPlaceholder,
+              styles2['elementPlaceholder--1'])}>
             57-71
           </div>
           {/* actinoids placeholder */}
-          <div className='elementPlaceholder elementPlaceholder--2'>
+          <div className={classNames(
+              styles2.elementPlaceholder,
+              styles2['elementPlaceholder--2'])}>
             89-103
           </div>
           {/* lanthanoids */}

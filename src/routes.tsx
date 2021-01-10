@@ -1,12 +1,11 @@
 import * as React from 'react'
 import { Route, Switch } from 'react-router-dom'
-
 import LoadingPage from './loading-page/LoadingPage'
 import NotFound from './not-found/NotFound'
 
 interface LoadableRoute {
   path: string
-  LazyComponent: React.LazyExoticComponent<any>
+  LazyComponent: React.LazyExoticComponent<React.ComponentType<unknown>>
 }
 
 const routes: LoadableRoute[] = [
@@ -133,14 +132,13 @@ const Routes = (
         </React.Suspense>
       </Route>
     ))}
-    {/* {LC3Routes} */}
     <Route
       path='/*'
       component={(): JSX.Element => (
         <NotFound
         to=''
         destination='the homepage' />
-        )} />
+      )} />
   </Switch>
 )
 

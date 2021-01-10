@@ -15,7 +15,7 @@
 @mixin homeTitleFont($size) {
   font-family: 'Roboto', sans-serif;
   font-size: $size;
-  font-weight: 200;
+  font-weight: 100;
 }
 
 @mixin aboutAndProjectsLayout() {
@@ -36,4 +36,17 @@
   color: rgb(60,60,60);
   margin: 0 0 10px;
   padding: 8px;
+}
+
+// TODO find better fixed size headers? bootstrap should have
+@mixin mediumHeader() {
+  font-size: 2.25rem;
+  line-height: 110%;
+  margin: 20px 0 20px 0;
+}
+
+@mixin smallHeader() {
+  font-size: 1.6rem;
+  line-height: 110%;
+  margin: 12px 0 12px 0;
 }

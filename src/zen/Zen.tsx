@@ -1,7 +1,7 @@
 import * as React from 'react'
-
 import ColorChanger from './ColorChanger'
 import Mover from './Mover'
+import styles from './scss/Zen.scss'
 
 interface State {
   screenCenterX: number
@@ -13,9 +13,9 @@ interface State {
 export default class Zen extends React.Component<{}, State> {
   colorChanger1: ColorChanger
   colorChanger2: ColorChanger
-  mover1: Mover
-  mover2: Mover
   moveInterval: number
+  private mover1: React.RefObject<Mover> = React.createRef()
+  private mover2: React.RefObject<Mover> = React.createRef()
 
   constructor(props: {}) {
     super(props)
@@ -33,7 +33,7 @@ export default class Zen extends React.Component<{}, State> {
     }
   }
 
-  componentWillMount(): void {
+  componentDidMount(): void {
     this.onWindowResize()
     window.addEventListener('resize', this.onWindowResize)
   }
@@ -57,18 +57,22 @@ export default class Zen extends React.Component<{}, State> {
   updateBlock = (): void => {
     const nextColor1 = this.colorChanger1.nextColor()
     const nextColor2 = this.colorChanger2.nextColor()
-    this.mover1.move(nextColor1)
-    this.mover2.move(nextColor2)
+    this.mover1.current.move(nextColor1)
+    this.mover2.current.move(nextColor2)
   }
 
   render(): JSX.Element {
     document.title = 'Zen Mode'
-    const { screenCenterX, screenCenterY, maxRadius } = this.state
+    const {
+      screenCenterX,
+      screenCenterY,
+      maxRadius,
+    } = this.state
 
     return (
-      <div className='zen'>
+      <div className={styles.zen}>
         <Mover
-          ref={(mover: Mover): void => { this.mover1 = mover }}
+          ref={this.mover1}
           direction={1}
           offset={0}
           centerX={screenCenterX}
@@ -77,7 +81,7 @@ export default class Zen extends React.Component<{}, State> {
           maxRadius={maxRadius}
           radiusChangeSpeed={0.2} />
         <Mover
-          ref={(mover: Mover): void => { this.mover2 = mover }}
+          ref={this.mover2}
           direction={-1}
           offset={Math.PI / 2}
           centerX={screenCenterX}

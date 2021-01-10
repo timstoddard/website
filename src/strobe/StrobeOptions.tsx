@@ -1,5 +1,7 @@
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
+import styles from './scss/StrobeOptions.scss'
 
 interface Props {
   ms: number
@@ -13,18 +15,6 @@ interface State {
 }
 
 export default class StrobeOptions extends React.Component<Props, State> {
-  static propTypes: any = {
-    ms: PropTypes.number,
-    updateMs: PropTypes.func,
-    hideOptions: PropTypes.func,
-  }
-
-  static defaultProps: any = {
-    ms: 0,
-    updateMs: (): void => {},
-    hideOptions: (): void => {},
-  }
-
   range: HTMLInputElement
 
   constructor(props: Props) {
@@ -36,54 +26,66 @@ export default class StrobeOptions extends React.Component<Props, State> {
     }
   }
 
-  componentDidMount(): void {
-    this.range.value = `${this.props.ms}`
-  }
-
-  onRangeChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const newMs = parseInt(event.target.value, 10)
+  onRangeChange = (event: React.FormEvent): void => {
+    const rawValue = (event.target as HTMLInputElement).value
+    const newMs = parseInt(rawValue, 10)
     this.props.updateMs(newMs)
     event.stopPropagation()
   }
 
-  onCloseClick = (event: React.MouseEvent<HTMLAnchorElement>): void => {
+  onCloseClick = (event: React.FormEvent): void => {
     this.props.hideOptions()
     event.stopPropagation()
   }
 
   render(): JSX.Element {
-    const { onRangeChange, onCloseClick } = this
-    const { ms } = this.props
-    const { min, max } = this.state
+    const {
+      onRangeChange,
+      onCloseClick,
+    } = this
+    const {
+      ms,
+    } = this.props
+    const {
+      min,
+      max,
+    } = this.state
+
     return (
-      <div className='options'>
-        <h5 className='options__title'>
+      <div className={styles.options}>
+        <h5 className={styles.options__title}>
           Options
         </h5>
-        <div className='options__form'>
-          <p className='options__form--min'>{min}</p>
-          <input
-            type='range'
-            onChange={onRangeChange}
-            min={min}
-            max={max}
-            step='5'
-            ref={(range: HTMLInputElement): void => { this.range = range }} />
-          <p className='options__form--max'>{max}</p>
-        </div>
-        <div>
-          <span className='options__ms'>
-            {ms}
-          </span>
-          &nbsp;milliseconds between strobes
-        </div>
-        <div className='options__buttonWrapper'>
-          <a
+        <Form className={styles.options__form}>
+          <div className={styles.options__form__sliderWrapper}>
+            <div>
+              <span className={styles.options__ms}>
+                {ms}
+              </span>
+              &nbsp;milliseconds between strobes
+            </div>
+            <div className={styles.options__form__slider}>
+              <Form.Group controlId='strobe-ms'>
+                <span className={styles['options__form--min']}>{min}</span>
+                <Form.Control
+                  // TODO why can't use custom element here?
+                  // custom
+                  type='range'
+                  value={this.props.ms.toString()}
+                  onChange={onRangeChange}
+                  min={min}
+                  max={max}
+                  step='5' />
+                <span className={styles['options__form--max']}>{max}</span>
+              </Form.Group>
+            </div>
+          </div>
+          <Button
             onClick={onCloseClick}
-            className='options__button'>
+            className={styles.options__button}>
             Close
-          </a>
-        </div>
+          </Button>
+        </Form>
       </div>
     )
   }

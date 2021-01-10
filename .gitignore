@@ -6,9 +6,9 @@ npm-debug.log
 .DS_Store
 
 # generated files
-dist/*
+dist
 index.html
-website.zip
+**/*.scss.d.ts
 
 # secrets
-utils/cloudflare-secrets.js
+utils/cloudflare/cloudflare-secrets.js

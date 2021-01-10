@@ -1,0 +1,59 @@
+@import 'src/scss/globals';
+@import './variables';
+
+.mode {
+  // 50 sqrt 2
+  $side: 35.3553390593px;
+
+  &__toggle {
+    align-items: flex-end;
+    border: 1px solid white;
+    clip-path: polygon(0% 100%, 50% 50%, 100% 100%);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    height: 100px;
+    justify-content: center;
+    position: absolute;
+    right: -50px;
+    top: -50px;
+    transform: rotate(45deg);
+    user-select: none;
+    width: 100px;
+
+    &--open,
+    &:hover {
+      background: white;
+      color: black;
+    }
+  }
+
+  &__shield {
+    background: rgba(255,255,255,0.2);
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  &__wrapper {
+    align-items: center;
+    background: $offBlack;
+    border: 1px solid white;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    position: absolute;
+    right: $side;
+    top: $side;
+  }
+
+  &__select {
+    background: none;
+    border: 1px solid white;
+    color: white;
+    text-align: center;
+    text-align-last: center;
+  }
+}

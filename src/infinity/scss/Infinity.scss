@@ -1,0 +1,47 @@
+@import 'src/scss/globals';
+
+@mixin infinity() {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.infinity {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+
+  &__child {
+    @include infinity;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &--landing {
+      align-items: center;
+      justify-content: center;
+    }
+
+    &--end {
+      &--bordered {
+        border: 1px solid black;
+      }
+
+      &:hover {
+        border-color: red;
+      }
+    }
+  }
+
+  &--vertical {
+    flex-direction: column;
+  }
+
+  @for $i from 0 through 20 {
+    $c: 255 - $i * 12;
+    &--level#{$i} {
+      background: rgb($c, $c, $c);
+    }
+  }
+}

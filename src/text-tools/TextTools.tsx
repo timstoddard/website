@@ -2,7 +2,8 @@ import * as React from 'react'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import alternatingCapsTransform from './transformers/alternating-caps'
-import partyParrotTransform from './transformers/party-parrot';
+import partyParrotTransform from './transformers/party-parrot'
+import styles from './scss/TextTools.scss'
 
 interface State {
   rawValue: string
@@ -25,7 +26,7 @@ export default class TextTools extends React.Component<{}, State> {
     }
   }
 
-  handleChange = (event: React.ChangeEvent): void => {
+  handleChange = (event: React.FormEvent): void => {
     this.setState({ rawValue: (event.target as HTMLInputElement).value })
   }
 
@@ -62,13 +63,13 @@ export default class TextTools extends React.Component<{}, State> {
     } = this.state
 
     return (
-      <div className='textTools'>
-        <h3 className='textTools__title'>
+      <div className={styles.textTools}>
+        <h3 className={styles.textTools__title}>
           Fun Text Tools
         </h3>
         <Form
           onSubmit={handleSubmit}
-          className='textTools__form'>
+          className={styles.textTools__form}>
           <Form.Group controlId='rawValue'>
             <Form.Label>Enter some text</Form.Label>
             <Form.Control
@@ -84,7 +85,7 @@ export default class TextTools extends React.Component<{}, State> {
           </Button>
         </Form>
         {hasText && (
-          <ul className='textTools__output'>
+          <ul>
             <li>
               <h4>Alternating Caps Text</h4>
               <p>{alternatingCapsText}</p>
@@ -95,17 +96,17 @@ export default class TextTools extends React.Component<{}, State> {
               {partyParrotText.map((row: string[], i: number) => (
                 <div
                   key={i}
-                  className='textTools__partyParrot__row'>
+                  className={styles.textTools__partyParrot__row}>
                   {row.map((value: string, i2: number) => !!value
                     ? (
                       <img
                         key={i2}
-                        className='textTools__partyParrot__img'
+                        className={styles.textTools__partyParrot__img}
                         src={value} />
                     ) : (
                       <div
                         key={i2}
-                        className='textTools__partyParrot__img' />
+                        className={styles.textTools__partyParrot__img} />
                     ))}
                 </div>
               ))}

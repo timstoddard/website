@@ -1,4 +1,6 @@
+import classNames from 'classnames'
 import * as React from 'react'
+import styles from './scss/Flicker.scss'
 
 interface State {
   currentHeight: number
@@ -33,23 +35,23 @@ export default class Flicker extends React.Component<{}, State> {
     const { currentHeight, currentMax, increasing } = this.state
     const delta = Math.random() * 100 + 20
     let newHeight
-    const setStateVars: any = {}
+    const newState: Partial<State> = {}
     if (increasing) {
       newHeight = currentHeight + delta
       if (newHeight > currentMax) {
         newHeight = currentMax
-        setStateVars.increasing = false
+        newState.increasing = false
       }
     } else {
       newHeight = currentHeight - delta
       if (newHeight < 0) {
         newHeight = MIN_FLAME_HEIGHT
-        setStateVars.increasing = true
-        setStateVars.currentMax = this.getNewMax()
+        newState.increasing = true
+        newState.currentMax = this.getNewMax()
       }
     }
-    setStateVars.currentHeight = newHeight
-    this.setState(setStateVars, () => {
+    newState.currentHeight = newHeight
+    this.setState(newState as State, () => {
       this.flickerTimeout = setTimeout(() => {
         this.run()
       }, Math.random() < 0.8 ? Math.random() * 40 + 20 : Math.random() * 80 + 20) as unknown as number
@@ -72,11 +74,13 @@ export default class Flicker extends React.Component<{}, State> {
     const topBorderRadius = `${Math.min(currentHeight / 2, 12)}px`
 
     return (
-      <div className='flicker'>
-        <div className='flicker__candle'>
-          <div className='flicker__base' />
+      <div className={styles.flicker}>
+        <div className={styles.flicker__candle}>
+          <div className={styles.flicker__base} />
           <div
-            className='flicker__fire flicker__fire--orange'
+            className={classNames(
+              styles.flicker__fire,
+              styles['flicker__fire--orange'])}
             style={{
               background: orange,
               borderTopLeftRadius: topBorderRadius,
@@ -86,7 +90,9 @@ export default class Flicker extends React.Component<{}, State> {
               opacity: currentHeight / currentMax,
             }} />
           <div
-            className='flicker__fire flicker__fire--yellow'
+            className={classNames(
+              styles.flicker__fire,
+              styles['flicker__fire--yellow'])}
             style={{
               background: yellow,
               borderTopLeftRadius: topBorderRadius,

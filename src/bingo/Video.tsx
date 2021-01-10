@@ -1,13 +1,21 @@
 import axios, { AxiosResponse } from 'axios'
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
+
+interface VideoData {
+  data: {
+    title: string
+    media_embed: {
+      content: string
+    }
+  }
+}
 
 interface Props {
   className: string
 }
 
 interface State {
-  videos: any[]
+  videos: VideoData[]
   currentVideoTitle: string
   currentVideoHtml: string
   previousVideoIndex: number
@@ -15,15 +23,7 @@ interface State {
 }
 
 export default class Video extends React.Component<Props, State> {
-  static propTypes: any = {
-    className: PropTypes.string,
-  }
-
-  static defaultProps: any = {
-    className: '',
-  }
-
-  videoDiv: HTMLDivElement
+  videoWrapper: React.RefObject<HTMLDivElement> = React.createRef()
 
   constructor(props: Props) {
     super(props)
@@ -48,13 +48,13 @@ export default class Video extends React.Component<Props, State> {
       })
     window.addEventListener('resize', this.onResize)
     window.addEventListener('keyup', this.onResize)
-    this.videoDiv.addEventListener('dblclick', this.onResize)
+    this.videoWrapper.current.addEventListener('dblclick', this.onResize)
   }
 
   componentWillUnmount(): void {
     window.removeEventListener('resize', this.onResize)
     window.removeEventListener('keyup', this.onResize)
-    this.videoDiv.removeEventListener('dblclick', this.onResize)
+    this.videoWrapper.current.removeEventListener('dblclick', this.onResize)
   }
 
   onResize = (): void => {
@@ -67,8 +67,12 @@ export default class Video extends React.Component<Props, State> {
   }
 
   loadNewVideo = (): void => {
-    const { videos, previousVideoIndex } = this.state
+    const {
+      videos,
+      previousVideoIndex,
+    } = this.state
     let newIndex = previousVideoIndex
+
     while (newIndex === previousVideoIndex || !videos[newIndex].data.media_embed.content) {
       newIndex = Math.floor(videos.length * Math.random())
     }
@@ -80,7 +84,7 @@ export default class Video extends React.Component<Props, State> {
     const videoHtml = videoRawHtml
       .replace(/&lt;/g, '<') // fix opening tags
       .replace(/&gt;/g, '>') // fix closing tags
-      .replace(/width="\d+"/, 'class="video"') // remove fixed width
+      .replace(/width="\d+"/, `style="width:100%;height:auto"`) // remove fixed width
       .replace(/height="\d+"/, '') // remove fixed height
     this.setState({
       currentVideoTitle: video.title,
@@ -93,12 +97,16 @@ export default class Video extends React.Component<Props, State> {
 
   render(): JSX.Element {
     const { className } = this.props
-    const { currentVideoTitle, currentVideoHtml } = this.state
+    const {
+      currentVideoTitle,
+      currentVideoHtml,
+    } = this.state
+
     return (
       <div className={className}>
         <h5>{currentVideoTitle}</h5>
         <div
-          ref={(div: HTMLDivElement): void => { this.videoDiv = div }}
+          ref={this.videoWrapper}
           dangerouslySetInnerHTML={{ __html: currentVideoHtml }} />
       </div>
     )

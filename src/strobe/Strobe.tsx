@@ -1,13 +1,14 @@
 import * as React from 'react'
-
+import Button from 'react-bootstrap/Button'
 import ColorChanger from './ColorChanger'
 import StrobeOptions from './StrobeOptions'
+import styles from './scss/Strobe.scss'
 
 interface State {
   background: string
   ms: number
   paused: boolean
-  showOptions: boolean
+  showingOptions: boolean
 }
 
 export default class Strobe extends React.Component<{}, State> {
@@ -21,7 +22,7 @@ export default class Strobe extends React.Component<{}, State> {
       background: 'black',
       ms: 45,
       paused: false,
-      showOptions: false,
+      showingOptions: false,
     }
   }
 
@@ -40,74 +41,86 @@ export default class Strobe extends React.Component<{}, State> {
   }
 
   updateMs = (ms: number): void => {
-    this.setState({ ms }, () => {
-      clearInterval(this.moveInterval)
-      this.moveInterval = setInterval(this.updateStrobe, ms) as unknown as number
-    })
+    this.setState({ ms })
   }
 
   showOptions = (): void => {
-    this.setState({ showOptions: true })
-    if (!this.state.paused) {
-      this.togglePause(true)
-    }
+    this.setState({ showingOptions: true })
+    this.setStrobeOn(false)
   }
 
   hideOptions = (): void => {
-    this.setState({ showOptions: false })
-    if (this.state.paused) {
-      this.togglePause(false)
-    }
+    this.setState({ showingOptions: false })
+    this.setStrobeOn(true)
   }
 
-  togglePause = (showOptions: boolean): (() => void) => {
-    return (): void => {
-      const { paused, background, ms } = this.state
-      if (showOptions) {
-        this.setState({ showOptions: true })
-      }
-      if (!paused) {
-        clearInterval(this.moveInterval)
-        if (background === 'rgb(0,0,0)') {
-          this.updateStrobe()
-        }
-      } else {
-        this.moveInterval = setInterval(this.updateStrobe, ms) as unknown as number
-      }
-      this.setState({ paused: !paused })
-    }
+  togglePause = (): void => {
+    const { paused } = this.state
+    this.setStrobeOn(paused)
   }
 
   render(): JSX.Element {
     document.title = 'Strobe'
-    const { togglePause } = this
-    const { background, showOptions, ms } = this.state
+    const {
+      showOptions,
+      updateMs,
+      hideOptions,
+      togglePause,
+    } = this
+    const {
+      paused,
+      background,
+      showingOptions,
+      ms,
+    } = this.state
 
     return (
       <div
-        className='strobe'
+        className={styles.strobe}
         style={{ background }}>
-        {!showOptions &&
-          <div className='strobe__buttons'>
-            <a
-              onClick={togglePause(false)}
-              className='strobe__button'>
-              Pause
-            </a>
-            <a
-              onClick={this.showOptions}
-              className='strobe__button'>
+        {!showingOptions &&
+          <div className={styles.strobe__buttons}>
+            <Button
+              onClick={togglePause}
+              className={styles.strobe__button}>
+              { paused ? 'Play' : 'Pause' }
+            </Button>
+            <Button
+              onClick={showOptions}
+              className={styles.strobe__button}>
               Options
-            </a>
+            </Button>
           </div>
         }
-        {showOptions &&
+        {showingOptions &&
           <StrobeOptions
             ms={ms}
-            updateMs={this.updateMs}
-            hideOptions={this.hideOptions} />
+            updateMs={updateMs}
+            hideOptions={hideOptions} />
         }
       </div>
     )
+  }
+
+  private setStrobeOn = (shouldTurnOn: boolean): void => {
+    const {
+      paused,
+      background,
+      ms,
+    } = this.state
+
+    // paused and should turn on   -> start
+    // paused and should turn off  -> do nothing
+    // playing and should turn on  -> do nothing
+    // playing and should turn off -> stop
+    if (paused && shouldTurnOn) {
+      this.moveInterval = setInterval(this.updateStrobe, ms) as unknown as number
+    } else if (!paused && !shouldTurnOn) {
+      clearInterval(this.moveInterval)
+      if (background === 'rgb(0,0,0)') {
+        this.updateStrobe()
+      }
+    }
+    this.setState({ paused: !shouldTurnOn })
   }
 }

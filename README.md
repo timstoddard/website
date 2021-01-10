@@ -9,5 +9,7 @@ Technologies used:
 * NodeJS
 * Webpack
 * SCSS
-* ESLint
+* CSS Modules
+* TSLint
+* Protected by Cloudflare
 * Hosted on S3

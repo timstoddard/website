@@ -1,11 +1,12 @@
-import * as PropTypes from 'prop-types'
+import classNames from 'classnames'
 import * as React from 'react'
+import styles from './scss/Infinity.scss'
 
 const getProps = (
   name: NodeName,
   data: Node,
   link: string[],
-  handleClick: (links: string[]) => any,
+  handleClick: (links: string[]) => ((e: React.MouseEvent) => void),
   showingBorders: boolean,
 ): Props => {
   const newLink = [...link, name]
@@ -28,47 +29,34 @@ type NodeName = 'a' | 'b'
 interface Props {
   data: Node
   link: string[]
-  onClick: (e: React.MouseEvent<HTMLDivElement>) => void
-  handleClick: (link: string[]) => ((e: React.MouseEvent<HTMLDivElement>) => void)
+  onClick: (e: React.MouseEvent) => void
+  handleClick: (link: string[]) => ((e: React.MouseEvent) => void)
   showingBorders: boolean
 }
 
-const Infinity: React.StatelessComponent<Props> = ({
+const Infinity: React.FunctionComponent<Props> = ({
   data,
   link,
   onClick,
   handleClick,
   showingBorders,
 }: Props): JSX.Element => {
-  const classNames = [
-    'infinity__child',
-    !(data.a || data.b) ? 'infinity__child--end' : '',
-    !(data.a || data.b) && showingBorders
-      ? 'infinity__child--end--bordered'
-      : '',
-    link.length % 2 === 1 ? 'infinity--vertical' : '',
-    `infinity--level${link.length}`,
-  ]
 
   return (
     <div
       onClick={onClick}
-      className={classNames.join(' ')}>
+      className={classNames(
+        styles.infinity__child,
+        (styles as any)[`infinity--level${link.length}`],
+        {
+          [styles['infinity__child--end']]: !(data.a || data.b),
+          [styles['infinity__child--end--bordered']]: !(data.a || data.b) && showingBorders,
+          [styles['infinity--vertical']]: link.length % 2 === 1,
+        })}>
       {data.a && <Infinity {...getProps('a', data, link, handleClick, showingBorders)} />}
       {data.b && <Infinity {...getProps('b', data, link, handleClick, showingBorders)} />}
     </div>
   )
-}
-
-Infinity.propTypes = {
-  data: PropTypes.shape({
-    a: PropTypes.object,
-    b: PropTypes.object,
-  }).isRequired,
-  link: PropTypes.arrayOf(PropTypes.string).isRequired,
-  onClick: PropTypes.func.isRequired,
-  handleClick: PropTypes.func.isRequired,
-  showingBorders: PropTypes.bool.isRequired,
 }
 
 interface State {
@@ -90,8 +78,8 @@ export default class InfinityWrapper extends React.Component<{}, State> {
     return { a: {}, b: {} }
   }
 
-  handleClick = (link?: string[]): ((e: React.MouseEvent<HTMLDivElement>) => void) => {
-    return (e: React.MouseEvent<HTMLDivElement>): void => {
+  handleClick = (link?: string[]): ((e: React.MouseEvent) => void) => {
+    return (e: React.MouseEvent): void => {
       e.stopPropagation()
       if (!link) {
         this.setState({ data: this.getBaseData() })
@@ -118,7 +106,7 @@ export default class InfinityWrapper extends React.Component<{}, State> {
     }
   }
 
-  handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>): void => {
+  handleKeyDown = (e: React.KeyboardEvent): void => {
     e.preventDefault()
     e.stopPropagation()
 
@@ -135,14 +123,20 @@ export default class InfinityWrapper extends React.Component<{}, State> {
   render(): JSX.Element {
     document.title = 'Infinity Demo'
 
-    const { handleClick, handleKeyDown } = this
-    const { data, showingBorders } = this.state
+    const {
+      handleClick,
+      handleKeyDown,
+    } = this
+    const {
+      data,
+      showingBorders,
+    } = this.state
 
     return (
       <div
         onKeyDown={handleKeyDown}
         tabIndex={0}
-        className='infinity'>
+        className={styles.infinity}>
         {(data.a && data.b) ? (
           <Infinity
             data={data}
@@ -153,7 +147,9 @@ export default class InfinityWrapper extends React.Component<{}, State> {
         ) : (
           <div
             onClick={handleClick()}
-            className='infinity__child infinity__child--landing'>
+            className={classNames(
+              styles.infinity__child,
+              styles['infinity__child--landing'])}>
             Click to get started!
           </div>
         )}

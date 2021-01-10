@@ -4,22 +4,13 @@ import InfoBar from './InfoBar'
 import Links from './Links'
 import RandomQuote from './RandomQuote'
 import Weather from './Weather'
+import { BackgroundUrlType, getRandomType, backgroundUrls } from './background-urls'
+import styles from './scss/Start.scss'
 
-const BACKGROUND_IMAGE_CLASS = 'start__backgroundImagePreload'
-
-const backgroundUrls = [
-  'https://www.wsupercars.com/wallpapers/Tesla/2020-Tesla-Roadster-V1-2000.jpg',
-  'https://www.wsupercars.com/wallpapers/Tesla/2020-Tesla-Roadster-V2-2000.jpg',
-  'https://www.wsupercars.com/wallpapers/Tesla/2020-Tesla-Roadster-V3-2000.jpg',
-  'https://www.wsupercars.com/wallpapers/Tesla/2020-Tesla-Roadster-V4-2000.jpg',
-  'https://www.wsupercars.com/wallpapers/Tesla/2020-Tesla-Roadster-V5-2000.jpg',
-  'https://www.wsupercars.com/wallpapers/Tesla/2020-Tesla-Roadster-V6-2000.jpg',
-  'https://www.wsupercars.com/wallpapers/Tesla/2020-Tesla-Roadster-V7-2000.jpg',
-  'https://www.wsupercars.com/wallpapers/Tesla/2020-Tesla-Roadster-V8-2000.jpg',
-  'https://www.wsupercars.com/wallpapers/Tesla/2020-Tesla-Roadster-V10-2000.jpg',
-]
+const BACKGROUND_IMAGE_CLASS = styles.start__backgroundImagePreload
 
 interface State {
+  backgroundType: BackgroundUrlType
   backgroundUrlIndex: number
   showContent: boolean
 }
@@ -32,14 +23,30 @@ export default class Start extends React.Component<{}, State> {
     super(props)
 
     this.state = {
+      backgroundType: getRandomType(),
       backgroundUrlIndex: 0,
       showContent: true,
     }
   }
 
   componentDidMount = (): void => {
+    this.start()
+
+    // add window key listener
+    window.addEventListener('keydown', this.onKeyDown)
+  }
+
+  componentWillUnmount = (): void => {
+    this.stop()
+
+    // remove window key listener
+    window.removeEventListener('keydown', this.onKeyDown)
+  }
+
+  start = () => {
     // preload background images
-    for (const url of backgroundUrls) {
+    const { backgroundType } = this.state
+    for (const url of backgroundUrls[backgroundType]) {
       // TODO preload images with service worker
       const img = new Image()
       img.src = url
@@ -47,28 +54,37 @@ export default class Start extends React.Component<{}, State> {
       document.body.appendChild(img)
     }
 
-    // add window key listener
-    window.addEventListener('keydown', this.onKeyDown)
-
     // start background change timer
     this.changeBackgroundTimer = setInterval(this.changeBackground, 5000) as unknown as number
   }
 
-  componentWillUnmount = (): void => {
+  stop = () => {
     // remove preload background images
-    document.querySelectorAll(BACKGROUND_IMAGE_CLASS)
+    document.querySelectorAll(`.${BACKGROUND_IMAGE_CLASS}`)
       .forEach((element: HTMLImageElement) => element.parentElement.removeChild(element))
-
-    // remove window key listener
-    window.removeEventListener('keydown', this.onKeyDown)
 
     // stop background change timer
     clearInterval(this.changeBackgroundTimer)
   }
 
+  updateBackgroundUrls = (carType: BackgroundUrlType) => {
+    this.stop()
+    this.setState({
+      backgroundType: carType,
+      backgroundUrlIndex: 0,
+    }, () => {
+      this.start()
+    })
+  }
+
   changeBackground = (): void => {
-    const backgroundUrlIndex = (this.state.backgroundUrlIndex + 1) % backgroundUrls.length
-    this.setState({ backgroundUrlIndex })
+    const {
+      backgroundType,
+      backgroundUrlIndex,
+    } = this.state
+    const urls = backgroundUrls[backgroundType]
+    const newBackgroundUrlIndex = (backgroundUrlIndex + 1) % urls.length
+    this.setState({ backgroundUrlIndex: newBackgroundUrlIndex })
   }
 
   onKeyDown = (e: KeyboardEvent): void => {
@@ -84,24 +100,30 @@ export default class Start extends React.Component<{}, State> {
   render(): JSX.Element {
     document.title = 'Start'
     const {
+      updateBackgroundUrls,
       toggleShowContent,
     } = this
     const {
+      backgroundType,
       backgroundUrlIndex,
       showContent,
     } = this.state
-    const backgroundUrl = backgroundUrls[backgroundUrlIndex]
+    const backgroundUrl = backgroundUrls[backgroundType][backgroundUrlIndex]
+    const startClasses = `${styles.start} ${showContent ? '' : styles['start--contentHidden']}`
 
     return (
       <div
         onDoubleClick={toggleShowContent}
-        className={`start ${showContent ? '' : 'start--contentHidden'}`}
+        className={startClasses}
         style={{ backgroundImage: `url('${backgroundUrl}')` }}>
-        <Links className='start__links' />
-        <CNN className='start__news' />
-        <InfoBar className='start__info' />
-        <Weather className='start__weather' />
-        <RandomQuote className='start__quote' />
+        <Links
+          backgroundUrlType={backgroundType}
+          updateBackgroundUrls={updateBackgroundUrls}
+          className={styles.start__links} />
+        <CNN className={styles.start__news} />
+        <InfoBar className={styles.start__info} />
+        <Weather className={styles.start__weather} />
+        <RandomQuote className={styles.start__quote} />
       </div>
     )
   }

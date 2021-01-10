@@ -1,20 +1,13 @@
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import Button from 'react-bootstrap/Button'
+import styles from './scss/HeapInput.scss'
 
 interface Props {
   generateHeaps: (ints: number[]) => void
 }
 
 export default class HeapInput extends React.Component<Props, {}> {
-  static propTypes: any = {
-    generateHeaps: PropTypes.func,
-  }
-
-  static defaultProps: any = {
-    generateHeaps: (): void => {},
-  }
-
-  input: HTMLInputElement
+  input: React.RefObject<HTMLInputElement> = React.createRef()
 
   constructor(props: Props) {
     super(props)
@@ -29,12 +22,12 @@ export default class HeapInput extends React.Component<Props, {}> {
       const { generateHeaps } = this.props
       const hashData = decodeURIComponent(window.location.hash.substr(1))
       if (/\d(,\d+)*/.test(hashData)) {
-        this.input.value = hashData
+        this.input.current.value = hashData
         const ints = hashData.split(',').map((n: string) => parseInt(n, 10))
         generateHeaps(ints)
       } else {
         window.location.hash = ''
-        this.input.value = ''
+        this.input.current.value = ''
         generateHeaps([])
       }
     } catch (e) {
@@ -48,14 +41,14 @@ export default class HeapInput extends React.Component<Props, {}> {
   }
 
   processInput = (): void => {
-    const rawInput = this.input.value.replace(/\s/g, '')
+    const rawInput = this.input.current.value.replace(/\s/g, '')
     if (rawInput.length === 0) {
-      this.input.value = ''
+      this.input.current.value = ''
       return
     }
     const rawList = rawInput.split(',')
     if (rawList.length === 0 || (rawList.length === 1 && rawList[0].length === 0)) {
-      this.input.value = ''
+      this.input.current.value = ''
       return
     }
     const ints = []
@@ -75,24 +68,22 @@ export default class HeapInput extends React.Component<Props, {}> {
 
   render(): JSX.Element {
     return (
-      <div className='heapInput'>
-        <div className='heapInput__form'>
+      <div>
+        <div className={styles.heapInput__form}>
           <p>Paste your heap contents here:</p>
           <input
-            ref={(input: HTMLInputElement): void => { this.input = input }}
+            ref={this.input}
             type='text'
-            className='heapInput__form--textbox' />
-          <a
-            onClick={this.processInput}
-            className='btn'>
+            className={styles['heapInput__form--textbox']} />
+          <Button onClick={this.processInput}>
             Generate tree
-          </a>
+          </Button>
         </div>
         <p>
           Accepted format example:&nbsp;
           <a
             onClick={this.showSample}
-            className='heapInput__sample'>
+            className={styles.heapInput__sample}>
             1,2,3
           </a>
           &nbsp;(no enclosing brackets, spaces optional)

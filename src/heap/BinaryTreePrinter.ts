@@ -1,4 +1,5 @@
 import BinaryHeap from './BinaryHeap'
+import styles from './scss/Heap.scss'
 
 class Node {
   data: number
@@ -37,7 +38,7 @@ const printTreeInternal = (nodes: Node[], level: number, maxLevel: number): stri
   for (let i = 0; i < nodes.length; i++) {
     const value = nodes[i]
     if (!DNE(value)) {
-      treeString += `<span class="heap__value">${value.data}</span>`
+      treeString += `<span class="${styles.heap__value}">${value.data}</span>`
       newNodes.push(value.left)
       newNodes.push(value.right)
     } else {
@@ -114,13 +115,13 @@ const convertToNodes = (arr: number[]): Node => {
   return data[1]
 }
 
-const DNE = (value: any): boolean => {
+const DNE = (value: unknown): boolean => {
   return value === null || value === undefined
 }
 
-const allElementsDNE = (list: any[]): boolean => {
+const allElementsDNE = (list: unknown[]): boolean => {
   let allDNE = true
-  list.forEach((value: any) => {
+  list.forEach((value: unknown) => {
     if (!DNE(value)) {
       allDNE = false
     }

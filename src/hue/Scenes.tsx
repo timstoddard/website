@@ -1,5 +1,7 @@
+import classNames from 'classnames'
 import * as React from 'react'
 import { HueApi } from './hue-utils'
+import styles from './scss/Hue.scss'
 
 interface Props {
   hueApi: HueApi
@@ -44,21 +46,23 @@ export default class Scenes extends React.Component<Props, State> {
     const selectedScene = hueApi.getScene(selectedSceneId)
 
     return (
-      <div className='hueGroups'>
+      <div className={styles.hueGroups}>
         {/* TODO fix classnames (shared scss names I guess) */}
-        <ul className='hueGroups__list'>
+        <ul className={styles.hueGroups__list}>
           {sceneIds.map((sceneId: string) => (
             <li
               key={sceneId}
               onClick={selectScene(sceneId)}
-              className={`hueGroups__listItem ${selectedSceneId === sceneId ? 'hueGroups__listItem--selected' : ''}`}>
+              className={classNames(
+                styles.hueGroups__listItem,
+                { [styles['hueGroups__listItem--selected']]: selectedSceneId === sceneId })}>
               {/* [{sceneId}] */}
               {scenes[sceneId].name}
             </li>
           ))}
         </ul>
         {selectedScene && (
-          <div className='hueGroups__detail'>
+          <div className={styles.hueGroups__detail}>
             Scene details (TODO)
           </div>
         )}

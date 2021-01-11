@@ -48,7 +48,7 @@ export class HueApi {
   }
 
   getLightIds = (): number[] => {
-    return Object.keys(this.lights).map(stringToInt)
+    return this.convertObjectKeysToSortedNumberList(this.lights)
   }
 
   getGroups = (): any => {
@@ -60,7 +60,7 @@ export class HueApi {
   }
 
   getGroupIds = (): number[] => {
-    return Object.keys(this.groups).map(stringToInt)
+    return this.convertObjectKeysToSortedNumberList(this.groups)
   }
 
   getLightIdsInGroup = (groupId: number): number[] => {
@@ -79,7 +79,19 @@ export class HueApi {
   }
 
   getSceneIds = (): string[] => {
-    return Object.keys(this.scenes)
+    return this.convertObjectKeysToSortedStringList(this.scenes)
+  }
+
+  private convertObjectKeysToSortedNumberList = (dict: { [key: string]: any }): number[] => {
+    const list = Object.keys(dict).map(stringToInt)
+    list.sort((a: number, b: number) => a - b)
+    return list
+  }
+
+  private convertObjectKeysToSortedStringList = (dict: { [key: string]: any }): string[] => {
+    const list = Object.keys(dict)
+    list.sort()
+    return list
   }
 
   /* SETTERS */
@@ -189,7 +201,7 @@ export const getLightColor = (light: LightData): string => {
   return colorToHex(color)
 }
 
-export const stringToInt = (id: string): number => parseInt(id, 10)
+export const stringToInt = (s: string): number => parseInt(s, 10)
 
 const fetchWithTimeout = (url: string, options: RequestInit = {}, timeoutMs: number = 3000): Promise<Response> => {
   const controller = new AbortController()
@@ -211,4 +223,51 @@ const fetchWithTimeout = (url: string, options: RequestInit = {}, timeoutMs: num
       const message = error.name === 'AbortError' ? 'Response timed out' : error.message
       throw new Error(message)
     })
+}
+
+/**
+ * Sort an array using the merge sort algorithm.
+ *
+ * @param {function} comparatorFn The comparator function.
+ * @param {array} arr The array to sort.
+ * @returns {array} The sorted array.
+ */
+export const mergeSort = <T>(comparatorFn: (t1: T, t2: T) => number, arr: T[]): T[] => {
+  const len = arr.length
+  if (len >= 2) {
+    const firstHalf = arr.slice(0, len / 2)
+    const secondHalf = arr.slice(len / 2, len)
+    return merge(comparatorFn, mergeSort(comparatorFn, firstHalf), mergeSort(comparatorFn, secondHalf))
+  } else {
+    return arr.slice()
+  }
+}
+
+/**
+ * The merge part of the merge sort algorithm.
+ *
+ * @param {function} comparatorFn The comparator function.
+ * @param {array} arr1 The first sorted array.
+ * @param {array} arr2 The second sorted array.
+ * @returns {array} The merged and sorted array.
+ */
+const merge = <T>(comparatorFn: (t1: T, t2: T) => number, arr1: T[], arr2: T[]): T[] => {
+  const result = []
+  let left1 = arr1.length
+  let left2 = arr2.length
+  while (left1 > 0 && left2 > 0) {
+    if (comparatorFn(arr1[0], arr2[0]) <= 0) {
+      result.push(arr1.shift())
+      left1--
+    } else {
+      result.push(arr2.shift())
+      left2--
+    }
+  }
+  if (left1 > 0) {
+    result.push.apply(result, arr1)
+  } else {
+    result.push.apply(result, arr2)
+  }
+  return result
 }

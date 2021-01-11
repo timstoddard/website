@@ -1,5 +1,10 @@
+import classNames from 'classnames'
 import * as React from 'react'
 import Button from 'react-bootstrap/Button'
+import ButtonGroup from 'react-bootstrap/ButtonGroup'
+import FormControl from 'react-bootstrap/FormControl'
+import InputGroup from 'react-bootstrap/InputGroup'
+import ListGroup from 'react-bootstrap/ListGroup'
 import Modal from 'react-bootstrap/Modal'
 import { LightState, MsStep } from './beats/beat-types'
 import BeatCanvas from './beats/BeatCanvas'
@@ -8,8 +13,9 @@ import bitingDown from './beats/songs/biting-down'
 import easySwitchScreens from './beats/songs/easy-switch-screens'
 import mercy from './beats/songs/mercy'
 import { calculateXY, getValueFromPoint, UIColor } from './hue-color-conversion'
-import { HueApi, stringToInt } from './hue-utils'
+import { HueApi, mergeSort } from './hue-utils'
 import { LightData } from './Light'
+import styles from './scss/Hue.scss'
 
 interface BeatLightProps {
   id: number
@@ -26,7 +32,9 @@ const formatBrightness = (brightness: number): number => brightness
   : 100
 const BeatLight = ({ id, on, color, brightness }: BeatLightProps): JSX.Element => (
   <div
-    className={`beatLight ${on ? '' : 'beatLight--off'}`}
+    className={classNames(
+      styles.beatLight,
+      { [styles['beatLight--off']]: !on })}
     style={{
       background: formatBgColor(color),
       opacity: formatBrightness(brightness),
@@ -38,100 +46,79 @@ const BeatLight = ({ id, on, color, brightness }: BeatLightProps): JSX.Element =
 interface LightTracksSettingsProps {
   hueApi: HueApi
   song: MsStep[]
-  updateLightTrackMap: (map: number[][]) => void
-  lightTrackToLightIdMap: number[][]
+  updateLightIdToLightTrackMap: (map: { [key: number]: number }) => void
+  lightIdToLightTrackMap: { [key: number]: number }
 }
 
-interface LightTracksSettingsState {
-  tempLightTrackToLightIdMap: number[][]
-}
-
-class LightTracksSettings extends React.Component<LightTracksSettingsProps, LightTracksSettingsState> {
+class LightTracksSettings extends React.Component<LightTracksSettingsProps, {}> {
   constructor(props: LightTracksSettingsProps) {
     super(props)
-
-    this.state = {
-      tempLightTrackToLightIdMap: props.lightTrackToLightIdMap,
-    }
   }
 
-  // tslint:disable-next-line:max-line-length
-  handleChange = (index: number): ((event: React.ChangeEvent<HTMLInputElement>) => void) => (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const { tempLightTrackToLightIdMap } = this.state
-    const newMap = []
-    for (let i = 0; i < tempLightTrackToLightIdMap.length; i++) {
-      const lightIds = i === index
-        ? event.target.value.replace(/\s+/g, '')
-            .split(',')
-            .map(stringToInt)
-            .filter((n: number) => !isNaN(n))
-        : [...tempLightTrackToLightIdMap[i]]
-      newMap.push(lightIds)
-    }
-    this.setState({ tempLightTrackToLightIdMap: newMap })
-  }
-
-  updateMap = (): void => {
-    const { updateLightTrackMap } = this.props
-    const { tempLightTrackToLightIdMap } = this.state
-    const newMap = []
-    for (const lightIds of tempLightTrackToLightIdMap) {
-      newMap.push([...lightIds])
-    }
-    updateLightTrackMap(newMap)
+  handleChange = (lightId: number, trackId: number) => {
+    const {
+      updateLightIdToLightTrackMap,
+      lightIdToLightTrackMap,
+    } = this.props
+    const newTempLightIdToLightTrackMap = Object.assign({},
+      lightIdToLightTrackMap, { [lightId]: trackId })
+    updateLightIdToLightTrackMap(Object.assign({}, newTempLightIdToLightTrackMap))
   }
 
   render(): JSX.Element {
     const {
       handleChange,
-      updateMap,
     } = this
     const {
       hueApi,
-      lightTrackToLightIdMap,
+      lightIdToLightTrackMap,
     } = this.props
-    const {
-      tempLightTrackToLightIdMap,
-    } = this.state
-    const allLightIds = Object.keys(hueApi.getLights()).map(stringToInt)
-    const lightTrackInputs = []
-    for (let i = 0; i < lightTrackToLightIdMap.length; i++) {
-      lightTrackInputs.push((
-        <li key={i}>
-          <div>Light Track {i + 1}</div>
-          <input
-            type='text'
-            onChange={handleChange(i)} />
-        </li>
-      ))
+    const allLights = hueApi.getLights()
+
+    const getLightTracks = () => { // TODO pass by props? or?
+      const LIGHT_TRACK_COUNT = 2
+      const list = []
+      for (let trackId = 0; trackId < LIGHT_TRACK_COUNT; trackId++) {
+        list.push(trackId)
+      }
+      return list
     }
 
     return (
-      <div>
-        {/* TODO make this checkbox list of all light names for each light track */}
-        <hr />
-        <div>
-          {allLightIds.join(', ')}
-        </div>
+      <div className={styles.lightTracksSettings}>
         <ul>
-          {lightTrackInputs}
+          {getLightTracks().map((trackId: number) => (
+            <li key={trackId}>
+            <div>Light Track {trackId + 1}</div>
+            <ButtonGroup aria-label={`Light IDs for Light Track ${trackId + 1}`}>
+              {hueApi.getLightIds().map((lightId: number) => (
+                <Button
+                  key={lightId}
+                  variant={lightIdToLightTrackMap[lightId] === trackId ? 'primary' : 'secondary'}
+                  onClick={() => handleChange(lightId, trackId)}
+                  className={styles.lightTracksSettings__lightIdButton}>
+                  {lightId}
+                </Button>
+              ))}
+            </ButtonGroup>
+          </li>
+          ))}
         </ul>
         <div>
-          {tempLightTrackToLightIdMap.map((lightIds: number[], i: number) => (
-            <div key={i}>
-              [ {lightIds.join(', ')} ]
-            </div>
-          ))}
-          <Button
-            variant='primary'
-            onClick={updateMap}>
-            Save
-          </Button>
+          <ListGroup>
+            {hueApi.getLightIds().map((lightId: number) => (
+              <ListGroup.Item>
+                {lightId}: {allLights[lightId].name}
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
         </div>
       </div>
     )
   }
 }
+
+const DEFAULT_HUE_LATENCY_MS = 100 // TODO make this a setting
 
 /**
  * Set light color.
@@ -155,6 +142,12 @@ const brightnessSetting = (percent: number): any => {
   return { bri }
 }
 
+interface SongData {
+  id: number
+  name: string
+  artist: string
+}
+
 interface Props {
   hueApi: HueApi
 }
@@ -165,8 +158,10 @@ interface State {
   startTimeMs: number
   currentMs: number
   shouldUpdateHueLights: boolean
-  lightTrackToLightIdMap: number[][]
+  lightIdToLightTrackMap: { [key: number]: number }
   areLightsFullScreen: boolean
+  hueLatencyMs: number
+  sortedSong: MsStep[]
 }
 
 export default class Beats extends React.Component<Props, State> {
@@ -177,85 +172,96 @@ export default class Beats extends React.Component<Props, State> {
     3: bitingDown,
     4: beezInTheTrap,
   }
-  private beatCanvas: BeatCanvas
+  private beatCanvasRef: React.RefObject<BeatCanvas> = React.createRef()
 
   constructor(props: Props) {
     super(props)
 
+    const DEFAULT_SONG_ID = 4 // beez
+
     this.state = {
-      songId: 4,
+      songId: DEFAULT_SONG_ID,
       lights: [],
       startTimeMs: 0,
       currentMs: 0,
       shouldUpdateHueLights: false,
-      lightTrackToLightIdMap: [
-        [4],
-        [6],
-      ],
+      lightIdToLightTrackMap: {
+        4: 0,
+        6: 1,
+      },
       areLightsFullScreen: false,
+      hueLatencyMs: DEFAULT_HUE_LATENCY_MS,
+      sortedSong: this.sortSong(this.songs[DEFAULT_SONG_ID]),
     }
   }
 
   componentDidMount = (): void => {
     this.beatTimers = []
-    this.beatCanvas.refresh()
+    this.beatCanvasRef.current.refresh()
   }
 
   playRoutine = (): void => {
-    const { songId } = this.state
+    const { sortedSong } = this.state
 
     this.resetRoutine()
-    const song = this.songs[songId]
-    for (let i = 0; i < song.length; i++) {
-      this.beatTimers.push(this.createBeatTimer(song[i], i === song.length - 1))
+    for (let i = 0; i < sortedSong.length; i++) {
+      this.beatTimers.push(...this.createBeatTimer(sortedSong[i], i === sortedSong.length - 1))
     }
-    this.beatCanvas.start()
+    this.beatCanvasRef.current.start()
     this.setState({ startTimeMs: Date.now() })
   }
 
-  createBeatTimer = (data: MsStep, isLast: boolean): number => {
+  createBeatTimer = (data: MsStep, isLast: boolean): number[] => {
     const { hueApi } = this.props
     const {
       shouldUpdateHueLights,
-      lightTrackToLightIdMap,
+      lightIdToLightTrackMap,
+      hueLatencyMs,
     } = this.state
     const lights = hueApi.getLights()
-    return setTimeout(() => {
-      console.log('lights', data.lights)
+    const timeouts: number[] = []
 
-      // update lights with current state
-      for (let i = 0; i < data.lights.length; i++) {
-        const settings = data.lights[i]
-        const lightIds = lightTrackToLightIdMap[i]
-        for (const lightId of lightIds) {
-          const settingsList = []
-          if (settings.color) {
-            settingsList.push(colorSetting(settings.color, lights[lightId]))
-          }
-          if (settings.brightness) {
-            settingsList.push(brightnessSetting(settings.brightness))
-          }
-          if (settings.on === true || settings.on === false) {
-            settingsList.push({ on: settings.on })
-          }
-          const options = Object.assign({}, ...settingsList)
-          console.log(data.ms, options)
-          if (shouldUpdateHueLights) {
-            hueApi.updateLightState(lightId, options, data.transitionMs / 100 || 0)
-          }
-        }
-      }
+    const t1 = setTimeout(() => {
+      // console.log('lights', data.lights)
+
       this.setState({ lights: data.lights })
 
-      // stop player if last timer
+      // stop player if last step of the song
       if (isLast) {
         this.stopRoutine()
       }
     }, data.ms) as unknown as number
+    timeouts.push(t1)
+
+    if (shouldUpdateHueLights) {
+      const t2 = setTimeout(() => {
+        // update physical lights with current state
+        for (const lightId in lightIdToLightTrackMap) {
+          const trackId = lightIdToLightTrackMap[lightId]
+          const settings = data.lights[trackId]
+          const settingsList = []
+            if (settings.color) {
+              settingsList.push(colorSetting(settings.color, lights[lightId]))
+            }
+            if (settings.brightness) {
+              settingsList.push(brightnessSetting(settings.brightness))
+            }
+            if (settings.on === true || settings.on === false) {
+              settingsList.push({ on: settings.on })
+            }
+            const options = Object.assign({}, ...settingsList)
+            // console.log(data.ms, options)
+            hueApi.updateLightState(lightId, options, data.transitionMs / 100 || 0)
+        }
+      }, data.ms - hueLatencyMs) as unknown as number
+      timeouts.push(t2)
+    }
+
+    return timeouts
   }
 
   stopRoutine = (): void => {
-    this.beatCanvas.stop()
+    this.beatCanvasRef.current.stop()
     for (const timer of this.beatTimers) {
       clearTimeout(timer)
     }
@@ -269,7 +275,7 @@ export default class Beats extends React.Component<Props, State> {
 
   resetRoutine = (): void => {
     this.stopRoutine()
-    this.beatCanvas.reset()
+    this.beatCanvasRef.current.reset()
     this.setState({ currentMs: 0 })
   }
 
@@ -280,14 +286,19 @@ export default class Beats extends React.Component<Props, State> {
 
   selectSong = (id: number): (() => void) => (): void => {
     this.resetRoutine()
-    this.setState({ songId: id }, () => {
-      this.beatCanvas.reset()
-      this.beatCanvas.refresh()
+    const sortedSong = this.sortSong(this.songs[id])
+    // console.log('new song', sortedSong)
+    this.setState({
+      songId: id,
+      sortedSong,
+    }, () => {
+      this.beatCanvasRef.current.reset()
+      this.beatCanvasRef.current.refresh()
     })
   }
 
-  updateLightTrackMap = (lightTrackMap: number[][]): void => {
-    this.setState({ lightTrackToLightIdMap: lightTrackMap })
+  updateLightIdToLightTrackMap = (newLightIdToLightTrackMap: { [key: number]: number }): void => {
+    this.setState({ lightIdToLightTrackMap: newLightIdToLightTrackMap })
   }
 
   toggleLightsFullScreen = (): void => {
@@ -299,6 +310,12 @@ export default class Beats extends React.Component<Props, State> {
     this.setState({ areLightsFullScreen: false })
   }
 
+  updateHueLatency = (e: React.ChangeEvent): void => {
+    const rawValue = (e.target as HTMLInputElement).value
+    const hueLatencyMs = parseInt(rawValue.replace(/[^\d]/g, ''), 10)
+    this.setState({ hueLatencyMs })
+  }
+
   render(): JSX.Element {
     const {
       playRoutine,
@@ -306,9 +323,10 @@ export default class Beats extends React.Component<Props, State> {
       restartRoutine,
       toggleShouldUpdateHueLights,
       selectSong,
-      updateLightTrackMap,
+      updateLightIdToLightTrackMap,
       toggleLightsFullScreen,
       closeFullScreenLights,
+      updateHueLatency,
     } = this
     const {
       hueApi,
@@ -318,10 +336,12 @@ export default class Beats extends React.Component<Props, State> {
       lights,
       startTimeMs,
       shouldUpdateHueLights,
-      lightTrackToLightIdMap,
+      lightIdToLightTrackMap,
       areLightsFullScreen,
+      hueLatencyMs,
+      sortedSong,
     } = this.state
-    const songItems = [
+    const songItems: SongData[] = [
       {
         id: 1, // TODO better id system
         name: 'Mercy',
@@ -330,88 +350,106 @@ export default class Beats extends React.Component<Props, State> {
       {
         id: 2,
         name: 'Easy (Switch Screens)',
-        artisti: 'Lorde',
+        artist: 'Lorde',
       },
       {
         id: 3,
         name: 'Biting Down',
-        artisti: 'Lorde',
+        artist: 'Lorde',
       },
       {
         id: 4,
         name: 'Beez In The Trap',
-        artisti: 'Nicki Minaj',
+        artist: 'Nicki Minaj',
       },
     ]
 
     return (
-      <div className='hueGroups'>
-        <ul className='hueGroups__list'>
-          {songItems.map((songItem /* TODO type */) => (
+      <div className={styles.hueGroups}>
+        <ul className={styles.hueGroups__list}>
+          {songItems.map(({ id, name }: SongData) => (
             <li
-              key={songItem.id}
-              onClick={selectSong(songItem.id)}
-              className={`hueGroups__listItem ${songId === songItem.id ? 'hueGroups__listItem--selected' : ''}`}>
+              key={id}
+              onClick={selectSong(id)}
+              className={classNames(
+                styles.hueGroups__listItem,
+                { [styles['hueGroups__listItem--selected']]: songId === id })}>
               <div>
-                {songItem.name}
+                {name}
               </div>
             </li>
           ))}
         </ul>
 
-        <div className='hueGroups__detail'>
+        <div className={classNames(
+          styles.hueGroups__detail,
+          styles.beats__wrapper)}>
           <BeatCanvas
-            song={this.songs[songId]}
+            song={sortedSong}
             startTimeMs={startTimeMs}
-            lightsCount={lightTrackToLightIdMap.length}
-            isClippedMode={false}
-            ref={(beatCanvas: BeatCanvas): void => { this.beatCanvas = beatCanvas }} />
+            lightsCount={Object.keys(lightIdToLightTrackMap).length}
+            ref={this.beatCanvasRef} />
 
-          <div className='beats__buttons'>
+          <div className={styles.beats__buttons}>
             <Button
               onClick={playRoutine}
               variant='secondary'
-              className='beats__buttons__button'>
+              className={styles.beats__buttons__button}>
               Play
             </Button>
             <Button
               onClick={stopRoutine}
               variant='secondary'
-              className='beats__buttons__button'>
+              className={styles.beats__buttons__button}>
               Stop
             </Button>
             <Button
               onClick={restartRoutine}
               variant='secondary'
-              className='beats__buttons__button'>
+              className={styles.beats__buttons__button}>
               Restart
             </Button>
             <Button
               onClick={toggleLightsFullScreen}
               variant='secondary'
-              className='beats__buttons__button'>
+              className={styles.beats__buttons__button}>
               Toggle fullscreen mode
             </Button>
           </div>
 
-          <label className={`beats__checkbox ${shouldUpdateHueLights ? 'beats__checkbox--checked' : ''}`}>
-            <input
-              type='checkbox'
-              value={shouldUpdateHueLights ? 'checked' : ''}
-              onClick={toggleShouldUpdateHueLights}
-              style={{ position: 'initial', opacity: 1 }} />
-            <div>
-              {shouldUpdateHueLights ? 'Disable' : 'Enable'} hue lights
-            </div>
-          </label>
+          <div className={styles.beats__basicHueControls}>
+            <label className={classNames(
+              styles.beats__checkbox,
+              { [styles['beats__checkbox--checked']]: shouldUpdateHueLights })}>
+              <input
+                type='checkbox'
+                value={shouldUpdateHueLights ? 'checked' : ''}
+                onClick={toggleShouldUpdateHueLights}
+                style={{ position: 'initial', opacity: 1 }} />
+              <span>Enable hue lights</span>
+            </label>
 
-          <div className='beats__lights'>
+            <InputGroup className={styles.beats__inputWrapper}>
+              <InputGroup.Prepend>
+                <InputGroup.Text>Hue latency:</InputGroup.Text>
+              </InputGroup.Prepend>
+              <FormControl
+                value={hueLatencyMs}
+                onChange={updateHueLatency}
+                aria-label='Hue bulbs latency'
+                className={styles.beats__input} />
+              <InputGroup.Append>
+                <InputGroup.Text>ms</InputGroup.Text>
+              </InputGroup.Append>
+            </InputGroup>
+          </div>
 
+          <div className={styles.beats__lights}>
             {/* beat lights fullscreen mode */}
             <Modal
               show={areLightsFullScreen}
               onHide={closeFullScreenLights}
-              dialogClassName='beats__lights--fullScreen'>
+              dialogClassName={styles['beats__lights--fullScreen']}>
               {lights.map((light: LightState, i: number) => (
                 <BeatLight
                   key={i}
@@ -434,13 +472,19 @@ export default class Beats extends React.Component<Props, State> {
               ))
             )}
           </div>
+
           <LightTracksSettings
             hueApi={hueApi}
-            song={this.songs[songId]}
-            updateLightTrackMap={updateLightTrackMap}
-            lightTrackToLightIdMap={lightTrackToLightIdMap} />
+            song={sortedSong}
+            updateLightIdToLightTrackMap={updateLightIdToLightTrackMap}
+            lightIdToLightTrackMap={lightIdToLightTrackMap} />
         </div>
       </div>
     )
+  }
+
+  // guarantees that a song is in order (precondition of running beat canvas)
+  private sortSong = (song: MsStep[]): MsStep[] => {
+    return mergeSort((note1: MsStep, note2: MsStep) => note1.ms - note2.ms, song)
   }
 }

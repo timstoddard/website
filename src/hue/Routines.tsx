@@ -1,6 +1,8 @@
+import classNames from 'classnames'
 import * as React from 'react'
 import { HueApi, stringToInt } from './hue-utils'
 import { RainbowRoutine, Routine, RoutineType, StrobeRoutine } from './routine-impls'
+import styles from './scss/Hue.scss'
 
 enum ItemType {
   LIGHT,
@@ -141,17 +143,15 @@ export default class Routines extends React.Component<Props, State> {
     const groupIds = hueApi.getGroupIds()
 
     return (
-      <div className='hueGroups'>
-        <ul className='hueGroups__list'>
+      <div className={styles.hueGroups}>
+        <ul className={styles.hueGroups__list}>
           {groupIds.map((groupId: number) => (
             <li
               key={groupId}
               onClick={selectGroup(groupId)}
-              className={`hueGroups__listItem ${
-                (selectedItemType === ItemType.GROUP && selectedItemId === groupId)
-                  ? 'hueGroups__listItem--selected'
-                  : ''
-              }`}>
+              className={classNames(
+                styles.hueGroups__listItem,
+                { [styles['hueGroups__listItem--selected']]: (selectedItemType === ItemType.GROUP && selectedItemId === groupId) })}>
               <div>
                 {groups[groupId].name}
               </div>
@@ -161,11 +161,9 @@ export default class Routines extends React.Component<Props, State> {
             <li
               key={lightId}
               onClick={selectLight(lightId)}
-              className={`hueGroups__listItem ${
-                (selectedItemType === ItemType.LIGHT && selectedItemId === lightId)
-                  ? 'hueGroups__listItem--selected'
-                  : ''
-              }`}>
+              className={classNames(
+                styles.hueGroups__listItem,
+                { [styles['hueGroups__listItem--selected']]: (selectedItemType === ItemType.LIGHT && selectedItemId === lightId) })}>
               <div>
                 {lights[lightId].name}
               </div>
@@ -174,18 +172,16 @@ export default class Routines extends React.Component<Props, State> {
           <li
             key={0}
             onClick={selectGroup(0)}
-            className={`hueGroups__listItem ${
-              (selectedItemType === ItemType.LIGHT && selectedItemId === 0)
-                ? 'hueGroups__listItem--selected'
-                : ''
-            }`}>
+            className={classNames(
+              styles.hueGroups__listItem,
+              { [styles['hueGroups__listItem--selected']]: (selectedItemType === ItemType.LIGHT && selectedItemId === 0) })}>
             <div>
               All Lights
             </div>
           </li>
         </ul>
         {selectedItemId !== -1 && (
-          <div className='hueGroups__detail'>
+          <div className={styles.hueGroups__detail}>
             <div>
               <button onClick={setRoutine(RoutineType.STROBE)}>
                 Strobe

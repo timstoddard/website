@@ -1,8 +1,10 @@
+import classNames from 'classnames'
 import * as React from 'react'
 import BasicController from './BasicController'
 import { calculateXY, getValueFromPoint } from './hue-color-conversion'
 import { getLightColor, hexToColor, HueApi } from './hue-utils'
 import Light, { LightData } from './Light'
+import styles from './scss/Hue.scss'
 
 interface Props {
   hueApi: HueApi
@@ -126,13 +128,15 @@ export default class Groups extends React.Component<Props, State> {
     const lights = hueApi.getLights()
 
     return (
-      <div className='hueGroups'>
-        <ul className='hueGroups__list'>
+      <div className={styles.hueGroups}>
+        <ul className={styles.hueGroups__list}>
           {groupIds.map((groupId: number) => (
             <li
               key={groupId}
               onClick={selectGroup(groupId)}
-              className={`hueGroups__listItem ${selectedGroupId === groupId ? 'hueGroups__listItem--selected' : ''}`}>
+              className={classNames(
+                styles.hueGroups__listItem,
+                { [styles['hueGroups__listItem--selected']]: selectedGroupId === groupId })}>
               <div>
                 {groups[groupId].name}
               </div>
@@ -141,16 +145,16 @@ export default class Groups extends React.Component<Props, State> {
           <li
             key={0}
             onClick={selectGroup(0)}
-            className='hueGroups__listItem'>
+            className={styles.hueGroups__listItem}>
             <div>
               All Lights
             </div>
             </li>
         </ul>
         {selectedGroup && (
-          <div className='hueGroups__detail'>
+          <div className={styles.hueGroups__detail}>
             <div
-              className='hueGroups__detail__controller'
+              className={styles.hueGroups__detail__controller}
               style={{ background: color }}>
               <BasicController
                 hueApi={hueApi}

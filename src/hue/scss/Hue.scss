@@ -1,3 +1,5 @@
+@import 'src/scss/globals';
+
 $headerHeight: 120px;
 
 .hue {
@@ -101,11 +103,29 @@ $headerHeight: 120px;
 }
 
 .beats {
+  &__wrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px;
+  }
+
   &__buttons {
     display: flex;
+    padding: 12px;
 
     &__button {
       margin: 5px;
+    }
+  }
+
+  &__basicHueControls {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+
+    & > * {
+      padding: 4px 10px;
     }
   }
 
@@ -155,13 +175,28 @@ $headerHeight: 120px;
       opacity: 1;
     }
   }
+
+  &__inputWrapper {
+    width: auto;
+  }
+
+  &__input {
+    max-width: 100px;
+    text-align: center;
+  }
 }
 
+$beatCanvasBorderRadius: 8px;
 .beatCanvas {
-  &__wrapper {
-    background: rgb(220,220,220);
-    overflow-x: auto;
-    overflow-y: hidden;
+  background: rgb(220,220,220);
+  border: 1px solid black;
+  border-radius: $beatCanvasBorderRadius;
+  box-shadow: inset 0px 8px 20px 0px rgba(0,0,0,0.35);
+  min-width: 100%;
+  overflow: hidden;
+
+  &__preview {
+    border-radius: $beatCanvasBorderRadius;
   }
 }
 
@@ -174,5 +209,15 @@ $headerHeight: 120px;
 
   &--off {
     opacity: 0;
+  }
+}
+
+.lightTracksSettings {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+
+  &__lightIdButton {
+    padding: 8px 16px;
   }
 }

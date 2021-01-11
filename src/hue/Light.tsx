@@ -2,6 +2,7 @@ import * as React from 'react'
 import BasicController from './BasicController'
 import { calculateXY, getValueFromPoint } from './hue-color-conversion'
 import { getLightColor, hexToColor, HueApi } from './hue-utils'
+import styles from './scss/Light.scss'
 
 export interface Lights {
   [key: number]: LightData
@@ -161,7 +162,7 @@ export default class Light extends React.Component<Props, State> {
 
     return (
       <div
-        className='light'
+        className={styles.light}
         style={{ background: color }}>
         <BasicController
           hueApi={hueApi}

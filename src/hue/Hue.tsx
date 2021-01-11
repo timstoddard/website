@@ -1,9 +1,15 @@
+import classNames from 'classnames'
 import * as React from 'react'
 import Beats from './Beats'
 import Groups from './Groups'
 import { HueApi } from './hue-utils'
 import Routines from './Routines'
 import Scenes from './Scenes'
+import styles from './scss/Hue.scss'
+
+// https://developers.meethue.com/develop/get-started-2
+// id INz7iO8Vfld-V0w0th0pGxzU3KzfcWTIOg5kNeE0
+// ip address 192.168.100.107
 
 enum DetailType {
   GROUPS,
@@ -23,7 +29,7 @@ interface HueControllerLinkProps {
   setDetailType: (type: DetailType) => (() => void)
 }
 
-const HueControllerLink: React.StatelessComponent<HueControllerLinkProps> = ({
+const HueControllerLink: React.FunctionComponent<HueControllerLinkProps> = ({
   text,
   detailType,
   selectedDetailType,
@@ -31,7 +37,9 @@ const HueControllerLink: React.StatelessComponent<HueControllerLinkProps> = ({
 }: HueControllerLinkProps): JSX.Element => (
   <a
     onClick={setDetailType(detailType)}
-    className={`hue__links__link ${detailType === selectedDetailType ? 'hue__links__link--selected' : ''}`}>
+    className={classNames(
+      styles.hue__links__link,
+      { [styles['hue__links__link--selected']]: detailType === selectedDetailType })}>
     {text}
   </a>
 )
@@ -97,13 +105,14 @@ export default class Hue extends React.Component<{}, State> {
     ]
 
     return (
-      <div className='hue'>
-        <header className='hue__header'>
-          <h5 className='hue__title'>
+      <div className={styles.hue}>
+        <header className={styles.hue__header}>
+          <h5 className={styles.hue__title}>
             Hue Controller
           </h5>
-          <div className='hue__links'>
-            {links.map(({ type, text }) => (
+          <div className={styles.hue__links}>
+            {/* TODO no any */}
+            {links.map(({ type, text }: any) => (
               <HueControllerLink
                 key={type}
                 text={text}
@@ -114,7 +123,7 @@ export default class Hue extends React.Component<{}, State> {
             ))}
           </div>
         </header>
-        <div className='hue__controller'>
+        <div className={styles.hue__controller}>
           {detailType === DetailType.GROUPS && (
             <Groups hueApi={hueApi} />
           )}

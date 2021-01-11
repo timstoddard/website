@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { throttle } from 'underscore'
 import { HueApi } from './hue-utils'
+import styles from './scss/BasicController.scss'
 
 interface Props {
   hueApi: HueApi
@@ -71,14 +72,14 @@ export default class BasicController extends React.Component<Props, {}> {
     } = this.state
 
     return (
-      <div className='basicController'>
-        <h5 className='basicController__name'>
+      <div className='{styles.basicController}'>
+        <h5 className={styles.basicController__name}>
           {name}
         </h5>
-        <div className='basicController__controls'>
+        <div className={styles.basicController__controls}>
           <button
             onClick={toggle}
-            className='basicController__toggle'>
+            className={styles.basicController__toggle}>
             {isOn ? 'Turn off' : 'Turn on'}
           </button>
           {/* TODO use color picker component */}
@@ -87,14 +88,14 @@ export default class BasicController extends React.Component<Props, {}> {
             type='color'
             value={color}
             onChange={setColor}
-            className='basicController__colorPicker' />
+            className='{styles.basicController__colorPicker}' />
           <input
             type='range'
             value={brightness}
             onChange={setBrightness}
             min={1}
             max={254}
-            className='basicController__brightness' />
+            className='{styles.basicController__brightness}' />
         </div>
       </div>
     )

@@ -100,6 +100,11 @@ $darkModeTextWhite: rgb(250,250,250);
         }
       }
     }
+
+    & .beats__songSearchInput,
+    & .beats__songSearchInput::placeholder {
+      color: $darkModeTextWhite;
+    }
   }
 }
 
@@ -209,6 +214,10 @@ $darkModeTextWhite: rgb(250,250,250);
   &__checkbox {
     align-items: center;
     display: flex;
+  }
+
+  &__songSearchInput {
+    margin-bottom: 8px !important;
   }
 }
 

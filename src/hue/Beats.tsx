@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import * as React from 'react'
-import { Button, ButtonGroup, Form } from 'react-bootstrap'
+import { Button, ButtonGroup, Form, FormControl, InputGroup } from 'react-bootstrap'
 import { LightState, MsStep } from './beats/beat-types'
 import BeatCanvas from './beats/BeatCanvas'
 import beezInTheTrap from './beats/songs/beez-in-the-trap'
@@ -15,6 +15,8 @@ import LightTracksSettings from './LightTracksSettings'
 import styles from './scss/Hue.scss'
 
 const DEFAULT_HUE_LATENCY_MS = 100 // TODO make this a setting
+
+// TODO make these private methods (?)
 
 /**
  * Set light color.
@@ -58,6 +60,7 @@ interface State {
   lightIdToLightTrackMap: { [key: number]: number }
   hueLatencyMs: number
   sortedSong: MsStep[]
+  songSearchTerm: string
 }
 
 export default class Beats extends React.Component<Props, State> {
@@ -87,6 +90,7 @@ export default class Beats extends React.Component<Props, State> {
       },
       hueLatencyMs: DEFAULT_HUE_LATENCY_MS,
       sortedSong: this.sortSong(this.songs[DEFAULT_SONG_ID]),
+      songSearchTerm: '',
     }
   }
 
@@ -202,6 +206,10 @@ export default class Beats extends React.Component<Props, State> {
     this.setState({ hueLatencyMs })
   }
 
+  updateSongSearchTerm = (e: React.ChangeEvent): void => {
+    this.setState({ songSearchTerm: (e.target as HTMLInputElement).value })
+  }
+
   render(): JSX.Element {
     const {
       playRoutine,
@@ -211,6 +219,7 @@ export default class Beats extends React.Component<Props, State> {
       selectSong,
       updateLightIdToLightTrackMap,
       updateHueLatency,
+      updateSongSearchTerm,
     } = this
     const {
       hueApi,
@@ -224,7 +233,9 @@ export default class Beats extends React.Component<Props, State> {
       lightIdToLightTrackMap,
       hueLatencyMs,
       sortedSong,
+      songSearchTerm,
     } = this.state
+
     const songItems: SongData[] = [
       {
         id: 1, // TODO better id system
@@ -248,19 +259,37 @@ export default class Beats extends React.Component<Props, State> {
       },
     ]
 
+    // filter song list by search term
+    const re = new RegExp(`(${songSearchTerm.split('').join('[^\\w]*?')})`, 'i')
+    const filteredSongItems = songItems.filter((song: SongData) => re.test(song.name))
+
+    const highlightMatchedSongName = (name: string) => {
+      const match = name.match(re)[1]
+      const renderedName = name.replace(match, `<span style="background: yellow; color: black;">${match}</span>`)
+      return { __html: renderedName }
+    }
+
     return (
       <>
         <ul className={styles.hueGroups__list}>
-          {songItems.map(({ id, name }: SongData) => (
+          <InputGroup>
+            <FormControl
+              value={songSearchTerm}
+              onChange={updateSongSearchTerm}
+              aria-label='Song search term'
+              placeholder='filter songs...'
+              className={classNames(
+                styles.hueGroups__listItem,
+                styles.beats__songSearchInput)} />
+            </InputGroup>
+          {filteredSongItems.map(({ id, name }: SongData) => (
             <li
               key={id}
               onClick={selectSong(id)}
               className={classNames(
                 styles.hueGroups__listItem,
                 { [styles['hueGroups__listItem--selected']]: songId === id })}>
-              <div>
-                {name}
-              </div>
+              <span dangerouslySetInnerHTML={highlightMatchedSongName(name)} />
             </li>
           ))}
         </ul>

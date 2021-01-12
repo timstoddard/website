@@ -1,12 +1,14 @@
+import classNames from 'classnames'
 import * as React from 'react'
-import Button from 'react-bootstrap/Button'
-import ButtonGroup from 'react-bootstrap/ButtonGroup'
-import Dropdown from 'react-bootstrap/Dropdown'
-import DropdownButton from 'react-bootstrap/DropdownButton'
-import FormControl from 'react-bootstrap/FormControl'
-import InputGroup from 'react-bootstrap/InputGroup'
-import ListGroup from 'react-bootstrap/ListGroup'
-// import Modal from 'react-bootstrap/Modal'
+import {
+  Button,
+  ButtonGroup,
+  Dropdown,
+  DropdownButton,
+  FormControl,
+  InputGroup,
+  ListGroup,
+} from 'react-bootstrap'
 import BeatLight from './BeatLight'
 import { LightState, MsStep } from './beats/beat-types'
 import { HueApi } from './hue-utils'
@@ -22,6 +24,7 @@ interface LightTracksSettingsProps {
   shouldUpdateHueLights: boolean
   hueLatencyMs: number
   updateHueLatency: (e: React.ChangeEvent) => void
+  isDarkMode: boolean
 }
 
 interface LightTracksSettingsState {
@@ -88,6 +91,7 @@ export default class LightTracksSettings extends React.Component<LightTracksSett
       // shouldUpdateHueLights,
       hueLatencyMs,
       updateHueLatency,
+      isDarkMode,
     } = this.props
     // const {
     //   areLightsFullScreen,
@@ -103,8 +107,17 @@ export default class LightTracksSettings extends React.Component<LightTracksSett
       return list
     }
 
+    const getSelectLightIdButtonVariant = (lightId: number, trackId: number) => {
+      if (lightIdToLightTrackMap[lightId] === trackId) {
+        return 'primary'
+      }
+      return isDarkMode ? 'dark' : 'secondary'
+    }
+
     return (
-      <div className={styles.lightTracksSettings}>
+      <div className={classNames(
+        styles.lightTracksSettings,
+        { [styles['lightTracksSettings--darkMode']]: isDarkMode })}>
         <div className={styles.lightTracksSettings__leftColumn}>
           <div className={styles.lightTracksSettings__tracks}>
             {lights.map((light: LightState, trackId: number) => (
@@ -122,9 +135,10 @@ export default class LightTracksSettings extends React.Component<LightTracksSett
                     <div>Light Track {trackId + 1}</div>
                     <DropdownButton
                       title='Swap'
-                      variant='link'>
+                      variant={isDarkMode ? 'dark' : 'link'}>
                       {getLightTracks().map((trackId2: number) =>
                         (trackId2 !== trackId) && (
+                          // TODO style items for dark mode (no variant option)
                           <Dropdown.Item
                             key={`${trackId}${trackId2}`}
                             onClick={() => swapSelectedLightIds(trackId, trackId2)}>
@@ -137,7 +151,7 @@ export default class LightTracksSettings extends React.Component<LightTracksSett
                     {hueApi.getLightIds().map((lightId: number) => (
                       <Button
                         key={lightId}
-                        variant={lightIdToLightTrackMap[lightId] === trackId ? 'primary' : 'secondary'}
+                        variant={getSelectLightIdButtonVariant(lightId, trackId)}
                         onClick={() => handleChange(lightId, trackId)}
                         className={styles.lightTracksSettings__lightIdButton}>
                         {lightId}
@@ -146,7 +160,7 @@ export default class LightTracksSettings extends React.Component<LightTracksSett
                     {/* {[5,2,17,1].map((lightId: number) => (
                       <Button
                         key={lightId}
-                        variant={lightIdToLightTrackMap[lightId] === trackId ? 'primary' : 'secondary'}
+                        variant={getSelectLightIdButtonVariant(lightId, trackId)}
                         className={styles.lightTracksSettings__lightIdButton}>
                         {lightId}
                       </Button>
@@ -156,7 +170,7 @@ export default class LightTracksSettings extends React.Component<LightTracksSett
               </div>
             ))}
 
-            <InputGroup className={styles.beats__inputWrapper}>
+            <InputGroup>
               <InputGroup.Prepend>
                 <InputGroup.Text>Hue latency:</InputGroup.Text>
               </InputGroup.Prepend>
@@ -164,7 +178,7 @@ export default class LightTracksSettings extends React.Component<LightTracksSett
                 value={hueLatencyMs}
                 onChange={updateHueLatency}
                 aria-label='Hue bulbs latency'
-                className={styles.beats__input} />
+                className={styles.lightTracksSettings__input} />
               <InputGroup.Append>
                 <InputGroup.Text>ms</InputGroup.Text>
               </InputGroup.Append>

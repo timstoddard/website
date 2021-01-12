@@ -143,7 +143,7 @@ export default class Routines extends React.Component<Props, State> {
     const groupIds = hueApi.getGroupIds()
 
     return (
-      <div className={styles.hueGroups}>
+      <>
         <ul className={styles.hueGroups__list}>
           {groupIds.map((groupId: number) => (
             <li
@@ -206,7 +206,7 @@ export default class Routines extends React.Component<Props, State> {
             )}
           </div>
         )}
-      </div>
+      </>
     )
   }
 }

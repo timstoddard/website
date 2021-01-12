@@ -128,7 +128,7 @@ export default class Groups extends React.Component<Props, State> {
     const lights = hueApi.getLights()
 
     return (
-      <div className={styles.hueGroups}>
+      <>
         <ul className={styles.hueGroups__list}>
           {groupIds.map((groupId: number) => (
             <li
@@ -178,7 +178,7 @@ export default class Groups extends React.Component<Props, State> {
             ))}
           </div>
         )}
-      </div>
+      </>
     )
   }
 }

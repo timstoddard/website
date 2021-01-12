@@ -43,7 +43,7 @@ export default class Scenes extends React.Component<Props, State> {
     const selectedScene = hueApi.getScene(selectedSceneId)
 
     return (
-      <div className={styles.hueGroups}>
+      <>
         {/* TODO fix classnames (shared scss names I guess) */}
         <ul className={styles.hueGroups__list}>
           {sceneIds.map((sceneId: string) => (
@@ -62,7 +62,7 @@ export default class Scenes extends React.Component<Props, State> {
             Scene details (TODO)
           </div>
         )}
-      </div>
+      </>
     )
   }
 }

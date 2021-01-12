@@ -1,7 +1,6 @@
 import classNames from 'classnames'
 import * as React from 'react'
-import Button from 'react-bootstrap/Button'
-import ButtonGroup from 'react-bootstrap/ButtonGroup'
+import { Button, ButtonGroup, Form } from 'react-bootstrap'
 import { LightState, MsStep } from './beats/beat-types'
 import BeatCanvas from './beats/BeatCanvas'
 import beezInTheTrap from './beats/songs/beez-in-the-trap'
@@ -47,6 +46,7 @@ interface SongData {
 
 interface Props {
   hueApi: HueApi
+  isDarkMode: boolean
 }
 
 interface State {
@@ -214,6 +214,7 @@ export default class Beats extends React.Component<Props, State> {
     } = this
     const {
       hueApi,
+      isDarkMode,
     } = this.props
     const {
       songId,
@@ -248,7 +249,7 @@ export default class Beats extends React.Component<Props, State> {
     ]
 
     return (
-      <div className={styles.hueGroups}>
+      <>
         <ul className={styles.hueGroups__list}>
           {songItems.map(({ id, name }: SongData) => (
             <li
@@ -279,31 +280,35 @@ export default class Beats extends React.Component<Props, State> {
               className={styles.beats__buttons}>
               <Button
                 onClick={playRoutine}
-                variant='secondary'>
+                variant={isDarkMode ? 'dark' : 'secondary'}>
                 Play
               </Button>
               <Button
                 onClick={stopRoutine}
-                variant='secondary'>
+                variant={isDarkMode ? 'dark' : 'secondary'}>
                 Stop
               </Button>
               <Button
                 onClick={restartRoutine}
-                variant='secondary'>
+                variant={isDarkMode ? 'dark' : 'secondary'}>
                 Restart
               </Button>
             </ButtonGroup>
 
-            <label className={classNames(
-              styles.beats__checkbox,
-              { [styles['beats__checkbox--checked']]: shouldUpdateHueLights })}>
-              <input
+            <Form>
+              <Form.Check
+                custom
                 type='checkbox'
-                value={shouldUpdateHueLights ? 'checked' : ''}
-                onClick={toggleShouldUpdateHueLights}
-                style={{ position: 'initial', opacity: 1 }} />
-              <span>Enable hue lights</span>
-            </label>
+                className={styles.beats__checkbox}
+                id='beats-enable-hue-checkbox'>
+                <Form.Check.Input
+                  type='checkbox'
+                  onChange={toggleShouldUpdateHueLights}
+                  checked={shouldUpdateHueLights}
+                  id='beats-enable-hue-checkbox' />
+                <Form.Check.Label>Enable hue lights</Form.Check.Label>
+              </Form.Check>
+            </Form>
           </div>
 
           <LightTracksSettings
@@ -315,9 +320,10 @@ export default class Beats extends React.Component<Props, State> {
             toggleShouldUpdateHueLights={toggleShouldUpdateHueLights}
             shouldUpdateHueLights={shouldUpdateHueLights}
             hueLatencyMs={hueLatencyMs}
-            updateHueLatency={updateHueLatency} />
+            updateHueLatency={updateHueLatency}
+            isDarkMode={isDarkMode} />
         </div>
-      </div>
+      </>
     )
   }
 

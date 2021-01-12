@@ -1,6 +1,11 @@
 @import 'src/scss/globals';
 
 $headerHeight: 120px;
+$darkModeBlack: rgb(15,15,25);
+$darkModeBlackOffset: rgb(60,60,75);
+$darkModeTextWhite: rgb(250,250,250);
+
+// TODO add blue (green? red?) accents to dark mode (borders, etc)
 
 .hue {
   display: grid;
@@ -15,10 +20,18 @@ $headerHeight: 120px;
   }
 
   &__title {
-    // TODO uncomment after merged with bootstrap changes
-    // @include smallHeader;
+    @include smallHeader;
+    align-items: center;
+    display: flex;
+    justify-content: center;
     margin-top: 20px;
     text-align: center;
+  }
+
+  &__darkModeCheckbox {
+    align-items: center;
+    display: flex;
+    justify-content: center;
   }
 
   &__links {
@@ -50,21 +63,50 @@ $headerHeight: 120px;
   &__controller {
     border: 1px solid rgb(200,200,200);
     border-radius: 6px;
+    display: grid;
     grid-area: 2 / 1 / 3 / 2;
+    // TODO max width on list col?
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: auto;
     margin: 10px 10vw;
-    overflow: auto;
+    max-height: 100%;
+    max-width: 1000px;
     padding: 20px;
+  }
+
+  &--darkMode {
+    background: $darkModeBlack;
+    color: $darkModeTextWhite;
+
+    & .hue__links {
+      background: $darkModeBlackOffset;
+
+      &__link {
+        color: $darkModeTextWhite;
+  
+        &--selected {
+          color: white;
+        }
+      }
+    }
+
+    & .hueGroups {
+      &__listItem {
+        background: $darkModeBlack;
+
+        &:hover,
+        &--selected {
+          background: $darkModeBlackOffset;
+        }
+      }
+    }
   }
 }
 
 // TODO move into own file
 .hueGroups {
-  // TODO made mixin (also in Light.scss)
+  // TODO make mixin (also in Light.scss)
   margin: 0 auto;
-  max-width: 1000px;
-  display: grid;
-  grid-template-columns: 33.3333% 66.6667%;
-  grid-template-rows: auto;
 
   &__list,
   &__detail {
@@ -166,28 +208,7 @@ $headerHeight: 120px;
 
   &__checkbox {
     align-items: center;
-    color: rgb(180,180,180);
     display: flex;
-    margin: 0;
-    margin-left: 8px;
-
-    > input {
-      margin-right: 4px;
-    }
-
-    &--checked {
-      color: black;
-      opacity: 1;
-    }
-  }
-
-  &__inputWrapper {
-    width: auto;
-  }
-
-  &__input {
-    max-width: 100px;
-    text-align: center;
   }
 }
 
@@ -206,14 +227,11 @@ $beatCanvasBorderRadius: 8px;
 }
 
 .beatLight {
-  @include forceHeight(50px);
-  @include forceWidth(50px);
+  $beatLightRadius: 50px;
+  @include forceHeight($beatLightRadius);
+  @include forceWidth($beatLightRadius);
   border: 1px solid black;
-  border-radius: 25px;
-
-  &--off {
-    // opacity: 0;
-  }
+  border-radius: #{$beatLightRadius / 2};
 }
 
 .lightTracksSettings {
@@ -260,6 +278,11 @@ $beatCanvasBorderRadius: 8px;
     padding: 8px 16px;
   }
 
+  &__input {
+    max-width: 100px;
+    text-align: center;
+  }
+
   &__lightsInfo {
     grid-area: 1 / 2 / 2 / 3;
     margin-left: 8px;
@@ -271,6 +294,34 @@ $beatCanvasBorderRadius: 8px;
 
     &--details {
       font-style: italic;
+    }
+
+  }
+
+  &--darkMode {
+    color: $darkModeTextWhite;
+
+    & .beatLight {
+      border: 1px solid white;
+    }
+
+    & .lightTracksSettings__input {
+      background: $darkModeBlack;
+      color: $darkModeTextWhite;
+    }
+
+    & :global(.list-group-item) {
+      background: $darkModeBlack;
+      border: 1px solid $darkModeTextWhite;
+
+      &:not(:first-child) {
+        border-top: 0;
+      }
+    }
+
+    & :global(.input-group-text) {
+      background: $darkModeBlackOffset;
+      color: $darkModeTextWhite;
     }
   }
 }

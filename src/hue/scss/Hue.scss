@@ -110,13 +110,16 @@ $headerHeight: 120px;
     padding: 0 10px;
   }
 
-  &__buttons {
+  &__mainControls {
     display: flex;
-    padding: 12px;
+    justify-content: space-between;
+    margin: 3px 0;
+    width: 100%;
+  }
 
-    &__button {
-      margin: 5px;
-    }
+  &__buttons {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
   }
 
   &__basicHueControls {
@@ -150,21 +153,23 @@ $headerHeight: 120px;
         min-height: 100%;
       }
 
-      & .beatLight {
-        @include forceWidth(50%); // TODO tim make this variable
-        @include forceHeight(100%);
-        border: 0;
-        border-radius: 0;
-        margin: 0;
-        padding: 0;
-      }
+      // & .beatLight {
+      //   @include forceWidth(50%); // TODO tim make this variable
+      //   @include forceHeight(100%);
+      //   border: 0;
+      //   border-radius: 0;
+      //   margin: 0;
+      //   padding: 0;
+      // }
     }
   }
 
   &__checkbox {
     align-items: center;
-    display: flex;
     color: rgb(180,180,180);
+    display: flex;
+    margin: 0;
+    margin-left: 8px;
 
     > input {
       margin-right: 4px;
@@ -201,23 +206,71 @@ $beatCanvasBorderRadius: 8px;
 }
 
 .beatLight {
-  @include forceHeight(80px);
-  @include forceWidth(80px);
+  @include forceHeight(50px);
+  @include forceWidth(50px);
   border: 1px solid black;
-  border-radius: 6px;
-  margin: 4px;
+  border-radius: 25px;
 
   &--off {
-    opacity: 0;
+    // opacity: 0;
   }
 }
 
 .lightTracksSettings {
   display: flex;
+  flex-direction: column;
   justify-content: space-evenly;
   width: 100%;
 
+  &__leftColumn {
+    display: grid;
+    grid-template-columns: auto 150px;
+    grid-template-rows: auto;
+    max-width: 100%;
+  }
+
+  &__tracks {
+    margin-bottom: 10px;
+
+    & > * {
+      padding: 5px;
+    }
+  }
+
+  &__trackSettings {
+    align-items: center;
+    display: flex;
+    grid-area: 1 / 1 / 2 / 2;
+  }
+
+  &__lightIdSelectors {
+    margin-left: 10px;
+
+    &__titleRow {
+      align-items: center;
+      display: flex;
+
+      & > *:first-child {
+        margin-right: 10px;
+      }
+    }
+  }
+
   &__lightIdButton {
     padding: 8px 16px;
+  }
+
+  &__lightsInfo {
+    grid-area: 1 / 2 / 2 / 3;
+    margin-left: 8px;
+
+    & > * {
+      text-align: center;
+      padding: 6px;
+    }
+
+    &--details {
+      font-style: italic;
+    }
   }
 }

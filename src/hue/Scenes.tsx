@@ -15,9 +15,6 @@ export default class Scenes extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
 
-    const { hueApi } = this.props
-    // const foo = hueApi.getS
-
     this.state = {
       selectedSceneId: '',
     }
@@ -56,7 +53,6 @@ export default class Scenes extends React.Component<Props, State> {
               className={classNames(
                 styles.hueGroups__listItem,
                 { [styles['hueGroups__listItem--selected']]: selectedSceneId === sceneId })}>
-              {/* [{sceneId}] */}
               {scenes[sceneId].name}
             </li>
           ))}

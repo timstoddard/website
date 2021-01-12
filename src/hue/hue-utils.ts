@@ -79,18 +79,32 @@ export class HueApi {
   }
 
   getSceneIds = (): string[] => {
-    return this.convertObjectKeysToSortedStringList(this.scenes)
+    const list = []
+    for (const sceneId in this.scenes) {
+      list.push(Object.assign({}, this.scenes[sceneId], { sceneId }))
+    }
+    // sort by scene name, then return ids only
+    list.sort((a: ({ name: string }), b: ({ name: string })) => {
+      if (!a) {
+        return -1
+      } else if (!b) {
+        return 1
+      }
+      if (a.name < b.name) {
+        return -1
+      } else if (a.name > b.name) {
+        return 1
+      } else {
+        // a.name === b.name
+        return 0
+      }
+    })
+    return list.map((n: any) => n.sceneId)
   }
 
   private convertObjectKeysToSortedNumberList = (dict: { [key: string]: any }): number[] => {
     const list = Object.keys(dict).map(stringToInt)
     list.sort((a: number, b: number) => a - b)
-    return list
-  }
-
-  private convertObjectKeysToSortedStringList = (dict: { [key: string]: any }): string[] => {
-    const list = Object.keys(dict)
-    list.sort()
     return list
   }
 

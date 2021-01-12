@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import Form from 'react-bootstrap/Form'
+import { Form } from 'react-bootstrap'
 import { BackgroundUrlType, carNamesForSelect, StartPageCar } from './background-urls'
 import styles from './scss/Links.scss'
 import styles2 from './scss/Start.scss'

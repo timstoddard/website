@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Button from 'react-bootstrap/Button'
+import { Button } from 'react-bootstrap'
 import BinaryHeap from './BinaryHeap'
 import printTree from './BinaryTreePrinter'
 import styles from './scss/HeapDetail.scss'

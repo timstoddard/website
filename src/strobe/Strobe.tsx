@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Button from 'react-bootstrap/Button'
+import { Button } from 'react-bootstrap'
 import ColorChanger from './ColorChanger'
 import StrobeOptions from './StrobeOptions'
 import styles from './scss/Strobe.scss'

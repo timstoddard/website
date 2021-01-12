@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Form from 'react-bootstrap/Form'
+import { Form } from 'react-bootstrap'
 import styles from './scss/E85.scss'
 
 interface Props {

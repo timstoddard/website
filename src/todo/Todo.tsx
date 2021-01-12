@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import * as React from 'react'
-import Form from 'react-bootstrap/Form'
+import { Form } from 'react-bootstrap'
 import IconButton, { IconPath } from './IconButton'
 import styles from './scss/Todo.scss'
 

@@ -1,6 +1,5 @@
 import * as React from 'react'
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
+import { Button, Form } from 'react-bootstrap'
 import alternatingCapsTransform from './transformers/alternating-caps'
 import partyParrotTransform from './transformers/party-parrot'
 import styles from './scss/TextTools.scss'

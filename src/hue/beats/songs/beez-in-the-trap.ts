@@ -155,8 +155,7 @@ const chorusPart8 = (colors: UIColor[]): BeatStep[] => {
   ]
 }
 
-const song = new Song(150, 4, 400)
-const beezInTheTrap = song
+const beezInTheTrap = new Song('Beez In The Trap', 'Nicki Minaj', 150, 4, 400)
   .measure(0, instrumentalPart1([PINK, GREEN]))
   .measure(1, instrumentalPart2([PINK, GREEN]))
   .measure(2, instrumentalPart1([GREEN, PINK]))
@@ -733,7 +732,5 @@ const beezInTheTrap = song
   .measure(93, chorusPart6([GREEN, PINK, CYAN]))
   .measure(94, chorusPart7([CYAN, GREEN, PINK]))
   .measure(95, chorusPart8([PINK, CYAN, GREEN]))
-
-  .getSteps()
 
 export default beezInTheTrap

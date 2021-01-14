@@ -44,19 +44,13 @@ export default class Hue extends React.Component<{}, State> {
     }
   }
 
-  // componentDidMount = (): Promise<void> => {
-  // }
+  async componentDidMount(): Promise<void> {
+    await this.setDetailType(DetailType.BEATS)()
+  }
 
-  // componentWillUnmount = (): void => {
-  // }
-
-  setDetailType = (detailType: DetailType) => async () => { // tslint:disable-line:typedef
-    try {
-      await this.hueApi.init() // TODO add switch statement to only reload necessary data?
-    } catch (e) {
-      // TODO alert of some sort?
-      // this is for the case where I'm developing away from the hue network
-    }
+  setDetailType = (detailType: DetailType) => async () => {
+    // reload lights/etc every time we switch detail type
+    await this.hueApi.init()
     this.setState({ detailType })
   }
 

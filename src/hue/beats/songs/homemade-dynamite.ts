@@ -1,6 +1,7 @@
 import { UIColor } from '../../hue-color-conversion'
 import { BeatTypes } from '../beat-types'
 
+// TODO convert to new way
 const song = [
   {
     time: 0,

@@ -16,7 +16,7 @@ interface State {
   isPlaying: boolean
 }
 
-export default class BeatCanvas extends React.Component<Props, State> {
+export default class BeatVisualizer extends React.Component<Props, State> {
   private animationFrame: number
   private firstRenderedStepIndex: number
   private canvasElement: React.RefObject<HTMLCanvasElement> = React.createRef()
@@ -56,13 +56,13 @@ export default class BeatCanvas extends React.Component<Props, State> {
 
     return (
       <div
-        className={styles.beatCanvas}
+        className={styles.BeatVisualizer}
         style={{
           maxHeight: `${getCanvasHeight()}px`,
           minHeight: `${getCanvasHeight()}px`,
         }}>
         <canvas
-          className={styles.beatCanvas__preview}
+          className={styles.BeatVisualizer__preview}
           ref={this.canvasElement} />
       </div>
     )
@@ -86,8 +86,8 @@ export default class BeatCanvas extends React.Component<Props, State> {
     const {
       isPlaying,
     } = this.state
-    const getBackground = (c: UIColor, brightness: number): string => c
-      ? `rgba(${c.r},${c.g},${c.b},${brightness / 100})`
+    const getBackground = (color: UIColor, brightness: number): string => color
+      ? `rgba(${color.r},${color.g},${color.b},${brightness / 100})`
       : 'transparent'
 
     const c = this.canvasElement.current
@@ -103,7 +103,7 @@ export default class BeatCanvas extends React.Component<Props, State> {
     // draw only rects inside visible area
     const elapsedMs = isPlaying ? Date.now() - startTimeMs : 0
     const calculateX = (step: MsStep): number => Math.floor((step.ms - elapsedMs) / 10) + canvasMiddle
-    const minX = calculateX(song[0])
+    const minX = Math.max(calculateX(song[0]) - 1, 0)
     const maxX = canvasWidth
     let shouldRender = false
     let shouldRenderWasTrue = false
@@ -130,7 +130,7 @@ export default class BeatCanvas extends React.Component<Props, State> {
         if (shouldRenderWasTrue) {
           // done drawing visible group, so stop drawing
           break
-        } else if (x < minX) {
+        } else if ((x + width) < minX) {
           // found an element that is currently out to the left side of the frame.
           // next paint, exclude step that is now out of frame
           this.firstRenderedStepIndex++

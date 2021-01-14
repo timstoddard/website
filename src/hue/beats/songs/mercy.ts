@@ -106,8 +106,7 @@ const ohOhOhOhOhOkay = (): BeatStep[] => [
   //   allLightsOff()),
 ]
 
-const song = new Song(140, 4, 2200)
-const mercy = song
+const mercy = new Song('Mercy', 'Kanye West', 140, 4, 2500)
   // weepin and a moanin...
   .measure(0, [
     createNote(0, [
@@ -1229,6 +1228,5 @@ const mercy = song
   .measure(190, [
     createNote(0, allLightsOff()),
   ])
-  .getSteps()
 
 export default mercy

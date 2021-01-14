@@ -1,16 +1,22 @@
 import { BeatStep, MsStep } from './beat-types'
 
 export class Song {
+  title: string
+  artist: string
   private bpm: number
   private timeSignature: number
   private initialTimeout: number
   private steps: MsStep[]
 
   constructor(
+    title: string,
+    artist: string,
     bpm: number,
     timeSignature: number,
     initialTimeout: number,
   ) {
+    this.title = title
+    this.artist = artist
     this.bpm = bpm
     this.timeSignature = timeSignature
     this.initialTimeout = initialTimeout

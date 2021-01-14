@@ -5,8 +5,8 @@ import { LightData, Lights } from './Light'
 export class HueApi {
   private apiUrl: string
   private lights: Lights = {}
-  private groups: any // TODO type
-  private scenes: any // TODO type
+  private groups: any = {} // TODO type
+  private scenes: any = {} // TODO type
   private headers: HeadersInit = {
     'Content-Type': 'application/json',
   }
@@ -29,7 +29,9 @@ export class HueApi {
     }
 
     // generate api url
-    this.apiUrl = `http://${hueUrl}/api/${hueUserId}`
+    this.apiUrl = (hueUrl && hueUserId)
+      ? `http://${hueUrl}/api/${hueUserId}`
+      : null
 
     // load light data from api
     await this.fetchLights()
@@ -115,6 +117,10 @@ export class HueApi {
     body: unknown,
     transitionTime: number = 0,
   ): Promise<void> => {
+    if (!this.apiUrl) {
+      return
+    }
+
     const url = `${this.apiUrl}/lights/${lightId}/state`
     await fetch(url, {
       method: 'PUT',
@@ -130,6 +136,10 @@ export class HueApi {
     body: unknown,
     transitionTime: number = 0,
   ): Promise<void> => {
+    if (!this.apiUrl) {
+      return
+    }
+
     /* // TODO this doesn't seem to work (choppy/laggy)
     const url = `${this.apiUrl}/groups/${groupId}/action`
     await fetch(url, {
@@ -150,6 +160,10 @@ export class HueApi {
     sceneId: string,
     transitionTime: number = 0,
   ): Promise<void> => {
+    if (!this.apiUrl) {
+      return
+    }
+
     const url = `${this.apiUrl}/groups/${groupId}/action`
     await fetch(url, {
       method: 'PUT',
@@ -164,6 +178,10 @@ export class HueApi {
   /* FETCH DATA FROM BRIDGE */
 
   fetchLights = async (): Promise<void> => {
+    if (!this.apiUrl) {
+      return
+    }
+
     const url = `${this.apiUrl}/lights`
     const response = await fetchWithTimeout(url, {
       method: 'GET',
@@ -174,6 +192,10 @@ export class HueApi {
   }
 
   fetchGroups = async (): Promise<void> => {
+    if (!this.apiUrl) {
+      return
+    }
+
     const url = `${this.apiUrl}/groups`
     const response = await fetchWithTimeout(url, {
       method: 'GET',
@@ -184,6 +206,10 @@ export class HueApi {
   }
 
   fetchScenes = async (): Promise<void> => {
+    if (!this.apiUrl) {
+      return
+    }
+
     const url = `${this.apiUrl}/scenes`
     const response = await fetchWithTimeout(url, {
       method: 'GET',

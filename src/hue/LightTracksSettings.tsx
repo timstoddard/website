@@ -25,6 +25,7 @@ interface LightTracksSettingsProps {
   hueLatencyMs: number
   updateHueLatency: (e: React.ChangeEvent) => void
   isDarkMode: boolean
+  lightTracksCount: number
 }
 
 interface LightTracksSettingsState {
@@ -98,10 +99,10 @@ export default class LightTracksSettings extends React.Component<LightTracksSett
     // } = this.state
     const allLights = hueApi.getLights()
 
-    const getLightTracks = () => { // TODO pass by props? or?
-      const LIGHT_TRACK_COUNT = 2
+    const getLightTracks = () => {
+      const { lightTracksCount } = this.props
       const list = []
-      for (let trackId = 0; trackId < LIGHT_TRACK_COUNT; trackId++) {
+      for (let trackId = 0; trackId < lightTracksCount; trackId++) {
         list.push(trackId)
       }
       return list
@@ -118,81 +119,80 @@ export default class LightTracksSettings extends React.Component<LightTracksSett
       <div className={classNames(
         styles.lightTracksSettings,
         { [styles['lightTracksSettings--darkMode']]: isDarkMode })}>
-        <div className={styles.lightTracksSettings__leftColumn}>
-          <div className={styles.lightTracksSettings__tracks}>
-            {lights.map((light: LightState, trackId: number) => (
+        <div className={styles.lightTracksSettings__tracks}>
+          {lights.map((light: LightState, trackId: number) => (
+            <div
+              key={trackId}
+              className={styles.lightTracksSettings__trackSettings}>
+              <BeatLight
+                on={light.on}
+                color={light.color}
+                brightness={light.brightness} />
               <div
                 key={trackId}
-                className={styles.lightTracksSettings__trackSettings}>
-                <BeatLight
-                  on={light.on}
-                  color={light.color}
-                  brightness={light.brightness} />
-                <div
-                  key={trackId}
-                  className={styles.lightTracksSettings__lightIdSelectors}>
-                  <div className={styles.lightTracksSettings__lightIdSelectors__titleRow}>
-                    <div>Light Track {trackId + 1}</div>
-                    <DropdownButton
-                      title='Swap'
-                      variant={isDarkMode ? 'dark' : 'link'}>
-                      {getLightTracks().map((trackId2: number) =>
-                        (trackId2 !== trackId) && (
-                          // TODO style items for dark mode (no variant option)
-                          <Dropdown.Item
-                            key={`${trackId}${trackId2}`}
-                            onClick={() => swapSelectedLightIds(trackId, trackId2)}>
-                          Swap rows {trackId + 1} and {trackId2 + 1}
-                        </Dropdown.Item>
-                        ))}
-                    </DropdownButton>
-                  </div>
-                  <ButtonGroup aria-label={`Light IDs for Light Track ${trackId + 1}`}>
-                    {hueApi.getLightIds().map((lightId: number) => (
-                      <Button
-                        key={lightId}
-                        variant={getSelectLightIdButtonVariant(lightId, trackId)}
-                        onClick={() => handleChange(lightId, trackId)}
-                        className={styles.lightTracksSettings__lightIdButton}>
-                        {lightId}
-                      </Button>
-                    ))}
-                    {/* {[5,2,17,1].map((lightId: number) => (
-                      <Button
-                        key={lightId}
-                        variant={getSelectLightIdButtonVariant(lightId, trackId)}
-                        className={styles.lightTracksSettings__lightIdButton}>
-                        {lightId}
-                      </Button>
-                    ))} */}
-                  </ButtonGroup>
+                className={styles.lightTracksSettings__lightIdSelectors}>
+                <div className={styles.lightTracksSettings__lightIdSelectors__titleRow}>
+                  <div>Light Track {trackId + 1}</div>
+                  <DropdownButton
+                    title='Swap'
+                    variant={isDarkMode ? 'dark' : 'link'}
+                    size='sm'>
+                    {getLightTracks().map((trackId2: number) =>
+                      (trackId2 !== trackId) && (
+                        // TODO style items for dark mode (no variant option)
+                        <Dropdown.Item
+                          key={`${trackId}${trackId2}`}
+                          onClick={() => swapSelectedLightIds(trackId, trackId2)}>
+                        Swap rows {trackId + 1} and {trackId2 + 1}
+                      </Dropdown.Item>
+                      ))}
+                  </DropdownButton>
                 </div>
+                <ButtonGroup aria-label={`Light IDs for Light Track ${trackId + 1}`}>
+                  {hueApi.getLightIds().map((lightId: number) => (
+                    <Button
+                      key={lightId}
+                      variant={getSelectLightIdButtonVariant(lightId, trackId)}
+                      onClick={() => handleChange(lightId, trackId)}
+                      className={styles.lightTracksSettings__lightIdButton}>
+                      {lightId}
+                    </Button>
+                  ))}
+                  {[5,2,17,1].map((lightId: number) => (
+                    <Button
+                      key={lightId}
+                      variant={getSelectLightIdButtonVariant(lightId, trackId)}
+                      className={styles.lightTracksSettings__lightIdButton}>
+                      {lightId}
+                    </Button>
+                  ))}
+                </ButtonGroup>
               </div>
-            ))}
+            </div>
+          ))}
 
-            <InputGroup>
-              <InputGroup.Prepend>
-                <InputGroup.Text>Hue latency:</InputGroup.Text>
-              </InputGroup.Prepend>
-              <FormControl
-                value={hueLatencyMs}
-                onChange={updateHueLatency}
-                aria-label='Hue bulbs latency'
-                className={styles.lightTracksSettings__input} />
-              <InputGroup.Append>
-                <InputGroup.Text>ms</InputGroup.Text>
-              </InputGroup.Append>
-            </InputGroup>
-          </div>
-
-          <ListGroup className={styles.lightTracksSettings__lightsInfo}>
-            {hueApi.getLightIds().map((lightId: number) => (
-              <ListGroup.Item key={lightId}>
-                {lightId}: {allLights[lightId].name}
-              </ListGroup.Item>
-            ))}
-          </ListGroup>
+          <InputGroup>
+            <InputGroup.Prepend>
+              <InputGroup.Text>Hue latency:</InputGroup.Text>
+            </InputGroup.Prepend>
+            <FormControl
+              value={hueLatencyMs}
+              onChange={updateHueLatency}
+              aria-label='Hue bulbs latency'
+              className={styles.lightTracksSettings__input} />
+            <InputGroup.Append>
+              <InputGroup.Text>ms</InputGroup.Text>
+            </InputGroup.Append>
+          </InputGroup>
         </div>
+
+        <ListGroup className={styles.lightTracksSettings__lightsInfo}>
+          {hueApi.getLightIds().map((lightId: number) => (
+            <ListGroup.Item key={lightId}>
+              {lightId}: {allLights[lightId].name}
+            </ListGroup.Item>
+          ))}
+        </ListGroup>
 
         {/* <Button
           onClick={toggleLightsFullScreen}

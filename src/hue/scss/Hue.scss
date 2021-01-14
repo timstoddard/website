@@ -2,10 +2,20 @@
 
 $headerHeight: 120px;
 $darkModeBlack: rgb(15,15,25);
-$darkModeBlackOffset: rgb(60,60,75);
 $darkModeTextWhite: rgb(250,250,250);
 
-// TODO add blue (green? red?) accents to dark mode (borders, etc)
+$darkModeNeonAccent--red: rgb(255,42,0);
+$darkModeBlackOffset--red: rgb(90,75,75);
+$darkModeNeonAccent--green: rgb(0,255,42);
+$darkModeBlackOffset--green: rgb(75,90,75);
+$darkModeNeonAccent--blue: rgb(0,200,255);
+$darkModeBlackOffset--blue: rgb(75,75,90);
+$darkModeNeonAccent--orange: rgb(255,126,0); // bmw gauge orange
+$darkModeBlackOffset--orange: rgb(80,70,60);
+$darkModeBlackOffset: $darkModeBlackOffset--orange;
+$darkModeNeonAccent: $darkModeNeonAccent--orange;
+
+// TODO add settings to change these colors
 
 .hue {
   display: grid;
@@ -90,9 +100,14 @@ $darkModeTextWhite: rgb(250,250,250);
       }
     }
 
+    & .hue__controller {
+      border: 1px solid $darkModeNeonAccent;
+    }
+
     & .hueGroups {
       &__listItem {
         background: $darkModeBlack;
+        border: 1px solid $darkModeNeonAccent;
 
         &:hover,
         &--selected {
@@ -105,12 +120,16 @@ $darkModeTextWhite: rgb(250,250,250);
     & .beats__songSearchInput::placeholder {
       color: $darkModeTextWhite;
     }
+
+    & .beats__buttons {
+      border: 1px solid $darkModeNeonAccent;
+      border-radius: 5px; // wraps buttons that have 4px border radius
+    }
   }
 }
 
 // TODO move into own file
 .hueGroups {
-  // TODO make mixin (also in Light.scss)
   margin: 0 auto;
 
   &__list,
@@ -123,12 +142,14 @@ $darkModeTextWhite: rgb(250,250,250);
     margin: 0;
 
     &Item {
+      // TODO make mixin (also in Light.scss)
       background: white;
       border: 1px solid rgb(200,200,200);
       border-radius: 8px;
       cursor: pointer;
       margin: 3px;
       padding: 10px;
+      text-align: center;
 
       &:hover,
       &--selected {
@@ -160,13 +181,12 @@ $darkModeTextWhite: rgb(250,250,250);
   &__mainControls {
     display: flex;
     justify-content: space-between;
-    margin: 3px 0;
+    margin: 8px 0;
     width: 100%;
   }
 
   &__buttons {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
+    border: 1px solid transparent;
   }
 
   &__basicHueControls {
@@ -211,6 +231,10 @@ $darkModeTextWhite: rgb(250,250,250);
     }
   }
 
+  &__checkboxWrapper {
+    display: flex;
+  }
+
   &__checkbox {
     align-items: center;
     display: flex;
@@ -221,17 +245,17 @@ $darkModeTextWhite: rgb(250,250,250);
   }
 }
 
-$beatCanvasBorderRadius: 8px;
-.beatCanvas {
+$BeatVisualizerBorderRadius: 8px;
+.BeatVisualizer {
   background: rgb(220,220,220);
   border: 1px solid black;
-  border-radius: $beatCanvasBorderRadius;
+  border-radius: $BeatVisualizerBorderRadius;
   box-shadow: inset 0px 8px 20px 0px rgba(0,0,0,0.35);
   min-width: 100%;
   overflow: hidden;
 
   &__preview {
-    border-radius: $beatCanvasBorderRadius;
+    border-radius: $BeatVisualizerBorderRadius;
   }
 }
 
@@ -244,20 +268,14 @@ $beatCanvasBorderRadius: 8px;
 }
 
 .lightTracksSettings {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
+  display: grid;
+  grid-template-columns: 1fr 150px;
+  grid-template-rows: auto;
   width: 100%;
-
-  &__leftColumn {
-    display: grid;
-    grid-template-columns: auto 150px;
-    grid-template-rows: auto;
-    max-width: 100%;
-  }
 
   &__tracks {
     margin-bottom: 10px;
+    overflow: auto;
 
     & > * {
       padding: 5px;
@@ -276,9 +294,10 @@ $beatCanvasBorderRadius: 8px;
     &__titleRow {
       align-items: center;
       display: flex;
+      margin-bottom: 5px;
 
       & > *:first-child {
-        margin-right: 10px;
+        margin-right: 20px;
       }
     }
   }
@@ -295,6 +314,7 @@ $beatCanvasBorderRadius: 8px;
   &__lightsInfo {
     grid-area: 1 / 2 / 2 / 3;
     margin-left: 8px;
+    overflow-y: auto;
 
     & > * {
       text-align: center;
@@ -311,17 +331,31 @@ $beatCanvasBorderRadius: 8px;
     color: $darkModeTextWhite;
 
     & .beatLight {
-      border: 1px solid white;
+      border: 1px solid $darkModeNeonAccent;
     }
 
     & .lightTracksSettings__input {
       background: $darkModeBlack;
+      border: 1px solid $darkModeNeonAccent;
       color: $darkModeTextWhite;
+    }
+
+    & :global(.dropdown-menu) {
+      background: $darkModeBlackOffset;
+      border: 1px solid $darkModeNeonAccent;
+
+      & > :global(.dropdown-item) {
+        color: $darkModeTextWhite;
+
+        &:hover {
+          color: black;
+        }
+      }
     }
 
     & :global(.list-group-item) {
       background: $darkModeBlack;
-      border: 1px solid $darkModeTextWhite;
+      border: 1px solid $darkModeNeonAccent;
 
       &:not(:first-child) {
         border-top: 0;
@@ -330,6 +364,7 @@ $beatCanvasBorderRadius: 8px;
 
     & :global(.input-group-text) {
       background: $darkModeBlackOffset;
+      border: 1px solid $darkModeNeonAccent;
       color: $darkModeTextWhite;
     }
   }

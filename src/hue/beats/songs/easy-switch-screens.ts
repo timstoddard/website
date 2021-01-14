@@ -152,8 +152,7 @@ const chorusInstrumental4 = (): BeatStep[] => [
     allLightsState(BLUE)),
 ]
 
-const song = new Song(146, 4, 700)
-const easySwitchScreens = song
+const easySwitchScreens = new Song('Easy (Switch Screens)', 'Lorde', 146, 4, 700)
   .measure(0, chorusIntro1())
   .measure(1, chorusIntro2())
   .measure(2, chorusIntro1())
@@ -256,6 +255,5 @@ const easySwitchScreens = song
 
   // TODO
   .measure(52, [])
-  .getSteps()
 
 export default easySwitchScreens

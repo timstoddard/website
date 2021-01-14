@@ -90,8 +90,7 @@ const introPart4 = (): BeatStep[] => [
     allLightsState(BLUE, 60)),
 ]
 
-const song = new Song(116, 4, 600)
-const bitingDown = song
+const bitingDown = new Song('Biting Down', 'Lorde', 116, 4, 600)
   .measure(0, [
     createNote(0,
       allLightsState(BLUE, 10)),
@@ -212,6 +211,5 @@ const bitingDown = song
 
   // TODO
   .measure(14, [])
-  .getSteps()
 
 export default bitingDown

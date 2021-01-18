@@ -7,6 +7,7 @@ export class Song {
   private timeSignature: number
   private initialTimeout: number
   private steps: MsStep[]
+  private measureCount: number
 
   constructor(
     title: string,
@@ -21,11 +22,12 @@ export class Song {
     this.timeSignature = timeSignature
     this.initialTimeout = initialTimeout
     this.steps = []
+    this.measureCount = 0
   }
 
-  measure = (n: number, steps: BeatStep[]): this => {
+  measure = (steps: BeatStep[]): this => {
     const msPerBeat = 1000 / (this.bpm / 60)
-    const measureStartMs = this.timeSignature * n * msPerBeat
+    const measureStartMs = this.timeSignature * this.measureCount * msPerBeat
     const totalMs = this.initialTimeout + measureStartMs
     for (const step of steps) {
       this.steps.push({
@@ -34,6 +36,7 @@ export class Song {
         transitionMs: step.transitionMs,
       })
     }
+    this.measureCount++
     return this
   }
 

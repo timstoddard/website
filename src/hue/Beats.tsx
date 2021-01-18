@@ -7,6 +7,7 @@ import { Song } from './beats/song'
 import beezInTheTrap from './beats/songs/beez-in-the-trap'
 import bitingDown from './beats/songs/biting-down'
 import easySwitchScreens from './beats/songs/easy-switch-screens'
+import homemadeDynamite from './beats/songs/homemade-dynamite'
 import mercy from './beats/songs/mercy'
 import { allLightsOff } from './beats/songs/utils/utils'
 import yellowFlickerBeat from './beats/songs/yellow-flicker-beat'
@@ -25,6 +26,7 @@ const ALL_SONGS: Song[] = [
   bitingDown,
   beezInTheTrap,
   yellowFlickerBeat,
+  homemadeDynamite,
 ]
 
 interface Props {

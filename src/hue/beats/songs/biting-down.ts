@@ -1,5 +1,5 @@
 import { UIColor } from '../../hue-color-conversion'
-import { BeatStep, BeatTypes } from '../beat-types'
+import { BeatStep } from '../beat-types'
 import { Song } from '../song'
 import { allLightsOff, allLightsState, createNote } from './utils/utils'
 
@@ -15,201 +15,129 @@ const WHITE = new UIColor(255, 255, 255)
 const BLACK = new UIColor(0, 0, 0)
 
 const introPart1 = (): BeatStep[] => [
-  createNote(0,
-    allLightsState(BLUE)),
-  createNote(BeatTypes.HALF_BEAT,
-    allLightsState(BLUE, 60)),
-  createNote(BeatTypes.ONE_BEAT,
-    allLightsState(BLUE)),
-  createNote(BeatTypes.ONE_BEAT + BeatTypes.HALF_BEAT,
-    allLightsState(BLUE, 60)),
-  createNote(BeatTypes.ONE_BEAT * 2,
-    allLightsState(RED)),
-  createNote(BeatTypes.ONE_BEAT * 2 + BeatTypes.HALF_BEAT,
-    allLightsState(BLUE, 60)),
-  createNote(BeatTypes.ONE_BEAT * 3,
-    allLightsState(RED)),
-  createNote(BeatTypes.ONE_BEAT * 3 + BeatTypes.HALF_BEAT,
-    allLightsState(BLUE, 60)),
+  createNote(0, allLightsState(BLUE)),
+  createNote(0.5, allLightsState(BLUE, 60)),
+  createNote(1, allLightsState(BLUE)),
+  createNote(1.5, allLightsState(BLUE, 60)),
+  createNote(2, allLightsState(RED)),
+  createNote(2.5, allLightsState(BLUE, 60)),
+  createNote(3, allLightsState(RED)),
+  createNote(3.5, allLightsState(BLUE, 60)),
 ]
 
 const introPart2 = (): BeatStep[] => [
-  createNote(0,
-    allLightsState(RED)),
-  createNote(BeatTypes.HALF_BEAT,
-    allLightsState(BLUE, 60)),
-  createNote(BeatTypes.ONE_BEAT,
-    allLightsState(RED)),
-  createNote(BeatTypes.ONE_BEAT + BeatTypes.HALF_BEAT,
-    allLightsState(BLUE, 60)),
-  createNote(BeatTypes.ONE_BEAT * 2,
-    allLightsState(RED)),
-  createNote(BeatTypes.ONE_BEAT * 2 + BeatTypes.HALF_BEAT,
-    allLightsState(RED, 60)),
-  createNote(BeatTypes.ONE_BEAT * 3,
-    allLightsState(RED)),
-  createNote(BeatTypes.ONE_BEAT * 3 + BeatTypes.HALF_BEAT,
-    allLightsState(BLUE, 60)),
+  createNote(0, allLightsState(RED)),
+  createNote(0.5, allLightsState(BLUE, 60)),
+  createNote(1, allLightsState(RED)),
+  createNote(1.5, allLightsState(BLUE, 60)),
+  createNote(2, allLightsState(RED)),
+  createNote(2.5, allLightsState(RED, 60)),
+  createNote(3, allLightsState(RED)),
+  createNote(3.5, allLightsState(BLUE, 60)),
 ]
 
 const introPart3 = (): BeatStep[] => [
-  createNote(0,
-    allLightsState(RED)),
-  createNote(BeatTypes.HALF_BEAT,
-    allLightsState(BLUE, 60)),
-  createNote(BeatTypes.ONE_BEAT,
-    allLightsState(BLUE)),
-  createNote(BeatTypes.ONE_BEAT + BeatTypes.HALF_BEAT,
-    allLightsState(BLUE, 60)),
-  createNote(BeatTypes.ONE_BEAT * 2,
-    allLightsState(BLUE)),
-  createNote(BeatTypes.ONE_BEAT * 2 + BeatTypes.HALF_BEAT,
-    allLightsState(BLUE, 60)),
-  createNote(BeatTypes.ONE_BEAT * 3,
-    allLightsState(BLUE)),
-  createNote(BeatTypes.ONE_BEAT * 3 + BeatTypes.HALF_BEAT,
-    allLightsState(BLUE, 60)),
+  createNote(0, allLightsState(RED)),
+  createNote(0.5, allLightsState(BLUE, 60)),
+  createNote(1, allLightsState(BLUE)),
+  createNote(1.5, allLightsState(BLUE, 60)),
+  createNote(2, allLightsState(BLUE)),
+  createNote(2.5, allLightsState(BLUE, 60)),
+  createNote(3, allLightsState(BLUE)),
+  createNote(3.5, allLightsState(BLUE, 60)),
 ]
 
 const introPart4 = (): BeatStep[] => [
-  createNote(0,
-    allLightsState(BLUE)),
-  createNote(BeatTypes.HALF_BEAT,
-    allLightsState(BLUE, 60)),
-  createNote(BeatTypes.ONE_BEAT,
-    allLightsState(BLUE)),
-  createNote(BeatTypes.ONE_BEAT + BeatTypes.HALF_BEAT,
-    allLightsState(BLUE, 60)),
-  createNote(BeatTypes.ONE_BEAT * 2,
-    allLightsState(BLUE)),
-  createNote(BeatTypes.ONE_BEAT * 2 + BeatTypes.HALF_BEAT,
-    allLightsState(BLUE, 60)),
-  createNote(BeatTypes.ONE_BEAT * 3,
-    allLightsState(BLUE)),
-  createNote(BeatTypes.ONE_BEAT * 3 + BeatTypes.HALF_BEAT,
-    allLightsState(BLUE, 60)),
+  createNote(0, allLightsState(BLUE)),
+  createNote(0.5, allLightsState(BLUE, 60)),
+  createNote(1, allLightsState(BLUE)),
+  createNote(1.5, allLightsState(BLUE, 60)),
+  createNote(2, allLightsState(BLUE)),
+  createNote(2.5, allLightsState(BLUE, 60)),
+  createNote(3, allLightsState(BLUE)),
+  createNote(3.5, allLightsState(BLUE, 60)),
 ]
 
 const bitingDown = new Song('Biting Down', 'Lorde', 116, 4, 600)
-  .measure(0, [
-    createNote(0,
-      allLightsState(BLUE, 10)),
-    createNote(BeatTypes.HALF_BEAT,
-      allLightsOff()),
-    createNote(BeatTypes.ONE_BEAT,
-      allLightsState(BLUE, 20)),
-    createNote(BeatTypes.ONE_BEAT + BeatTypes.HALF_BEAT,
-      allLightsOff()),
-    createNote(BeatTypes.ONE_BEAT * 2,
-      allLightsState(BLUE, 30)),
-    createNote(BeatTypes.ONE_BEAT * 2 + BeatTypes.HALF_BEAT,
-      allLightsOff()),
-    createNote(BeatTypes.ONE_BEAT * 3,
-      allLightsState(BLUE, 40)),
-    createNote(BeatTypes.ONE_BEAT * 3 + BeatTypes.HALF_BEAT,
-      allLightsOff()),
+  .measure([
+    createNote(0, allLightsState(BLUE, 10)),
+    createNote(0.5, allLightsOff()),
+    createNote(1, allLightsState(BLUE, 20)),
+    createNote(1.5, allLightsOff()),
+    createNote(2, allLightsState(BLUE, 30)),
+    createNote(2.5, allLightsOff()),
+    createNote(3, allLightsState(BLUE, 40)),
+    createNote(3.5, allLightsOff()),
   ])
-  .measure(1, [
-    createNote(0,
-      allLightsState(BLUE, 50)),
-    createNote(BeatTypes.HALF_BEAT,
-      allLightsOff()),
-    createNote(BeatTypes.ONE_BEAT,
-      allLightsState(BLUE, 60)),
-    createNote(BeatTypes.ONE_BEAT + BeatTypes.HALF_BEAT,
-      allLightsOff()),
-    createNote(BeatTypes.ONE_BEAT * 2,
-      allLightsState(BLUE, 70)),
-    createNote(BeatTypes.ONE_BEAT * 2 + BeatTypes.HALF_BEAT,
-      allLightsOff()),
-    createNote(BeatTypes.ONE_BEAT * 3,
-      allLightsState(BLUE, 80)),
-    createNote(BeatTypes.ONE_BEAT * 3 + BeatTypes.HALF_BEAT,
-      allLightsOff()),
+  .measure([
+    createNote(0, allLightsState(BLUE, 50)),
+    createNote(0.5, allLightsOff()),
+    createNote(1, allLightsState(BLUE, 60)),
+    createNote(1.5, allLightsOff()),
+    createNote(2, allLightsState(BLUE, 70)),
+    createNote(2.5, allLightsOff()),
+    createNote(3, allLightsState(BLUE, 80)),
+    createNote(3.5, allLightsOff()),
   ])
 
   // it feels
-  .measure(2, [
-    createNote(0,
-      allLightsState(BLUE, 90)),
-    createNote(BeatTypes.HALF_BEAT,
-      allLightsOff()),
-    createNote(BeatTypes.ONE_BEAT,
-      allLightsState(BLUE)),
-    createNote(BeatTypes.ONE_BEAT + BeatTypes.HALF_BEAT,
-      allLightsState(BLUE, 10)),
-    createNote(BeatTypes.ONE_BEAT * 2,
-      allLightsState(RED)),
-    createNote(BeatTypes.ONE_BEAT * 2 + BeatTypes.HALF_BEAT,
-      allLightsState(BLUE, 20)),
-    createNote(BeatTypes.ONE_BEAT * 3,
-      allLightsState(RED)),
-    createNote(BeatTypes.ONE_BEAT * 3 + BeatTypes.HALF_BEAT,
-      allLightsState(BLUE, 30)),
+  .measure([
+    createNote(0, allLightsState(BLUE, 90)),
+    createNote(0.5, allLightsOff()),
+    createNote(1, allLightsState(BLUE)),
+    createNote(1.5, allLightsState(BLUE, 10)),
+    createNote(2, allLightsState(RED)),
+    createNote(2.5, allLightsState(BLUE, 20)),
+    createNote(3, allLightsState(RED)),
+    createNote(3.5, allLightsState(BLUE, 30)),
   ])
 
   // better biting
-  .measure(3, [
-    createNote(0,
-      allLightsState(RED)),
-    createNote(BeatTypes.HALF_BEAT,
-      allLightsState(BLUE, 40)),
-    createNote(BeatTypes.ONE_BEAT,
-      allLightsState(RED)),
-    createNote(BeatTypes.ONE_BEAT + BeatTypes.HALF_BEAT,
-      allLightsState(BLUE, 50)),
-    createNote(BeatTypes.ONE_BEAT * 2,
-      allLightsState(RED)),
-    createNote(BeatTypes.ONE_BEAT * 2 + BeatTypes.HALF_BEAT,
-      allLightsState(RED, 60)),
-    createNote(BeatTypes.ONE_BEAT * 3,
-      allLightsState(RED)),
-    createNote(BeatTypes.ONE_BEAT * 3 + BeatTypes.HALF_BEAT,
-      allLightsState(BLUE, 60)),
+  .measure([
+    createNote(0, allLightsState(RED)),
+    createNote(0.5, allLightsState(BLUE, 40)),
+    createNote(1, allLightsState(RED)),
+    createNote(1.5, allLightsState(BLUE, 50)),
+    createNote(2, allLightsState(RED)),
+    createNote(2.5, allLightsState(RED, 60)),
+    createNote(3, allLightsState(RED)),
+    createNote(3.5, allLightsState(BLUE, 60)),
   ])
 
   // down
-  .measure(4, [
-    createNote(0,
-      allLightsState(RED)),
-    createNote(BeatTypes.HALF_BEAT,
-      allLightsState(BLUE, 40)),
-    createNote(BeatTypes.ONE_BEAT,
-      allLightsState(BLUE)),
-    createNote(BeatTypes.ONE_BEAT + BeatTypes.HALF_BEAT,
-      allLightsState(BLUE, 50)),
-    createNote(BeatTypes.ONE_BEAT * 2,
-      allLightsState(BLUE)),
-    createNote(BeatTypes.ONE_BEAT * 2 + BeatTypes.HALF_BEAT,
-      allLightsState(BLUE, 60)),
-    createNote(BeatTypes.ONE_BEAT * 3,
-      allLightsState(BLUE)),
-    createNote(BeatTypes.ONE_BEAT * 3 + BeatTypes.HALF_BEAT,
-      allLightsState(BLUE, 60)),
+  .measure([
+    createNote(0, allLightsState(RED)),
+    createNote(0.5, allLightsState(BLUE, 40)),
+    createNote(1, allLightsState(BLUE)),
+    createNote(1.5, allLightsState(BLUE, 50)),
+    createNote(2, allLightsState(BLUE)),
+    createNote(2.5, allLightsState(BLUE, 60)),
+    createNote(3, allLightsState(BLUE)),
+    createNote(3.5, allLightsState(BLUE, 60)),
   ])
-  .measure(5, introPart4())
+  .measure(introPart4())
 
   // it feels
-  .measure(6, introPart1())
+  .measure(introPart1())
 
   // better biting
-  .measure(7, introPart2())
+  .measure(introPart2())
 
   // down
-  .measure(8, introPart3())
-  .measure(9, introPart4())
+  .measure(introPart3())
+  .measure(introPart4())
 
   // it feels
-  .measure(10, introPart1())
+  .measure(introPart1())
 
   // better biting
-  .measure(11, introPart2())
+  .measure(introPart2())
 
   // down
-  .measure(12, introPart3())
-  .measure(13, introPart4())
+  .measure(introPart3())
+  .measure(introPart4())
 
   // TODO
-  .measure(14, [])
+  .measure([])
 
 export default bitingDown

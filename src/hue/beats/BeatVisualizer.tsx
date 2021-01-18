@@ -56,13 +56,13 @@ export default class BeatVisualizer extends React.Component<Props, State> {
 
     return (
       <div
-        className={styles.BeatVisualizer}
+        className={styles.beatVisualizer}
         style={{
           maxHeight: `${getCanvasHeight()}px`,
           minHeight: `${getCanvasHeight()}px`,
         }}>
         <canvas
-          className={styles.BeatVisualizer__preview}
+          className={styles.beatVisualizer__preview}
           ref={this.canvasElement} />
       </div>
     )

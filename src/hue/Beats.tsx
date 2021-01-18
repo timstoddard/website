@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import * as React from 'react'
-import { Button, ButtonGroup, Form, FormControl, InputGroup } from 'react-bootstrap'
+import { Button, ButtonGroup, Form, InputGroup } from 'react-bootstrap'
 import { LightState, MsStep } from './beats/beat-types'
 import BeatVisualizer from './beats/BeatVisualizer'
 import { Song } from './beats/song'
@@ -36,12 +36,13 @@ interface State {
   songId: number
   lights: LightState[]
   startTimeMs: number
-  currentMs: number
+  elapsedMs: number
   shouldUpdateHueLights: boolean
   lightIdToLightTrackMap: { [key: number]: number }
   hueLatencyMs: number
   sortedSong: MsStep[]
   songSearchTerm: string
+  overallBrightness: number
 }
 
 export default class Beats extends React.Component<Props, State> {
@@ -65,29 +66,37 @@ export default class Beats extends React.Component<Props, State> {
       songId: DEFAULT_SONG_ID,
       lights: allLightsOff(),
       startTimeMs: 0,
-      currentMs: 0,
+      elapsedMs: 0,
       shouldUpdateHueLights: false,
       lightIdToLightTrackMap,
       hueLatencyMs: DEFAULT_HUE_LATENCY_MS,
       sortedSong,
       songSearchTerm: '',
+      overallBrightness: 100,
     }
   }
 
   componentDidMount = (): void => {
     this.beatTimers = []
     this.BeatVisualizerRef.current.refresh()
+    window.addEventListener('resize', this.onWindowResize)
+  }
+
+  componentWillUnmount = (): void => {
+    window.removeEventListener('resize', this.onWindowResize)
   }
 
   playRoutine = (): void => {
-    const { sortedSong } = this.state
+    const {
+      sortedSong,
+      elapsedMs,
+    } = this.state
 
-    // TODO use current playback time to start where left off
     for (let i = 0; i < sortedSong.length; i++) {
       this.beatTimers.push(...this.createBeatTimer(sortedSong[i], i === sortedSong.length - 1))
     }
     this.BeatVisualizerRef.current.start()
-    this.setState({ startTimeMs: Date.now() })
+    this.setState({ startTimeMs: Date.now() - elapsedMs })
   }
 
   createBeatTimer = (data: MsStep, isLast: boolean): number[] => {
@@ -96,66 +105,88 @@ export default class Beats extends React.Component<Props, State> {
       shouldUpdateHueLights,
       lightIdToLightTrackMap,
       hueLatencyMs,
+      elapsedMs,
     } = this.state
     const lights = hueApi.getLights()
     const timeouts: number[] = []
 
-    const t1 = setTimeout(() => {
-      // console.log('lights', data.lights)
-
-      this.setState({ lights: data.lights })
-
-      // stop player if last step of the song
-      if (isLast) {
-        this.stopRoutine()
+    const createTimeoutIfDurationIsPositive = (durationMs: number, successFn: () => void) => {
+      if (durationMs >= 0) {
+        return setTimeout(successFn, durationMs) as unknown as number
       }
-    }, data.ms) as unknown as number
-    timeouts.push(t1)
+      return null
+    }
+
+    const clientTimeout = createTimeoutIfDurationIsPositive(
+      data.ms - elapsedMs,
+      () => {
+        this.setState({ lights: data.lights })
+        // console.log('lights', data.lights)
+
+        // stop player if last step of the song
+        if (isLast) {
+          this.stopRoutine()
+        }
+      })
+    if (clientTimeout !== null) {
+      timeouts.push(clientTimeout)
+    }
 
     if (shouldUpdateHueLights) {
-      const t2 = setTimeout(() => {
-        // update physical lights with current state
-        for (const lightId in lightIdToLightTrackMap) {
-          const trackId = lightIdToLightTrackMap[lightId]
-          const settings = data.lights[trackId]
-          const settingsList = []
-            if (settings.color) {
-              settingsList.push(this.colorSetting(settings.color, lights[lightId]))
-            }
-            if (settings.brightness) {
-              settingsList.push(this.brightnessSetting(settings.brightness))
-            }
-            if (settings.on === true || settings.on === false) {
-              settingsList.push({ on: settings.on })
-            }
-            const options = Object.assign({}, ...settingsList)
-            // console.log(data.ms, options)
-            hueApi.updateLightState(lightId, options, data.transitionMs / 100 || 0)
-        }
-      }, data.ms - hueLatencyMs) as unknown as number
-      timeouts.push(t2)
+      const lightsTimeout = createTimeoutIfDurationIsPositive(
+        data.ms - elapsedMs - hueLatencyMs,
+        () => {
+          // update physical lights with current state
+          for (const lightId in lightIdToLightTrackMap) {
+            const trackId = lightIdToLightTrackMap[lightId]
+            const settings = data.lights[trackId]
+            const settingsList = []
+              if (settings.color) {
+                settingsList.push(this.colorSetting(settings.color, lights[lightId]))
+              }
+              if (settings.brightness) {
+                settingsList.push(this.brightnessSetting(settings.brightness))
+              }
+              if (settings.on === true || settings.on === false) {
+                settingsList.push({ on: settings.on })
+              }
+              const options = Object.assign({}, ...settingsList)
+              // console.log(data.ms, options)
+              hueApi.updateLightState(lightId, options, data.transitionMs / 100 || 0)
+          }
+        })
+      if (lightsTimeout !== null) {
+        timeouts.push(lightsTimeout)
+      }
     }
 
     return timeouts
   }
 
   stopRoutine = (): void => {
+    const { startTimeMs } = this.state
     this.BeatVisualizerRef.current.stop()
-    for (const timer of this.beatTimers) {
-      clearTimeout(timer)
+    // this is how we know if it was playing
+    if (this.beatTimers && this.beatTimers.length) {
+      for (const timer of this.beatTimers) {
+        clearTimeout(timer)
+      }
+      this.beatTimers = []
+      this.setState({ elapsedMs: Date.now() - startTimeMs })
     }
-    this.beatTimers = []
+  }
+
+  resetRoutine = (afterFn: () => void): void => {
+    this.stopRoutine()
+    this.BeatVisualizerRef.current.reset()
+    this.setState({
+      elapsedMs: 0,
+      startTimeMs: 0,
+    }, afterFn)
   }
 
   restartRoutine = (): void => {
-    this.resetRoutine()
-    this.playRoutine()
-  }
-
-  resetRoutine = (): void => {
-    this.stopRoutine()
-    this.BeatVisualizerRef.current.reset()
-    this.setState({ currentMs: 0 })
+    this.resetRoutine(() => this.playRoutine())
   }
 
   toggleShouldUpdateHueLights = (): void => {
@@ -164,15 +195,16 @@ export default class Beats extends React.Component<Props, State> {
   }
 
   selectSong = (id: number): (() => void) => (): void => {
-    this.resetRoutine()
-    const sortedSong = this.sortSong(ALL_SONGS[id].getSteps())
-    // console.log('new song', sortedSong)
-    this.setState({
-      songId: id,
-      sortedSong,
-    }, () => {
-      this.BeatVisualizerRef.current.reset()
-      this.BeatVisualizerRef.current.refresh()
+    this.resetRoutine(() => {
+      const sortedSong = this.sortSong(ALL_SONGS[id].getSteps())
+      // console.log('new song', sortedSong)
+      this.setState({
+        songId: id,
+        sortedSong,
+      }, () => {
+        this.BeatVisualizerRef.current.reset()
+        this.BeatVisualizerRef.current.refresh()
+      })
     })
   }
 
@@ -181,13 +213,17 @@ export default class Beats extends React.Component<Props, State> {
   }
 
   updateHueLatency = (e: React.ChangeEvent): void => {
-    const rawValue = (e.target as HTMLInputElement).value
-    const hueLatencyMs = parseInt(rawValue.replace(/[^\d]/g, ''), 10)
+    const hueLatencyMs = this.parseIntFromInput(e.target as HTMLInputElement)
     this.setState({ hueLatencyMs })
   }
 
   updateSongSearchTerm = (e: React.ChangeEvent): void => {
     this.setState({ songSearchTerm: (e.target as HTMLInputElement).value })
+  }
+
+  updateOverallBrightness = (e: React.ChangeEvent): void => {
+    const overallBrightness = this.parseIntFromInput(e.target as HTMLInputElement)
+    this.setState({ overallBrightness })
   }
 
   render(): JSX.Element {
@@ -200,7 +236,10 @@ export default class Beats extends React.Component<Props, State> {
       updateLightIdToLightTrackMap,
       updateHueLatency,
       updateSongSearchTerm,
+      updateOverallBrightness,
       getLightTracksCount,
+      getFilteredSongs,
+      highlightMatchedSongName,
     } = this
     const {
       hueApi,
@@ -215,43 +254,32 @@ export default class Beats extends React.Component<Props, State> {
       hueLatencyMs,
       sortedSong,
       songSearchTerm,
+      overallBrightness,
     } = this.state
-
-    // filter song list by search term
-    const re = new RegExp(`(${songSearchTerm.split('').join('[^\\w]*?')})`, 'i')
-    const filteredSongs = ALL_SONGS.filter((song: Song) => re.test(song.title) || re.test(song.artist))
-
-    const highlightMatchedSongName = (name: string) => {
-      let renderedName = name
-      const match = name.match(re)
-      if (match) {
-        renderedName = name.replace(match[1], `<span style="background: yellow; color: black;">${match[1]}</span>`)
-      }
-      return { __html: renderedName }
-    }
 
     return (
       <>
+        <Form.Control
+          value={songSearchTerm}
+          onChange={updateSongSearchTerm}
+          aria-label='Song search term'
+          placeholder='filter songs...'
+          className={styles.hueGroups__filter} />
+
         <ul className={styles.hueGroups__list}>
-          <InputGroup>
-            <FormControl
-              value={songSearchTerm}
-              onChange={updateSongSearchTerm}
-              aria-label='Song search term'
-              placeholder='filter songs...'
-              className={classNames(
-                styles.hueGroups__listItem,
-                styles.beats__songSearchInput)} />
-            </InputGroup>
-          {filteredSongs.map(({ title, artist }: Song, i: number) => (
+          {getFilteredSongs().map(({ title, artist }: Song, i: number) => (
             <li
               key={title + artist}
               onClick={selectSong(i)}
               className={classNames(
                 styles.hueGroups__listItem,
                 { [styles['hueGroups__listItem--selected']]: songId === i })}>
-              <div dangerouslySetInnerHTML={highlightMatchedSongName(title)} />
-              <div dangerouslySetInnerHTML={highlightMatchedSongName(artist)} />
+              <div
+                dangerouslySetInnerHTML={highlightMatchedSongName(title)}
+                className={styles.hueGroups__listItem__title} />
+              <div
+                dangerouslySetInnerHTML={highlightMatchedSongName(artist)}
+                className={styles.hueGroups__listItem__subtitle} />
             </li>
           ))}
         </ul>
@@ -265,7 +293,7 @@ export default class Beats extends React.Component<Props, State> {
             lightsCount={getLightTracksCount(sortedSong)}
             ref={this.BeatVisualizerRef} />
 
-          <div className={styles.beats__mainControls}>
+          <Form className={styles.beats__mainControls}>
             <ButtonGroup
               aria-label='Playback controls'
               className={styles.beats__buttons}>
@@ -286,21 +314,45 @@ export default class Beats extends React.Component<Props, State> {
               </Button>
             </ButtonGroup>
 
-            <Form className={styles.beats__checkboxWrapper}>
-              <Form.Check
-                custom
+            <Form.Check
+              custom
+              type='checkbox'
+              className={styles.beats__checkbox}
+              id='beats-enable-hue-checkbox'>
+              <Form.Check.Input
                 type='checkbox'
-                className={styles.beats__checkbox}
-                id='beats-enable-hue-checkbox'>
-                <Form.Check.Input
-                  type='checkbox'
-                  onChange={toggleShouldUpdateHueLights}
-                  checked={shouldUpdateHueLights}
-                  id='beats-enable-hue-checkbox' />
-                <Form.Check.Label>Enable hue lights</Form.Check.Label>
-              </Form.Check>
-            </Form>
-          </div>
+                onChange={toggleShouldUpdateHueLights}
+                checked={shouldUpdateHueLights}
+                id='beats-enable-hue-checkbox' />
+              <Form.Check.Label>Enable hue lights</Form.Check.Label>
+            </Form.Check>
+
+            <InputGroup aria-disabled={!shouldUpdateHueLights}>
+              <InputGroup.Prepend>
+                <InputGroup.Text>Hue latency:</InputGroup.Text>
+              </InputGroup.Prepend>
+              <Form.Control
+                value={hueLatencyMs}
+                onChange={updateHueLatency}
+                aria-label='Hue bulbs latency'
+                disabled={!shouldUpdateHueLights}
+                className={styles.beats__hueLatencyInput} />
+              <InputGroup.Append>
+                <InputGroup.Text>ms</InputGroup.Text>
+              </InputGroup.Append>
+            </InputGroup>
+
+            <Form.Group
+              controlId='overallBrightnessSlider'
+              aria-disabled={!shouldUpdateHueLights}>
+              <Form.Label>Hue max brightness: {overallBrightness}%</Form.Label>
+              <Form.Control
+                type='range'
+                onChange={updateOverallBrightness}
+                value={overallBrightness}
+                disabled={!shouldUpdateHueLights} />
+            </Form.Group>
+          </Form>
 
           <LightTracksSettings
             hueApi={hueApi}
@@ -310,8 +362,6 @@ export default class Beats extends React.Component<Props, State> {
             lights={lights}
             toggleShouldUpdateHueLights={toggleShouldUpdateHueLights}
             shouldUpdateHueLights={shouldUpdateHueLights}
-            hueLatencyMs={hueLatencyMs}
-            updateHueLatency={updateHueLatency}
             isDarkMode={isDarkMode}
             lightTracksCount={getLightTracksCount(sortedSong)} />
         </div>
@@ -319,9 +369,35 @@ export default class Beats extends React.Component<Props, State> {
     )
   }
 
+  private getFilteredSongs = () => {
+    const { songSearchTerm } = this.state
+    if (songSearchTerm) {
+      const re = this.getSongSearchTermRegex()
+      return ALL_SONGS.filter((song: Song) => re.test(song.title) || re.test(song.artist))
+    }
+    return ALL_SONGS
+  }
+
+  private highlightMatchedSongName = (name: string) => {
+    let renderedName = name
+    const match = name.match(this.getSongSearchTermRegex())
+    if (match) {
+      renderedName = name.replace(match[1], `<span class="${styles['beats--highlight']}">${match[1]}</span>`)
+    }
+    return { __html: renderedName }
+  }
+
+  private getSongSearchTermRegex = () => {
+    const { songSearchTerm } = this.state
+    const regexBase = songSearchTerm
+      .replace(/[^\w\s]/gi, '')
+      .split('').join('[^\\w]*?')
+    return new RegExp(`(${regexBase})`, 'i')
+  }
+
   // guarantees that a song is in order (precondition of running beat canvas)
   private sortSong = (song: MsStep[]): MsStep[] => {
-    return mergeSort((note1: MsStep, note2: MsStep) => note1.ms - note2.ms, song)
+    return mergeSort(song, (note1: MsStep, note2: MsStep) => note1.ms - note2.ms)
   }
 
   /**
@@ -342,11 +418,23 @@ export default class Beats extends React.Component<Props, State> {
    * @param percent must be in range 1 to 100 (inclusive)
    */
   private brightnessSetting = (percent: number): any => {
-    const bri = Math.round(percent / 100 * 254)
+    const { overallBrightness } = this.state
+    const hueBrightness = (percent / 100) * 254
+    const scalar = overallBrightness / 100
+    const bri = Math.round(hueBrightness * scalar)
     return { bri }
   }
 
   private getLightTracksCount = (sortedSong: MsStep[]) => {
     return sortedSong[0] ? sortedSong[0].lights.length : 0
+  }
+
+  private onWindowResize = () => {
+    this.BeatVisualizerRef.current.refresh()
+  }
+
+  private parseIntFromInput = (input: HTMLInputElement) => {
+    const value = parseInt(input.value.replace(/[^\d]/g, ''), 10)
+    return value || 0
   }
 }

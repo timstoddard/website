@@ -269,17 +269,17 @@ const fetchWithTimeout = (url: string, options: RequestInit = {}, timeoutMs: num
  * Sort an array using the merge sort algorithm.
  *
  * @param {function} comparatorFn The comparator function.
- * @param {array} arr The array to sort.
+ * @param {array} list The array to sort.
  * @returns {array} The sorted array.
  */
-export const mergeSort = <T>(comparatorFn: (t1: T, t2: T) => number, arr: T[]): T[] => {
-  const len = arr.length
+export const mergeSort = <T>(list: T[], comparatorFn: (t1: T, t2: T) => number): T[] => {
+  const len = list.length
   if (len >= 2) {
-    const firstHalf = arr.slice(0, len / 2)
-    const secondHalf = arr.slice(len / 2, len)
-    return merge(comparatorFn, mergeSort(comparatorFn, firstHalf), mergeSort(comparatorFn, secondHalf))
+    const firstHalf = list.slice(0, len / 2)
+    const secondHalf = list.slice(len / 2, len)
+    return merge(mergeSort(firstHalf, comparatorFn), mergeSort(secondHalf, comparatorFn), comparatorFn)
   } else {
-    return arr.slice()
+    return list.slice()
   }
 }
 
@@ -291,7 +291,7 @@ export const mergeSort = <T>(comparatorFn: (t1: T, t2: T) => number, arr: T[]): 
  * @param {array} arr2 The second sorted array.
  * @returns {array} The merged and sorted array.
  */
-const merge = <T>(comparatorFn: (t1: T, t2: T) => number, arr1: T[], arr2: T[]): T[] => {
+const merge = <T>(arr1: T[], arr2: T[], comparatorFn: (t1: T, t2: T) => number): T[] => {
   const result = []
   let left1 = arr1.length
   let left2 = arr2.length

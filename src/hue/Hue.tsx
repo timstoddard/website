@@ -1,9 +1,9 @@
 import classNames from 'classnames'
 import * as React from 'react'
-import { Form } from 'react-bootstrap'
 import Beats from './Beats'
 import Groups from './Groups'
 import { HueApi } from './hue-utils'
+import HueLayoutSettings from './HueLayoutSettings'
 import Routines from './Routines'
 import Scenes from './Scenes'
 import styles from './scss/Hue.scss'
@@ -24,9 +24,15 @@ interface HueDetailLink {
   text: string
 }
 
+export enum DarkModeColorScheme {
+  RED, GREEN, BLUE, ORANGE
+}
+
 interface State {
   detailType: DetailType
+  isSettingsModalOpen: boolean
   isDarkMode: boolean
+  darkModeColorScheme: DarkModeColorScheme
 }
 
 // TODO add redux (?)
@@ -40,7 +46,9 @@ export default class Hue extends React.Component<{}, State> {
 
     this.state = {
       detailType: null,
+      isSettingsModalOpen: false,
       isDarkMode: true,
+      darkModeColorScheme: DarkModeColorScheme.GREEN,
     }
   }
 
@@ -58,18 +66,52 @@ export default class Hue extends React.Component<{}, State> {
     this.setState({ isDarkMode: (e.target as HTMLInputElement).checked })
   }
 
+  openModal = () => {
+    this.setState({ isSettingsModalOpen: true })
+  }
+
+  closeModal = () => {
+    this.setState({ isSettingsModalOpen: false })
+  }
+
+  selectDarkModeColorScheme = (darkModeColorScheme: DarkModeColorScheme) => () => {
+    this.setState({ darkModeColorScheme })
+  }
+
+  getDarkModeColorName = () => {
+    const { darkModeColorScheme } = this.state
+    switch(darkModeColorScheme) {
+      case DarkModeColorScheme.RED:
+        return 'red'
+      case DarkModeColorScheme.GREEN:
+        return 'green'
+      case DarkModeColorScheme.BLUE:
+        return 'blue'
+      case DarkModeColorScheme.ORANGE:
+        return 'orange'
+      default:
+        return ''
+    }
+  }
+
   render(): JSX.Element {
     document.title = 'Hue Lights Controller'
     const {
       hueApi,
       setDetailType,
       handleDarkModeCheckboxChange,
+      openModal,
+      closeModal,
+      selectDarkModeColorScheme,
+      getDarkModeColorName,
     } = this
     const {
       detailType,
+      isSettingsModalOpen,
       isDarkMode,
+      darkModeColorScheme,
     } = this.state
-    console.log('dt', detailType)
+    // console.log('dt', detailType)
 
     const links: HueDetailLink[] = [
       {
@@ -112,26 +154,22 @@ export default class Hue extends React.Component<{}, State> {
     return (
       <div className={classNames(
         styles.hue,
+        (styles as any)[`hue--darkMode--${getDarkModeColorName()}`],
         { [styles['hue--darkMode']]: isDarkMode })}>
         <header className={styles.hue__header}>
+
+          {/* header */}
           <h5 className={styles.hue__title}>
             Hue Controller (
-              <Form>
-                <Form.Check
-                  custom
-                  type='checkbox'
-                  className={styles.hue__darkModeCheckbox}
-                  id='hue-dark-mode-checkbox'>
-                  <Form.Check.Input
-                    type='checkbox'
-                    onChange={handleDarkModeCheckboxChange}
-                    checked={isDarkMode}
-                    id='hue-dark-mode-checkbox' />
-                  <Form.Check.Label>dark mode</Form.Check.Label>
-                </Form.Check>
-              </Form>
+            <div
+              onClick={openModal}
+              className={styles.hue__title__settingsButton}>
+              settings
+            </div>
             )
           </h5>
+
+          {/* top row of buttons */}
           <div className={styles.hue__links}>
             {links.map(({ type, text }: HueDetailLink) => (
               <a
@@ -145,9 +183,21 @@ export default class Hue extends React.Component<{}, State> {
             ))}
           </div>
         </header>
+
+        {/* where the action happens */}
         <div className={styles.hue__controller}>
           {getDetailComponent()}
         </div>
+
+        {/* dark mode settings */}
+        {isSettingsModalOpen && (
+          <HueLayoutSettings
+            closeModal={closeModal}
+            toggleDarkMode={handleDarkModeCheckboxChange}
+            selectDarkModeColorScheme={selectDarkModeColorScheme}
+            isDarkMode={isDarkMode}
+            darkModeColorScheme={darkModeColorScheme} />
+        )}
       </div>
     )
   }

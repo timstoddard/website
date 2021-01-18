@@ -1,21 +1,20 @@
 @import 'src/scss/globals';
 
 $headerHeight: 120px;
-$darkModeBlack: rgb(15,15,25);
+$hueBorderRadius: 8px;
+$darkModeBlack: rgb(10,10,20);
 $darkModeTextWhite: rgb(250,250,250);
 
-$darkModeNeonAccent--red: rgb(255,42,0);
-$darkModeBlackOffset--red: rgb(90,75,75);
-$darkModeNeonAccent--green: rgb(0,255,42);
-$darkModeBlackOffset--green: rgb(75,90,75);
-$darkModeNeonAccent--blue: rgb(0,200,255);
-$darkModeBlackOffset--blue: rgb(75,75,90);
-$darkModeNeonAccent--orange: rgb(255,126,0); // bmw gauge orange
-$darkModeBlackOffset--orange: rgb(80,70,60);
-$darkModeBlackOffset: $darkModeBlackOffset--orange;
-$darkModeNeonAccent: $darkModeNeonAccent--orange;
-
-// TODO add settings to change these colors
+$darkModeNeonAccent__red: rgb(255,42,0);
+$darkModeBlackOffset__red: rgb(90,75,75);
+$darkModeNeonAccent__green: rgb(0,255,42);
+$darkModeBlackOffset__green: rgb(75,90,75);
+$darkModeNeonAccent__blue: rgb(0,200,255);
+$darkModeBlackOffset__blue: rgb(50,60,70);
+$darkModeNeonAccent__orange: rgb(255,126,0); // bmw gauge orange
+$darkModeBlackOffset__orange: rgb(65,65,75);
+$darkModeBlackOffset: $darkModeBlackOffset__orange;
+$darkModeNeonAccent: $darkModeNeonAccent__orange;
 
 .hue {
   display: grid;
@@ -36,18 +35,21 @@ $darkModeNeonAccent: $darkModeNeonAccent--orange;
     justify-content: center;
     margin-top: 20px;
     text-align: center;
-  }
 
-  &__darkModeCheckbox {
-    align-items: center;
-    display: flex;
-    justify-content: center;
+    &__settingsButton {
+      text-decoration: underline;
+
+      &:hover {
+        cursor: pointer;
+        font-style: italic;
+      }
+    }
   }
 
   &__links {
     align-items: center;
     background: rgb(240,240,240);
-    border-radius: 8px;
+    border-radius: $hueBorderRadius;
     display: flex;
     justify-content: space-around;
     margin: 20px auto;
@@ -74,56 +76,114 @@ $darkModeNeonAccent: $darkModeNeonAccent--orange;
     border: 1px solid rgb(200,200,200);
     border-radius: 6px;
     display: grid;
+    gap: 12px;
     grid-area: 2 / 1 / 3 / 2;
-    // TODO max width on list col?
-    grid-template-columns: 1fr 2fr;
-    grid-template-rows: auto;
-    margin: 10px 10vw;
+    grid-template-columns: minmax(10%, 250px) 1fr;
+    grid-template-rows: auto 1fr;
+    margin: 10px auto;
     max-height: 100%;
     max-width: 1000px;
     padding: 20px;
+  }
+
+  &__layoutSettings {
+    &__radioInput {
+      align-items: center;
+      display: flex;
+
+      & :global(.form-check-input) {
+        margin-top: 0;
+      }
+    }
   }
 
   &--darkMode {
     background: $darkModeBlack;
     color: $darkModeTextWhite;
 
+    &--red {
+      --darkModeBlackOffset: #{$darkModeBlackOffset__red};
+      --darkModeNeonAccent: #{$darkModeNeonAccent__red};
+    }
+
+    &--green {
+      --darkModeBlackOffset: #{$darkModeBlackOffset__green};
+      --darkModeNeonAccent: #{$darkModeNeonAccent__green};
+    }
+
+    &--blue {
+      --darkModeBlackOffset: #{$darkModeBlackOffset__blue};
+      --darkModeNeonAccent: #{$darkModeNeonAccent__blue};
+    }
+
+    &--orange {
+      --darkModeBlackOffset: #{$darkModeBlackOffset__orange};
+      --darkModeNeonAccent: #{$darkModeNeonAccent__orange};
+    }
+
     & .hue__links {
-      background: $darkModeBlackOffset;
+      background: var(--darkModeBlackOffset);
 
       &__link {
         color: $darkModeTextWhite;
   
         &--selected {
-          color: white;
+          color: $darkModeTextWhite;
         }
       }
     }
 
     & .hue__controller {
-      border: 1px solid $darkModeNeonAccent;
+      border: 1px solid var(--darkModeNeonAccent);
     }
 
     & .hueGroups {
+      &__filter,
       &__listItem {
         background: $darkModeBlack;
-        border: 1px solid $darkModeNeonAccent;
+        border: 1px solid var(--darkModeNeonAccent);
 
         &:hover,
         &--selected {
-          background: $darkModeBlackOffset;
+          background: var(--darkModeBlackOffset);
         }
       }
     }
 
-    & .beats__songSearchInput,
-    & .beats__songSearchInput::placeholder {
+    & .hueGroups__filter {
+      background: $darkModeBlack;
+      border: 1px solid var(--darkModeNeonAccent);
+    }
+
+    & .hueGroups__filter,
+    & .hueGroups__filter::placeholder {
       color: $darkModeTextWhite;
     }
 
     & .beats__buttons {
-      border: 1px solid $darkModeNeonAccent;
+      border: 1px solid var(--darkModeNeonAccent);
       border-radius: 5px; // wraps buttons that have 4px border radius
+    }
+
+    & .beats__hueLatencyInput {
+      background: $darkModeBlack;
+      border: 1px solid var(--darkModeNeonAccent);
+      color: $darkModeTextWhite;
+    }
+
+    & :global(.list-group-item) {
+      background: $darkModeBlack;
+      border: 1px solid var(--darkModeNeonAccent);
+
+      &:not(:first-child) {
+        border-top: 0;
+      }
+    }
+
+    & :global(.input-group-text) {
+      background: var(--darkModeBlackOffset);
+      border: 1px solid var(--darkModeNeonAccent);
+      color: $darkModeTextWhite;
     }
   }
 }
@@ -132,34 +192,58 @@ $darkModeNeonAccent: $darkModeNeonAccent--orange;
 .hueGroups {
   margin: 0 auto;
 
-  &__list,
-  &__detail {
-    overflow-y: auto;
+  &__filter {
+    border: 1px solid rgb(200,200,200);
+    border-radius: $hueBorderRadius;
+    grid-area: 1 / 1 / 2 / 2;
+    padding: 5px 10px;
+  }
+
+  &__filter:hover,
+  &__listItem:hover,
+  &__listItem--selected {
+    background: rgb(240,240,240);
   }
 
   &__list {
-    grid-area: 1 / 1 / 2 / 2;
+    grid-area: 2 / 1 / 3 / 2;
     margin: 0;
+    overflow-y: auto;
 
     &Item {
       // TODO make mixin (also in Light.scss)
-      background: white;
       border: 1px solid rgb(200,200,200);
-      border-radius: 8px;
       cursor: pointer;
-      margin: 3px;
-      padding: 10px;
+      padding: 4px 10px;
       text-align: center;
 
-      &:hover,
-      &--selected {
-        background: rgb(240,240,240);
+      &:first-of-type {
+        border-top-left-radius: $hueBorderRadius;
+        border-top-right-radius: $hueBorderRadius;
+      }
+
+      &:last-of-type {
+        border-bottom-left-radius: $hueBorderRadius;
+        border-bottom-right-radius: $hueBorderRadius;
+      }
+
+      &:not(:first-of-type) {
+        border-top: 0;
+      }
+
+      &__title {
+        font-size: 1.25rem;
+      }
+
+      &__subtitle {
+        font-size: 1rem;
       }
     }
   }
 
   &__detail {
-    grid-area: 1 / 2 / 2 / 3;
+    grid-area: 1 / 2 / 3 / 3;
+    overflow-y: auto;
 
     &__controller {
       border: 1px solid rgb(200,200,200);
@@ -175,28 +259,29 @@ $darkModeNeonAccent: $darkModeNeonAccent--orange;
     align-items: center;
     display: flex;
     flex-direction: column;
-    padding: 0 10px;
   }
 
   &__mainControls {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
     margin: 8px 0;
     width: 100%;
+
+    & > * {
+      margin: 5px 10px;
+      width: auto;
+    }
   }
 
   &__buttons {
     border: 1px solid transparent;
   }
 
-  &__basicHueControls {
-    display: flex;
-    justify-content: space-evenly;
-    width: 100%;
-
-    & > * {
-      padding: 4px 10px;
-    }
+  &__hueLatencyInput {
+    max-width: 100px;
+    min-height: 100%;
+    text-align: center;
   }
 
   &__lights {
@@ -240,22 +325,22 @@ $darkModeNeonAccent: $darkModeNeonAccent--orange;
     display: flex;
   }
 
-  &__songSearchInput {
-    margin-bottom: 8px !important;
+  &--highlight {
+    background: yellow;
+    color: black;
   }
 }
 
-$BeatVisualizerBorderRadius: 8px;
-.BeatVisualizer {
+.beatVisualizer {
+  @include forceWidth(100%);
   background: rgb(220,220,220);
   border: 1px solid black;
-  border-radius: $BeatVisualizerBorderRadius;
+  border-radius: $hueBorderRadius;
   box-shadow: inset 0px 8px 20px 0px rgba(0,0,0,0.35);
-  min-width: 100%;
   overflow: hidden;
 
   &__preview {
-    border-radius: $BeatVisualizerBorderRadius;
+    border-radius: $hueBorderRadius;
   }
 }
 
@@ -268,24 +353,39 @@ $BeatVisualizerBorderRadius: 8px;
 }
 
 .lightTracksSettings {
+  column-gap: 10px;
   display: grid;
-  grid-template-columns: 1fr 150px;
+  grid-template-columns: minmax(auto, min-content) minmax(150px, 1fr);
   grid-template-rows: auto;
+  overflow: hidden;
   width: 100%;
 
   &__tracks {
     margin-bottom: 10px;
-    overflow: auto;
-
-    & > * {
-      padding: 5px;
-    }
+    overflow-y: auto;
   }
 
   &__trackSettings {
     align-items: center;
+    border: 1px solid var(--darkModeNeonAccent);
     display: flex;
     grid-area: 1 / 1 / 2 / 2;
+    overflow-x: auto;
+    padding: 12px;
+
+    &:first-of-type {
+      border-top-left-radius: $hueBorderRadius;
+      border-top-right-radius: $hueBorderRadius;
+    }
+
+    &:last-of-type {
+      border-bottom-left-radius: $hueBorderRadius;
+      border-bottom-right-radius: $hueBorderRadius;
+    }
+
+    &:not(:first-of-type) {
+      border-top: 0;
+    }
   }
 
   &__lightIdSelectors {
@@ -296,8 +396,9 @@ $BeatVisualizerBorderRadius: 8px;
       display: flex;
       margin-bottom: 5px;
 
-      & > *:first-child {
+      &__title {
         margin-right: 20px;
+        white-space: nowrap;
       }
     }
   }
@@ -306,19 +407,13 @@ $BeatVisualizerBorderRadius: 8px;
     padding: 8px 16px;
   }
 
-  &__input {
-    max-width: 100px;
-    text-align: center;
-  }
-
   &__lightsInfo {
     grid-area: 1 / 2 / 2 / 3;
-    margin-left: 8px;
     overflow-y: auto;
 
     & > * {
-      text-align: center;
       padding: 6px;
+      text-align: center;
     }
 
     &--details {
@@ -331,41 +426,21 @@ $BeatVisualizerBorderRadius: 8px;
     color: $darkModeTextWhite;
 
     & .beatLight {
-      border: 1px solid $darkModeNeonAccent;
-    }
-
-    & .lightTracksSettings__input {
-      background: $darkModeBlack;
-      border: 1px solid $darkModeNeonAccent;
-      color: $darkModeTextWhite;
+      border: 1px solid var(--darkModeNeonAccent);
     }
 
     & :global(.dropdown-menu) {
-      background: $darkModeBlackOffset;
-      border: 1px solid $darkModeNeonAccent;
+      background: $darkModeBlack;
+      border: 1px solid var(--darkModeNeonAccent);
 
       & > :global(.dropdown-item) {
         color: $darkModeTextWhite;
 
         &:hover {
-          color: black;
+          background: var(--darkModeBlackOffset);
+          color: $darkModeTextWhite;
         }
       }
-    }
-
-    & :global(.list-group-item) {
-      background: $darkModeBlack;
-      border: 1px solid $darkModeNeonAccent;
-
-      &:not(:first-child) {
-        border-top: 0;
-      }
-    }
-
-    & :global(.input-group-text) {
-      background: $darkModeBlackOffset;
-      border: 1px solid $darkModeNeonAccent;
-      color: $darkModeTextWhite;
     }
   }
 }

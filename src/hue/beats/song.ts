@@ -8,6 +8,7 @@ export class Song {
   private initialTimeout: number
   private steps: MsStep[]
   private measureCount: number
+  private lightTracksCount: number
 
   constructor(
     title: string,
@@ -23,6 +24,8 @@ export class Song {
     this.initialTimeout = initialTimeout
     this.steps = []
     this.measureCount = 0
+    // TODO add explicit # of light tracks as constructor arg
+    this.lightTracksCount = 0
   }
 
   measure = (steps: BeatStep[]): this => {

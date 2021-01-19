@@ -15,6 +15,7 @@ export enum RoutineType {
   RAINBOW,
 }
 
+// TODO separate classes
 export class StrobeRoutine implements Routine {
   hueApi: HueApi
   lightIds: number[]

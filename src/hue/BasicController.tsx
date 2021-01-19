@@ -1,20 +1,21 @@
 import * as React from 'react'
+import { Button, Form } from 'react-bootstrap'
+import { ChromePicker, ColorResult } from 'react-color'
 import { throttle } from 'underscore'
-import { HueApi } from './hue-utils'
+import { UIColor } from './hue-color-conversion'
+import { colorToHex, hexToColor } from './hue-utils'
 import styles from './scss/BasicController.scss'
 
 interface Props {
-  hueApi: HueApi
   name: string
   isOn: boolean
   brightness: number
   color: string
   throttleTimeMs: number
   toggle: () => void
-  setBrightness: (brightness: number) => void
-  setBrightnessThrottled: (brightness: number) => void
-  setColor: (color: string) => void
-  setColorThrottled: (color: string) => void
+  setColorAndBrightness: (color: string, brightness: number) => void
+  setColorAndBrightnessThrottled: (color: string, brightness: number) => void
+  isPrimary: boolean
 }
 
 export default class BasicController extends React.Component<Props, {}> {
@@ -35,69 +36,62 @@ export default class BasicController extends React.Component<Props, {}> {
     this.props.toggle()
   }, this.props.throttleTimeMs)
 
-  setBrightness = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const brightness = parseInt(e.target.value, 10)
-    this.props.setBrightness(brightness)
-    this.setBrightnessThrottled(brightness)
+  onColorChange = (colorResult: ColorResult) => {
+    // console.log(colorResult)
+    const color = colorToHex(new UIColor(colorResult.rgb.r, colorResult.rgb.g, colorResult.rgb.b))
+    const brightness = Math.floor(colorResult.rgb.a * 254)
+    this.props.setColorAndBrightness(color, brightness)
+    this.setColorAndBrightnessThrottled(color, brightness)
   }
 
-  setBrightnessThrottled = throttle((brightness: number) => {
-    this.props.setBrightnessThrottled(brightness)
-  }, this.props.throttleTimeMs)
-
-  setColor = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const color = e.target.value
-    this.props.setColor(color)
-    this.setColorThrottled(color)
-  }
-
-  setColorThrottled = throttle((color: string) => {
-    this.props.setColorThrottled(color)
+  setColorAndBrightnessThrottled = throttle((color: string, brightness: number) => {
+    this.props.setColorAndBrightnessThrottled(color, brightness)
   }, this.props.throttleTimeMs)
   // tslint:enable:member-ordering typedef
 
   render(): JSX.Element {
     const {
       toggle,
-      setBrightness,
-      setColor,
+      onColorChange,
     } = this
     const {
       name,
       isOn,
       brightness,
       color,
+      isPrimary,
     } = this.props
     const {
     } = this.state
 
+    const getColorForChromePicker = () => {
+      const rgb = hexToColor(color)
+      return {
+        r: rgb.r,
+        g: rgb.g,
+        b: rgb.b,
+        a: parseFloat((brightness / 254).toFixed(2)),
+      }
+    }
+
     return (
-      <div className='{styles.basicController}'>
-        <h5 className={styles.basicController__name}>
-          {name}
-        </h5>
-        <div className={styles.basicController__controls}>
-          <button
-            onClick={toggle}
-            className={styles.basicController__toggle}>
-            {isOn ? 'Turn off' : 'Turn on'}
-          </button>
-          {/* TODO use color picker component */}
-          {/* https://casesandberg.github.io/react-color */}
-          <input
-            type='color'
-            value={color}
-            onChange={setColor}
-            className='{styles.basicController__colorPicker}' />
-          <input
-            type='range'
-            value={brightness}
-            onChange={setBrightness}
-            min={1}
-            max={254}
-            className='{styles.basicController__brightness}' />
+      <Form className={styles.basicController}>
+        <div className={styles.basicController__titleRow}>
+          {isPrimary && (<h1>{name}</h1>)}
+          {!isPrimary && (<h3>{name}</h3>)}
+          <div>
+            <Button
+              onClick={toggle}
+              variant='primary'>
+              {isOn ? 'Turn off' : 'Turn on'}
+            </Button>
+          </div>
         </div>
-      </div>
+        <ChromePicker
+          color={getColorForChromePicker()}
+          onChange={onColorChange}
+          className={styles.basicController__colorPicker} />
+      </Form>
     )
   }
 }

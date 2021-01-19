@@ -88,13 +88,7 @@ export default class Light extends React.Component<Props, State> {
     }
   }
 
-  // componentDidMount = (): void => {
-  // }
-
-  // componentWillUnmount = (): void => {
-  // }
-
-  toggle = async (): Promise<void> => {
+  toggle = async () => {
     const {
       hueApi,
       lightId,
@@ -111,33 +105,22 @@ export default class Light extends React.Component<Props, State> {
     })
   }
 
-  setBrightness = (brightness: number): void => {
-    this.setState({ brightness })
+  setColorAndBrightness = (color: string, brightness: number) => {
+    this.setState({ color, brightness })
   }
 
-  setBrightnessThrottled = async (brightness: number): Promise<void> => {
+  setColorAndBrightnessThrottled = async (color: string, brightness: number) => {
     const {
       hueApi,
+    } = this.props
+    const {
       lightId,
     } = this.props
+
+    const light = hueApi.getLight(lightId)
+    const xy = calculateXY(hexToColor(color), light.modelid)
     await hueApi.updateLightState(lightId, {
       bri: brightness,
-    }, Math.floor(LIGHT_THROTTLE_TIME_MS / 100))
-  }
-
-  setColor = (color: string): void => {
-    this.setState({ color })
-  }
-
-  setColorThrottled = async (colorHex: string): Promise<void> => {
-    const {
-      hueApi,
-      lightId,
-      light,
-    } = this.props
-    const color = hexToColor(colorHex)
-    const xy = calculateXY(color, light.modelid)
-    await hueApi.updateLightState(lightId, {
       xy: getValueFromPoint(xy),
     }, Math.floor(LIGHT_THROTTLE_TIME_MS / 100))
   }
@@ -145,13 +128,10 @@ export default class Light extends React.Component<Props, State> {
   render(): JSX.Element {
     const {
       toggle,
-      setBrightness,
-      setBrightnessThrottled,
-      setColor,
-      setColorThrottled,
+      setColorAndBrightness,
+      setColorAndBrightnessThrottled,
     } = this
     const {
-      hueApi,
       light,
     } = this.props
     const {
@@ -165,17 +145,15 @@ export default class Light extends React.Component<Props, State> {
         className={styles.light}
         style={{ background: color }}>
         <BasicController
-          hueApi={hueApi}
           name={light.name}
           isOn={isOn}
           brightness={brightness}
           color={color}
           toggle={toggle}
           throttleTimeMs={LIGHT_THROTTLE_TIME_MS}
-          setBrightness={setBrightness}
-          setBrightnessThrottled={setBrightnessThrottled}
-          setColor={setColor}
-          setColorThrottled={setColorThrottled} />
+          setColorAndBrightness={setColorAndBrightness}
+          setColorAndBrightnessThrottled={setColorAndBrightnessThrottled}
+          isPrimary={false} />
       </div>
     )
   }

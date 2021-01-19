@@ -10,6 +10,8 @@ export class HueApi {
   private headers: HeadersInit = {
     'Content-Type': 'application/json',
   }
+  private fetchAbortController: AbortController
+  private fetchAbortTimeout: number
 
   init = async (): Promise<void> => { // TODO rename?
     // TODO make get()/set() shared util functions for the app (not just in /start)
@@ -50,6 +52,7 @@ export class HueApi {
   }
 
   getLightIds = (): number[] => {
+    // TODO sort by name not id
     return this.convertObjectKeysToSortedNumberList(this.lights)
   }
 
@@ -62,10 +65,12 @@ export class HueApi {
   }
 
   getGroupIds = (): number[] => {
+    // TODO sort by name not id
     return this.convertObjectKeysToSortedNumberList(this.groups)
   }
 
   getLightIdsInGroup = (groupId: number): number[] => {
+    // TODO sort by name not id
     const selectedGroup = this.getGroup(groupId)
     return selectedGroup
       ? selectedGroup.lights.map(stringToInt)
@@ -140,7 +145,9 @@ export class HueApi {
       return
     }
 
-    /* // TODO this doesn't seem to work (choppy/laggy)
+    /* // TODO this fails for repeated quick changes (builds up a queue of states to change to, and must cycle through all).
+    // this has been "fixed" via throttling & the working code
+    // TODO add option to switch between the 2 impls
     const url = `${this.apiUrl}/groups/${groupId}/action`
     await fetch(url, {
       method: 'PUT',
@@ -149,8 +156,7 @@ export class HueApi {
         transitiontime: transitionTime,
       })),
     }) // */
-    const lightIds = this.getLightIdsInGroup(groupId)
-    for (const lightId of lightIds) {
+    for (const lightId of this.getLightIdsInGroup(groupId)) {
       this.updateLightState(lightId, body, transitionTime)
     }
   }
@@ -177,46 +183,92 @@ export class HueApi {
 
   /* FETCH DATA FROM BRIDGE */
 
-  fetchLights = async (): Promise<void> => {
-    if (!this.apiUrl) {
-      return
-    }
-
+  // TODO types instead of any
+  fetchLights = async () => {
     const url = `${this.apiUrl}/lights`
-    const response = await fetchWithTimeout(url, {
-      method: 'GET',
-      headers: this.headers,
+    const success = await this.fetchBaseLogic(url, (result: any) => {
+      this.lights = result
+      console.log('LIGHTS', this.lights)
     })
-    this.lights = await response.json()
-    console.log('LIGHTS', this.lights)
+    return success
   }
 
-  fetchGroups = async (): Promise<void> => {
-    if (!this.apiUrl) {
-      return
-    }
-
+  fetchGroups = async () => {
     const url = `${this.apiUrl}/groups`
-    const response = await fetchWithTimeout(url, {
-      method: 'GET',
-      headers: this.headers,
+    const success = await this.fetchBaseLogic(url, (result: any) => {
+      this.groups = result
+      console.log('GROUPS', this.groups)
     })
-    this.groups = await response.json()
-    console.log('GROUPS', this.groups)
+    return success
   }
 
-  fetchScenes = async (): Promise<void> => {
+  fetchScenes = async () => {
+    const url = `${this.apiUrl}/scenes`
+    const success = await this.fetchBaseLogic(url, (result: any) => {
+      this.scenes = result
+      console.log('SCENES', this.scenes)
+    })
+    return success
+  }
+
+  private fetchBaseLogic = async (
+    url: string,
+    onResponse: ((result: any) => void) = () => {},
+  ) => {
     if (!this.apiUrl) {
       return
     }
 
-    const url = `${this.apiUrl}/scenes`
-    const response = await fetchWithTimeout(url, {
+    const response = await this.fetchWithTimeout(url, {
       method: 'GET',
       headers: this.headers,
     })
-    this.scenes = await response.json()
-    console.log('SCENES', this.scenes)
+    if (response) {
+      onResponse(await response.json())
+    }
+    // return true on success, false means it was likely aborted
+    return !!response
+  }
+
+  private fetchWithTimeout = (
+    url: string,
+    options: RequestInit = {},
+    timeoutMs: number = 3000
+  ): Promise<Response> => {
+    if (this.fetchAbortTimeout) {
+      clearTimeout(this.fetchAbortTimeout)
+    }
+    // abort if a controller already exists (for us, this means that there is another request already waiting for a response)
+    if (this.fetchAbortController) {
+      this.fetchAbortController.abort()
+    }
+    this.fetchAbortController = new AbortController()
+
+    this.fetchAbortTimeout = setTimeout(() => {
+      this.fetchAbortController.abort()
+    }, timeoutMs) as unknown as number
+
+    const config = {
+      ...options,
+      signal: this.fetchAbortController.signal,
+    }
+    return fetch(url, config)
+      .then((response: Response) => {
+        // any response is considered a success to fetch(),
+        // so we need to manually check that the response is in the 200 range
+        if (!response.ok) {
+          throw new Error(`${response.status}: ${response.statusText}`)
+        }
+        return response
+      })
+      .catch((error: Error) => {
+        if (error.name === 'AbortError') {
+          console.log('fetch aborted (this is expected)')
+        } else {
+          throw error
+        }
+        return null
+      })
   }
 }
 
@@ -241,29 +293,13 @@ export const getLightColor = (light: LightData): string => {
   return colorToHex(color)
 }
 
-export const stringToInt = (s: string): number => parseInt(s, 10)
-
-const fetchWithTimeout = (url: string, options: RequestInit = {}, timeoutMs: number = 3000): Promise<Response> => {
-  const controller = new AbortController()
-  const config = {
-    ...options,
-    signal: controller.signal,
-  }
-  setTimeout(() => controller.abort(), timeoutMs)
-  return fetch(url, config)
-    .then((response: Response) => {
-      // Because _any_ response is considered a success to `fetch`,
-      // we need to manually check that the response is in the 200 range.
-      if (!response.ok) {
-        throw new Error(`${response.status}: ${response.statusText}`)
-      }
-      return response
-    })
-    .catch((error: Error) => {
-      const message = error.name === 'AbortError' ? 'Response timed out' : error.message
-      throw new Error(message)
-    })
+export const getGroupColor = (group: any): string => {
+  const xy = makeCGPoint(group.action.xy[0], group.action.xy[1])
+  const color = colorFromXy(xy, '') // TODO need model id?
+  return colorToHex(color)
 }
+
+export const stringToInt = (s: string): number => parseInt(s, 10)
 
 /**
  * Sort an array using the merge sort algorithm.

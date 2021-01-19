@@ -9,7 +9,7 @@ const SPACING = 4
 interface Props {
   song: MsStep[]
   startTimeMs: number
-  lightsCount: number
+  lightTracksCount: number
 }
 
 interface State {
@@ -81,7 +81,7 @@ export default class BeatVisualizer extends React.Component<Props, State> {
     const {
       song,
       startTimeMs,
-      lightsCount,
+      lightTracksCount,
     } = this.props
     const {
       isPlaying,
@@ -118,7 +118,7 @@ export default class BeatVisualizer extends React.Component<Props, State> {
 
       if (shouldRender) {
         // draw rect for current note
-        for (let j = 0; j < lightsCount; j++) {
+        for (let j = 0; j < lightTracksCount; j++) {
           const currLights = step.lights[j]
           const y = (LINE_HEIGHT + SPACING) * j
           canvas.fillStyle = getBackground(currLights.color, currLights.brightness)
@@ -147,7 +147,7 @@ export default class BeatVisualizer extends React.Component<Props, State> {
   }
 
   private getCanvasHeight = (): number => {
-    const { lightsCount } = this.props
-    return (LINE_HEIGHT + SPACING) * lightsCount - SPACING
+    const { lightTracksCount } = this.props
+    return (LINE_HEIGHT + SPACING) * lightTracksCount - SPACING
   }
 }

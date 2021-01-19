@@ -292,7 +292,7 @@ export default class Beats extends React.Component<Props, State> {
           <BeatVisualizer
             song={sortedSong}
             startTimeMs={startTimeMs}
-            lightsCount={getLightTracksCount(sortedSong)}
+            lightTracksCount={getLightTracksCount(sortedSong)}
             ref={this.BeatVisualizerRef} />
 
           <Form className={styles.beats__mainControls}>
@@ -345,7 +345,7 @@ export default class Beats extends React.Component<Props, State> {
             </InputGroup>
 
             <Form.Group
-              controlId='overallBrightnessSlider'
+              controlId='hueOverallBrightnessSlider'
               aria-disabled={!shouldUpdateHueLights}>
               <Form.Label>Hue max brightness: {overallBrightness}%</Form.Label>
               <Form.Control

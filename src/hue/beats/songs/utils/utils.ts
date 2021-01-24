@@ -31,3 +31,31 @@ export const allLightsOff = (): LightState[] => ([
   lightOff(),
   lightOff(),
 ])
+
+export class ColorGenerator {
+  private colorList: UIColor[]
+  private currentIndex: number
+
+  constructor(colorList: UIColor[]) {
+    this.init(colorList)
+  }
+
+  init = (colorList: UIColor[]) => {
+    this.colorList = colorList
+    this.currentIndex = 0
+  }
+
+  next = () => {
+    if (this.colorList.length > 0) {
+      const nextColor = this.colorList[this.currentIndex]
+      this.currentIndex = (this.currentIndex + 1) % this.colorList.length
+      return nextColor
+    }
+    return null
+  }
+
+  reset = () => {
+    this.currentIndex = 0
+    return this
+  }
+}

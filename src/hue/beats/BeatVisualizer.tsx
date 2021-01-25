@@ -40,6 +40,7 @@ export default class BeatVisualizer extends React.Component<Props, State> {
   reset = (): void => {
     this.stop()
     this.firstRenderedStepIndex = 0
+    this.updateCanvas()
   }
 
   stop = (): void => {

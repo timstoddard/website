@@ -28,11 +28,16 @@ export enum DarkModeColorScheme {
   RED, GREEN, BLUE, ORANGE
 }
 
+enum HueLayoutState {
+  LIST_ONLY, DETAIL_ONLY, LIST_AND_DETAIL
+}
+
 interface State {
   detailType: DetailType
   isSettingsModalOpen: boolean
   isDarkMode: boolean
   darkModeColorScheme: DarkModeColorScheme
+  hueLayoutState: HueLayoutState
 }
 
 // TODO add redux (?)
@@ -49,6 +54,7 @@ export default class Hue extends React.Component<{}, State> {
       isSettingsModalOpen: false,
       isDarkMode: true,
       darkModeColorScheme: DarkModeColorScheme.GREEN,
+      hueLayoutState: HueLayoutState.LIST_AND_DETAIL,
     }
   }
 
@@ -110,6 +116,7 @@ export default class Hue extends React.Component<{}, State> {
       isSettingsModalOpen,
       isDarkMode,
       darkModeColorScheme,
+      hueLayoutState, // TODO use this
     } = this.state
     // console.log('dt', detailType)
 

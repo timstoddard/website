@@ -246,11 +246,14 @@ $darkModeNeonAccent: $darkModeNeonAccent__orange;
     overflow-y: auto;
 
     &__controller {
-      border: 1px solid rgb(200,200,200);
+      border: 1px solid var(--darkModeNeonAccent);
       border-radius: 6px;
-      margin: 4px;
       overflow: hidden;
       padding: 10px;
+
+      &:not(:last-of-type) {
+        margin-bottom: 6px;
+      }
     }
   }
 }

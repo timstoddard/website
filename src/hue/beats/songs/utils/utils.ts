@@ -19,19 +19,6 @@ export const lightState = (
 })
 export const lightOff = (): any => ({ on: false })
 
-// controls all lights
-export const allLightsState = (
-  color: UIColor,
-  brightness: number = 100,
-): LightState[] => [
-  lightState(color, brightness),
-  lightState(color, brightness),
-]
-export const allLightsOff = (): LightState[] => ([
-  lightOff(),
-  lightOff(),
-])
-
 export class ColorGenerator {
   private colorList: UIColor[]
   private currentIndex: number
@@ -57,5 +44,32 @@ export class ColorGenerator {
   reset = () => {
     this.currentIndex = 0
     return this
+  }
+}
+
+export class LightGenerator {
+  private lightTracksCount: number
+
+  constructor(lightTracksCount: number) {
+    this.lightTracksCount = lightTracksCount
+  }
+
+  allLightsState = (
+    color: UIColor,
+    brightness: number = 100,
+  ): LightState[] => {
+    const result: LightState[] = []
+    for (let i = 0; i < this.lightTracksCount; i++) {
+      result.push(lightState(color, brightness))
+    }
+    return result
+  }
+
+  allLightsOff = (): LightState[] => {
+    const result: LightState[] = []
+    for (let i = 0; i < this.lightTracksCount; i++) {
+      result.push(lightOff())
+    }
+    return result
   }
 }

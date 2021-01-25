@@ -1,9 +1,11 @@
 import { UIColor } from '../../hue-color-conversion'
 import { BeatStep } from '../beat-types'
 import { Song } from '../song'
-import { allLightsOff, allLightsState, createNote, lightOff, lightState } from './utils/utils'
+import { createNote, LightGenerator, lightOff, lightState } from './utils/utils'
 
 const BLUE = new UIColor(0, 0, 255)
+
+const lightGenerator = new LightGenerator(2)
 
 const homemadeDynamite = new Song('Homemade Dynamite', 'Lorde', 107, 4, 1000)
   .measure([

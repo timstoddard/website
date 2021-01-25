@@ -9,7 +9,7 @@ import bitingDown from './beats/songs/biting-down'
 import easySwitchScreens from './beats/songs/easy-switch-screens'
 import homemadeDynamite from './beats/songs/homemade-dynamite'
 import mercy from './beats/songs/mercy'
-import { allLightsOff } from './beats/songs/utils/utils'
+import { LightGenerator } from './beats/songs/utils/utils'
 import yellowFlickerBeat from './beats/songs/yellow-flicker-beat'
 import { calculateXY, getValueFromPoint, UIColor } from './hue-color-conversion'
 import { HueApi, mergeSort } from './hue-utils'
@@ -66,7 +66,7 @@ export default class Beats extends React.Component<Props, State> {
 
     this.state = {
       songId: DEFAULT_SONG_ID,
-      lights: allLightsOff(),
+      lights: this.getLightGenerator().allLightsOff(),
       startTimeMs: 0,
       elapsedMs: 0,
       shouldUpdateHueLights: false,
@@ -178,10 +178,11 @@ export default class Beats extends React.Component<Props, State> {
     }
   }
 
-  resetRoutine = (afterFn: () => void): void => {
+  resetRoutine = (afterFn: (() => void) = (() => {})): void => {
     this.stopRoutine()
     this.BeatVisualizerRef.current.reset()
     this.setState({
+      lights: this.getLightGenerator().allLightsOff(),
       elapsedMs: 0,
       startTimeMs: 0,
     }, afterFn)
@@ -203,10 +204,7 @@ export default class Beats extends React.Component<Props, State> {
       this.setState({
         songId: id,
         sortedSong,
-      }, () => {
-        this.BeatVisualizerRef.current.reset()
-        this.BeatVisualizerRef.current.refresh()
-      })
+      }, () => this.BeatVisualizerRef.current.reset())
     })
   }
 
@@ -232,6 +230,7 @@ export default class Beats extends React.Component<Props, State> {
     const {
       playRoutine,
       stopRoutine,
+      resetRoutine,
       restartRoutine,
       toggleShouldUpdateHueLights,
       selectSong,
@@ -308,6 +307,11 @@ export default class Beats extends React.Component<Props, State> {
                 onClick={stopRoutine}
                 variant={isDarkMode ? 'dark' : 'secondary'}>
                 Stop
+              </Button>
+              <Button
+                onClick={() => resetRoutine()}
+                variant={isDarkMode ? 'dark' : 'secondary'}>
+                Reset
               </Button>
               <Button
                 onClick={restartRoutine}
@@ -438,5 +442,10 @@ export default class Beats extends React.Component<Props, State> {
   private parseIntFromInput = (input: HTMLInputElement) => {
     const value = parseInt(input.value.replace(/[^\d]/g, ''), 10)
     return value || 0
+  }
+
+  private getLightGenerator = () => {
+    const DEFAULT_LIGHT_TRACKS_COUNT = 2
+    return new LightGenerator(DEFAULT_LIGHT_TRACKS_COUNT)
   }
 }

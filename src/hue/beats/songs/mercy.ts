@@ -2,7 +2,7 @@ import { UIColor } from '../../hue-color-conversion'
 import { BeatStep } from '../beat-types'
 import { Song } from '../song'
 import { flashLights } from './utils/basic-routines'
-import { allLightsOff, allLightsState, createNote, lightOff, lightState } from './utils/utils'
+import { createNote, LightGenerator, lightOff, lightState } from './utils/utils'
 
 const RED = new UIColor(255, 0, 0)
 const ORANGE = new UIColor(255, 120, 0)
@@ -13,42 +13,44 @@ const PURPLE = new UIColor(255, 0, 255)
 const WHITE = new UIColor(255, 255, 255)
 const BLACK = new UIColor(0, 0, 0)
 
+const lightGenerator = new LightGenerator(2)
+
 const chorusPart1And2 = (): BeatStep[] => [
-  createNote(0, allLightsOff()),
-  ...flashLights(WHITE, 2, 3),
+  createNote(0, lightGenerator.allLightsOff()),
+  ...flashLights(WHITE, 2, 3, lightGenerator),
 ]
 
 const chorusPart3 = (): BeatStep[] => [
-  createNote(0, allLightsState(RED, 100 * (1 / 6))),
-  createNote(0.5, allLightsState(RED, 100 * (2 / 6))),
-  createNote(1, allLightsState(YELLOW, 100 * (3 / 6))),
-  createNote(1.5, allLightsState(YELLOW, 100 * (4 / 6))),
-  createNote(2, allLightsState(GREEN, 100 * (5 / 6))),
-  createNote(2.5, allLightsState(GREEN, 100 * (6 / 6))),
-  createNote(3, allLightsState(RED, 100 * (6 / 6))),
-  createNote(3.5, allLightsState(RED, 100 * (5 / 6))),
+  createNote(0, lightGenerator.allLightsState(RED, 100 * (1 / 6))),
+  createNote(0.5, lightGenerator.allLightsState(RED, 100 * (2 / 6))),
+  createNote(1, lightGenerator.allLightsState(YELLOW, 100 * (3 / 6))),
+  createNote(1.5, lightGenerator.allLightsState(YELLOW, 100 * (4 / 6))),
+  createNote(2, lightGenerator.allLightsState(GREEN, 100 * (5 / 6))),
+  createNote(2.5, lightGenerator.allLightsState(GREEN, 100 * (6 / 6))),
+  createNote(3, lightGenerator.allLightsState(RED, 100 * (6 / 6))),
+  createNote(3.5, lightGenerator.allLightsState(RED, 100 * (5 / 6))),
 ]
 
 const chorusPart4 = (): BeatStep[] => [
-  createNote(0, allLightsState(YELLOW, 100 * (4 / 6))),
-  createNote(0.5, allLightsState(YELLOW, 100 * (3 / 6))),
-  createNote(1, allLightsState(GREEN, 100 * (2 / 6))),
-  createNote(1.5, allLightsState(GREEN, 100 * (1 / 6))),
-  createNote(2, allLightsState(WHITE)),
-  createNote(2.5, allLightsOff()),
-  createNote(3, allLightsState(WHITE)),
-  createNote(3.5, allLightsOff()),
+  createNote(0, lightGenerator.allLightsState(YELLOW, 100 * (4 / 6))),
+  createNote(0.5, lightGenerator.allLightsState(YELLOW, 100 * (3 / 6))),
+  createNote(1, lightGenerator.allLightsState(GREEN, 100 * (2 / 6))),
+  createNote(1.5, lightGenerator.allLightsState(GREEN, 100 * (1 / 6))),
+  createNote(2, lightGenerator.allLightsState(WHITE)),
+  createNote(2.5, lightGenerator.allLightsOff()),
+  createNote(3, lightGenerator.allLightsState(WHITE)),
+  createNote(3.5, lightGenerator.allLightsOff()),
 ]
 
 const chorusPart4Alt = (): BeatStep[] => [
-  createNote(0, allLightsState(YELLOW, 100 * (4 / 6))),
-  createNote(0.5, allLightsState(YELLOW, 100 * (3 / 6))),
-  createNote(1, allLightsState(GREEN, 100 * (2 / 6))),
-  createNote(1.5, allLightsState(GREEN, 100 * (1 / 6))),
-  createNote(2, allLightsState(RED)),
-  createNote(2.5, allLightsState(YELLOW)),
-  createNote(3, allLightsState(GREEN)),
-  createNote(3.5, allLightsOff()),
+  createNote(0, lightGenerator.allLightsState(YELLOW, 100 * (4 / 6))),
+  createNote(0.5, lightGenerator.allLightsState(YELLOW, 100 * (3 / 6))),
+  createNote(1, lightGenerator.allLightsState(GREEN, 100 * (2 / 6))),
+  createNote(1.5, lightGenerator.allLightsState(GREEN, 100 * (1 / 6))),
+  createNote(2, lightGenerator.allLightsState(RED)),
+  createNote(2.5, lightGenerator.allLightsState(YELLOW)),
+  createNote(3, lightGenerator.allLightsState(GREEN)),
+  createNote(3.5, lightGenerator.allLightsOff()),
 ]
 
 const ohOhOhOhOhOkay = (): BeatStep[] => [
@@ -58,8 +60,8 @@ const ohOhOhOhOhOkay = (): BeatStep[] => [
   createNote(1.5, [lightOff(), lightState(WHITE)]),
   createNote(2, [lightState(WHITE), lightOff()]),
   createNote(2.5, [lightOff(), lightState(WHITE)]),
-  createNote(3, allLightsState(WHITE)),
-  // createNote(3.5, allLightsOff()),
+  createNote(3, lightGenerator.allLightsState(WHITE)),
+  // createNote(3.5, lightGenerator.allLightsOff()),
 ]
 
 const mercy = new Song('Mercy', 'Kanye West', 140, 4, 2500)
@@ -155,134 +157,134 @@ const mercy = new Song('Mercy', 'Kanye West', 140, 4, 2500)
 
   // okay, drop it to the
   .measure([
-    createNote(0, allLightsOff()),
-    createNote(2, allLightsState(GREEN)),
-    createNote(2.5, allLightsState(BLUE)),
-    createNote(3, allLightsState(PURPLE)),
-    createNote(3.5, allLightsState(GREEN)),
+    createNote(0, lightGenerator.allLightsOff()),
+    createNote(2, lightGenerator.allLightsState(GREEN)),
+    createNote(2.5, lightGenerator.allLightsState(BLUE)),
+    createNote(3, lightGenerator.allLightsState(PURPLE)),
+    createNote(3.5, lightGenerator.allLightsState(GREEN)),
   ])
 
   // floor, make that ass shake
   .measure([
-    createNote(0, allLightsState(BLUE)),
-    createNote(1, allLightsState(PURPLE)),
-    createNote(1.5, allLightsState(GREEN)),
-    createNote(2, allLightsState(BLUE)),
-    createNote(3, allLightsState(PURPLE)),
+    createNote(0, lightGenerator.allLightsState(BLUE)),
+    createNote(1, lightGenerator.allLightsState(PURPLE)),
+    createNote(1.5, lightGenerator.allLightsState(GREEN)),
+    createNote(2, lightGenerator.allLightsState(BLUE)),
+    createNote(3, lightGenerator.allLightsState(PURPLE)),
   ])
 
   // woah! make the ground
   .measure([
-    createNote(0, allLightsOff()),
-    createNote(1, allLightsState(GREEN)),
-    createNote(2, allLightsState(BLUE)),
-    createNote(2.5, allLightsState(PURPLE)),
-    createNote(3, allLightsState(GREEN)),
+    createNote(0, lightGenerator.allLightsOff()),
+    createNote(1, lightGenerator.allLightsState(GREEN)),
+    createNote(2, lightGenerator.allLightsState(BLUE)),
+    createNote(2.5, lightGenerator.allLightsState(PURPLE)),
+    createNote(3, lightGenerator.allLightsState(GREEN)),
   ])
 
   // move, that's an ass-quake
   .measure([
-    createNote(0, allLightsState(BLUE)),
-    createNote(1, allLightsState(PURPLE)),
-    createNote(1.5, allLightsState(GREEN)),
-    createNote(2, allLightsState(BLUE)),
-    createNote(3, allLightsState(PURPLE)),
+    createNote(0, lightGenerator.allLightsState(BLUE)),
+    createNote(1, lightGenerator.allLightsState(PURPLE)),
+    createNote(1.5, lightGenerator.allLightsState(GREEN)),
+    createNote(2, lightGenerator.allLightsState(BLUE)),
+    createNote(3, lightGenerator.allLightsState(PURPLE)),
   ])
 
   // build a house up on that
   .measure([
-    createNote(0, allLightsOff()),
-    createNote(1, allLightsState(GREEN)),
-    createNote(1.5, allLightsState(BLUE)),
-    createNote(2, allLightsState(PURPLE)),
-    createNote(2.5, allLightsState(GREEN)),
-    createNote(3, allLightsState(BLUE)),
-    createNote(3.5, allLightsState(PURPLE)),
+    createNote(0, lightGenerator.allLightsOff()),
+    createNote(1, lightGenerator.allLightsState(GREEN)),
+    createNote(1.5, lightGenerator.allLightsState(BLUE)),
+    createNote(2, lightGenerator.allLightsState(PURPLE)),
+    createNote(2.5, lightGenerator.allLightsState(GREEN)),
+    createNote(3, lightGenerator.allLightsState(BLUE)),
+    createNote(3.5, lightGenerator.allLightsState(PURPLE)),
   ])
 
   // ass, that's an ass-tate
   .measure([
-    createNote(0, allLightsState(GREEN)),
-    createNote(1, allLightsState(BLUE)),
-    createNote(1.5, allLightsState(PURPLE)),
-    createNote(2, allLightsState(GREEN)),
-    createNote(3, allLightsState(BLUE)),
+    createNote(0, lightGenerator.allLightsState(GREEN)),
+    createNote(1, lightGenerator.allLightsState(BLUE)),
+    createNote(1.5, lightGenerator.allLightsState(PURPLE)),
+    createNote(2, lightGenerator.allLightsState(GREEN)),
+    createNote(3, lightGenerator.allLightsState(BLUE)),
   ])
 
   // (roll roll) roll my weed
   .measure([
-    createNote(0, allLightsOff()),
+    createNote(0, lightGenerator.allLightsOff()),
     createNote(1, [lightState(GREEN), lightOff()]),
     createNote(1.5, [lightOff(), lightState(GREEN)]),
-    createNote(2, allLightsState(GREEN)),
-    createNote(2.5, allLightsState(BLUE)),
-    createNote(3, allLightsState(PURPLE)),
+    createNote(2, lightGenerator.allLightsState(GREEN)),
+    createNote(2.5, lightGenerator.allLightsState(BLUE)),
+    createNote(3, lightGenerator.allLightsState(PURPLE)),
   ])
 
   // on it that's an ass tray
   .measure([
-    createNote(0, allLightsState(GREEN)),
-    createNote(0.5, allLightsState(BLUE)),
-    createNote(1, allLightsState(PURPLE)),
-    createNote(1.5, allLightsState(GREEN)),
-    createNote(2, allLightsState(BLUE)),
-    createNote(3, allLightsState(PURPLE)),
+    createNote(0, lightGenerator.allLightsState(GREEN)),
+    createNote(0.5, lightGenerator.allLightsState(BLUE)),
+    createNote(1, lightGenerator.allLightsState(PURPLE)),
+    createNote(1.5, lightGenerator.allLightsState(GREEN)),
+    createNote(2, lightGenerator.allLightsState(BLUE)),
+    createNote(3, lightGenerator.allLightsState(PURPLE)),
     // TODO add back in?
-    // createNote(3.5, allLightsOff()),
+    // createNote(3.5, lightGenerator.allLightsOff()),
   ])
 
   // say ye, say ye, don't we
   .measure([
-    ...flashLights(ORANGE, 0, 0.5),
-    ...flashLights(ORANGE, 2, 2.5),
+    ...flashLights(ORANGE, 0, 0.5, lightGenerator),
+    ...flashLights(ORANGE, 2, 2.5, lightGenerator),
   ])
 
   // do this every day day (huh)
   .measure([
     createNote(2, [lightState(YELLOW), lightOff()]),
     createNote(2.5, [lightOff(), lightState(YELLOW)]),
-    createNote(3, allLightsState(WHITE)),
+    createNote(3, lightGenerator.allLightsState(WHITE)),
   ])
 
   // work them long nights, long
   .measure([
-    ...flashLights(ORANGE, 1, 2),
-    ...flashLights(ORANGE, 3, 4),
+    ...flashLights(ORANGE, 1, 2, lightGenerator),
+    ...flashLights(ORANGE, 3, 4, lightGenerator),
   ])
 
   // nights to get a pay day (huh)
   .measure([
     createNote(2, [lightState(YELLOW), lightOff()]),
     createNote(2.5, [lightOff(), lightState(YELLOW)]),
-    createNote(3, allLightsState(WHITE)),
+    createNote(3, lightGenerator.allLightsState(WHITE)),
   ])
 
   // finally got paid, now I need
   .measure([
-    createNote(0, allLightsState(GREEN)),
-    createNote(0.5, allLightsState(BLUE)),
-    createNote(1, allLightsState(PURPLE)),
-    createNote(2, allLightsState(GREEN)),
-    createNote(2.5, allLightsState(BLUE)),
-    createNote(3, allLightsState(PURPLE)),
-    createNote(3.5, allLightsState(GREEN)),
+    createNote(0, lightGenerator.allLightsState(GREEN)),
+    createNote(0.5, lightGenerator.allLightsState(BLUE)),
+    createNote(1, lightGenerator.allLightsState(PURPLE)),
+    createNote(2, lightGenerator.allLightsState(GREEN)),
+    createNote(2.5, lightGenerator.allLightsState(BLUE)),
+    createNote(3, lightGenerator.allLightsState(PURPLE)),
+    createNote(3.5, lightGenerator.allLightsState(GREEN)),
   ])
 
   // shade and a vacay
   .measure([
-    createNote(0, allLightsState(BLUE)),
-    createNote(1, allLightsState(PURPLE)),
-    createNote(1.5, allLightsState(GREEN)),
-    createNote(2, allLightsState(BLUE)),
-    createNote(2.5, allLightsState(PURPLE)),
+    createNote(0, lightGenerator.allLightsState(BLUE)),
+    createNote(1, lightGenerator.allLightsState(PURPLE)),
+    createNote(1.5, lightGenerator.allLightsState(GREEN)),
+    createNote(2, lightGenerator.allLightsState(BLUE)),
+    createNote(2.5, lightGenerator.allLightsState(PURPLE)),
     // TODO keep this out?
-    // createNote(3, allLightsOff()),
+    // createNote(3, lightGenerator.allLightsOff()),
   ])
 
   // and niggas still hatin, so much
   .measure([
-    ...flashLights(RED, 0, 0.5),
-    ...flashLights(RED, 2, 2.5),
+    ...flashLights(RED, 0, 0.5, lightGenerator),
+    ...flashLights(RED, 2, 2.5, lightGenerator),
   ])
 
   // hate I need a AK
@@ -295,67 +297,67 @@ const mercy = new Song('Mercy', 'Kanye West', 140, 4, 2500)
 
   // now we out in Paris
   .measure([
-    createNote(0, allLightsState(YELLOW)),
-    createNote(0.5, allLightsState(ORANGE)),
-    createNote(1, allLightsState(GREEN)),
-    createNote(1.5, allLightsState(YELLOW)),
-    createNote(2, allLightsState(ORANGE)),
-    createNote(2.5, allLightsState(GREEN)),
+    createNote(0, lightGenerator.allLightsState(YELLOW)),
+    createNote(0.5, lightGenerator.allLightsState(ORANGE)),
+    createNote(1, lightGenerator.allLightsState(GREEN)),
+    createNote(1.5, lightGenerator.allLightsState(YELLOW)),
+    createNote(2, lightGenerator.allLightsState(ORANGE)),
+    createNote(2.5, lightGenerator.allLightsState(GREEN)),
   ])
 
   // yeah I'm Perrier-in
   .measure([
-    createNote(0, allLightsState(YELLOW)),
-    createNote(0.5, allLightsState(ORANGE)),
-    createNote(1, allLightsState(GREEN)),
-    createNote(1.5, allLightsState(YELLOW)),
-    createNote(2, allLightsState(ORANGE)),
-    createNote(2.5, allLightsState(GREEN)),
+    createNote(0, lightGenerator.allLightsState(YELLOW)),
+    createNote(0.5, lightGenerator.allLightsState(ORANGE)),
+    createNote(1, lightGenerator.allLightsState(GREEN)),
+    createNote(1.5, lightGenerator.allLightsState(YELLOW)),
+    createNote(2, lightGenerator.allLightsState(ORANGE)),
+    createNote(2.5, lightGenerator.allLightsState(GREEN)),
   ])
 
   // white girls politickin
   .measure([
-    createNote(0, allLightsState(YELLOW)),
-    createNote(1, allLightsState(ORANGE)),
-    createNote(2, allLightsState(GREEN)),
-    createNote(2.5, allLightsState(YELLOW)),
-    createNote(3, allLightsState(ORANGE)),
-    createNote(3.5, allLightsState(GREEN)),
+    createNote(0, lightGenerator.allLightsState(YELLOW)),
+    createNote(1, lightGenerator.allLightsState(ORANGE)),
+    createNote(2, lightGenerator.allLightsState(GREEN)),
+    createNote(2.5, lightGenerator.allLightsState(YELLOW)),
+    createNote(3, lightGenerator.allLightsState(ORANGE)),
+    createNote(3.5, lightGenerator.allLightsState(GREEN)),
   ])
 
   // that's that Sarah Palin (get get)
   .measure([
-    createNote(0, allLightsOff()),
-    ...flashLights(WHITE, 1, 1.5),
-    ...flashLights(WHITE, 2, 2.5),
+    createNote(0, lightGenerator.allLightsOff()),
+    ...flashLights(WHITE, 1, 1.5, lightGenerator),
+    ...flashLights(WHITE, 2, 2.5, lightGenerator),
   ])
 
   // (get get) gettin high
   .measure([
     createNote(0, [lightState(GREEN, 30), lightOff()]),
     createNote(0.5, [lightOff(), lightState(GREEN, 30)]),
-    createNote(1, allLightsState(GREEN, 30)),
-    createNote(1.5, allLightsState(GREEN, 60)),
-    createNote(2, allLightsState(GREEN)),
+    createNote(1, lightGenerator.allLightsState(GREEN, 30)),
+    createNote(1.5, lightGenerator.allLightsState(GREEN, 60)),
+    createNote(2, lightGenerator.allLightsState(GREEN)),
   ])
 
   // Californicatin, I
   .measure([
-    createNote(0, allLightsState(YELLOW)),
-    createNote(0.5, allLightsState(ORANGE)),
-    createNote(1, allLightsState(GREEN)),
-    createNote(1.5, allLightsState(YELLOW)),
-    createNote(2, allLightsState(ORANGE)),
-    createNote(2.5, allLightsState(GREEN)),
+    createNote(0, lightGenerator.allLightsState(YELLOW)),
+    createNote(0.5, lightGenerator.allLightsState(ORANGE)),
+    createNote(1, lightGenerator.allLightsState(GREEN)),
+    createNote(1.5, lightGenerator.allLightsState(YELLOW)),
+    createNote(2, lightGenerator.allLightsState(ORANGE)),
+    createNote(2.5, lightGenerator.allLightsState(GREEN)),
   ])
 
   // give her that D, cause
   .measure([
-    createNote(0, allLightsState(YELLOW)),
-    createNote(0.5, allLightsState(ORANGE)),
-    createNote(1, allLightsState(GREEN)),
-    createNote(2, allLightsState(YELLOW)),
-    createNote(3, allLightsOff()),
+    createNote(0, lightGenerator.allLightsState(YELLOW)),
+    createNote(0.5, lightGenerator.allLightsState(ORANGE)),
+    createNote(1, lightGenerator.allLightsState(GREEN)),
+    createNote(2, lightGenerator.allLightsState(YELLOW)),
+    createNote(3, lightGenerator.allLightsOff()),
   ])
 
   // that's where I was born and raised in (oh oh oh oh oh okay)
@@ -434,7 +436,7 @@ const mercy = new Song('Mercy', 'Kanye West', 140, 4, 2500)
 
   // yeah! it's prime time
   .measure([
-    createNote(0, allLightsState(YELLOW)),
+    createNote(0, lightGenerator.allLightsState(YELLOW)),
   ])
 
   // my top back, this pimp game
@@ -593,81 +595,81 @@ const mercy = new Song('Mercy', 'Kanye West', 140, 4, 2500)
 
   // most rapper's taste level
   .measure([
-    createNote(0, allLightsState(RED)),
+    createNote(0, lightGenerator.allLightsState(RED)),
     // TODO fix 1/3 beats (use const instead? needs a better way)
-    createNote(1/3 * 2, allLightsState(YELLOW)),
-    createNote(1 + 1/3, allLightsState(BLACK)),
-    createNote(2, allLightsState(RED)),
-    createNote(2 + 1/3 * 2, allLightsState(YELLOW)),
-    createNote(3 + 1/3, allLightsState(BLACK)),
+    createNote(1/3 * 2, lightGenerator.allLightsState(YELLOW)),
+    createNote(1 + 1/3, lightGenerator.allLightsState(BLACK)),
+    createNote(2, lightGenerator.allLightsState(RED)),
+    createNote(2 + 1/3 * 2, lightGenerator.allLightsState(YELLOW)),
+    createNote(3 + 1/3, lightGenerator.allLightsState(BLACK)),
   ])
 
   // ain't at my waist level
   .measure([
-    createNote(0, allLightsState(RED)),
-    createNote(1/3 * 2, allLightsState(YELLOW)),
-    createNote(1 + 1/3, allLightsState(BLACK)),
-    createNote(2, allLightsState(RED)),
-    createNote(2 + 1/3 * 2, allLightsState(YELLOW)),
-    createNote(3 + 1/3, allLightsState(BLACK)),
+    createNote(0, lightGenerator.allLightsState(RED)),
+    createNote(1/3 * 2, lightGenerator.allLightsState(YELLOW)),
+    createNote(1 + 1/3, lightGenerator.allLightsState(BLACK)),
+    createNote(2, lightGenerator.allLightsState(RED)),
+    createNote(2 + 1/3 * 2, lightGenerator.allLightsState(YELLOW)),
+    createNote(3 + 1/3, lightGenerator.allLightsState(BLACK)),
   ])
 
   // turn up the bass till it's
   .measure([
-    createNote(0, allLightsState(RED)),
-    createNote(1/3 * 2, allLightsState(YELLOW)),
-    createNote(1 + 1/3, allLightsState(BLACK)),
-    createNote(2, allLightsState(RED)),
-    createNote(2 + 1/3 * 2, allLightsState(YELLOW)),
-    createNote(3 + 1/3, allLightsState(BLACK)),
+    createNote(0, lightGenerator.allLightsState(RED)),
+    createNote(1/3 * 2, lightGenerator.allLightsState(YELLOW)),
+    createNote(1 + 1/3, lightGenerator.allLightsState(BLACK)),
+    createNote(2, lightGenerator.allLightsState(RED)),
+    createNote(2 + 1/3 * 2, lightGenerator.allLightsState(YELLOW)),
+    createNote(3 + 1/3, lightGenerator.allLightsState(BLACK)),
   ])
 
   // up in your face level
   .measure([
-    createNote(0, allLightsState(RED)),
-    createNote(1/3 * 2, allLightsState(YELLOW)),
-    createNote(1 + 1/3, allLightsState(BLACK)),
-    createNote(2, allLightsState(RED)),
-    createNote(2 + 1/3 * 2, allLightsState(YELLOW)),
-    createNote(3 + 1/3, allLightsState(BLACK)),
+    createNote(0, lightGenerator.allLightsState(RED)),
+    createNote(1/3 * 2, lightGenerator.allLightsState(YELLOW)),
+    createNote(1 + 1/3, lightGenerator.allLightsState(BLACK)),
+    createNote(2, lightGenerator.allLightsState(RED)),
+    createNote(2 + 1/3 * 2, lightGenerator.allLightsState(YELLOW)),
+    createNote(3 + 1/3, lightGenerator.allLightsState(BLACK)),
   ])
 
   // don't do no press but I
   .measure([
-    createNote(0, allLightsState(RED)),
-    createNote(1/3 * 2, allLightsState(YELLOW)),
-    createNote(1 + 1/3, allLightsState(BLACK)),
-    createNote(2, allLightsState(RED)),
-    createNote(2 + 1/3 * 2, allLightsState(YELLOW)),
-    createNote(3 + 1/3, allLightsState(BLACK)),
+    createNote(0, lightGenerator.allLightsState(RED)),
+    createNote(1/3 * 2, lightGenerator.allLightsState(YELLOW)),
+    createNote(1 + 1/3, lightGenerator.allLightsState(BLACK)),
+    createNote(2, lightGenerator.allLightsState(RED)),
+    createNote(2 + 1/3 * 2, lightGenerator.allLightsState(YELLOW)),
+    createNote(3 + 1/3, lightGenerator.allLightsState(BLACK)),
   ])
 
   // get the most press kit
   .measure([
-    createNote(0, allLightsState(RED)),
-    createNote(1/3 * 2, allLightsState(YELLOW)),
-    createNote(1 + 1/3, allLightsState(BLACK)),
-    createNote(2, allLightsState(RED)),
-    createNote(3, allLightsState(YELLOW)),
+    createNote(0, lightGenerator.allLightsState(RED)),
+    createNote(1/3 * 2, lightGenerator.allLightsState(YELLOW)),
+    createNote(1 + 1/3, lightGenerator.allLightsState(BLACK)),
+    createNote(2, lightGenerator.allLightsState(RED)),
+    createNote(3, lightGenerator.allLightsState(YELLOW)),
   ])
 
   // plus, yo, my bitch make your
   .measure([
-    createNote(0, allLightsState(BLACK)),
-    createNote(1, allLightsState(RED)),
-    createNote(1.5, allLightsState(YELLOW)),
-    createNote(2, allLightsState(BLACK)),
-    createNote(2 + 1/3 * 2, allLightsState(RED)),
-    createNote(3 + 1/3, allLightsState(YELLOW)),
+    createNote(0, lightGenerator.allLightsState(BLACK)),
+    createNote(1, lightGenerator.allLightsState(RED)),
+    createNote(1.5, lightGenerator.allLightsState(YELLOW)),
+    createNote(2, lightGenerator.allLightsState(BLACK)),
+    createNote(2 + 1/3 * 2, lightGenerator.allLightsState(RED)),
+    createNote(3 + 1/3, lightGenerator.allLightsState(YELLOW)),
   ])
 
   // bitch look like Precious
   .measure([
-    createNote(0, allLightsState(BLACK)),
-    createNote(1/3 * 2, allLightsState(RED)),
-    createNote(1 + 1/3, allLightsState(YELLOW)),
-    createNote(2, allLightsState(BLACK)),
-    createNote(3, allLightsState(RED)),
+    createNote(0, lightGenerator.allLightsState(BLACK)),
+    createNote(1/3 * 2, lightGenerator.allLightsState(RED)),
+    createNote(1 + 1/3, lightGenerator.allLightsState(YELLOW)),
+    createNote(2, lightGenerator.allLightsState(BLACK)),
+    createNote(3, lightGenerator.allLightsState(RED)),
   ])
 
   // somethin' bout Mary
@@ -801,45 +803,45 @@ const mercy = new Song('Mercy', 'Kanye West', 140, 4, 2500)
   .measure([])
 
   .measure([
-    createNote(0, allLightsState(YELLOW)),
+    createNote(0, lightGenerator.allLightsState(YELLOW)),
   ])
   .measure([
-    createNote(0, allLightsState(GREEN)),
+    createNote(0, lightGenerator.allLightsState(GREEN)),
   ])
   .measure([
-    createNote(0, allLightsState(YELLOW)),
+    createNote(0, lightGenerator.allLightsState(YELLOW)),
   ])
   .measure([
-    createNote(0, allLightsState(GREEN)),
+    createNote(0, lightGenerator.allLightsState(GREEN)),
   ])
   .measure([
-    createNote(0, allLightsState(YELLOW)),
+    createNote(0, lightGenerator.allLightsState(YELLOW)),
   ])
   .measure([
-    createNote(0, allLightsState(GREEN)),
+    createNote(0, lightGenerator.allLightsState(GREEN)),
   ])
   .measure([
-    createNote(0, allLightsState(YELLOW)),
+    createNote(0, lightGenerator.allLightsState(YELLOW)),
   ])
   .measure([
-    createNote(0, allLightsState(GREEN)),
+    createNote(0, lightGenerator.allLightsState(GREEN)),
   ])
 
   // fade out
   .measure([
-    createNote(0, allLightsState(BLACK)),
-    createNote(1, allLightsState(BLACK, 100 * (7 / 8))),
-    createNote(2, allLightsState(BLACK, 100 * (6 / 8))),
-    createNote(3, allLightsState(BLACK, 100 * (5 / 8))),
+    createNote(0, lightGenerator.allLightsState(BLACK)),
+    createNote(1, lightGenerator.allLightsState(BLACK, 100 * (7 / 8))),
+    createNote(2, lightGenerator.allLightsState(BLACK, 100 * (6 / 8))),
+    createNote(3, lightGenerator.allLightsState(BLACK, 100 * (5 / 8))),
   ])
   .measure([
-    createNote(0, allLightsState(BLACK, 100 * (4 / 8))),
-    createNote(1, allLightsState(BLACK, 100 * (3 / 8))),
-    createNote(2, allLightsState(BLACK, 100 * (2 / 8))),
-    createNote(3, allLightsState(BLACK, 100 * (1 / 8))),
+    createNote(0, lightGenerator.allLightsState(BLACK, 100 * (4 / 8))),
+    createNote(1, lightGenerator.allLightsState(BLACK, 100 * (3 / 8))),
+    createNote(2, lightGenerator.allLightsState(BLACK, 100 * (2 / 8))),
+    createNote(3, lightGenerator.allLightsState(BLACK, 100 * (1 / 8))),
   ])
   .measure([
-    createNote(0, allLightsOff()),
+    createNote(0, lightGenerator.allLightsOff()),
   ])
 
 export default mercy

@@ -9,6 +9,7 @@ import bitingDown from './beats/songs/biting-down'
 import easySwitchScreens from './beats/songs/easy-switch-screens'
 import homemadeDynamite from './beats/songs/homemade-dynamite'
 import mercy from './beats/songs/mercy'
+import moneyMakeHerSmile from './beats/songs/money-make-her-smile'
 import { LightGenerator } from './beats/songs/utils/utils'
 import yellowFlickerBeat from './beats/songs/yellow-flicker-beat'
 import { calculateXY, getValueFromPoint, UIColor } from './hue-color-conversion'
@@ -18,7 +19,7 @@ import LightTracksSettings from './LightTracksSettings'
 import styles from './scss/Hue.scss'
 
 const DEFAULT_HUE_LATENCY_MS = 100
-const DEFAULT_SONG_ID = 4 // yfb
+const DEFAULT_SONG_ID = 6 // yfb
 
 const ALL_SONGS: Song[] = [
   mercy,
@@ -27,6 +28,7 @@ const ALL_SONGS: Song[] = [
   beezInTheTrap,
   yellowFlickerBeat,
   homemadeDynamite,
+  moneyMakeHerSmile,
 ]
 
 interface Props {
@@ -180,12 +182,14 @@ export default class Beats extends React.Component<Props, State> {
 
   resetRoutine = (afterFn: (() => void) = (() => {})): void => {
     this.stopRoutine()
-    this.BeatVisualizerRef.current.reset()
     this.setState({
       lights: this.getLightGenerator().allLightsOff(),
       elapsedMs: 0,
       startTimeMs: 0,
-    }, afterFn)
+    }, () => {
+      this.BeatVisualizerRef.current.reset()
+      afterFn()
+    })
   }
 
   restartRoutine = (): void => {

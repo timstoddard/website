@@ -117,6 +117,7 @@ export default class BeatVisualizer extends React.Component<Props, State> {
       const width = calculateX(nextStep) - x
       shouldRender = (x > minX && x < maxX) || ((x + width) > minX && (x + width) < maxX)
 
+      // TODO multi-measure rects disappear when current measure != start or end measure (is somewhere in between)
       if (shouldRender) {
         // draw rect for current note
         for (let j = 0; j < lightTracksCount; j++) {

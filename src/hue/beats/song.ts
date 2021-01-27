@@ -46,8 +46,4 @@ export class Song {
   getSteps = (): MsStep[] => {
     return this.steps
   }
-
-  // getTimeSignature = (): number => {
-  //   return this.timeSignature
-  // }
 }

@@ -371,7 +371,7 @@ $darkModeNeonAccent: $darkModeNeonAccent__orange;
 
   &__trackSettings {
     align-items: center;
-    border: 1px solid var(--darkModeNeonAccent);
+    border: 1px solid rgb(200,200,200);
     display: flex;
     grid-area: 1 / 1 / 2 / 2;
     overflow-x: auto;
@@ -423,11 +423,14 @@ $darkModeNeonAccent: $darkModeNeonAccent__orange;
     &--details {
       font-style: italic;
     }
-
   }
 
   &--darkMode {
     color: $darkModeTextWhite;
+
+    & .lightTracksSettings__trackSettings {
+      border: 1px solid var(--darkModeNeonAccent);
+    }
 
     & .beatLight {
       border: 1px solid var(--darkModeNeonAccent);

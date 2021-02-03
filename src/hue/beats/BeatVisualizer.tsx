@@ -31,24 +31,24 @@ export default class BeatVisualizer extends React.Component<Props, State> {
     }
   }
 
-  start = (): void => {
+  start = () => {
     this.animationFrame = window.requestAnimationFrame(this.next)
     this.firstRenderedStepIndex = 0
     this.setState({ isPlaying: true })
   }
 
-  reset = (): void => {
+  reset = () => {
     this.stop()
     this.firstRenderedStepIndex = 0
     this.updateCanvas()
   }
 
-  stop = (): void => {
+  stop = () => {
     window.cancelAnimationFrame(this.animationFrame)
     this.setState({ isPlaying: false })
   }
 
-  refresh = (): void => {
+  refresh = () => {
     this.updateCanvas()
   }
 
@@ -69,12 +69,12 @@ export default class BeatVisualizer extends React.Component<Props, State> {
     )
   }
 
-  private next = (): void => {
+  private next = () => {
     this.updateCanvas()
     this.animationFrame = window.requestAnimationFrame(this.next)
   }
 
-  private updateCanvas = (): void => {
+  private updateCanvas = () => {
     if (!this.canvasElement) {
       return
     }

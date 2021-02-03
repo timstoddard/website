@@ -70,6 +70,10 @@ const routes: LoadableRoute[] = [
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Infinity' */ './infinity/Infinity')),
   },
   {
+    path: '/light-strips',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'LightStrips' */ './light-strips/LightStrips')),
+  },
+  {
     path: '/perf',
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Perf' */ './perf/Perf')),
   },

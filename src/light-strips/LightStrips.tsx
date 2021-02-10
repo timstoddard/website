@@ -1,11 +1,23 @@
 import * as React from 'react'
+// TODO possibly make shared utils for this + hue client
 import { hexToColor } from '../hue/hue-utils'
+import { InputAudioStream } from './InputAudioStream'
 import styles from './scss/LightStrips.scss'
 
 interface LightPixel {
   color: string // hex (?)
   brightness: number
   on: boolean // TODO needed? or just use bri=0?
+}
+
+// TODO need way to treat single light strip as several
+interface LightStripVirtualMap {
+  totalPixels: number
+  subStrips: {
+    startPixel: number
+    endPixel: number
+    // orientation? { N, S, E, W, U, D }
+  }[]
 }
 
 interface LightStrip {
@@ -25,6 +37,7 @@ interface State {
 export default class LightStrips extends React.Component<{}, State> {
   private animationFrame: number
   private canvasElement: React.RefObject<HTMLCanvasElement> = React.createRef()
+  private inputAudioStream: InputAudioStream
 
   constructor(props: {}) {
     super(props)
@@ -64,11 +77,19 @@ export default class LightStrips extends React.Component<{}, State> {
   }
 
   componentDidMount = () => {
-    this.animationFrame = window.requestAnimationFrame(this.next)
+    this.inputAudioStream = new InputAudioStream()
+    this.inputAudioStream.init((sources: string[]) => {
+      console.log('found beat from', sources)
+      this.updateCanvas(sources.includes('basic'), sources.includes('normal'))
+    })
+    // this.next()
   }
 
   componentWillUnmount = () => {
-    window.cancelAnimationFrame(this.animationFrame)
+    if (this.inputAudioStream) {
+      this.inputAudioStream.end()
+    }
+    // window.cancelAnimationFrame(this.animationFrame)
   }
 
   render(): JSX.Element {
@@ -96,12 +117,36 @@ export default class LightStrips extends React.Component<{}, State> {
     this.animationFrame = window.requestAnimationFrame(this.next)
   }
 
-  private updateCanvas = () => {
+  private updateCanvas = (isBeatDetected1: boolean = false, isBeatDetected2: boolean = false) => {
     if (!this.canvasElement) {
       return
     }
 
-    const {
+    const c = this.canvasElement.current
+    const canvas = c.getContext('2d')
+    const canvasWrapper = c.parentElement
+    const canvasWidth = canvasWrapper.clientWidth
+    const canvasHeight = canvasWrapper.clientHeight
+    c.width = canvasWidth
+    c.height = canvasHeight
+    canvas.clearRect(0, 0, canvasWidth, canvasHeight)
+
+    canvas.fillStyle = '#f00'
+
+    if (isBeatDetected1) {
+      canvas.fillRect(0, 0, canvasWidth / 2, canvasHeight)
+    }
+
+    if (isBeatDetected2) {
+      canvas.fillRect(canvasWidth / 2, 0, canvasWidth / 2, canvasHeight)
+    }
+
+    // reset beat display
+    if (isBeatDetected2 || isBeatDetected1) {
+      setTimeout(this.updateCanvas, 33)
+    }
+
+    /* const {
       lightStrips,
       startTimeMs,
     } = this.state
@@ -131,7 +176,8 @@ export default class LightStrips extends React.Component<{}, State> {
     c.height = canvasHeight
     canvas.clearRect(0, 0, canvasWidth, canvasHeight)
 
-    for (let i = 0; i < 1 /*lightStrips.length*/; i++) {
+    // for (let i = 0; i < lightStrips.length; i++) {
+    for (let i = 0; i < 1; i++) {
       const lightStrip = lightStrips[i]
       for (let j = 0; j < lightStrip.pixels.length; j++) {
         // console.log(lightStrip.pixels[j])
@@ -145,7 +191,7 @@ export default class LightStrips extends React.Component<{}, State> {
           this.drawPixelOff(canvas, x, y, PIXEL_DEFAULT_RADIUS)
         }
       }
-    }
+    }*/
   }
 
   private drawPixel = (

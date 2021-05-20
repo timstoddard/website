@@ -10,7 +10,7 @@ const getCssLoaders = (useCssModules, mode) => {
       loader: 'css-loader',
       options: {
         modules: {
-          localIdentName: mode === 'prod' ? '[hash:base64:5]' : '[local]__[hash:base64:5]',
+          localIdentName: mode === 'prod' ? '[fullhash:base64:5]' : '[local]__[fullhash:base64:5]',
         },
       },
     }
@@ -42,7 +42,7 @@ module.exports = {
     output: {
       path: path.join(__dirname, '../dist'),
       publicPath: mode === 'prod' ? '/dist/' : '/',
-      filename: '[name].[hash:8].js',
+      filename: '[name].[fullhash:8].js',
       chunkFilename: '[name].[chunkhash:8].chunk.js',
     },
     module: {
@@ -93,7 +93,7 @@ module.exports = {
     return [
       new HtmlWebpackPlugin(htmlWebpackPluginOptions),
       new MiniCssExtractPlugin({
-        filename: '[name].[hash:8].css',
+        filename: '[name].[fullhash:8].css',
         chunkFilename: '[name].[chunkhash:8].chunk.css',
       }),
     ]

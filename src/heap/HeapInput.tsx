@@ -1,7 +1,6 @@
 import * as React from 'react'
-import Button from 'react-bootstrap/Button'
-
-const styles = require('./scss/HeapInput.scss') // tslint:disable-line no-var-requires
+import { Button } from 'react-bootstrap'
+import styles from './scss/HeapInput.scss'
 
 interface Props {
   generateHeaps: (ints: number[]) => void
@@ -69,7 +68,7 @@ export default class HeapInput extends React.Component<Props, {}> {
 
   render(): JSX.Element {
     return (
-      <div className={styles.heapInput}>
+      <div>
         <div className={styles.heapInput__form}>
           <p>Paste your heap contents here:</p>
           <input

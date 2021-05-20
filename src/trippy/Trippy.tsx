@@ -1,6 +1,5 @@
 import * as React from 'react'
-
-const styles = require('./scss/Trippy.scss') // tslint:disable-line no-var-requires
+import styles from './scss/Trippy.scss'
 
 const REFRESH_DELAY = 200
 

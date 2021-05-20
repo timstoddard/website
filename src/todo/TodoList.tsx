@@ -1,11 +1,10 @@
 import classNames from 'classnames'
 import * as React from 'react'
-import Form from 'react-bootstrap/Form'
+import { Form } from 'react-bootstrap'
 import IconButton, { IconPath } from './IconButton'
 import Todo from './Todo'
 import { TRANSITION_MS, TransitionState } from './transition'
-
-const styles = require('./scss/TodoList.scss') // tslint:disable-line no-var-requires
+import styles from './scss/TodoList.scss'
 
 interface State {
   todos: TodoItem[],

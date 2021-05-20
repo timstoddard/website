@@ -1,7 +1,6 @@
 import classNames from 'classnames'
 import * as React from 'react'
-
-const styles = require('./scss/IconButton.scss') // tslint:disable-line no-var-requires
+import styles from './scss/IconButton.scss'
 
 interface Props {
   onClick?: () => void
@@ -12,7 +11,7 @@ interface Props {
   isDraggable?: boolean
 }
 
-const IconButton: React.StatelessComponent<Props> = ({
+const IconButton: React.FunctionComponent<Props> = ({
   onClick,
   onDragStart,
   path,

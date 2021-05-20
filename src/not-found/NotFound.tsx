@@ -1,14 +1,13 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-
-const styles = require('./scss/NotFound.scss') // tslint:disable-line no-var-requires
+import styles from './scss/NotFound.scss'
 
 interface Props {
   destination: string
   to: string
 }
 
-const NotFound: React.StatelessComponent<Props> = ({ destination, to }: Props): JSX.Element => {
+const NotFound: React.FunctionComponent<Props> = ({ destination, to }: Props): JSX.Element => {
   document.title = 'Page Not Found'
   return (
     <div className={styles.notFound}>

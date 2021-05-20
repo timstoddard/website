@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import * as React from 'react'
-
-const styles = require('./scss/2048.scss') // tslint:disable-line no-var-requires
+// import styles from './scss/2048.scss' // uncomment when working on this again
+const styles: any = {}
 
 // TODO finish this game
 

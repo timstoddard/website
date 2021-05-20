@@ -2,15 +2,14 @@ import classNames from 'classnames'
 import * as React from 'react'
 import { Element } from './elements'
 import { Mode } from './PeriodicTable'
-
-const styles = require('./scss/CurrentElement.scss') // tslint:disable-line no-var-requires
+import styles from './scss/CurrentElement.scss'
 
 interface Props {
   element: Element
   mode: Mode
 }
 
-const CurrentElement: React.StatelessComponent<Props> = ({
+const CurrentElement: React.FunctionComponent<Props> = ({
   element,
   mode,
 }: Props): JSX.Element => (
@@ -30,7 +29,7 @@ const CurrentElement: React.StatelessComponent<Props> = ({
           key={shell}
           className={classNames(
             styles.currentElement__electron,
-            styles[`currentElement__electron--${mode === Mode.NORMAL ? shell[1] : 'plain'}`])}>
+            (styles as any)[`currentElement__electron--${mode === Mode.NORMAL ? shell[1] : 'plain'}`])}>
           {shell}
         </div>
       ))}

@@ -2,8 +2,7 @@ import * as React from 'react'
 import BinaryHeap from './BinaryHeap'
 import HeapDetail from './HeapDetail'
 import HeapInput from './HeapInput'
-
-const styles = require('./scss/Heap.scss') // tslint:disable-line no-var-requires
+import styles from './scss/Heap.scss'
 
 interface State {
   showTree: boolean

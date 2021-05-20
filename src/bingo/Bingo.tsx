@@ -1,8 +1,7 @@
 import * as React from 'react'
 import Board from './Board'
 import Video from './Video'
-
-const styles = require('./scss/Bingo.scss') // tslint:disable-line no-var-requires
+import styles from './scss/Bingo.scss'
 
 export default class Bingo extends React.Component<{}, {}> {
   private videoPlayer: React.RefObject<Video> = React.createRef()

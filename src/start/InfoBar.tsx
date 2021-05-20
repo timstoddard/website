@@ -1,8 +1,7 @@
 import classNames from 'classnames'
 import * as React from 'react'
 import { StartUtils } from './Utils'
-
-const styles = require('./scss/InfoBar.scss') // tslint:disable-line no-var-requires
+import styles from './scss/InfoBar.scss'
 
 interface Props {
   className: string

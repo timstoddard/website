@@ -1,9 +1,8 @@
 import * as React from 'react'
-import Button from 'react-bootstrap/Button'
+import { Button } from 'react-bootstrap'
 import ColorChanger from './ColorChanger'
 import StrobeOptions from './StrobeOptions'
-
-const styles = require('./scss/Strobe.scss') // tslint:disable-line no-var-requires
+import styles from './scss/Strobe.scss'
 
 interface State {
   background: string

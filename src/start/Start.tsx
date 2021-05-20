@@ -5,8 +5,7 @@ import Links from './Links'
 import RandomQuote from './RandomQuote'
 import Weather from './Weather'
 import { BackgroundUrlType, getRandomType, backgroundUrls } from './background-urls'
-
-const styles = require('./scss/Start.scss') // tslint:disable-line no-var-requires
+import styles from './scss/Start.scss'
 
 const BACKGROUND_IMAGE_CLASS = styles.start__backgroundImagePreload
 

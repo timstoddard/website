@@ -1,7 +1,6 @@
 import * as React from 'react'
-import Form from 'react-bootstrap/Form'
-
-const styles = require('./scss/E85.scss') // tslint:disable-line no-var-requires
+import { Form } from 'react-bootstrap'
+import styles from './scss/E85.scss'
 
 interface Props {
   id: string
@@ -11,7 +10,7 @@ interface Props {
   onChange: (e: React.FormEvent) => void
 }
 
-const FormInput: React.StatelessComponent<Props> = ({
+const FormInput: React.FunctionComponent<Props> = ({
   id,
   label,
   value,

@@ -1,7 +1,6 @@
 import classNames from 'classnames'
 import * as React from 'react'
-
-const styles = require('./scss/RandomQuote.scss') // tslint:disable-line no-var-requires
+import styles from './scss/RandomQuote.scss'
 
 const quotes = [
   'Breathe.',

@@ -4,9 +4,8 @@ import CurrentElement from './CurrentElement'
 import ElementCard from './ElementCard'
 import elements, { Element } from './elements'
 import ModeSelect from './ModeSelect'
-
-const styles = require('./scss/PeriodicTable.scss') // tslint:disable-line no-var-requires
-const styles2 = require('./scss/ElementCard.scss') // tslint:disable-line no-var-requires
+import styles from './scss/PeriodicTable.scss'
+import styles2 from './scss/ElementCard.scss'
 
 export enum Mode {
   NORMAL = 'NORMAL',

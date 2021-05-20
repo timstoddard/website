@@ -1,6 +1,5 @@
 import BinaryHeap from './BinaryHeap'
-
-const styles = require('./scss/Heap.scss') // tslint:disable-line no-var-requires
+import styles from './scss/Heap.scss'
 
 class Node {
   data: number

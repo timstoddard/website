@@ -8,6 +8,7 @@ npm-debug.log
 # generated files
 dist
 index.html
+**/*.scss.d.ts
 
 # secrets
 utils/cloudflare/cloudflare-secrets.js

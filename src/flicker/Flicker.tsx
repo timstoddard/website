@@ -1,7 +1,6 @@
 import classNames from 'classnames'
 import * as React from 'react'
-
-const styles = require('./scss/Flicker.scss') // tslint:disable-line no-var-requires
+import styles from './scss/Flicker.scss'
 
 interface State {
   currentHeight: number

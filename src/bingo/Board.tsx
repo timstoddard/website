@@ -1,8 +1,7 @@
 import * as React from 'react'
 import Cell, { CellState } from './Cell'
 import ControlPanel from './ControlPanel'
-
-const styles = require('./scss/Bingo.scss') // tslint:disable-line no-var-requires
+import styles from './scss/Bingo.scss'
 
 interface Props {
   className: string
@@ -208,7 +207,7 @@ export default class Board extends React.Component<Props, State> {
 
     return (
       <div className={className}>
-        <table className={styles.board__table}>
+        <table>
           <tbody>{tableRows}</tbody>
         </table>
         <ControlPanel

@@ -1,8 +1,7 @@
 import * as React from 'react'
 import elements, { Element, ElementType } from './elements'
 import { Mode } from './PeriodicTable'
-
-const styles = require('./scss/ElementCard.scss') // tslint:disable-line no-var-requires
+import styles from './scss/ElementCard.scss'
 
 const getMin = (field: keyof Element) => (prev: number, curr: Element) => {
   const value = curr[field] as number
@@ -73,7 +72,7 @@ interface Props {
   mode: Mode
 }
 
-const ElementCard: React.StatelessComponent<Props> = ({
+const ElementCard: React.FunctionComponent<Props> = ({
   e,
   setCurrentElement,
   renderInColumn,

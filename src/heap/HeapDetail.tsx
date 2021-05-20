@@ -1,9 +1,8 @@
 import * as React from 'react'
-import Button from 'react-bootstrap/Button'
+import { Button } from 'react-bootstrap'
 import BinaryHeap from './BinaryHeap'
 import printTree from './BinaryTreePrinter'
-
-const styles = require('./scss/HeapDetail.scss') // tslint:disable-line no-var-requires
+import styles from './scss/HeapDetail.scss'
 
 interface Props {
   heap: BinaryHeap
@@ -29,7 +28,7 @@ export default class HeapDetail extends React.Component<Props, {}> {
     } = this.props
 
     return (
-      <div className={styles.heapDetail}>
+      <div>
         <hr />
         <Button
           onClick={showInputHeap}

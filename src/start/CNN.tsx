@@ -1,9 +1,8 @@
 import axios, { AxiosResponse } from 'axios'
 import classNames from 'classnames'
 import * as React from 'react'
-
-const styles = require('./scss/CNN.scss') // tslint:disable-line no-var-requires
-const styles2 = require('./scss/Start.scss') // tslint:disable-line no-var-requires
+import styles from './scss/CNN.scss'
+import styles2 from './scss/Start.scss'
 
 interface Props {
   className: string
@@ -42,7 +41,7 @@ export default class CNN extends React.Component<Props, State> {
     const { items } = this.state
 
     return (
-      <div className={classNames(styles.cnn, className)}>
+      <div className={className}>
         {items.map(({ link, origLink, title, description }: NewsItem) => (
           <a
             key={link}

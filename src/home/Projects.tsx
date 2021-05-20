@@ -1,8 +1,7 @@
 import classNames from 'classnames'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-
-const styles = require('./scss/Projects.scss') // tslint:disable-line no-var-requires
+import styles from './scss/Projects.scss'
 
 interface Section {
   name: string
@@ -118,7 +117,7 @@ const projectSections: Section[] = [
   },
 ]
 
-const Projects: React.StatelessComponent<{}> = (): JSX.Element => {
+const Projects: React.FunctionComponent<{}> = (): JSX.Element => {
   document.title = 'Tim\'s Projects'
   return (
     <div className={styles.projects}>

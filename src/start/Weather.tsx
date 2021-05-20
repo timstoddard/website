@@ -1,8 +1,7 @@
 import classNames from 'classnames'
 import * as React from 'react'
 import { get, StartUtils, WeatherUtils } from './Utils'
-
-const styles = require('./scss/Weather.scss') // tslint:disable-line no-var-requires
+import styles from './scss/Weather.scss'
 
 interface CurrentWeather {
   coord: {

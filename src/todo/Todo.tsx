@@ -1,9 +1,8 @@
 import classNames from 'classnames'
 import * as React from 'react'
-import Form from 'react-bootstrap/Form'
+import { Form } from 'react-bootstrap'
 import IconButton, { IconPath } from './IconButton'
-
-const styles = require('./scss/Todo.scss') // tslint:disable-line no-var-requires
+import styles from './scss/Todo.scss'
 
 interface Props {
   message: string
@@ -135,7 +134,6 @@ export default class Todo extends React.Component<Props, State> {
           {isEditing &&
             <Form.Control
               type='text'
-              className={styles.todo__input}
               onInput={handleInput}
               onKeyDown={handleKeyDown}
               value={currentTodoMessage} />

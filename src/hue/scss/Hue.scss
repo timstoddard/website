@@ -1,0 +1,453 @@
+@import 'src/scss/globals';
+
+$headerHeight: 120px;
+$hueBorderRadius: 8px;
+$darkModeBlack: rgb(10,10,20);
+$darkModeTextWhite: rgb(250,250,250);
+
+$darkModeNeonAccent__red: rgb(255,42,0);
+$darkModeBlackOffset__red: rgb(90,75,75);
+$darkModeNeonAccent__green: rgb(0,255,42);
+$darkModeBlackOffset__green: rgb(75,90,75);
+$darkModeNeonAccent__blue: rgb(0,200,255);
+$darkModeBlackOffset__blue: rgb(50,60,70);
+$darkModeNeonAccent__orange: rgb(255,126,0); // bmw gauge orange
+$darkModeBlackOffset__orange: rgb(65,65,75);
+$darkModeBlackOffset: $darkModeBlackOffset__orange;
+$darkModeNeonAccent: $darkModeNeonAccent__orange;
+
+.hue {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: $headerHeight calc(100vh - #{$headerHeight});
+  height: 100vh;
+  width: 100vw;
+
+  &__header {
+    grid-area: 1 / 1 / 2 / 2;
+    line-height: 1.4;
+  }
+
+  &__title {
+    @include smallHeader;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    text-align: center;
+
+    &__settingsButton {
+      text-decoration: underline;
+
+      &:hover {
+        cursor: pointer;
+        font-style: italic;
+      }
+    }
+  }
+
+  &__links {
+    align-items: center;
+    background: rgb(240,240,240);
+    border-radius: $hueBorderRadius;
+    display: flex;
+    justify-content: space-around;
+    margin: 20px auto;
+    max-width: 500px;
+    padding: 5px;
+
+    &__link {
+      color: rgb(100,100,100);
+      cursor: pointer;
+      text-decoration: none;
+
+      &:hover,
+      &--selected {
+        text-decoration: underline;
+      }
+
+      &--selected {
+        color: black;
+      }
+    }
+  }
+
+  &__controller {
+    border: 1px solid rgb(200,200,200);
+    border-radius: 6px;
+    display: grid;
+    gap: 12px;
+    grid-area: 2 / 1 / 3 / 2;
+    grid-template-columns: minmax(10%, 250px) 1fr;
+    grid-template-rows: auto 1fr;
+    margin: 10px auto;
+    max-height: 100%;
+    max-width: 1000px;
+    padding: 20px;
+  }
+
+  &__layoutSettings {
+    &__radioInput {
+      align-items: center;
+      display: flex;
+
+      & :global(.form-check-input) {
+        margin-top: 0;
+      }
+    }
+  }
+
+  &--darkMode {
+    background: $darkModeBlack;
+    color: $darkModeTextWhite;
+
+    &--red {
+      --darkModeBlackOffset: #{$darkModeBlackOffset__red};
+      --darkModeNeonAccent: #{$darkModeNeonAccent__red};
+    }
+
+    &--green {
+      --darkModeBlackOffset: #{$darkModeBlackOffset__green};
+      --darkModeNeonAccent: #{$darkModeNeonAccent__green};
+    }
+
+    &--blue {
+      --darkModeBlackOffset: #{$darkModeBlackOffset__blue};
+      --darkModeNeonAccent: #{$darkModeNeonAccent__blue};
+    }
+
+    &--orange {
+      --darkModeBlackOffset: #{$darkModeBlackOffset__orange};
+      --darkModeNeonAccent: #{$darkModeNeonAccent__orange};
+    }
+
+    & .hue__links {
+      background: var(--darkModeBlackOffset);
+
+      &__link {
+        color: $darkModeTextWhite;
+  
+        &--selected {
+          color: $darkModeTextWhite;
+        }
+      }
+    }
+
+    & .hue__controller {
+      border: 1px solid var(--darkModeNeonAccent);
+    }
+
+    & .hueGroups {
+      &__filter,
+      &__listItem {
+        background: $darkModeBlack;
+        border: 1px solid var(--darkModeNeonAccent);
+
+        &:hover,
+        &--selected {
+          background: var(--darkModeBlackOffset);
+        }
+      }
+    }
+
+    & .hueGroups__filter {
+      background: $darkModeBlack;
+      border: 1px solid var(--darkModeNeonAccent);
+    }
+
+    & .hueGroups__filter,
+    & .hueGroups__filter::placeholder {
+      color: $darkModeTextWhite;
+    }
+
+    & .beats__buttons {
+      border: 1px solid var(--darkModeNeonAccent);
+      border-radius: 5px; // wraps buttons that have 4px border radius
+    }
+
+    & .beats__hueLatencyInput {
+      background: $darkModeBlack;
+      border: 1px solid var(--darkModeNeonAccent);
+      color: $darkModeTextWhite;
+    }
+
+    & :global(.list-group-item) {
+      background: $darkModeBlack;
+      border: 1px solid var(--darkModeNeonAccent);
+
+      &:not(:first-child) {
+        border-top: 0;
+      }
+    }
+
+    & :global(.input-group-text) {
+      background: var(--darkModeBlackOffset);
+      border: 1px solid var(--darkModeNeonAccent);
+      color: $darkModeTextWhite;
+    }
+  }
+}
+
+// TODO move into own file
+.hueGroups {
+  margin: 0 auto;
+
+  &__filter {
+    border: 1px solid rgb(200,200,200);
+    border-radius: $hueBorderRadius;
+    grid-area: 1 / 1 / 2 / 2;
+    padding: 5px 10px;
+  }
+
+  &__filter:hover,
+  &__listItem:hover,
+  &__listItem--selected {
+    background: rgb(240,240,240);
+  }
+
+  &__list {
+    grid-area: 2 / 1 / 3 / 2;
+    margin: 0;
+    overflow-y: auto;
+
+    &Item {
+      // TODO make mixin (also in Light.scss)
+      border: 1px solid rgb(200,200,200);
+      cursor: pointer;
+      padding: 4px 10px;
+      text-align: center;
+
+      &:first-of-type {
+        border-top-left-radius: $hueBorderRadius;
+        border-top-right-radius: $hueBorderRadius;
+      }
+
+      &:last-of-type {
+        border-bottom-left-radius: $hueBorderRadius;
+        border-bottom-right-radius: $hueBorderRadius;
+      }
+
+      &:not(:first-of-type) {
+        border-top: 0;
+      }
+
+      &__title {
+        font-size: 1.25rem;
+      }
+
+      &__subtitle {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  &__detail {
+    grid-area: 1 / 2 / 3 / 3;
+    overflow-y: auto;
+
+    &__controller {
+      border: 1px solid var(--darkModeNeonAccent);
+      border-radius: 6px;
+      overflow: hidden;
+      padding: 10px;
+
+      &:not(:last-of-type) {
+        margin-bottom: 6px;
+      }
+    }
+  }
+}
+
+.beats {
+  &__wrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__mainControls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin: 8px 0;
+    width: 100%;
+
+    & > * {
+      margin: 5px 10px;
+      width: auto;
+    }
+  }
+
+  &__buttons {
+    border: 1px solid transparent;
+  }
+
+  &__hueLatencyInput {
+    max-width: 100px;
+    min-height: 100%;
+    text-align: center;
+  }
+
+  &__lights {
+    display: flex;
+
+    &--fullScreen {
+      bottom: 10px;
+      left: 10px;
+      margin: 0;
+      max-height: 100%;
+      max-width: 100%;
+      min-height: 0;
+      min-width: 0;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+
+      & .modal-content {
+        display: flex;
+        flex-direction: row;
+        min-height: 100%;
+      }
+
+      // & .beatLight {
+      //   @include forceWidth(50%); // TODO tim make this variable
+      //   @include forceHeight(100%);
+      //   border: 0;
+      //   border-radius: 0;
+      //   margin: 0;
+      //   padding: 0;
+      // }
+    }
+  }
+
+  &__checkboxWrapper {
+    display: flex;
+  }
+
+  &__checkbox {
+    align-items: center;
+    display: flex;
+  }
+
+  &--highlight {
+    background: yellow;
+    color: black;
+  }
+}
+
+.beatVisualizer {
+  @include forceWidth(100%);
+  background: rgb(220,220,220);
+  border: 1px solid black;
+  border-radius: $hueBorderRadius;
+  box-shadow: inset 0px 8px 20px 0px rgba(0,0,0,0.35);
+  overflow: hidden;
+
+  &__preview {
+    border-radius: $hueBorderRadius;
+  }
+}
+
+.beatLight {
+  $beatLightRadius: 50px;
+  @include forceHeight($beatLightRadius);
+  @include forceWidth($beatLightRadius);
+  border: 1px solid black;
+  border-radius: #{$beatLightRadius / 2};
+}
+
+.lightTracksSettings {
+  column-gap: 10px;
+  display: grid;
+  grid-template-columns: minmax(auto, min-content) minmax(150px, 1fr);
+  grid-template-rows: auto;
+  overflow: hidden;
+  width: 100%;
+
+  &__tracks {
+    margin-bottom: 10px;
+    overflow-y: auto;
+  }
+
+  &__trackSettings {
+    align-items: center;
+    border: 1px solid rgb(200,200,200);
+    display: flex;
+    grid-area: 1 / 1 / 2 / 2;
+    overflow-x: auto;
+    padding: 12px;
+
+    &:first-of-type {
+      border-top-left-radius: $hueBorderRadius;
+      border-top-right-radius: $hueBorderRadius;
+    }
+
+    &:last-of-type {
+      border-bottom-left-radius: $hueBorderRadius;
+      border-bottom-right-radius: $hueBorderRadius;
+    }
+
+    &:not(:first-of-type) {
+      border-top: 0;
+    }
+  }
+
+  &__lightIdSelectors {
+    margin-left: 10px;
+
+    &__titleRow {
+      align-items: center;
+      display: flex;
+      margin-bottom: 5px;
+
+      &__title {
+        margin-right: 20px;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  &__lightIdButton {
+    padding: 8px 16px;
+  }
+
+  &__lightsInfo {
+    grid-area: 1 / 2 / 2 / 3;
+    overflow-y: auto;
+
+    & > * {
+      padding: 6px;
+      text-align: center;
+    }
+
+    &--details {
+      font-style: italic;
+    }
+  }
+
+  &--darkMode {
+    color: $darkModeTextWhite;
+
+    & .lightTracksSettings__trackSettings {
+      border: 1px solid var(--darkModeNeonAccent);
+    }
+
+    & .beatLight {
+      border: 1px solid var(--darkModeNeonAccent);
+    }
+
+    & :global(.dropdown-menu) {
+      background: $darkModeBlack;
+      border: 1px solid var(--darkModeNeonAccent);
+
+      & > :global(.dropdown-item) {
+        color: $darkModeTextWhite;
+
+        &:hover {
+          background: var(--darkModeBlackOffset);
+          color: $darkModeTextWhite;
+        }
+      }
+    }
+  }
+}

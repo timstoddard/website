@@ -1,7 +1,6 @@
 import * as React from 'react'
-import Button from 'react-bootstrap/Button'
-
-const styles = require('./scss/IncrGame.scss') // tslint:disable-line no-var-requires
+import { Button } from 'react-bootstrap'
+import styles from './scss/IncrGame.scss'
 
 const moneyFormat = (n: number): string => n.toFixed(2)
 const moneyAmount = (n: number): number => parseFloat(moneyFormat(n))

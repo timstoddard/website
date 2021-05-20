@@ -1,6 +1,5 @@
 import * as React from 'react'
-
-const styles = require('./scss/Zen.scss') // tslint:disable-line no-var-requires
+import styles from './scss/Zen.scss'
 
 interface Props {
   radiusChangeSpeed: number

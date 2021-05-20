@@ -1,0 +1,13 @@
+.lightStrips {
+  padding: 10px;
+
+  &__canvas {
+    width: 100%;
+  }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+}

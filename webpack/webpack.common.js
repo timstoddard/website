@@ -1,6 +1,7 @@
+const merge = require('webpack-merge').merge // package now in TS
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const autoprefixer = require('autoprefixer')
+// const autoprefixer = require('autoprefixer')
 const path = require('path')
 
 const getCssLoaders = (useCssModules, mode) => {
@@ -9,19 +10,23 @@ const getCssLoaders = (useCssModules, mode) => {
       loader: 'css-loader',
       options: {
         modules: {
-          localIdentName: mode === 'prod' ? '[hash:base64:5]' : '[local]__[hash:base64:5]',
+          localIdentName: mode === 'prod' ? '[fullhash:base64:5]' : '[local]__[fullhash:base64:5]',
         },
       },
     }
     : 'css-loader'
   return [
     MiniCssExtractPlugin.loader,
+    'css-modules-typescript-loader',
     cssLoader,
     {
       loader: 'postcss-loader',
       options: {
-        ident: 'postcss',
-        plugins: [autoprefixer],
+        postcssOptions: {
+          plugins: [
+            ['autoprefixer', { /* options */ }],
+          ],
+        },
       },
     },
     'sass-loader',
@@ -37,7 +42,7 @@ module.exports = {
     output: {
       path: path.join(__dirname, '../dist'),
       publicPath: mode === 'prod' ? '/dist/' : '/',
-      filename: '[name].[hash:8].js',
+      filename: '[name].[fullhash:8].js',
       chunkFilename: '[name].[chunkhash:8].chunk.js',
     },
     module: {
@@ -67,7 +72,7 @@ module.exports = {
       ],
     },
     resolve: {
-      extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+      extensions: ['.ts', '.tsx', '.js', '.json'],
     },
   }),
   sharedPlugins: (mode) => {
@@ -88,9 +93,10 @@ module.exports = {
     return [
       new HtmlWebpackPlugin(htmlWebpackPluginOptions),
       new MiniCssExtractPlugin({
-        filename: '[name].[hash:8].css',
+        filename: '[name].[fullhash:8].css',
         chunkFilename: '[name].[chunkhash:8].chunk.css',
       }),
     ]
   },
+  merge,
 }

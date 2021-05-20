@@ -1,8 +1,7 @@
 import classNames from 'classnames'
 import * as React from 'react'
-import Button from 'react-bootstrap/Button'
-
-const styles = require('./scss/Perf.scss') // tslint:disable-line no-var-requires
+import { Button } from 'react-bootstrap'
+import styles from './scss/Perf.scss'
 
 /*
 const sampleSnippets = [
@@ -254,9 +253,7 @@ export default class Perf extends React.Component<{}, State> {
                 rows={10} />
             </div>
           ))}
-          <Button
-            className={styles.perf__button}
-            onClick={addSnippet}>
+          <Button onClick={addSnippet}>
             Add New Code Snippet
           </Button>
           <div className={styles.perf__form__numberOfRuns}>

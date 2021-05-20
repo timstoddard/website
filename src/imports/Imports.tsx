@@ -1,7 +1,6 @@
 import * as React from 'react'
-import Button from 'react-bootstrap/Button'
-
-const styles = require('./scss/Imports.scss') // tslint:disable-line no-var-requires
+import { Button } from 'react-bootstrap'
+import styles from './scss/Imports.scss'
 
 interface State {
   rawValue: string

@@ -1,11 +1,10 @@
 import classNames from 'classnames'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import Form from 'react-bootstrap/Form'
+import { Form } from 'react-bootstrap'
 import { BackgroundUrlType, carNamesForSelect, StartPageCar } from './background-urls'
-
-const styles = require('./scss/Links.scss') // tslint:disable-line no-var-requires
-const styles2 = require('./scss/Start.scss') // tslint:disable-line no-var-requires
+import styles from './scss/Links.scss'
+import styles2 from './scss/Start.scss'
 
 interface HomePageLink {
   name: string

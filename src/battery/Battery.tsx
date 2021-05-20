@@ -1,7 +1,6 @@
 import classNames from 'classnames'
 import * as React from 'react'
-
-const styles = require('./scss/Battery.scss') // tslint:disable-line no-var-requires
+import styles from './scss/Battery.scss'
 
 interface Nav {
   getBattery: () => BatteryStats
@@ -186,7 +185,7 @@ export default class Battery extends React.Component<{}, State> {
           <div
             className={classNames(
               styles.battery__level__background,
-              styles[`battery__level__background--${batteryColor}`])}
+              (styles as any)[`battery__level__background--${batteryColor}`])}
             style={{ width: percentage }} />
           <div className={styles.battery__level__text}>
             {hasGetBattery ? percentage : '??'}

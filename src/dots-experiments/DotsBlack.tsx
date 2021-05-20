@@ -1,7 +1,6 @@
 import classNames from 'classnames'
 import * as React from 'react'
-
-const styles = require('../home/scss/Dots.scss') // tslint:disable-line no-var-requires
+import styles from '../home/scss/Dots.scss'
 
 interface State {
   visible: boolean

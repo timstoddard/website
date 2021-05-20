@@ -7,6 +7,7 @@ unlink node_modules
 rm package-lock.json
 
 # install modules
+rm -rf node_modules
 npm i
 
 # move node_modules to external directory

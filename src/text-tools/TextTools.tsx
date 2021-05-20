@@ -1,10 +1,8 @@
 import * as React from 'react'
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
+import { Button, Form } from 'react-bootstrap'
 import alternatingCapsTransform from './transformers/alternating-caps'
 import partyParrotTransform from './transformers/party-parrot'
-
-const styles = require('./scss/TextTools.scss') // tslint:disable-line no-var-requires
+import styles from './scss/TextTools.scss'
 
 interface State {
   rawValue: string
@@ -86,7 +84,7 @@ export default class TextTools extends React.Component<{}, State> {
           </Button>
         </Form>
         {hasText && (
-          <ul className={styles.textTools__output}>
+          <ul>
             <li>
               <h4>Alternating Caps Text</h4>
               <p>{alternatingCapsText}</p>

@@ -1,7 +1,6 @@
 import classNames from 'classnames'
 import * as React from 'react'
-
-const styles = require('./scss/Bingo.scss') // tslint:disable-line no-var-requires
+import styles from './scss/Bingo.scss'
 
 export enum CellState {
   UNSELECTED,

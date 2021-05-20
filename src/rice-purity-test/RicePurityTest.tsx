@@ -1,8 +1,6 @@
 import * as React from 'react'
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
-
-const styles = require('./scss/RicePurityTest.scss') // tslint:disable-line no-var-requires
+import { Button, Form } from 'react-bootstrap'
+import styles from './scss/RicePurityTest.scss'
 
 const questions = [
   'Held hands romantically?',
@@ -218,8 +216,7 @@ export default class RicePurityTest extends React.Component<{}, State> {
                   className={styles.rpt__question}>
                   <Form.Check.Input
                     type='checkbox'
-                    onChange={handleCheckboxChange}
-                    className={styles.rpt__checkbox} />
+                    onChange={handleCheckboxChange} />
                   <Form.Check.Label>{index + 1}. {question}</Form.Check.Label>
                 </Form.Check>
               ))}

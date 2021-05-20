@@ -1,8 +1,7 @@
 import classNames from 'classnames'
 import * as React from 'react'
 import { Mode } from './PeriodicTable'
-
-const styles = require('./scss/ModeSelect.scss') // tslint:disable-line no-var-requires
+import styles from './scss/ModeSelect.scss'
 
 interface Props {
   mode: Mode
@@ -11,7 +10,7 @@ interface Props {
   handleSelectChange: (e: unknown) => void
 }
 
-const ModeSelect: React.StatelessComponent<Props> = ({
+const ModeSelect: React.FunctionComponent<Props> = ({
   mode,
   toggleMode,
   showModeSelect,

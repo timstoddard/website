@@ -1,8 +1,6 @@
 import * as React from 'react'
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
-
-const styles = require('./scss/StrobeOptions.scss') // tslint:disable-line no-var-requires
+import { Button, Form } from 'react-bootstrap'
+import styles from './scss/StrobeOptions.scss'
 
 interface Props {
   ms: number

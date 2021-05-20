@@ -1,7 +1,6 @@
 import classNames from 'classnames'
 import * as React from 'react'
-
-const styles = require('./scss/Dots.scss') // tslint:disable-line no-var-requires
+import styles from './scss/Dots.scss'
 
 interface Props {
   delay: number
@@ -170,6 +169,7 @@ export default class Dots extends React.Component<Props, State> {
     }
   }
 
+  // TODO get RGB should return { r, g, b } to improve efficiency (no parseInt)
   averageRGB = (color1: Color, color2: Color): string => {
     const rgb1 = this.getRGB(color1)
     const rgb2 = this.getRGB(color2)

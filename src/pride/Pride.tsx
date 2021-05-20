@@ -1,7 +1,6 @@
 import classNames from 'classnames'
 import * as React from 'react'
-
-const styles = require('./scss/Pride.scss') // tslint:disable-line no-var-requires
+import styles from './scss/Pride.scss'
 
 const PERIOD = 225
 const COLUMNS = 500
@@ -11,17 +10,17 @@ const ANIMATION_DURATION = 2 // keep in sync with scss
 const arr = (n: number): null[] => new Array(n).fill(null)
 
 interface PrideRowProps { n: number }
-const PrideRow: React.StatelessComponent<PrideRowProps> = ({ n }: PrideRowProps): JSX.Element => {
+const PrideRow: React.FunctionComponent<PrideRowProps> = ({ n }: PrideRowProps): JSX.Element => {
   return (
     <div
       className={classNames(
         styles.pride__flagRow,
-        styles[`pride__flagRow${n}`])} />
+        (styles as any)[`pride__flagRow${n}`])} />
   )
 }
 
 interface PrideColumnProps { n: number }
-const PrideColumn: React.StatelessComponent<PrideColumnProps> = ({ n }: PrideColumnProps): JSX.Element => {
+const PrideColumn: React.FunctionComponent<PrideColumnProps> = ({ n }: PrideColumnProps): JSX.Element => {
   return (
     <div
       style={{ animationDelay : `${ANIMATION_DURATION * 1000 * (n / PERIOD)}ms` }}
@@ -65,7 +64,7 @@ export default class Pride extends React.Component<{}, State> {
           className={classNames(
             styles.pride__border,
             { [styles['pride__border--visible']]: showingBorder })} />
-        <div className={styles.pride__flag}>
+        <div>
           {arr(COLUMNS).map((_: unknown, i: number) => (
             <PrideColumn
               key={i}

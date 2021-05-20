@@ -1,6 +1,5 @@
 import * as React from 'react'
-
-const styles = require('./scss/Time.scss') // tslint:disable-line no-var-requires
+import styles from './scss/Time.scss'
 
 interface State {
   timeString: string

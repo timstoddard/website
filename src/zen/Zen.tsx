@@ -1,8 +1,7 @@
 import * as React from 'react'
 import ColorChanger from './ColorChanger'
 import Mover from './Mover'
-
-const styles = require('./scss/Zen.scss') // tslint:disable-line no-var-requires
+import styles from './scss/Zen.scss'
 
 interface State {
   screenCenterX: number

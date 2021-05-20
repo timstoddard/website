@@ -1,6 +1,5 @@
 import * as React from 'react'
-
-const styles = require('./scss/About.scss') // tslint:disable-line no-var-requires
+import styles from './scss/About.scss'
 
 interface Icon {
   name: string
@@ -62,15 +61,14 @@ const details: Detail[] = [
   },
 ]
 
-const IconLinks: React.StatelessComponent<{}> = (): JSX.Element => (
+const IconLinks: React.FunctionComponent<{}> = (): JSX.Element => (
   <div className={styles.about__icons}>
     {icons.map(({ href, name }: Icon) => (
       <a
         href={href}
         target='_blank'
         rel='noopener noreferrer'
-        key={name}
-        className={styles.about__icons__link}>
+        key={name}>
         <img
           src={`../../media/logos/${name.toLowerCase()}.png`}
           alt={name}
@@ -80,7 +78,7 @@ const IconLinks: React.StatelessComponent<{}> = (): JSX.Element => (
   </div>
 )
 
-const Details: React.StatelessComponent<{}> = (): JSX.Element => (
+const Details: React.FunctionComponent<{}> = (): JSX.Element => (
   <dl className={styles.about__details}>
     {details.map(({ field, value }: Detail) => (
       <div
@@ -97,7 +95,7 @@ const Details: React.StatelessComponent<{}> = (): JSX.Element => (
   </dl>
 )
 
-const About: React.StatelessComponent<{}> = (): JSX.Element => (
+const About: React.FunctionComponent<{}> = (): JSX.Element => (
   <div className={styles.about}>
       <h4 className={styles.about__title}>
         Tim Stoddard

@@ -1,9 +1,7 @@
 import * as React from 'react'
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
+import { Button, Form } from 'react-bootstrap'
 import FormInput from './FormInput'
-
-const styles = require('./scss/E85.scss') // tslint:disable-line no-var-requires
+import styles from './scss/E85.scss'
 
 interface State {
   currentGallons: number

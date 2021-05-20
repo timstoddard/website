@@ -1,7 +1,6 @@
 import classNames from 'classnames'
 import * as React from 'react'
-
-const styles = require('./scss/Infinity.scss') // tslint:disable-line no-var-requires
+import styles from './scss/Infinity.scss'
 
 const getProps = (
   name: NodeName,
@@ -35,7 +34,7 @@ interface Props {
   showingBorders: boolean
 }
 
-const Infinity: React.StatelessComponent<Props> = ({
+const Infinity: React.FunctionComponent<Props> = ({
   data,
   link,
   onClick,
@@ -48,7 +47,7 @@ const Infinity: React.StatelessComponent<Props> = ({
       onClick={onClick}
       className={classNames(
         styles.infinity__child,
-        styles[`infinity--level${link.length}`],
+        (styles as any)[`infinity--level${link.length}`],
         {
           [styles['infinity__child--end']]: !(data.a || data.b),
           [styles['infinity__child--end--bordered']]: !(data.a || data.b) && showingBorders,

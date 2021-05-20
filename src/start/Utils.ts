@@ -125,7 +125,7 @@ export class WeatherUtils {
   private getLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        (location: Position) => {
+        (location: GeolocationPosition) => {
           const locationData = {
             lat: location.coords.latitude,
             lon: location.coords.longitude,

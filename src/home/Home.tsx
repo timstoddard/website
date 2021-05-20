@@ -1,8 +1,7 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 import Dots from './Dots'
-
-const styles = require('./scss/Home.scss') // tslint:disable-line no-var-requires
+import styles from './scss/Home.scss'
 
 interface HomepageLink {
   pathname: string
@@ -24,7 +23,7 @@ const links: HomepageLink[] = [
   },
 ]
 
-const Home: React.StatelessComponent<{}> = (): JSX.Element => {
+const Home: React.FunctionComponent<{}> = (): JSX.Element => {
   document.title = 'Tim Stoddard'
 
   const setIfExternalPath = (pathname: string, tResult: string): string =>

@@ -74,6 +74,10 @@ const routes: LoadableRoute[] = [
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'LightStrips' */ './light-strips/LightStrips')),
   },
   {
+    path: '/outlook',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Outlook' */ './outlook/Outlook')),
+  },
+  {
     path: '/perf',
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Perf' */ './perf/Perf')),
   },

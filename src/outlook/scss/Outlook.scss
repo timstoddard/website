@@ -1,0 +1,44 @@
+.outlook {
+  display: grid;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  grid-template-columns: 15% 25% 60%;
+  grid-template-rows: 60px auto 35px;
+  height: 100vh;
+  width: 100vw;
+
+  &__header {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 1;
+  }
+
+  &__folders {
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 2;
+    grid-row-end: 2;
+  }
+
+  &__posts {
+    grid-column-start: 2;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 2;
+  }
+
+  &__detail {
+    grid-column-start: 3;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 2;
+  }
+
+  &__footer {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 3;
+    grid-row-end: 3;
+  }
+}

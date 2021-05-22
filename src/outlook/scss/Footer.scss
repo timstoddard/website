@@ -1,0 +1,21 @@
+.footer {
+  align-items: center;
+  background: rgb(160,160,160);
+  box-shadow: inset 0px 2px 5px 0px rgba(0,0,0,0.5);
+  color: white;
+  display: flex;
+  font-size: 0.9em;
+  font-weight: bold;
+  justify-content: space-between;
+  padding: 0 16px 0 80px;
+
+  &__items {
+    // TODO add real styles
+    color: inherit;
+  }
+
+  &__email {
+    // TODO add real styles
+    color: inherit;
+  }
+}

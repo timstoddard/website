@@ -126,10 +126,10 @@ $newsWidth: 40%;
 
   &__backgroundImagePreload {
     height: 1px;
-    left: -1px;
+    left: -1000px;
     opacity: 0;
     position: absolute;
-    top: -1px;
+    top: -1000px;
     visibility: hidden;
     width: 1px;
   }

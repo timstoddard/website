@@ -3,6 +3,7 @@ import * as React from 'react'
 import { Link } from 'react-router-dom'
 import { Form } from 'react-bootstrap'
 import { BackgroundUrlType, carNamesForSelect, StartPageCar } from './background-urls'
+import { EmptyObject } from '../types'
 import styles from './scss/Links.scss'
 import styles2 from './scss/Start.scss'
 
@@ -100,7 +101,7 @@ interface Props {
   className: string
 }
 
-export default class Links extends React.Component<Props, {}> {
+export default class Links extends React.Component<Props, EmptyObject> {
   constructor(props: Props) {
     super(props)
   }

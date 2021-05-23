@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 import * as React from 'react'
+import { EmptyObject } from '../types'
 import styles from './scss/Battery.scss'
 
 interface Nav {
@@ -34,11 +35,11 @@ interface State {
   decreasing: boolean
 }
 
-export default class Battery extends React.Component<{}, State> {
+export default class Battery extends React.Component<EmptyObject, State> {
   batteryAnimationInterval: number
   removeEventListeners: () => void
 
-  constructor(props: {}) {
+  constructor(props: EmptyObject) {
     super(props)
 
     this.state = {
@@ -185,6 +186,7 @@ export default class Battery extends React.Component<{}, State> {
           <div
             className={classNames(
               styles.battery__level__background,
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               (styles as any)[`battery__level__background--${batteryColor}`])}
             style={{ width: percentage }} />
           <div className={styles.battery__level__text}>

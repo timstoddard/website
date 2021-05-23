@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { EmptyObject } from '../types'
 
 interface OutlookIconProps {
   className: string
@@ -158,7 +159,7 @@ interface Props {
   className?: string
 }
 
-export default class OutlookIcon extends React.Component<Props, {}> {
+export default class OutlookIcon extends React.Component<Props, EmptyObject> {
   render(): JSX.Element {
     const {
       iconName,

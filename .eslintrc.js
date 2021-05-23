@@ -5,10 +5,14 @@ module.exports = {
     sourceType: 'module',
   },
   extends: [
-    'plugin:@typescript-eslint/recommended'
+    'plugin:@typescript-eslint/recommended',
   ],
   rules: {
-    // place to specify ESLint rules - can be used to overwrite rules specified from the extended configs
-    // e.g. "@typescript-eslint/explicit-function-return-type": "off",
+    // TODO turn back on eventually
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    // TODO turn back on eventually
+    "@typescript-eslint/no-explicit-any": "off",
+    // TODO turn back on eventually
+    "@typescript-eslint/no-unused-vars": "off",
   }
 }

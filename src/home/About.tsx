@@ -61,7 +61,7 @@ const details: Detail[] = [
   },
 ]
 
-const IconLinks: React.FunctionComponent<{}> = (): JSX.Element => (
+const IconLinks: React.FunctionComponent = (): JSX.Element => (
   <div className={styles.about__icons}>
     {icons.map(({ href, name }: Icon) => (
       <a
@@ -78,7 +78,7 @@ const IconLinks: React.FunctionComponent<{}> = (): JSX.Element => (
   </div>
 )
 
-const Details: React.FunctionComponent<{}> = (): JSX.Element => (
+const Details: React.FunctionComponent = (): JSX.Element => (
   <dl className={styles.about__details}>
     {details.map(({ field, value }: Detail) => (
       <div
@@ -95,7 +95,7 @@ const Details: React.FunctionComponent<{}> = (): JSX.Element => (
   </dl>
 )
 
-const About: React.FunctionComponent<{}> = (): JSX.Element => (
+const About: React.FunctionComponent = (): JSX.Element => (
   <div className={styles.about}>
       <h4 className={styles.about__title}>
         Tim Stoddard

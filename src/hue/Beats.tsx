@@ -1,6 +1,7 @@
 import classNames from 'classnames'
 import * as React from 'react'
 import { Button, ButtonGroup, Form, InputGroup } from 'react-bootstrap'
+import { noop } from '../types'
 import { LightState, MsStep } from './beats/beat-types'
 import BeatVisualizer from './beats/BeatVisualizer'
 import { Song } from './beats/song'
@@ -180,7 +181,7 @@ export default class Beats extends React.Component<Props, State> {
     }
   }
 
-  resetRoutine = (afterFn: (() => void) = (() => {})): void => {
+  resetRoutine = (afterFn = noop()): void => {
     this.stopRoutine()
     this.setState({
       lights: this.getLightGenerator().allLightsOff(),

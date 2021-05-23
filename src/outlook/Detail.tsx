@@ -1,5 +1,6 @@
 import * as React from 'react'
 import OutlookIcon, { OutlookIconName } from './OutlookIcon'
+import { EmptyObject } from '../types'
 import styles from './scss/Detail.scss'
 
 const decodeHTML = (html: string): string => {
@@ -106,7 +107,7 @@ interface DetailProps {
   className: string
 }
 
-export default class Detail extends React.Component<DetailProps, {}> {
+export default class Detail extends React.Component<DetailProps, EmptyObject> {
   renderDateAndTime = (secondsFromEpoch: number): string => {
     const days = 'Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday'
     const months = 'January|February|March|April|May|June|July|August|September|October|November|December'

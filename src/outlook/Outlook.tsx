@@ -5,6 +5,7 @@ import Folders from './Folders'
 import Footer from './Footer'
 import Header from './Header'
 import Posts, { Post } from './Posts'
+import { EmptyObject } from '../types'
 import styles from './scss/Outlook.scss'
 
 interface State {
@@ -21,10 +22,10 @@ const FAKE_EMAIL_MESSAGE = 'Enter a fake email (leave blank for the default)'
 const DEFAULT_SUBREDDIT =  'cars'
 const DEFAULT_EMAIL = 'johnsmith23@gmail.com'
 
-export default class Outlook extends React.Component<{}, State> {
+export default class Outlook extends React.Component<EmptyObject, State> {
   postsRef: React.Ref<Posts>
 
-  constructor(props: {}) {
+  constructor(props: EmptyObject) {
     super(props)
     this.postsRef = React.createRef()
 
@@ -81,6 +82,7 @@ export default class Outlook extends React.Component<{}, State> {
         postDetails: null,
         postComments: null,
       }, () => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (this.postsRef as any).current.loadPosts()
         this.saveSettings()
       })

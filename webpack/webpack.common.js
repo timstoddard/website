@@ -86,8 +86,8 @@ module.exports = {
       }
       : {
         eslint: {
-          files: './src/**/*.{ts,tsx,js,jsx}',
-        }
+          files: './src/**/!(*.d).{ts,tsx,js,jsx}',
+        },
       }
 
     const htmlWebpackPluginOptions = {

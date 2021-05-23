@@ -1,8 +1,9 @@
 import * as React from 'react'
 import { Form } from 'react-bootstrap'
 // TODO possibly make shared utils for this + hue client
-import { hexToColor } from '../hue/hue-utils'
+// import { hexToColor } from '../hue/hue-utils'
 import { InputAudioStream, OnBeatDetectedParams } from './InputAudioStream'
+import { EmptyObject } from '../types'
 import styles from './scss/LightStrips.scss'
 
 const PERCUSSION_FADE_CYCLES = 4
@@ -40,7 +41,7 @@ interface State {
   percussiveThreshold: number
 }
 
-export default class LightStrips extends React.Component<{}, State> {
+export default class LightStrips extends React.Component<EmptyObject, State> {
   private animationFrame: number
   private canvasElement: React.RefObject<HTMLCanvasElement> = React.createRef()
   private inputAudioStream: InputAudioStream
@@ -50,10 +51,10 @@ export default class LightStrips extends React.Component<{}, State> {
   private spectrogramDataWindow: Float32Array[] = []
 
   // TODO remove eventually (maybe have an option to hide/show)
-  private avgPercussionCountMsNumerator: number = 0
-  private avgPercussionCountMsDenominator: number = 0
+  private avgPercussionCountMsNumerator = 0
+  private avgPercussionCountMsDenominator = 0
 
-  constructor(props: {}) {
+  constructor(props: EmptyObject) {
     super(props)
 
     this.spectrogramOverallMin = Number.POSITIVE_INFINITY
@@ -370,7 +371,7 @@ export default class LightStrips extends React.Component<{}, State> {
 }
 
 class PixelGenerator {
-  private msPerCycle: number = 40
+  private msPerCycle = 40
 
   next = (i: number, totalPixels: number, elapsedMs: number) => {
     const cycle = Math.floor(elapsedMs / this.msPerCycle)

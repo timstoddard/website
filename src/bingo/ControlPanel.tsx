@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Button } from 'react-bootstrap'
+import { noop } from '../types'
 import styles from './scss/Bingo.scss'
 
 interface Props {
@@ -13,7 +14,7 @@ const ControlPanel: React.FunctionComponent<Props> = ({
   buttonText = '',
   moveCount = 0,
   selectedCells = 0,
-  onSubmit = (): void => {},
+  onSubmit = noop(),
 }: Props): JSX.Element => (
   <div className={styles.board__controls}>
     <div className={styles.board__controls__section}>

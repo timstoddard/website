@@ -29,6 +29,7 @@ const CurrentElement: React.FunctionComponent<Props> = ({
           key={shell}
           className={classNames(
             styles.currentElement__electron,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (styles as any)[`currentElement__electron--${mode === Mode.NORMAL ? shell[1] : 'plain'}`])}>
           {shell}
         </div>
@@ -37,7 +38,7 @@ const CurrentElement: React.FunctionComponent<Props> = ({
   </div>
 )
 
-const getElectrons = (e: Element, charge: number = 0): string[] => {
+const getElectrons = (e: Element, charge = 0): string[] => {
   const shells = [
     '1s',
     '2s',

@@ -1,14 +1,15 @@
 import * as React from 'react'
+import { EmptyObject } from '../types'
 import styles from './scss/Time.scss'
 
 interface State {
   timeString: string
 }
 
-export default class Time extends React.Component<{}, State> {
+export default class Time extends React.Component<EmptyObject, State> {
   updateTimer: number
 
-  constructor(props: {}) {
+  constructor(props: EmptyObject) {
     super(props)
 
     this.state = {

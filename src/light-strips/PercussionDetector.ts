@@ -8,8 +8,8 @@ export default class PercussionDetector {
   private previousDbValues: Float32Array
   private previousDbValuesFast: Float32Array
 
-  getPercussionCountTimeMs: number = 0
-  getPercussionCountFastTimeMs: number = 0
+  getPercussionCountTimeMs = 0
+  getPercussionCountFastTimeMs = 0
 
   getStftValues =  () => this.previousDbValues
 

@@ -1,12 +1,13 @@
 import * as React from 'react'
 import { Button } from 'react-bootstrap'
+import { EmptyObject } from '../types'
 import styles from './scss/HeapInput.scss'
 
 interface Props {
   generateHeaps: (ints: number[]) => void
 }
 
-export default class HeapInput extends React.Component<Props, {}> {
+export default class HeapInput extends React.Component<Props, EmptyObject> {
   input: React.RefObject<HTMLInputElement> = React.createRef()
 
   constructor(props: Props) {

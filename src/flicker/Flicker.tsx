@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 import * as React from 'react'
+import { EmptyObject } from '../types'
 import styles from './scss/Flicker.scss'
 
 interface State {
@@ -10,10 +11,10 @@ interface State {
 
 const MIN_FLAME_HEIGHT = 30
 
-export default class Flicker extends React.Component<{}, State> {
+export default class Flicker extends React.Component<EmptyObject, State> {
   flickerTimeout: number
 
-  constructor(props: {}) {
+  constructor(props: EmptyObject) {
     super(props)
 
     this.state = {

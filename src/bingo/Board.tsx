@@ -1,7 +1,6 @@
 import * as React from 'react'
 import Cell, { CellState } from './Cell'
 import ControlPanel from './ControlPanel'
-import styles from './scss/Bingo.scss'
 
 interface Props {
   className: string

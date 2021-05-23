@@ -1,7 +1,7 @@
 import { SortByDateRange, SortByFilter } from './Posts'
 
 export default class SubredditService {
-  private subredditName: string = ''
+  private subredditName = ''
   private sortBy: SortByFilter = SortByFilter.HOT
   private params: { [key: string]: unknown } = {}
 

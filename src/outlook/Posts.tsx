@@ -193,6 +193,7 @@ export default class Posts extends React.Component<PostsProps, PostsState> {
       showingSortOptions1: false,
       showingSortOptions2: false,
       [name]: !this.state[name],
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any)
   }
 

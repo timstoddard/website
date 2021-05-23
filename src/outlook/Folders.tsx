@@ -1,6 +1,7 @@
 import classNames from 'classnames'
 import * as React from 'react'
 import OutlookIcon, { OutlookIconName } from './OutlookIcon'
+import { EmptyObject } from '../types'
 import styles from './scss/Folders.scss'
 
 interface Props {
@@ -10,7 +11,7 @@ interface Props {
   className: string
 }
 
-export default class Folders extends React.Component<Props, {}> {
+export default class Folders extends React.Component<Props, EmptyObject> {
   render(): JSX.Element {
     const {
       fakeEmail,

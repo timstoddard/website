@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 import * as React from 'react'
+import { EmptyObject } from '../types'
 import styles from './scss/Footer.scss'
 
 interface Props {
@@ -7,7 +8,7 @@ interface Props {
   className: string
 }
 
-export default class Footer extends React.Component<Props, {}> {
+export default class Footer extends React.Component<Props, EmptyObject> {
   render(): JSX.Element {
     const {
       fakeEmail,

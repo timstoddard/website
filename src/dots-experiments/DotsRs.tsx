@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 import * as React from 'react'
+import { EmptyObject, noop } from '../types'
 import styles from '../home/scss/Dots.scss'
 
 interface State {
@@ -16,7 +17,7 @@ interface Dot {
   opacity: number
 }
 
-export default class DotsBlack extends React.Component<{}, State> {
+export default class DotsBlack extends React.Component<EmptyObject, State> {
   dots: Dot[]
   moveInterval: number
   visibleTimer: number
@@ -25,7 +26,7 @@ export default class DotsBlack extends React.Component<{}, State> {
   private canvasElement: React.RefObject<HTMLCanvasElement> = React.createRef()
   private imgRef: React.RefObject<HTMLImageElement> = React.createRef()
 
-  constructor(props: {}) {
+  constructor(props: EmptyObject) {
     super(props)
 
     this.canvasElement = React.createRef()
@@ -70,7 +71,7 @@ export default class DotsBlack extends React.Component<{}, State> {
   componentWillUnmount(): void {
     clearInterval(this.moveInterval)
     clearTimeout(this.visibleTimer)
-    window.onresize = (): void => {}
+    window.onresize = noop()
   }
 
   moveDots = (): void => {

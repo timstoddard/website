@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Button, Form } from 'react-bootstrap'
 import alternatingCapsTransform from './transformers/alternating-caps'
 import partyParrotTransform from './transformers/party-parrot'
+import { EmptyObject } from '../types'
 import styles from './scss/TextTools.scss'
 
 interface State {
@@ -12,8 +13,8 @@ interface State {
   hasText: boolean
 }
 
-export default class TextTools extends React.Component<{}, State> {
-  constructor(props: {}) {
+export default class TextTools extends React.Component<EmptyObject, State> {
+  constructor(props: EmptyObject) {
     super(props)
 
     this.state = {

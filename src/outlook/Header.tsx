@@ -1,6 +1,7 @@
 import classNames from 'classnames'
 import * as React from 'react'
 import OutlookIcon, { OutlookIconName } from './OutlookIcon'
+import { EmptyObject } from '../types'
 import styles from './scss/Header.scss'
 
 interface Props {
@@ -9,7 +10,7 @@ interface Props {
   className: string
 }
 
-export default class Header extends React.Component<Props, {}> {
+export default class Header extends React.Component<Props, EmptyObject> {
   showInstructions = (): void => {
     alert(
       'Click on the blue folder to pick a new subreddit.\n' +

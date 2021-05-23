@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { EmptyObject } from '../types'
 import styles from './scss/Trippy.scss'
 
 const REFRESH_DELAY = 200
@@ -18,10 +19,10 @@ interface PairGroup {
   radius: number
 }
 
-export default class Trippy extends React.Component<{}, State> {
+export default class Trippy extends React.Component<EmptyObject, State> {
   interval: number
 
-  constructor(props: {}) {
+  constructor(props: EmptyObject) {
     super(props)
 
     this.state = {

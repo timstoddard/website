@@ -5,6 +5,7 @@ import Links from './Links'
 import RandomQuote from './RandomQuote'
 import Weather from './Weather'
 import { BackgroundUrlType, getRandomType, backgroundUrls } from './background-urls'
+import { EmptyObject } from '../types'
 import styles from './scss/Start.scss'
 
 const BACKGROUND_IMAGE_CLASS = styles.start__backgroundImagePreload
@@ -15,11 +16,11 @@ interface State {
   showContent: boolean
 }
 
-export default class Start extends React.Component<{}, State> {
+export default class Start extends React.Component<EmptyObject, State> {
   changeBackgroundTimer: number
   images: HTMLImageElement[]
 
-  constructor(props: {}) {
+  constructor(props: EmptyObject) {
     super(props)
 
     this.state = {

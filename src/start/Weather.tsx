@@ -196,7 +196,7 @@ export default class Weather extends React.Component<Props, State> {
     )
   }
 
-  private load = (isFirstLoad: boolean = true) => {
+  private load = (isFirstLoad = true) => {
     if (isFirstLoad) {
       // init weather utils on first load
       this.weatherUtils = new WeatherUtils(() => {

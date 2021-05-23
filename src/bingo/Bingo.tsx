@@ -1,12 +1,13 @@
 import * as React from 'react'
 import Board from './Board'
 import Video from './Video'
+import { EmptyObject } from '../types'
 import styles from './scss/Bingo.scss'
 
-export default class Bingo extends React.Component<{}, {}> {
+export default class Bingo extends React.Component<EmptyObject, EmptyObject> {
   private videoPlayer: React.RefObject<Video> = React.createRef()
 
-  constructor(props: {}) {
+  constructor(props: EmptyObject) {
     super(props)
   }
 

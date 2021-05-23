@@ -11,7 +11,7 @@ const getCssLoaders = (useCssModules, mode) => {
       loader: 'css-loader',
       options: {
         modules: {
-          localIdentName: mode === 'prod' ? '[fullhash:base64:5]' : '[local]__[fullhash:base64:5]',
+          localIdentName: mode === 'prod' ? '[hash:base64:5]' : '[local]__[hash:base64:5]',
         },
       },
     }

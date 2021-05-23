@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Button } from 'react-bootstrap'
+import { EmptyObject } from '../types'
 import styles from './scss/Imports.scss'
 
 interface State {
@@ -23,11 +24,11 @@ interface Alias {
 }
 
 // TODO needs logic fixed to follow actual js conventions
-export default class Imports extends React.Component<{}, State> {
+export default class Imports extends React.Component<EmptyObject, State> {
   input: React.RefObject<HTMLTextAreaElement> = React.createRef()
   output: React.RefObject<HTMLTextAreaElement> = React.createRef()
 
-  constructor(props: {}) {
+  constructor(props: EmptyObject) {
     super(props)
 
     this.state = {

@@ -1,4 +1,5 @@
 import { get, set } from '../start/Utils'
+import { noop } from '../types'
 import { colorFromXy, makeCGPoint, UIColor } from './hue-color-conversion'
 import { LightData, Lights } from './Light'
 
@@ -120,7 +121,7 @@ export class HueApi {
   updateLightState = async (
     lightId: number | string,
     body: unknown,
-    transitionTime: number = 0,
+    transitionTime = 0,
   ): Promise<void> => {
     if (!this.apiUrl) {
       return
@@ -139,7 +140,7 @@ export class HueApi {
   updateGroupState = async (
     groupId: number,
     body: unknown,
-    transitionTime: number = 0,
+    transitionTime = 0,
   ): Promise<void> => {
     if (!this.apiUrl) {
       return
@@ -164,7 +165,7 @@ export class HueApi {
   displayScene = async (
     groupId: number,
     sceneId: string,
-    transitionTime: number = 0,
+    transitionTime = 0,
   ): Promise<void> => {
     if (!this.apiUrl) {
       return
@@ -213,7 +214,7 @@ export class HueApi {
 
   private fetchBaseLogic = async (
     url: string,
-    onResponse: ((result: any) => void) = () => {},
+    onResponse: ((result: any) => void) = noop(),
   ) => {
     if (!this.apiUrl) {
       return
@@ -233,7 +234,7 @@ export class HueApi {
   private fetchWithTimeout = (
     url: string,
     options: RequestInit = {},
-    timeoutMs: number = 3000
+    timeoutMs = 3000
   ): Promise<Response> => {
     if (this.fetchAbortTimeout) {
       clearTimeout(this.fetchAbortTimeout)
@@ -299,7 +300,7 @@ export const getGroupColor = (group: any): string => {
   return colorToHex(color)
 }
 
-export const stringToInt = (s: string): number => parseInt(s, 10)
+export const stringToInt = (s: string) => parseInt(s, 10)
 
 /**
  * Sort an array using the merge sort algorithm.
@@ -341,9 +342,9 @@ const merge = <T>(arr1: T[], arr2: T[], comparatorFn: (t1: T, t2: T) => number):
     }
   }
   if (left1 > 0) {
-    result.push.apply(result, arr1)
+    result.push(...arr1)
   } else {
-    result.push.apply(result, arr2)
+    result.push(...arr2)
   }
   return result
 }

@@ -23,7 +23,7 @@ const links: HomepageLink[] = [
   },
 ]
 
-const Home: React.FunctionComponent<{}> = (): JSX.Element => {
+const Home: React.FunctionComponent = (): JSX.Element => {
   document.title = 'Tim Stoddard'
 
   const setIfExternalPath = (pathname: string, tResult: string): string =>

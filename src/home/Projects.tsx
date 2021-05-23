@@ -117,7 +117,7 @@ const projectSections: Section[] = [
   },
 ]
 
-const Projects: React.FunctionComponent<{}> = (): JSX.Element => {
+const Projects: React.FunctionComponent = (): JSX.Element => {
   document.title = 'Tim\'s Projects'
   return (
     <div className={styles.projects}>

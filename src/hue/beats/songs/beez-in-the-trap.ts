@@ -1,16 +1,18 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { UIColor } from '../../hue-color-conversion'
 import { BeatStep } from '../beat-types'
 import { Song } from '../song'
 import { ColorGenerator, createNote, LightGenerator, lightOff, lightState } from './utils/utils'
 
 const PINK = new UIColor(255, 0, 200)
-// const RED = new UIColor(255, 0, 0)
+const RED = new UIColor(255, 0, 0)
 const ORANGE = new UIColor(255, 120, 0)
 const YELLOW = new UIColor(255, 255, 0)
 const GREEN = new UIColor(0, 255, 0)
 const CYAN = new UIColor(0, 200, 255)
-// const BLUE = new UIColor(0, 0, 255)
-// const PURPLE = new UIColor(255, 0, 255)
+const BLUE = new UIColor(0, 0, 255)
+const PURPLE = new UIColor(255, 0, 255)
 const WHITE = new UIColor(255, 255, 255)
 const BLACK = new UIColor(0, 0, 0)
 

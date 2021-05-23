@@ -6,6 +6,7 @@ import { HueApi } from './hue-utils'
 import HueLayoutSettings from './HueLayoutSettings'
 import Routines from './Routines'
 import Scenes from './Scenes'
+import { EmptyObject } from '../types'
 import styles from './scss/Hue.scss'
 
 // https://developers.meethue.com/develop/get-started-2
@@ -41,10 +42,10 @@ interface State {
 }
 
 // TODO add redux (?)
-export default class Hue extends React.Component<{}, State> {
+export default class Hue extends React.Component<EmptyObject, State> {
   hueApi: HueApi
 
-  constructor(props: {}) {
+  constructor(props: EmptyObject) {
     super(props)
 
     this.hueApi = new HueApi()
@@ -161,6 +162,7 @@ export default class Hue extends React.Component<{}, State> {
     return (
       <div className={classNames(
         styles.hue,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (styles as any)[`hue--darkMode--${getDarkModeColorName()}`],
         { [styles['hue--darkMode']]: isDarkMode })}>
         <header className={styles.hue__header}>

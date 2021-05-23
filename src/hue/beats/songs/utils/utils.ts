@@ -5,19 +5,20 @@ import { BeatStep, LightState } from '../../beat-types'
 export const createNote = (
   beat: number,
   lights: LightState[],
-  transitionMs: number = 0,
+  transitionMs = 0,
 ): BeatStep => ({ beat, lights, transitionMs })
 
 // control single light
 export const lightState = (
   color: UIColor,
-  brightness: number = 100,
+  brightness = 100,
 ): LightState => ({
   on: true,
   color,
   brightness,
 })
-export const lightOff = (): any => ({ on: false })
+
+export const lightOff = (): LightState => ({ on: false })
 
 export class ColorGenerator {
   private colorList: UIColor[]
@@ -56,7 +57,7 @@ export class LightGenerator {
 
   allLightsState = (
     color: UIColor,
-    brightness: number = 100,
+    brightness = 100,
   ): LightState[] => {
     const result: LightState[] = []
     for (let i = 0; i < this.lightTracksCount; i++) {

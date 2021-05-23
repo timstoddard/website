@@ -1,0 +1,201 @@
+@import 'src/scss/globals';
+
+.posts {
+  border-left: 1px solid rgb(185,185,185);
+  border-right: 1px solid rgb(185,185,185);
+  display: flex;
+  flex-direction: column;
+
+  &__sortBy {
+    border-bottom: 1px solid rgb(185,185,185);
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: flex-end;
+    padding: 8px 10px;
+
+    &__sortOptions1,
+    &__sortOptions2 {
+      position: relative;
+    }
+
+    &__sortOptions1 {
+      &Trigger {
+        color: black;
+        cursor: default;
+      }
+
+      &List {
+        display: flex;
+        flex-direction: column;
+        left: 0;
+        position: absolute;
+        top: 20px;
+
+        &__option {
+          @include defaultTransition(all);
+          background: rgb(250,250,250);
+          border: 1px solid rgb(200,200,200);
+          border-bottom: 0;
+          outline: 0;
+
+          &--selected,
+          &:hover {
+            background: rgb(230,230,230);
+          }
+
+          &:last-of-type {
+            border-bottom: 1px solid rgb(200,200,200);
+          }
+        }
+      }
+    }
+
+    &__sortOptions2 {
+      &Trigger {
+        // TODO add real styles
+        // color: black;
+        cursor: default;
+      }
+
+      &List {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        right: 0;
+        top: 20px;
+
+        &__option {
+          @include defaultTransition(all);
+          background: rgb(250,250,250);
+          border: 1px solid rgb(200,200,200);
+          outline: 0;
+
+          &--selected,
+          &:hover {
+            background: rgb(230,230,230);
+          }
+        }
+      }
+    }
+
+    &__downChevronIcon,
+    &__downArrowIcon {
+      margin: 0 4px;
+    }
+
+    &__downChevronIcon {
+      @include forceWidth(0.6em);
+    }
+
+    &__downArrowIcon {
+      @include forceWidth(0.8em);
+    }
+  }
+
+  &__scrollPane {
+    flex: 1 1 0;
+    overflow: auto;
+  }
+
+  &__todayHeader {
+    background: rgb(245,245,245);
+    border-bottom: 1px solid rgb(215,215,215);
+    border-top: 1px solid white;
+    color: rgb(110,110,110);
+    font-size: 0.85em;
+    padding: 2px 5px;
+
+    &__downChevronIcon {
+      @include forceWidth(0.9em);
+      fill: rgb(150,150,150);
+      margin: 0 3px;
+    }
+  }
+
+  &__post {
+    border-bottom: 1px solid rgb(215,215,215);
+    cursor: default;
+    padding: 4px 10px 4px 20px;
+
+    &:hover {
+      background: rgb(251,251,251);
+
+      & .posts__post__from__actions {
+        padding-left: 20px;
+        visibility: visible;
+      }
+    }
+
+    &--selected,
+    &--selected:hover {
+      background: $outlookLightBlue;
+    }
+
+    &__from,
+    &__title,
+    &__preview {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &__from {
+      display: flex;
+      justify-content: space-between;
+
+      &__name {
+        flex: 1 1 0;
+        font-size: 1.1em;
+        font-weight: bold;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      &__actions {
+        flex: 0 0 auto;
+        visibility: hidden;
+
+        &__trashCanIcon,
+        &__flagIcon {
+          fill: rgb(100,100,100);
+          margin-left: 5px;
+  
+          &:hover {
+            fill: rgb(0,0,0);
+          }
+        }
+
+        &__trashCanIcon {
+          @include forceWidth(16px);
+        }
+
+        &__flagIcon {
+          @include forceWidth(14px);
+        }
+      }
+    }
+
+    &__title {
+      display: flex;
+      justify-content: space-between;
+      max-width: 100%;
+      overflow: hidden;
+
+      &__name {
+        flex: 1 0 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      &__time {
+        color: rgb(110,110,110);
+        flex: 0 0 auto;
+        margin-left: 10px;
+      }
+    }
+
+    &__preview {
+      color: rgb(110,110,110);
+    }
+  }
+}

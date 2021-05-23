@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import * as React from 'react'
-// import styles from './scss/2048.scss' // uncomment when working on this again
-const styles: any = {}
+import { EmptyObject } from '../types'
+import styles from './scss/2048.scss'
 
 // TODO finish this game
 
@@ -77,10 +77,10 @@ const BoardTile = ({ value }: BoardTileProps): JSX.Element => {
   )
 }
 
-export default class Game2048 extends React.Component<{}, State> {
+export default class Game2048 extends React.Component<EmptyObject, State> {
   batteryAnimationInterval: number
 
-  constructor(props: {}) {
+  constructor(props: EmptyObject) {
     super(props)
 
     const boardWidth = 4

@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Button, Form } from 'react-bootstrap'
 import FormInput from './FormInput'
+import { EmptyObject } from '../types'
 import styles from './scss/E85.scss'
 
 interface State {
@@ -17,8 +18,8 @@ interface State {
   showError: boolean
 }
 
-export default class E85 extends React.Component<{}, State> {
-  constructor(props: {}) {
+export default class E85 extends React.Component<EmptyObject, State> {
+  constructor(props: EmptyObject) {
     super(props)
 
     this.state = {

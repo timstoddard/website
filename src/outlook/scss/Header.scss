@@ -1,0 +1,157 @@
+@import 'src/scss/globals';
+
+.outlookHeader {
+  background: $outlookBlue;
+  background: linear-gradient(to bottom, #136dca 0%,#0073c6 100%);
+  border-bottom: 1px solid rgb(3,97,168);
+  border-top: 1px solid #a0c3e3;
+  color: white;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto auto;
+
+  &__quickActions {
+    align-items: flex-end;
+    display: flex;
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 1;
+    grid-row-end: 1;
+    margin-left: 22px;
+
+    &__action {
+      cursor: default;
+      padding: 0 5px;
+
+      &__icon {
+        @include forceWidth(14px);
+        fill: white;
+
+        &--forwardArrow {
+          transform: scaleX(-1);
+        }
+
+        &--backArrow {
+          // TODO add real styles
+          color: inherit;
+        }
+
+        &--save {
+          // TODO add real styles
+          color: inherit;
+        }
+
+        &--printer {
+          // TODO add real styles
+          color: inherit;
+        }
+      }
+    }
+
+    &__action:not(:last-of-type) {
+      padding-right: 8px;
+    }
+  }
+
+  &__tabs {
+    align-items: flex-end;
+    display: flex;
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 2;
+    grid-row-end: 2;
+    margin-left: 10px;
+
+    &__tab {
+      cursor: default;
+      padding: 2px 12px;
+    }
+  }
+
+  &__title {
+    align-items: center;
+    cursor: default;
+    display: flex;
+    grid-column-start: 2;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 1;
+    justify-content: center;
+  }
+
+  &__search {
+    $inputMargin: 8px;
+    display: flex;
+    grid-column-start: 3;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 1;
+    margin-left: auto;
+    position: relative;
+
+    &__magnifyingGlassIcon {
+      @include forceWidth(10px);
+      fill: white;
+      left: 5px;
+      position: absolute;
+      top: #{$inputMargin + 4};
+    }
+
+    &__input {
+      // TODO remove redundancies after removing materialize.css
+      background-color: rgba(0,0,0,0.2) !important;
+      border: none !important;
+      border-radius: 3px !important;
+      cursor: default;
+      font-size: 0.85em !important;
+      height: 1.3em !important;
+      margin: $inputMargin $inputMargin 0 0 !important;
+      outline: none !important;
+      padding: 2px 2px 2px 25px !important;
+      transition: none !important;
+      width: 150px !important;
+
+      &::placeholder {
+        color: rgba(255,255,255,0.6);
+        font-weight: bold;
+      }
+
+      &:focus {
+        border: 0 !important;
+        box-shadow: none !important;
+      }
+    }
+  }
+
+  &__help {
+    align-items: flex-end;
+    display: flex;
+    grid-column-start: 3;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 2;
+    margin: 0 8px 3px auto;
+
+    &__questionMark,
+    &__downChevronIcon {
+      margin: 0 4px;
+    }
+
+    &__questionMark {
+      @include forceHeight(1.2em);
+      @include forceWidth(1.2em);
+      align-items: center;
+      border: 1px solid white;
+      border-radius: 50%;
+      cursor: default;
+      display: flex;
+      font-size: 0.9em;
+      justify-content: center;
+    }
+
+    &__downChevronIcon {
+      @include forceWidth(0.9em);
+      fill: white;
+    }
+  }
+}

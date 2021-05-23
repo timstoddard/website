@@ -1,3 +1,4 @@
+import { noop } from '../types'
 import PercussionDetector from './PercussionDetector'
 
 const MIN_FREQUENCY_BIN_COUNT = 128
@@ -43,7 +44,7 @@ export class InputAudioStream {
   // fourier stuff
   private stftRateOfChangeThreshold: number = DEFAULT_STFT_RATE_OF_CHANGE_THRESHOLD
   private percussiveThreshold: number = DEFAULT_PERCUSSIVE_THRESHOLD
-  private onBeatDetected: (sources: OnBeatDetectedParams) => void = () => {}
+  private onBeatDetected: (sources: OnBeatDetectedParams) => void = noop()
 
   constructor(config: Config = {
     bufferLen: FFT_SIZE,
@@ -164,7 +165,7 @@ export class InputAudioStream {
   /**
    * Processes the given frequency values to determine if a percussive sound has occurred.
    */
-  private processFrequencies = (freqValues: Float32Array, amplitudeValues: Float32Array, freqMs: number, amplitudeMs: number, isFast: boolean = true) => {
+  private processFrequencies = (freqValues: Float32Array, amplitudeValues: Float32Array, freqMs: number, amplitudeMs: number, isFast = true) => {
     const count = isFast
       ? this.percussionDetector.getPercussionCountFast(freqValues, this.stftRateOfChangeThreshold)
       : this.percussionDetector.getPercussionCount(amplitudeValues, this.stftRateOfChangeThreshold)

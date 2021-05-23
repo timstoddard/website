@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Form } from 'react-bootstrap'
+import { noop } from '../types'
 import styles from './scss/E85.scss'
 
 interface Props {
@@ -15,7 +16,7 @@ const FormInput: React.FunctionComponent<Props> = ({
   label,
   value,
   usePrecision = false,
-  onChange = (): void => {},
+  onChange = noop(),
 }: Props): JSX.Element => (
   <Form.Group
     controlId={id}

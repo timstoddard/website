@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Button, Form } from 'react-bootstrap'
+import { EmptyObject } from '../types'
 import styles from './scss/RicePurityTest.scss'
 
 const questions = [
@@ -110,8 +111,8 @@ interface State {
   showingResult: boolean
 }
 
-export default class RicePurityTest extends React.Component<{}, State> {
-  constructor(props: {}) {
+export default class RicePurityTest extends React.Component<EmptyObject, State> {
+  constructor(props: EmptyObject) {
     super(props)
 
     this.state = {

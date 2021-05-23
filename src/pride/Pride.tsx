@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 import * as React from 'react'
+import { EmptyObject } from '../types'
 import styles from './scss/Pride.scss'
 
 const PERIOD = 225
@@ -15,6 +16,7 @@ const PrideRow: React.FunctionComponent<PrideRowProps> = ({ n }: PrideRowProps):
     <div
       className={classNames(
         styles.pride__flagRow,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (styles as any)[`pride__flagRow${n}`])} />
   )
 }
@@ -38,8 +40,8 @@ interface State {
   showingBorder: boolean
 }
 
-export default class Pride extends React.Component<{}, State> {
-  constructor(props: {}) {
+export default class Pride extends React.Component<EmptyObject, State> {
+  constructor(props: EmptyObject) {
     super(props)
 
     this.state = {

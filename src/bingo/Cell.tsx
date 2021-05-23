@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 import * as React from 'react'
+import { EmptyObject } from '../types'
 import styles from './scss/Bingo.scss'
 
 export enum CellState {
@@ -14,7 +15,7 @@ interface Props {
   onClick: () => void
 }
 
-export default class Cell extends React.Component<Props, {}> {
+export default class Cell extends React.Component<Props, EmptyObject> {
   constructor(props: Props) {
     super(props)
   }

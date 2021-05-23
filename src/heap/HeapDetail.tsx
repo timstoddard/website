@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Button } from 'react-bootstrap'
 import BinaryHeap from './BinaryHeap'
 import printTree from './BinaryTreePrinter'
+import { EmptyObject } from '../types'
 import styles from './scss/HeapDetail.scss'
 
 interface Props {
@@ -10,7 +11,7 @@ interface Props {
   showSortedHeap: () => void
 }
 
-export default class HeapDetail extends React.Component<Props, {}> {
+export default class HeapDetail extends React.Component<Props, EmptyObject> {
   constructor(props: Props) {
     super(props)
   }

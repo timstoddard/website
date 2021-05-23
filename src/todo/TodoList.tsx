@@ -4,6 +4,7 @@ import { Form } from 'react-bootstrap'
 import IconButton, { IconPath } from './IconButton'
 import Todo from './Todo'
 import { TRANSITION_MS, TransitionState } from './transition'
+import { EmptyObject } from '../types'
 import styles from './scss/TodoList.scss'
 
 interface State {
@@ -21,8 +22,8 @@ interface TodoItem {
   isEditing: boolean
 }
 
-export default class TodoList extends React.Component<{}, State> {
-  constructor(props: {}) {
+export default class TodoList extends React.Component<EmptyObject, State> {
+  constructor(props: EmptyObject) {
     super(props)
 
     this.state = {

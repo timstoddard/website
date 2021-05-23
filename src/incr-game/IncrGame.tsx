@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Button } from 'react-bootstrap'
+import { EmptyObject } from '../types'
 import styles from './scss/IncrGame.scss'
 
 const moneyFormat = (n: number): string => n.toFixed(2)
@@ -15,11 +16,11 @@ interface State {
   timerCost: number
 }
 
-export default class IncrGame extends React.Component<{}, State> {
+export default class IncrGame extends React.Component<EmptyObject, State> {
   runTimeout: number
   hoverMoneyTimeout: number
 
-  constructor(props: {}) {
+  constructor(props: EmptyObject) {
     super(props)
 
     this.state = {

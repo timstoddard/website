@@ -1,4 +1,5 @@
 const merge = require('webpack-merge').merge // package now in TS
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // const autoprefixer = require('autoprefixer')
@@ -49,8 +50,8 @@ module.exports = {
       rules: [
         {
           test: /\.tsx?$/,
-          loader: 'awesome-typescript-loader',
-          exclude: /node_modules/,
+          loader: 'ts-loader',
+          options: { transpileOnly: true },
         },
         {
           test: /\.js$/,
@@ -76,21 +77,42 @@ module.exports = {
     },
   }),
   sharedPlugins: (mode) => {
+    const forkTsCheckerWebpackPluginOptions = mode == 'prod'
+      ? {
+        async: false,
+        typescript: {
+          memoryLimit: 4096,
+        }
+      }
+      : {
+        eslint: {
+          files: './src/**/!(*.d).{ts,tsx,js,jsx}',
+        },
+      }
+
     const htmlWebpackPluginOptions = {
       template: 'src/app.html',
       filename: './index.html',
     }
     if (mode === 'prod') {
+      htmlWebpackPluginOptions.hash = true
       htmlWebpackPluginOptions.minify = {
         collapseWhitespace: true,
-        minifyJS: {
-          mangle: false,
-        },
+        keepClosingSlash: true,
         removeComments: true,
+        removeRedundantAttributes: true,
+        removeScriptTypeAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true,
       }
       htmlWebpackPluginOptions.scriptLoading = 'defer'
     }
     return [
+      new ForkTsCheckerWebpackPlugin(forkTsCheckerWebpackPluginOptions),
       new HtmlWebpackPlugin(htmlWebpackPluginOptions),
       new MiniCssExtractPlugin({
         filename: '[name].[fullhash:8].css',

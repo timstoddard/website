@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Button } from 'react-bootstrap'
 import ColorChanger from './ColorChanger'
 import StrobeOptions from './StrobeOptions'
+import { EmptyObject } from '../types'
 import styles from './scss/Strobe.scss'
 
 interface State {
@@ -11,11 +12,11 @@ interface State {
   showingOptions: boolean
 }
 
-export default class Strobe extends React.Component<{}, State> {
+export default class Strobe extends React.Component<EmptyObject, State> {
   colorChanger: ColorChanger
   moveInterval: number
 
-  constructor(props: {}) {
+  constructor(props: EmptyObject) {
     super(props)
 
     this.state = {

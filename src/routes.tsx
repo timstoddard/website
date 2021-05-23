@@ -13,10 +13,10 @@ const routes: LoadableRoute[] = [
     path: '/',
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Home' */ './home/Home')),
   },
-  // {
-  //   path: '/2048',
-  //   LazyComponent: React.lazy(() => import(/* webpackChunkName: '2048' */ './2048/2048')),
-  // },
+  {
+    path: '/2048',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: '2048' */ './2048/2048')),
+  },
   {
     path: '/about',
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'About' */ './home/About')),
@@ -72,6 +72,10 @@ const routes: LoadableRoute[] = [
   {
     path: '/light-strips',
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'LightStrips' */ './light-strips/LightStrips')),
+  },
+  {
+    path: '/outlook',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Outlook' */ './outlook/Outlook')),
   },
   {
     path: '/perf',

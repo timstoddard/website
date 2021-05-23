@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
 import { DarkModeColorScheme } from './Hue'
+import { EmptyObject } from '../types'
 import styles from './scss/Hue.scss'
 
 interface ColorSchemeOption {
@@ -16,7 +17,7 @@ interface Props {
   darkModeColorScheme: DarkModeColorScheme
 }
 
-export default class HueLayoutSettings extends React.Component<Props, {}> {
+export default class HueLayoutSettings extends React.Component<Props, EmptyObject> {
   render(): JSX.Element {
     const {
       closeModal,

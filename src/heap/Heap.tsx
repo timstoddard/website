@@ -2,6 +2,7 @@ import * as React from 'react'
 import BinaryHeap from './BinaryHeap'
 import HeapDetail from './HeapDetail'
 import HeapInput from './HeapInput'
+import { EmptyObject } from '../types'
 import styles from './scss/Heap.scss'
 
 interface State {
@@ -9,11 +10,11 @@ interface State {
   heap: BinaryHeap
 }
 
-export default class Heap extends React.Component<{}, State> {
+export default class Heap extends React.Component<EmptyObject, State> {
   inputHeap: BinaryHeap
   sortedHeap: BinaryHeap
 
-  constructor(props: {}) {
+  constructor(props: EmptyObject) {
     super(props)
 
     this.inputHeap = new BinaryHeap(false)

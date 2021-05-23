@@ -1,6 +1,7 @@
 import * as React from 'react'
 import ColorChanger from './ColorChanger'
 import Mover from './Mover'
+import { EmptyObject } from '../types'
 import styles from './scss/Zen.scss'
 
 interface State {
@@ -10,14 +11,14 @@ interface State {
   maxRadius: number
 }
 
-export default class Zen extends React.Component<{}, State> {
+export default class Zen extends React.Component<EmptyObject, State> {
   colorChanger1: ColorChanger
   colorChanger2: ColorChanger
   moveInterval: number
   private mover1: React.RefObject<Mover> = React.createRef()
   private mover2: React.RefObject<Mover> = React.createRef()
 
-  constructor(props: {}) {
+  constructor(props: EmptyObject) {
     super(props)
 
     this.colorChanger1 = new ColorChanger()

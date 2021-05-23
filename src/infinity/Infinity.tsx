@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 import * as React from 'react'
+import { EmptyObject } from '../types'
 import styles from './scss/Infinity.scss'
 
 const getProps = (
@@ -47,6 +48,7 @@ const Infinity: React.FunctionComponent<Props> = ({
       onClick={onClick}
       className={classNames(
         styles.infinity__child,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (styles as any)[`infinity--level${link.length}`],
         {
           [styles['infinity__child--end']]: !(data.a || data.b),
@@ -64,8 +66,8 @@ interface State {
   showingBorders: boolean
 }
 
-export default class InfinityWrapper extends React.Component<{}, State> {
-  constructor(props: {}) {
+export default class InfinityWrapper extends React.Component<EmptyObject, State> {
+  constructor(props: EmptyObject) {
     super(props)
 
     this.state = {

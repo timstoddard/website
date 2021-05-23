@@ -1,0 +1,162 @@
+@import 'src/scss/globals';
+
+$commentIndent: 16px;
+
+// TODO move to own file
+.comment {
+  border-top: 1px dotted rgb(150,150,150);
+  border-left: 1px dotted rgb(150,150,150);
+  margin: 10px 0 10px $commentIndent;
+  min-height: 1.2em;
+  padding: 5px 3px 0 12px;
+  position: relative;
+
+  &__toggleButton {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+
+    &__downChevronIcon {
+      @include forceWidth(10px);
+      cursor: pointer;
+    }
+  }
+
+  &__author,
+  &__date {
+    background: rgb(240,240,240);
+    padding: 2px 6px;
+  }
+
+  &__author {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &__score {
+      color: rgb(125,125,125);
+      margin-right: 10px;
+    }
+
+    &__name {
+      // TODO add real styles
+      color: inherit;
+    }
+  }
+
+  &__text {
+    // TODO add real styles
+    color: inherit;
+  }
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+
+  &__header {
+    padding: 10px 0 0 20px;
+
+    &__title {
+      color: rgb(90,90,90);
+      font-size: 1.5em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+
+    &__details {
+      $initialsWidth: 2.5em;
+      display: grid;
+      grid-template-columns: #{$initialsWidth + 2 * 2.5em} auto;
+      grid-template-rows: auto auto auto auto;
+
+      &__from {
+        &__initials {
+          @include forceHeight($initialsWidth);
+          @include forceWidth($initialsWidth);
+          align-items: center;
+          background: green;
+          border-radius: 50%;
+          color: white;
+          display: flex;
+          font-size: 2em;
+          grid-column-start: 1;
+          grid-column-end: 1;
+          grid-row-start: 1;
+          grid-row-end: 5;
+          justify-content: center;
+          margin: auto;
+          text-transform: uppercase;
+        }
+
+        &__name {
+          align-items: center;
+          cursor: default;
+          display: flex;
+          font-weight: bold;
+          grid-column-start: 2;
+          grid-column-end: 2;
+        }
+      }
+
+      &__to {
+        align-items: center;
+        color: rgb(130,130,130);
+        cursor: default;
+        display: flex;
+        grid-column-start: 2;
+        grid-column-end: 2;
+      }
+
+      &__date {
+        align-items: center;
+        color: rgb(130,130,130);
+        display: flex;
+        grid-column-start: 2;
+        grid-column-end: 2;
+      }
+
+      &__showMore {
+        align-items: center;
+        display: flex;
+        grid-column-start: 2;
+        grid-column-end: 2;
+
+        &__link {
+          color: $outlookDarkBlue;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  &__hr {
+    border: 0;
+    border-top: 1px solid rgb(225,225,225);
+    margin: 4px 0;
+  }
+
+  &__body {
+    overflow: auto;
+    padding: 0 20px 10px 20px;
+  }
+
+  &__postHTML {
+    // TODO temp
+    & h1,
+    & h2,
+    & h3,
+    & h4,
+    & h5,
+    & h6 {
+      font-size: 1.4em;
+    }
+  }
+
+  &__comments {
+    margin: 50px 0 0 (-$commentIndent);
+  }
+}

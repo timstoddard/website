@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { UIColor } from '../../hue-color-conversion'
 import { BeatStep } from '../beat-types'
 import { Song } from '../song'

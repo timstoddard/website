@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 import * as React from 'react'
+import { EmptyObject, noop } from '../types'
 import styles from '../home/scss/Dots.scss'
 
 interface State {
@@ -21,7 +22,7 @@ enum Color {
   BLACK,
 }
 
-export default class DotsBlack extends React.Component<{}, State> {
+export default class DotsBlack extends React.Component<EmptyObject, State> {
   dots: Dot[]
   moveInterval: number
   visibleTimer: number
@@ -29,7 +30,7 @@ export default class DotsBlack extends React.Component<{}, State> {
   twoPiRadians: number = 2 * Math.PI
   private canvasElement: React.RefObject<HTMLCanvasElement> = React.createRef()
 
-  constructor(props: {}) {
+  constructor(props: EmptyObject) {
     super(props)
 
     this.state = {
@@ -71,7 +72,7 @@ export default class DotsBlack extends React.Component<{}, State> {
   componentWillUnmount(): void {
     clearInterval(this.moveInterval)
     clearTimeout(this.visibleTimer)
-    window.onresize = (): void => {}
+    window.onresize = noop()
   }
 
   moveDots = (): void => {
@@ -174,7 +175,9 @@ export default class DotsBlack extends React.Component<{}, State> {
     }
 
     // not found in cache, generate new entry and store it
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [_1, r1, g1, b1] = rgb1.match(/(\d+),(\d+),(\d+)/)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [_2, r2, g2, b2] = rgb2.match(/(\d+),(\d+),(\d+)/)
     const r = Math.floor((parseInt(r1, 10) + parseInt(r2, 10)) / 2)
     const g = Math.floor((parseInt(g1, 10) + parseInt(g2, 10)) / 2)

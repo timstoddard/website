@@ -4,6 +4,7 @@ import CurrentElement from './CurrentElement'
 import ElementCard from './ElementCard'
 import elements, { Element } from './elements'
 import ModeSelect from './ModeSelect'
+import { EmptyObject } from '../types'
 import styles from './scss/PeriodicTable.scss'
 import styles2 from './scss/ElementCard.scss'
 
@@ -38,8 +39,8 @@ interface State {
   showModeSelect: boolean,
 }
 
-export default class PeriodicTable extends React.Component<{}, State> {
-  constructor(props: {}) {
+export default class PeriodicTable extends React.Component<EmptyObject, State> {
+  constructor(props: EmptyObject) {
     super(props)
 
     this.state = {

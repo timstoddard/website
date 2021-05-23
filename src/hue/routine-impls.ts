@@ -47,7 +47,7 @@ export class StrobeRoutine implements Routine {
     })
   }
 
-  getNextTimeout = (): number => {
+  getNextTimeout = () => {
     return 100
   }
 
@@ -141,7 +141,7 @@ export default class ColorChanger {
 export class RainbowRoutine implements Routine {
   hueApi: HueApi
   lightIds: number[]
-  private timeout: number = 200
+  private timeout = 200
   private colorChanger: ColorChanger
 
   constructor(hueApi: HueApi, lightIds: number[]) {
@@ -158,7 +158,7 @@ export class RainbowRoutine implements Routine {
     this.updateLights()
   }
 
-  getNextTimeout = (): number => {
+  getNextTimeout = () => {
     return this.timeout
   }
 
@@ -166,7 +166,7 @@ export class RainbowRoutine implements Routine {
     this.lightIds = lightIds
   }
 
-  private updateLights = (isInit: boolean = false): void => {
+  private updateLights = (isInit = false): void => {
     const color = this.colorChanger.nextColor()
     this.lightIds.forEach((lightId: number): void => {
       const model = this.hueApi.getLight(lightId).modelid

@@ -1,6 +1,7 @@
 import classNames from 'classnames'
 import * as React from 'react'
 import { Button } from 'react-bootstrap'
+import { EmptyObject } from '../types'
 import styles from './scss/Perf.scss'
 
 /*
@@ -39,8 +40,8 @@ interface ErrorResult {
   place: number
 }
 
-export default class Perf extends React.Component<{}, State> {
-  constructor(props: {}) {
+export default class Perf extends React.Component<EmptyObject, State> {
+  constructor(props: EmptyObject) {
     super(props)
 
     this.state = {
@@ -190,15 +191,6 @@ export default class Perf extends React.Component<{}, State> {
     })
   }
 
-  getResultClasses = (isBest: boolean, isWorst: boolean): string => {
-    return classNames(
-      styles.perf__results__details,
-      {
-        [styles['perf__results__details--best']]: isBest,
-        [styles['perf__results__details--worst']]: isWorst,
-      })
-  }
-
   render(): JSX.Element {
     document.title = 'Performance Testing'
     const {
@@ -208,7 +200,6 @@ export default class Perf extends React.Component<{}, State> {
       updateSnippet,
       ignoreTab,
       updateNumberOfRuns,
-      getResultClasses,
     } = this
     const {
       snippetsToTest,

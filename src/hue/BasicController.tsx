@@ -4,6 +4,7 @@ import { ChromePicker, ColorResult } from 'react-color'
 import { throttle } from 'underscore'
 import { UIColor } from './hue-color-conversion'
 import { colorToHex, hexToColor } from './hue-utils'
+import { EmptyObject } from '../types'
 import styles from './scss/BasicController.scss'
 
 interface Props {
@@ -18,7 +19,7 @@ interface Props {
   isPrimary: boolean
 }
 
-export default class BasicController extends React.Component<Props, {}> {
+export default class BasicController extends React.Component<Props, EmptyObject> {
   constructor(props: Props) {
     super(props)
   }

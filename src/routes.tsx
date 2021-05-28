@@ -26,6 +26,10 @@ const routes: LoadableRoute[] = [
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Battery' */ './battery/Battery')),
   },
   {
+    path: '/bezier-curve',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'BezierCurve' */ './bezier-curve/BezierCurve')),
+  },
+  {
     path: '/bingo',
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Bingo' */ './bingo/Bingo')),
   },

@@ -52,7 +52,7 @@ export default class Dots extends React.Component<Props, State> {
     }
 
     // start the interval to move the dots
-    this.moveInterval = setInterval(this.moveDots, 5)  as unknown as number
+    this.moveInterval = setInterval(this.moveDots, 5) as unknown as number
 
     // timer to make dots visible
     this.visibleTimer = setTimeout(() => {

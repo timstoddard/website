@@ -1,4 +1,4 @@
-import { Point } from './BezierCurve'
+import { Point } from './letters'
 
 interface Color {
   r: number
@@ -112,8 +112,9 @@ export default class CurveImpl {
     const lineColor = BLACK
     this.drawLayer(canvas, points, dotColor, lineColor)
     for (let i = 0; i < intermediatePoints.length; i++) {
-      // opacity = [0.4, 1]
-      const opacity = 1 - (0.6 * (i + 1) / intermediatePoints.length)
+      // opacity = [0.25, 0.75]
+      // const opacity = 0.75 - (0.5 * (i + 1) / intermediatePoints.length)
+      const opacity = 0.5
       this.drawLayer(canvas, intermediatePoints[i], dotColor, lineColor, opacity)
     }
   }
@@ -146,7 +147,7 @@ export default class CurveImpl {
     color: Color,
     opacity = 1,
   ): void => {
-    const DOT_RADIUS = 5
+    const DOT_RADIUS = 4
     canvas.beginPath()
     canvas.arc(point.x, point.y, DOT_RADIUS, 0, this.twoPiRadians)
     canvas.fillStyle = `rgba(${color.r},${color.g},${color.b},${opacity})`

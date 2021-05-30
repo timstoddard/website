@@ -107,6 +107,7 @@ interface DetailProps {
   className: string
 }
 
+// TODO rename to something more specific!
 export default class Detail extends React.Component<DetailProps, EmptyObject> {
   renderDateAndTime = (secondsFromEpoch: number): string => {
     const days = 'Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday'

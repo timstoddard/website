@@ -10,35 +10,70 @@
     padding-top: 2rem;
   }
 
+  &__section {
+    &__divider {
+      color: rgb(120,120,120);
+      margin: 25px auto;
+      max-width: 250px;
+      opacity: 1; // override
+      width: 50vw;
+    }
+  }
+
   &__details {
+    $detailWrapperWidth: 500px;
+    $valueWidth: 75%;
     line-height: 1.5;
-    margin: 0 0 20px;
-    max-width: 500px;
+    margin: 0;
+    max-width: $detailWrapperWidth;
     padding: 0 20px;
     text-align: left;
+    width: 100%;
+
+    @media screen and (max-width: #{$detailWrapperWidth + 50px}) {
+      &__detailWrapper {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      &__field,
+      &__value {
+        min-width: 100%;
+      }
+    }
 
     &__detailWrapper {
       @include aboutAndProjectsListItem;
       display: flex;
+      max-width: 100%;
 
-      @media screen and (max-width: 400px) {
-        flex-direction: column;
+      &:last-of-type {
+        margin: 0;
       }
     }
 
-    &__field {
-      float: left;
-      font-weight: bold;
-      margin: 0;
-      padding: 0;
-      width: 25%;
+    &__title {
+      font-size: 1.2em;
+      min-width: 100%;
+      text-align: center;
+      text-decoration: underline;
+      padding: 5px; // in addition to detailWrapper padding
     }
 
+    &__field,
     &__value {
       float: left;
       margin: 0;
       padding: 0;
-      width: 75%;
+    }
+
+    &__field {
+      font-weight: bold;
+      width: #{100% - $valueWidth};
+    }
+
+    &__value {
+      width: $valueWidth;
     }
   }
 
@@ -46,6 +81,7 @@
     align-content: center;
     display: flex;
     justify-content: center;
+    margin-bottom: 20px;
     width: 100%;
 
     &__icon {
@@ -54,7 +90,7 @@
       border: 1px solid $lightGray;
       border-radius: 10px;
       margin: 1rem;
-      width: 3rem;
+      width: 4rem;
 
       &:hover {
         animation: shake 0.25s linear both;

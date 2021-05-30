@@ -1,14 +1,10 @@
 import * as React from 'react'
+import { Detail, Section, sections } from './about-sections'
 import styles from './scss/About.scss'
 
 interface Icon {
   name: string
   href: string
-}
-
-interface Detail {
-  field: string
-  value: string
 }
 
 const icons: Icon[] = [
@@ -20,45 +16,6 @@ const icons: Icon[] = [
     name: 'Github',
     href: 'https://github.com/timstoddard',
  },
-//   {
-//     name: 'Portfolium',
-//     href: 'https://portfolium.com/timstoddard',
-//  },
-//   {
-//     name: 'Facebook',
-//     href: 'https://facebook.com/timstoddard200',
-//  },
-]
-
-const details: Detail[] = [
-  {
-    field: 'School',
-    value: 'Cal Poly SLO',
-  },
-  {
-    field: 'Major',
-    value: 'Computer Science',
-  },
-  {
-    field: 'Minor',
-    value: 'Entrepreneurship',
-  },
-  {
-    field: 'Company',
-    value: 'Amazon Web Services',
-  },
-  {
-    field: 'Role',
-    value: 'SDE Intern',
-  },
-  {
-    field: 'Skills',
-    value: 'Angular, React, Typescript, Node.js, Java, Python, SQL, C++',
-  },
-  {
-    field: 'Hobbies',
-    value: 'Lifting weights, cars',
-  },
 ]
 
 const IconLinks: React.FunctionComponent = (): JSX.Element => (
@@ -72,27 +29,50 @@ const IconLinks: React.FunctionComponent = (): JSX.Element => (
         <img
           src={`../../media/logos/${name.toLowerCase()}.png`}
           alt={name}
+          title={name}
           className={styles.about__icons__icon} />
       </a>
     ))}
   </div>
 )
 
-const Details: React.FunctionComponent = (): JSX.Element => (
-  <dl className={styles.about__details}>
-    {details.map(({ field, value }: Detail) => (
-      <div
-        key={field}
-        className={styles.about__details__detailWrapper}>
-        <dt className={styles.about__details__field}>
-          {field}
-        </dt>
-        <dd className={styles.about__details__value}>
-          {value}
-        </dd>
+interface SectionProps {
+  section: Section
+}
+
+const Section: React.FunctionComponent<SectionProps> = ({ section }: SectionProps): JSX.Element => (
+  <>
+    <dl className={styles.about__details}>
+      <div className={styles.about__details__detailWrapper}>
+        <div className={styles.about__details__title}>
+          {section.title}
+        </div>
       </div>
-    ))}
-  </dl>
+      {section.details.map(({ field, value }: Detail) => (
+        <div
+          key={field}
+          className={styles.about__details__detailWrapper}>
+          <dt className={styles.about__details__field}>
+            {field}
+          </dt>
+          <dd className={styles.about__details__value}>
+            {value}
+          </dd>
+        </div>
+      ))}
+    </dl>
+    <hr className={styles.about__section__divider} />
+  </>
+)
+
+const DetailSections: React.FunctionComponent = (): JSX.Element => (
+  <>
+    {sections.map((section: Section, i: number) =>
+      <Section
+        key={section.title + i}
+        section={section} />
+    )}
+  </>
 )
 
 const About: React.FunctionComponent = (): JSX.Element => (
@@ -100,8 +80,8 @@ const About: React.FunctionComponent = (): JSX.Element => (
       <h4 className={styles.about__title}>
         Tim Stoddard
       </h4>
-      <Details />
       <IconLinks />
+      <DetailSections />
   </div>
 )
 

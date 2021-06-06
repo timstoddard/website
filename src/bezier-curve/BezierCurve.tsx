@@ -1,28 +1,18 @@
 import * as React from 'react'
-import { EmptyObject, noop } from '../types'
+import { EmptyObject } from '../types'
+import BezierSettings from './BezierSettings'
 import CurveImpl from './CurveImpl'
-import Letters, { Point } from './letters'
 import styles from './scss/BezierCurve.scss'
+
+export interface CanvasDimensions {
+  width: number
+  height: number
+}
 
 interface State {
   curves: CurveImpl[]
-}
-
-const ALPHABET = 'abcdefghijklmnopqrstuvwxyz'
-const NUMBERS = '0123456789'
-const SYMBOLS1 = `!"#$%&'()*+,-./`
-const SYMBOLS2 = ':;<=>?@'
-const SYMBOLS3 = '[\\]^_`'
-const SYMBOLS4 = '{|}~'
-const formatIntoLines = (chars: string[], lineLength: number) => {
-  let fullString = chars.join('')
-  const result = []
-  while (fullString.length > 0) {
-    const nextLine = fullString.substr(0, lineLength)
-    result.push(nextLine)
-    fullString = fullString.substr(lineLength)
-  }
-  return result
+  isSettingsOpen: boolean
+  canvasDimensions: CanvasDimensions
 }
 
 export default class BezierCurve extends React.Component<EmptyObject, State> {
@@ -32,75 +22,92 @@ export default class BezierCurve extends React.Component<EmptyObject, State> {
   constructor(props: EmptyObject) {
     super(props)
 
-    // TODO make these settings, add settings UI
-    const CURVE_SEGMENTS = 100
-    const SIDE_LENGTH = 100
-    const LINE_LENGTH = 12
-    const TEXT_LINES = formatIntoLines([
-      ALPHABET,
-      NUMBERS,
-      SYMBOLS1,
-      SYMBOLS2,
-      SYMBOLS3,
-      SYMBOLS4,
-    ], LINE_LENGTH)
-    
-    const letters = new Letters(SIDE_LENGTH)
-    // const randomCurveSegments = () => Math.floor(100 + Math.random() * 100)
-    const curves = TEXT_LINES
-      .map((str: string, i: number) => letters.convertString(str, i))
-      .reduce((prev: Point[][], curr: Point[][]) => {
-        prev.push(...curr)
-        return prev
-      }, [])
-      .map((points: Point[]) => new CurveImpl(points, CURVE_SEGMENTS))
-
     this.state = {
-      curves,
+      curves: [],
+      isSettingsOpen: false,
+      canvasDimensions: {
+        width: 0,
+        height: 0,
+      },
     }
   }
 
-  componentDidMount(): void {
-    // track the window size
-    const trackWindowSize = (): void => {
-      const {
-        clientWidth: viewportWidth,
-        clientHeight: viewportHeight,
-      } = document.documentElement
-      // TODO set canvas size based on text content
-      this.canvasElement.current.width = viewportWidth
-      this.canvasElement.current.height = viewportHeight
-    }
-    trackWindowSize()
-    window.onresize = trackWindowSize
-
-    this.moveInterval = setInterval(this.updateCurve, 25) as unknown as number
+  componentDidMount = (): void => {
+    alert('Click anywhere to change the settings!')
   }
 
-  componentWillUnmount(): void {
+  componentWillUnmount = (): void => {
     clearInterval(this.moveInterval)
-    window.onresize = noop()
+  }
+
+  private updateMoveIntervalMs = (ms: number) => {
+    clearInterval(this.moveInterval)
+    this.moveInterval = setInterval(this.updateCurve, 1000 / ms) as unknown as number
   }
 
   private updateCurve = () => {
-    const { curves } = this.state
+    const {
+      curves,
+      canvasDimensions,
+    } = this.state
     const {
       clientWidth: viewportWidth,
       clientHeight: viewportHeight,
     } = document.documentElement
 
     const canvas = this.canvasElement.current.getContext('2d')
-    canvas.clearRect(0, 0, viewportWidth, viewportHeight)
+    const width = Math.max(canvasDimensions.width, viewportWidth)
+    const height = Math.max(canvasDimensions.height, viewportHeight)
+    this.canvasElement.current.width = width
+    this.canvasElement.current.height = height
+    canvas.clearRect(0, 0, width, height)
     for (const curve of curves) {
       curve.drawNext(canvas)
     }
   }
 
+  private updateCanvasDimensions = (canvasDimensions: CanvasDimensions) => {
+    this.setState({ canvasDimensions })
+  }
+
+  private openSettings = () => {
+    this.setState({ isSettingsOpen: true })
+  }
+
+  private closeSettings = () => {
+    this.setState({ isSettingsOpen: false })
+  }
+
+  private updateCurves = (curves: CurveImpl[]) => {
+    this.setState({ curves })
+  }
+
   render(): JSX.Element {
+    document.title = 'Bezier'
+
+    const {
+      updateMoveIntervalMs,
+      updateCurves,
+      updateCanvasDimensions,
+      openSettings,
+      closeSettings,
+    } = this
+    const { isSettingsOpen } = this.state
+
     return (
-      <canvas
-        ref={this.canvasElement}
-        className={styles.bezierCurve} />
+      <div className={styles.bezierCurve}>
+        <canvas
+          ref={this.canvasElement}
+          onClick={openSettings}
+          className={styles.bezierCurve__canvas} />
+
+        <BezierSettings
+          isSettingsOpen={isSettingsOpen}
+          updateCurves={updateCurves}
+          updateMoveIntervalMs={updateMoveIntervalMs}
+          updateCanvasDimensions={updateCanvasDimensions}
+          closeSettings={closeSettings} />
+      </div>
     )
   }
 }

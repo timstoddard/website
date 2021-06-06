@@ -84,6 +84,11 @@ const projectSections: Section[] = [
         inProgress: false,
       },
       {
+        name: 'Bezier Curve Text',
+        link: '/bezier-curve',
+        inProgress: false,
+      },
+      {
         name: 'Candle Simulation',
         link: '/flicker',
         inProgress: false,

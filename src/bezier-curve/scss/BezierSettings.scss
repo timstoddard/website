@@ -1,0 +1,34 @@
+@import 'src/scss/globals';
+
+.settings {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  user-select: none;
+
+  &__header {
+    justify-content: center;
+  }
+
+  &__control {
+    margin-bottom: 12px;
+
+    &--slider {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &--number {
+      & > :global(.form-control) {
+        margin: 0 auto;
+        max-width: 120px;
+        text-align: center;
+      }
+    }
+
+    &--textarea {
+      min-width: 80%;
+    }
+  }
+}

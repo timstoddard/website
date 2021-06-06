@@ -30,14 +30,11 @@ class LetterBuilder {
 
 type LetterGeneratorFn = (letterBuilder: LetterBuilder) => Point[]
 
-const DEFAULT_SIDE_LENGTH = 100
-const DEFAULT_HORIZONTAL_PADDING_BETWEEN_LETTERS = 10
-const DEFAULT_VERTICAL_PADDING_BETWEEN_LETTERS = 20
+export const DEFAULT_SIDE_LENGTH = 100
 
 export default class Letters {
+  private letterGenerators: { [key: string]: LetterGeneratorFn }
   private sideLength: number
-  private horizontalLetterSpacing: number
-  private verticalLetterSpacing: number
 
   private XS_PADDING_X: number
   private SMALL_PADDING_X: number
@@ -51,14 +48,9 @@ export default class Letters {
   private LARGE_PADDING_DIAG: number
   private XL_PADDING_DIAG: number
 
-  constructor(
-    sideLength = DEFAULT_SIDE_LENGTH,
-    horizontalLetterSpacing = DEFAULT_HORIZONTAL_PADDING_BETWEEN_LETTERS,
-    verticalLetterSpacing = DEFAULT_VERTICAL_PADDING_BETWEEN_LETTERS,
-  ) {
+  constructor(sideLength = DEFAULT_SIDE_LENGTH) {
     this.sideLength = sideLength
-    this.horizontalLetterSpacing = horizontalLetterSpacing
-    this.verticalLetterSpacing = verticalLetterSpacing
+    this.letterGenerators = this.getLetterGenerators()
 
     this.XS_PADDING_X = this.scaled(5)
     this.SMALL_PADDING_X = this.scaled(10)
@@ -73,128 +65,111 @@ export default class Letters {
     this.XL_PADDING_DIAG = this.scaled(25)
   }
 
-  convertString = (str: string, line: number) => {
+  convertString = (str: string, line: number, horizontalLetterSpacing: number, verticalLetterSpacing: number) => {
     const xCoord = (charIndex: number) =>
-      charIndex * (this.sideLength + this.horizontalLetterSpacing) + this.horizontalLetterSpacing
+      charIndex * (this.sideLength + horizontalLetterSpacing) + horizontalLetterSpacing
     const yCoord = (lineIndex: number) =>
-      lineIndex * (this.sideLength + this.verticalLetterSpacing) + this.verticalLetterSpacing
+      lineIndex * (this.sideLength + verticalLetterSpacing) + verticalLetterSpacing
     const letterCurves = str.split('').map((letter: string, i: number) =>
       this.convertLetterToCurve(letter, xCoord(i), yCoord(line)))
     return letterCurves
-  }
-
-  updateLayoutSettings = (
-    sideLength: number,
-    horizontalLetterSpacing: number,
-    verticalLetterSpacing: number,
-  ) => {
-    this.updateSideLength(sideLength)
-    this.updateHorizontalPadding(horizontalLetterSpacing)
-    this.updateverticalLetterSpacing(verticalLetterSpacing)
   }
 
   updateSideLength = (sideLength: number) => {
     this.sideLength = sideLength
   }
 
-  updateHorizontalPadding = (horizontalLetterSpacing: number) => {
-    this.horizontalLetterSpacing = horizontalLetterSpacing
-  }
-
-  updateverticalLetterSpacing = (verticalLetterSpacing: number) => {
-    this.verticalLetterSpacing = verticalLetterSpacing
-  }
-
   private convertLetterToCurve = (letter: string, x: number, y: number) => {
-    /**
-     * ascii breakdown:
-     * - symbols      [ 33 -  47]
-     * - numbers      [ 48 -  57]
-     * - symbols      [ 58 -  64]
-     * - upper alpha  [ 65 -  90]
-     * - symbols      [ 91 -  96]
-     * - lower alpha  [ 97 - 122]
-     * - symbols      [123 - 126]
-     */
-    const letterGenerators: { [key: string]: LetterGeneratorFn } = {
-      // alphabet: [65-90], [97-122]
-      'A': this.A, // 65 / 97
-      'B': this.B, // 66 / 98
-      'C': this.C, // 67 / 99
-      'D': this.D, // 68 / 100
-      'E': this.E, // 69 / 101
-      'F': this.F, // 70 / 102
-      'G': this.G, // 71 / 103
-      'H': this.H, // 72 / 104
-      'I': this.I, // 73 / 105
-      'J': this.J, // 74 / 106
-      'K': this.K, // 75 / 107
-      'L': this.L, // 76 / 108
-      'M': this.M, // 77 / 109
-      'N': this.N, // 78 / 110
-      'O': this.O, // 79 / 111
-      'P': this.P, // 80 / 112
-      'Q': this.Q, // 81 / 113
-      'R': this.R, // 82 / 114
-      'S': this.S, // 83 / 115
-      'T': this.T, // 84 / 116
-      'U': this.U, // 85 / 117
-      'V': this.V, // 86 / 118
-      'W': this.W, // 87 / 119
-      'X': this.X, // 88 / 120
-      'Y': this.Y, // 89 / 121
-      'Z': this.Z, // 90 / 122
-
-      // numbers: [48-57]
-      '0': this.zero,  // 48
-      '1': this.one,   // 49
-      '2': this.two,   // 50
-      '3': this.three, // 51
-      '4': this.four,  // 52
-      '5': this.five,  // 53
-      '6': this.six,   // 54
-      '7': this.seven, // 55
-      '8': this.eight, // 56
-      '9': this.nine,  // 57
-
-      // symbols: [33-47], [58-64], [91-96], [123-126]
-      '!': this.exclamationPoint,   // 33
-      '"': this.doubleQuote,        // 34
-      '#': this.hashtag,            // 35
-      '$': this.dollarSign,         // 36
-      '%': this.percent,            // 37
-      '&': this.ampersand,          // 38
-      '\'': this.singleQuote,       // 39
-      '(': this.openParenthesis,    // 40
-      ')': this.closeParenthesis,   // 41
-      '*': this.asterisk,           // 42
-      '+': this.plus,               // 43
-      ',': this.comma,              // 44
-      '-': this.hyphen,             // 45
-      '.': this.period,             // 46
-      '/': this.forwardSlash,       // 47
-      ':': this.colon,              // 58
-      ';': this.semicolon,          // 59
-      '<': this.lessThan,           // 60
-      '=': this.equals,             // 61
-      '>': this.greaterThan,        // 62
-      '?': this.questionMark,       // 63
-      '@': this.atSign,             // 64
-      '[': this.openBracket,        // 91
-      '\\': this.backSlash,         // 92
-      ']': this.closeBracket,       // 93
-      '^': this.caret,              // 94
-      '_': this.underscore,         // 95
-      '`': this.backtick,           // 96
-      '{': this.openSwirlyBracket,  // 123
-      '|': this.pipe,               // 124
-      '}': this.closeSwirlyBracket, // 125
-      '~': this.tilde,              // 126
-    }
-    const letterGenerator = letterGenerators[letter.toUpperCase()] || this.space
+    const letterGenerator = this.letterGenerators[letter.toUpperCase()] || this.space
     const letterBuilder = new LetterBuilder(x, y)
     return letterGenerator(letterBuilder)
   }
+
+  /**
+   * ascii breakdown:
+   * - symbols      [ 33 -  47]
+   * - numbers      [ 48 -  57]
+   * - symbols      [ 58 -  64]
+   * - upper alpha  [ 65 -  90]
+   * - symbols      [ 91 -  96]
+   * - lower alpha  [ 97 - 122]
+   * - symbols      [123 - 126]
+   */
+  private getLetterGenerators = (): { [key: string]: LetterGeneratorFn } => ({
+    // alphabet: [65-90], [97-122]
+    'A': this.A, // 65 / 97
+    'B': this.B, // 66 / 98
+    'C': this.C, // 67 / 99
+    'D': this.D, // 68 / 100
+    'E': this.E, // 69 / 101
+    'F': this.F, // 70 / 102
+    'G': this.G, // 71 / 103
+    'H': this.H, // 72 / 104
+    'I': this.I, // 73 / 105
+    'J': this.J, // 74 / 106
+    'K': this.K, // 75 / 107
+    'L': this.L, // 76 / 108
+    'M': this.M, // 77 / 109
+    'N': this.N, // 78 / 110
+    'O': this.O, // 79 / 111
+    'P': this.P, // 80 / 112
+    'Q': this.Q, // 81 / 113
+    'R': this.R, // 82 / 114
+    'S': this.S, // 83 / 115
+    'T': this.T, // 84 / 116
+    'U': this.U, // 85 / 117
+    'V': this.V, // 86 / 118
+    'W': this.W, // 87 / 119
+    'X': this.X, // 88 / 120
+    'Y': this.Y, // 89 / 121
+    'Z': this.Z, // 90 / 122
+
+    // numbers: [48-57]
+    '0': this.zero,  // 48
+    '1': this.one,   // 49
+    '2': this.two,   // 50
+    '3': this.three, // 51
+    '4': this.four,  // 52
+    '5': this.five,  // 53
+    '6': this.six,   // 54
+    '7': this.seven, // 55
+    '8': this.eight, // 56
+    '9': this.nine,  // 57
+
+    // symbols: [33-47], [58-64], [91-96], [123-126]
+    '!': this.exclamationPoint,   // 33
+    '"': this.doubleQuote,        // 34
+    '#': this.hashtag,            // 35
+    '$': this.dollarSign,         // 36
+    '%': this.percent,            // 37
+    '&': this.ampersand,          // 38
+    '\'': this.singleQuote,       // 39
+    '(': this.openParenthesis,    // 40
+    ')': this.closeParenthesis,   // 41
+    '*': this.asterisk,           // 42
+    '+': this.plus,               // 43
+    ',': this.comma,              // 44
+    '-': this.hyphen,             // 45
+    '.': this.period,             // 46
+    '/': this.forwardSlash,       // 47
+    ':': this.colon,              // 58
+    ';': this.semicolon,          // 59
+    '<': this.lessThan,           // 60
+    '=': this.equals,             // 61
+    '>': this.greaterThan,        // 62
+    '?': this.questionMark,       // 63
+    '@': this.atSign,             // 64
+    '[': this.openBracket,        // 91
+    '\\': this.backSlash,         // 92
+    ']': this.closeBracket,       // 93
+    '^': this.caret,              // 94
+    '_': this.underscore,         // 95
+    '`': this.backtick,           // 96
+    '{': this.openSwirlyBracket,  // 123
+    '|': this.pipe,               // 124
+    '}': this.closeSwirlyBracket, // 125
+    '~': this.tilde,              // 126
+   })
 
   private A = (letterBuilder: LetterBuilder): Point[] => {
     const paddingX = this.SMALL_PADDING_X
@@ -528,9 +503,9 @@ export default class Letters {
     return letterBuilder
       .addPoint([paddingX], [])
       .addPoint([this.sideLength / 2], [paddingDiag])
-      .addPoint([this.sideLength, -paddingX], [])
-      .addPoint([this.sideLength / 2], [paddingDiag])
       .addPoint([this.sideLength / 2], [this.sideLength])
+      .addPoint([this.sideLength / 2], [paddingDiag])
+      .addPoint([this.sideLength, -paddingX], [])
       .getPoints()
   }
   

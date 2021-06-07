@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { Link } from 'react-router-dom'
 import { Detail, Section, sections } from './about-sections'
 import styles from './scss/About.scss'
 
@@ -77,9 +78,11 @@ const DetailSections: React.FunctionComponent = (): JSX.Element => (
 
 const About: React.FunctionComponent = (): JSX.Element => (
   <div className={styles.about}>
-      <h4 className={styles.about__title}>
+    <h4 className={styles.about__title}>
+      <Link to=''>
         Tim Stoddard
-      </h4>
+      </Link>
+    </h4>
       <IconLinks />
       <DetailSections />
   </div>

@@ -6,7 +6,8 @@
   &__title {
     @include aboutAndProjectsTitleFont;
     @include mediumHeader;
-    margin-top: 0;
+    margin: 0; // override
+    margin-bottom: 10px;
     padding-top: 2rem;
   }
 

@@ -26,8 +26,8 @@ const links: HomepageLink[] = [
 const Home: React.FunctionComponent = (): JSX.Element => {
   document.title = 'Tim Stoddard'
 
-  const setIfExternalPath = (pathname: string, tResult: string): string =>
-    pathname[0] !== '/' ? tResult : ''
+  const setIfExternalPath = (pathname: string, value: string): string =>
+    pathname[0] !== '/' ? value : ''
 
   return (
     <div className={styles.home}>

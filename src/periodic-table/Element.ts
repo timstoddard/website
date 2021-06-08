@@ -26,25 +26,6 @@ const subshellMax = (subshell: Subshell): number => {
   return ret;
 };
 
-const subshellToInt = (subshell: Subshell): number => {
-  let ret = -1;
-  switch (subshell) {
-    case Subshell.s:
-      ret = 0;
-      break;
-    case Subshell.p:
-      ret = 1;
-      break;
-    case Subshell.d:
-      ret = 2;
-      break;
-    case Subshell.f:
-      ret = 3;
-      break;
-  }
-  return ret;
-};
-
 const intToSubshell = (n: number): Subshell => {
   let ret: Subshell;
   switch (n) {

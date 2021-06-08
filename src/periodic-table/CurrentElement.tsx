@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 import * as React from 'react'
+import { getShells } from './Element'
 import { Element } from './elements'
 import { Mode } from './PeriodicTable'
 import styles from './scss/CurrentElement.scss'
@@ -24,7 +25,7 @@ const CurrentElement: React.FunctionComponent<Props> = ({
       {element.name}
     </div>
     <div className={styles.currentElement__electrons}>
-      {getElectrons(element).map((shell: string) => (
+      {getShells(element).map((shell: string) => (
         <div
           key={shell}
           className={classNames(
@@ -37,56 +38,5 @@ const CurrentElement: React.FunctionComponent<Props> = ({
     </div>
   </div>
 )
-
-const getElectrons = (e: Element, charge = 0): string[] => {
-  const shells = [
-    '1s',
-    '2s',
-    '2p',
-    '3s',
-    '3p',
-    '4s',
-    '3d',
-    '4p',
-    '5s',
-    '4d',
-    '5p',
-    '6s',
-    '4f',
-    '5d',
-    '6p',
-    '7s',
-    '5f',
-    '6d',
-    '7p',
-  ]
-  const result = []
-  let totalElectrons = e.number - charge
-  for (const shell of shells) {
-    if (totalElectrons > 0) {
-      let maxInShell = 0
-      switch (shell[1]) {
-        case 's':
-          maxInShell = 2
-          break
-        case 'p':
-          maxInShell = 6
-          break
-        case 'd':
-          maxInShell = 10
-          break
-        case 'f':
-          maxInShell = 14
-          break
-      }
-      const shellElectrons = Math.min(maxInShell, totalElectrons)
-      result.push(`${shell}${shellElectrons}`)
-      totalElectrons -= shellElectrons
-    } else {
-      break
-    }
-  }
-  return result
-}
 
 export default CurrentElement

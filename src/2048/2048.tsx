@@ -72,9 +72,25 @@ interface BoardTileProps {
   value: number
 }
 
-const BoardTile = ({ rowIndex, columnIndex, value }: BoardTileProps): JSX.Element => {
+const BoardTile = ({
+  rowIndex,
+  columnIndex,
+  value,
+}: BoardTileProps): JSX.Element => {
+  type ColorIndex = 1 | 2 | 3 | 4 | 5 | 6
+  const colors: { [key in ColorIndex]: string } = {
+    1: 'ff0000',
+    2: 'ff8000',
+    3: 'ffff00',
+    4: '00ff00',
+    5: '0000ff',
+    6: '0000ff',
+  }
+  const color = colors[Math.log2(value) as ColorIndex]
+
   const boardTileDynamicStyle: React.CSSProperties = {
-    gridArea: `${rowIndex + 1} / ${columnIndex + 1} / ${rowIndex + 2} / ${columnIndex + 2}`
+    backgroundColor: value !== null ? `#${color}` : undefined,
+    gridArea: `${rowIndex + 1} / ${columnIndex + 1} / ${rowIndex + 2} / ${columnIndex + 2}`,
   }
 
   return (
@@ -115,22 +131,19 @@ interface State {
   score: number
   boardWidth: number
   canMove: boolean // cannot move if waiting to add a tile after making a move
+  mergeTiles: (tile1: Tile, tile2: Tile) => number
+  lostGame: boolean
 }
 
 const DEFAULT_BOARD_WIDTH = 4
 
 export default class Game2048 extends React.Component<EmptyObject, State> {
-  batteryAnimationInterval: number
+  private addTileTimeout: number
 
   constructor(props: EmptyObject) {
     super(props)
 
-    this.state = {
-      tiles: this.generateInitBoard(DEFAULT_BOARD_WIDTH),
-      score: 0,
-      boardWidth: DEFAULT_BOARD_WIDTH,
-      canMove: true,
-    }
+    this.state = this.init()
   }
 
   componentDidMount = (): void => {
@@ -139,9 +152,19 @@ export default class Game2048 extends React.Component<EmptyObject, State> {
 
   componentWillUnmount = (): void => {
     window.removeEventListener('keydown', this.handleKeyDown)
+    clearTimeout(this.addTileTimeout)
   }
 
-  generateInitBoard = (boardWidth: number): Tile[] => {
+  init = () => ({
+    tiles: this.generateInitBoard(DEFAULT_BOARD_WIDTH),
+    score: 0,
+    boardWidth: DEFAULT_BOARD_WIDTH,
+    canMove: true,
+    mergeTiles: this.defaultMergeTiles,
+    lostGame: false,
+  })
+
+  private generateInitBoard = (boardWidth: number): Tile[] => {
     const board: Tile[] = []
     const tileCount = boardWidth * boardWidth
 
@@ -163,10 +186,12 @@ export default class Game2048 extends React.Component<EmptyObject, State> {
     return board
   }
 
-  private addTile = (tiles: Tile[]): Tile[] => {
-    const freeSpaces = tiles
-      .map(({ value }: Tile, i: number) => value === null ? i : undefined)
-      .filter((n: number) => n !== undefined)
+  private addTile = (): Tile[] => {
+    const { tiles } = this.state
+    const freeSpaces = this.getFreeSpaces(tiles)
+    if (freeSpaces.length === 0) {
+      return tiles
+    }
     const randomIndex = freeSpaces[Math.floor(Math.random() * freeSpaces.length)]
     return [
       ...tiles.slice(0, randomIndex),
@@ -175,64 +200,66 @@ export default class Game2048 extends React.Component<EmptyObject, State> {
     ]
   }
 
-  private getTileInitValue = (): number => Math.random() < 0.8 ? 2 : 4
-
   handleKeyDown = (e: KeyboardEvent): void => {
     const {
+      tiles,
       score,
       canMove,
     } = this.state
+    const keyToDirectionMap: { [key: string]: Direction } = {
+      // arrow keys
+      'ArrowUp': Direction.UP,
+      'ArrowDown': Direction.DOWN,
+      'ArrowLeft': Direction.LEFT,
+      'ArrowRight': Direction.RIGHT,
+      // WASD
+      'w': Direction.UP,
+      's': Direction.DOWN,
+      'a': Direction.LEFT,
+      'd': Direction.RIGHT,
+    }
+    const direction = keyToDirectionMap[e.key]
 
-    if (!canMove) {
+    if (!canMove || !direction) {
       return
     }
 
-    let moveResult
-    switch (e.key) {
-      case 'ArrowUp':
-      case 'w': // WASD
-        moveResult = this.move(Direction.UP)
-        break
-      case 'ArrowDown':
-      case 's': // WASD
-        moveResult = this.move(Direction.DOWN)
-        break
-      case 'ArrowLeft':
-      case 'a': // WASD
-        moveResult = this.move(Direction.LEFT)
-        break
-      case 'ArrowRight':
-      case 'd': // WASD
-        moveResult = this.move(Direction.RIGHT)
-        break
-    }
+    const {
+      newTiles,
+      scoreDelta,
+    } = this.move(direction)
+    TESTPrintRow('before', tiles)
+    TESTPrintRow('after', newTiles)
 
-    if (moveResult) {
-      const newBoard = moveResult.tiles
+    if (this.tileArrayChanged(tiles, newTiles)) {
+      const newBoard = newTiles
       this.setState({
         tiles: newBoard,
         canMove: false,
-        score: score + moveResult.score,
+        score: score + scoreDelta,
       }, () => {
-        setTimeout(() => {
+        clearTimeout(this.addTileTimeout)
+        this.addTileTimeout = setTimeout(() => {
           this.setState({
-            tiles: this.addTile(newBoard),
+            tiles: this.addTile(),
             canMove: true,
           })
-        }, 250);
+        }, 250) as unknown as number
       })
+    } else if (this.noMovesAvailable()) {
+      this.setState({ lostGame: true })
     }
   }
 
-  move = (direction: Direction) => {
+  private move = (direction: Direction) => {
     const { tiles } = this.state
     const {
       basis,
       rows,
       columns,
     } = this.getDirectionalConfig(direction)
-    const result: Tile[] = []
-    let score = 0
+    const newTiles: Tile[] = []
+    let scoreDelta = 0
 
     const getOffset = ({ start, end }: SingleDirectionalConfig) => start < end ? 1 : -1
     const rowsOffset = getOffset(rows)
@@ -253,10 +280,10 @@ export default class Game2048 extends React.Component<EmptyObject, State> {
           tiles: newColumn,
           score: columnScore,
         } = this.collapse(currColumn)
-        score += columnScore
+        scoreDelta += columnScore
         let newColumnIndex = 0
         for (let row = rows.start; loopCondition(row, rows.start, rows.end); row += rowsOffset) {
-          result[this.getBoardIndex(row, column)] = newColumn[newColumnIndex++]
+          newTiles[this.getBoardIndex(row, column)] = newColumn[newColumnIndex++]
         }
       }
     } else { // basis === Basis.ROW
@@ -269,25 +296,51 @@ export default class Game2048 extends React.Component<EmptyObject, State> {
           tiles: newRow,
           score: rowScore,
         } = this.collapse(currRow)
-        score += rowScore
+        scoreDelta += rowScore
         let newRowIndex = 0
         for (let column = columns.start; loopCondition(column, columns.start, columns.end); column += columnsOffset) {
-          result[this.getBoardIndex(row, column)] = newRow[newRowIndex++]
+          newTiles[this.getBoardIndex(row, column)] = newRow[newRowIndex++]
         }
       }
     }
 
     return {
-      tiles: result,
-      score,
+      newTiles,
+      scoreDelta,
     }
   }
+
+  render(): JSX.Element {
+    document.title = '2048+'
+
+    const {
+      tiles,
+      score,
+      boardWidth,
+      lostGame,
+    } = this.state
+
+    return (
+      <div className={styles.game2048}>
+        <h1>2048</h1>
+        <h4>Score: {score}</h4>
+        {lostGame && (
+          <h2>You Lose!</h2>
+        )}
+        <Board
+          tiles={tiles}
+          boardWidth={boardWidth} />
+      </div>
+    )
+  }
+
+  /** UTILS */
 
   private getDirectionalConfig = (direction: Direction) => {
     const { boardWidth } = this.state
     const createDirectionalConfig = (start: number, end: number) =>
       ({ start, end })
-    const config: { [key: string]: DirectionalConfig } = {
+    const config: { [key in Direction]: DirectionalConfig } = {
       [Direction.UP]: {
         basis: Basis.COLUMN,
         rows: createDirectionalConfig(0, boardWidth - 1),
@@ -311,116 +364,17 @@ export default class Game2048 extends React.Component<EmptyObject, State> {
     }
     return config[direction]
   }
-
-  /*moveUp = (): Tile[] => {
-    const {
-      tiles,
-      boardWidth,
-    } = this.state
-    const result: Tile[] = []
-    let score = 0
-
-    for (let column = 0; column < boardWidth; column++) {
-      const currColumn = []
-      for (let row = 0; row < boardWidth; row++) {
-        currColumn.push(tiles[this.getBoardIndex(row, column)])
-      }
-      const {
-        tiles: newColumn,
-        score,
-      } = this.collapse(currColumn)
-      for (let row = 0; row < boardWidth; row++) {
-        result[this.getBoardIndex(row, column)] = newColumn[row]
-      }
-    }
-
-    return result
-  }
-
-  moveDown = (): Tile[] => {
-    const {
-      tiles,
-      boardWidth,
-    } = this.state
-    const result: Tile[] = []
-    let score = 0
-
-    for (let column = 0; column < boardWidth; column++) {
-      const currColumn = []
-      for (let row = boardWidth - 1; row >= 0; row--) {
-        currColumn.push(tiles[this.getBoardIndex(row, column)])
-      }
-      const {
-        tiles: newColumn,
-        score,
-      } = this.collapse(currColumn)
-      for (let row = boardWidth - 1; row >= 0; row--) {
-        result[this.getBoardIndex(row, column)] = newColumn[boardWidth - 1 - row]
-      }
-    }
-
-    return result
-  }
-
-  moveLeft = (): Tile[] => {
-    const {
-      tiles,
-      boardWidth,
-    } = this.state
-    const result: Tile[] = []
-    let score = 0
-
-    for (let row = 0; row < boardWidth; row++) {
-      const currRow = []
-      for (let column = 0; column < boardWidth; column++) {
-        currRow.push(tiles[this.getBoardIndex(row, column)])
-      }
-      const {
-        tiles: newRow,
-        score,
-      } = this.collapse(currRow)
-      for (let column = 0; column < boardWidth; column++) {
-        result[this.getBoardIndex(row, column)] = newRow[column]
-      }
-    }
-
-    return result
-  }
-
-  moveRight = (): Tile[] => {
-    const {
-      tiles,
-      boardWidth,
-    } = this.state
-    const result: Tile[] = []
-    let score = 0
-
-    for (let row = 0; row < boardWidth; row++) {
-      const currRow = []
-      for (let column = boardWidth - 1; column >= 0; column--) {
-        currRow.push(tiles[this.getBoardIndex(row, column)])
-      }
-      const {
-        tiles: newRow,
-        score,
-      } = this.collapse(currRow)
-      for (let column = boardWidth - 1; column >= 0; column--) {
-        result[this.getBoardIndex(row, column)] = newRow[boardWidth - 1 - column]
-      }
-    }
-
-    return result
-  }*/
-
-  private getBoardIndex = (row: number, column: number) => {
-    const { boardWidth } = this.state
-    return row * boardWidth + column
-  }
   
-  // precondition: array has exact length = boardWidth
-  // postcondition: returned array has exact length = boardWidth
+  /**
+   * precondition: array has exact length = boardWidth
+   *
+   * postcondition: returned array has exact length = boardWidth
+   */
   private collapse = (rowOrColumn: Tile[]) => {
-    const { boardWidth } = this.state
+    const {
+      boardWidth,
+      mergeTiles,
+    } = this.state
     const result: Tile[] = []
     let score = 0
     let prevTileWasCombo = false
@@ -430,7 +384,7 @@ export default class Game2048 extends React.Component<EmptyObject, State> {
       const currTile = rowOrColumn[i]
       if (currTile.value !== null) {
         if (!prevTileWasCombo && prevTile && currTile.value === prevTile.value) {
-          prevTile.value *= 2
+          prevTile.value = mergeTiles(prevTile, currTile)
           score += prevTile.value
           prevTileWasCombo = true
         } else { // if (prevTileWasCombo || !prevTile || currTile.value !== prevTile.value)
@@ -453,23 +407,54 @@ export default class Game2048 extends React.Component<EmptyObject, State> {
     }
   }
 
-  render(): JSX.Element {
-    document.title = '2048+'
-
-    const {
-      tiles,
-      score,
-      boardWidth,
-    } = this.state
-
-    return (
-      <div className={styles.game2048}>
-        <h1>2048</h1>
-        <h4>Score: {score}</h4>
-        <Board
-          tiles={tiles}
-          boardWidth={boardWidth} />
-      </div>
-    )
+  private noMovesAvailable = () => {
+    const { tiles } = this.state
+    const directions: Direction[] = [
+      Direction.UP,
+      Direction.DOWN,
+      Direction.LEFT,
+      Direction.RIGHT,
+    ]
+    for (const direction of directions) {
+      const { newTiles } = this.move(direction)
+      if (this.tileArrayChanged(tiles, newTiles)) {
+        return false
+      }
+    }
+    return true
   }
+
+  private tileArrayChanged = (tiles1: Tile[], tiles2: Tile[]) => {
+    if (!tiles1
+      || !tiles2
+      || !tiles1.length
+      || !tiles2.length
+      || tiles1.length != tiles2.length) {
+      return true
+    }
+    for (let i = 0; i < tiles1.length; i++) {
+      if (tiles1[i].value !== tiles2[i].value) {
+        // console.log('oops', i, tiles1[i], tiles2[i])
+        return true
+      }
+    }
+    // console.log('wow false')
+    return false
+  }
+
+  private getBoardIndex = (row: number, column: number) => {
+    const { boardWidth } = this.state
+    return row * boardWidth + column
+  }
+
+  private defaultMergeTiles = (tile1: Tile, tile2: Tile) =>
+    tile1.value + tile2.value
+
+  private getTileInitValue = (chanceOfFirst = 0.8, value1 = 2, value2 = 4): number =>
+    Math.random() < chanceOfFirst ? value1 : value2
+
+  private getFreeSpaces = (tiles: Tile[]) =>
+    tiles
+      .map(({ value }: Tile, i: number) => value === null ? i : undefined)
+      .filter((n: number) => n !== undefined)
 }

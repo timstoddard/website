@@ -72,25 +72,57 @@ interface BoardTileProps {
   value: number
 }
 
+interface BoardTileColors {
+  textColor: string
+  backgroundColor: string
+}
+
 const BoardTile = ({
   rowIndex,
   columnIndex,
   value,
 }: BoardTileProps): JSX.Element => {
   type ColorIndex = 1 | 2 | 3 | 4 | 5 | 6
-  const colors: { [key in ColorIndex]: string } = {
-    1: 'ff0000',
-    2: 'ff8000',
-    3: 'ffff00',
-    4: '00ff00',
-    5: '0000ff',
-    6: '0000ff',
+  const boardTileColors: { [key in ColorIndex]: BoardTileColors } = {
+    1: {
+      textColor: 'ffffff',
+      backgroundColor: 'ff0000',
+    },
+    2: {
+      textColor: '000000',
+      backgroundColor: 'ff8000',
+    },
+    3: {
+      textColor: '000000',
+      backgroundColor: 'ffff00',
+    },
+    4: {
+      textColor: '000000',
+      backgroundColor: '00ff00',
+    },
+    5: {
+      textColor: 'ffffff',
+      backgroundColor: '0000ff',
+    },
+    6: {
+      textColor: '000000',
+      backgroundColor: 'ff00ff',
+    },
   }
-  const color = colors[Math.log2(value) as ColorIndex]
 
-  const boardTileDynamicStyle: React.CSSProperties = {
-    backgroundColor: value !== null ? `#${color}` : undefined,
+  let boardTileDynamicStyle: React.CSSProperties = {
     gridArea: `${rowIndex + 1} / ${columnIndex + 1} / ${rowIndex + 2} / ${columnIndex + 2}`,
+  }
+
+  if (value !== null) {
+    const {
+      textColor,
+      backgroundColor,
+    } = boardTileColors[Math.log2(value) as ColorIndex]
+    boardTileDynamicStyle = Object.assign(boardTileDynamicStyle, {
+      backgroundColor: `#${backgroundColor}`,
+      color: `#${textColor}`,
+    })
   }
 
   return (
@@ -104,7 +136,7 @@ const BoardTile = ({
   )
 }
 
-enum Basis {
+enum MainAxis {
   ROW = 'ROW',
   COLUMN = 'COLUMN',
 }
@@ -120,8 +152,9 @@ interface SingleDirectionalConfig {
   start: number
   end: number
 }
+
 interface DirectionalConfig {
-  basis: Basis
+  mainAxis: MainAxis
   rows: SingleDirectionalConfig
   columns: SingleDirectionalConfig
 }
@@ -254,7 +287,7 @@ export default class Game2048 extends React.Component<EmptyObject, State> {
   private move = (direction: Direction) => {
     const { tiles } = this.state
     const {
-      basis,
+      mainAxis,
       rows,
       columns,
     } = this.getDirectionalConfig(direction)
@@ -262,45 +295,46 @@ export default class Game2048 extends React.Component<EmptyObject, State> {
     let scoreDelta = 0
 
     const getOffset = ({ start, end }: SingleDirectionalConfig) => start < end ? 1 : -1
-    const rowsOffset = getOffset(rows)
-    const columnsOffset = getOffset(columns)
-
     const loopCondition = (value: number, start: number, end: number) =>
       start < end
         ? value <= end
         : value >= end
 
-    if (basis === Basis.COLUMN) {
-      for (let column = columns.start; loopCondition(column, columns.start, columns.end); column += columnsOffset) {
-        const currColumn = []
-        for (let row = rows.start; loopCondition(row, rows.start, rows.end); row += rowsOffset) {
-          currColumn.push(tiles[this.getBoardIndex(row, column)])
-        }
-        const {
-          tiles: newColumn,
-          score: columnScore,
-        } = this.collapse(currColumn)
-        scoreDelta += columnScore
-        let newColumnIndex = 0
-        for (let row = rows.start; loopCondition(row, rows.start, rows.end); row += rowsOffset) {
-          newTiles[this.getBoardIndex(row, column)] = newColumn[newColumnIndex++]
-        }
+    const mainAxisConfig = mainAxis === MainAxis.ROW ? rows : columns
+    const subAxisConfig = mainAxis === MainAxis.ROW ? columns : rows
+    const mainAxisOffset = getOffset(mainAxisConfig)
+    const subAxisOffset = getOffset(subAxisConfig)
+    const getBoardIndexWithAxis = (mainAxisIndex: number, subAxisIndex: number) =>
+      mainAxis === MainAxis.ROW
+        ? this.getBoardIndex(mainAxisIndex, subAxisIndex)
+        : this.getBoardIndex(subAxisIndex, mainAxisIndex)
+    for (
+      let mainAxisIndex = mainAxisConfig.start;
+      loopCondition(mainAxisIndex, mainAxisConfig.start, mainAxisConfig.end);
+      mainAxisIndex += mainAxisOffset
+    ) {
+      const currRowOrColumn = []
+      for (
+        let subAxisIndex = subAxisConfig.start;
+        loopCondition(subAxisIndex, subAxisConfig.start, subAxisConfig.end);
+        subAxisIndex += subAxisOffset
+      ) {
+        const boardIndex = getBoardIndexWithAxis(mainAxisIndex, subAxisIndex)
+        currRowOrColumn.push(tiles[boardIndex])
       }
-    } else { // basis === Basis.ROW
-      for (let row = rows.start; loopCondition(row, rows.start, rows.end); row += rowsOffset) {
-        const currRow = []
-        for (let column = columns.start; loopCondition(column, columns.start, columns.end); column += columnsOffset) {
-          currRow.push(tiles[this.getBoardIndex(row, column)])
-        }
-        const {
-          tiles: newRow,
-          score: rowScore,
-        } = this.collapse(currRow)
-        scoreDelta += rowScore
-        let newRowIndex = 0
-        for (let column = columns.start; loopCondition(column, columns.start, columns.end); column += columnsOffset) {
-          newTiles[this.getBoardIndex(row, column)] = newRow[newRowIndex++]
-        }
+      const {
+        tiles: newColumn,
+        score: columnScore,
+      } = this.collapse(currRowOrColumn)
+      scoreDelta += columnScore
+      let newColumnIndex = 0
+      for (
+        let subAxisIndex = subAxisConfig.start;
+        loopCondition(subAxisIndex, subAxisConfig.start, subAxisConfig.end);
+        subAxisIndex += subAxisOffset
+      ) {
+        const boardIndex = getBoardIndexWithAxis(mainAxisIndex, subAxisIndex)
+        newTiles[boardIndex] = newColumn[newColumnIndex++]
       }
     }
 
@@ -342,22 +376,22 @@ export default class Game2048 extends React.Component<EmptyObject, State> {
       ({ start, end })
     const config: { [key in Direction]: DirectionalConfig } = {
       [Direction.UP]: {
-        basis: Basis.COLUMN,
+        mainAxis: MainAxis.COLUMN,
         rows: createDirectionalConfig(0, boardWidth - 1),
         columns: createDirectionalConfig(0, boardWidth - 1),
       },
       [Direction.DOWN]: {
-        basis: Basis.COLUMN,
+        mainAxis: MainAxis.COLUMN,
         rows: createDirectionalConfig(boardWidth - 1, 0),
         columns: createDirectionalConfig(0, boardWidth - 1),
       },
       [Direction.LEFT]: {
-        basis: Basis.ROW,
+        mainAxis: MainAxis.ROW,
         rows: createDirectionalConfig(0, boardWidth - 1),
         columns: createDirectionalConfig(0, boardWidth - 1),
       },
       [Direction.RIGHT]: {
-        basis: Basis.ROW,
+        mainAxis: MainAxis.ROW,
         rows: createDirectionalConfig(0, boardWidth - 1),
         columns: createDirectionalConfig(boardWidth - 1, 0),
       },

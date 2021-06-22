@@ -66,15 +66,96 @@ const BoardRow = ({ rowIndex, tiles }: BoardRowProps): JSX.Element => (<>
   ))}
 </>)
 
+interface BoardTileStyles {
+  textColor: string
+  backgroundColor: string
+  borderColor: string
+  fontSizeRem: number
+}
+
+type TileStyleIndex = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
+const getBoardTileStyles = (index: TileStyleIndex): BoardTileStyles => {
+  const boardTileStyles = {
+    1: { // 2
+      textColor: 'ffffff',
+      backgroundColor: 'ff0000',
+      borderColor: '000000',
+      fontSizeRem: 3,
+    },
+    2: { // 4
+      textColor: '000000',
+      backgroundColor: 'ff8000',
+      borderColor: '000000',
+      fontSizeRem: 3,
+    },
+    3: { // 8
+      textColor: '000000',
+      backgroundColor: 'ffff00',
+      borderColor: '000000',
+      fontSizeRem: 3,
+    },
+    4: { // 16
+      textColor: '000000',
+      backgroundColor: '00ff00',
+      borderColor: '000000',
+      fontSizeRem: 3,
+    },
+    5: { // 32
+      textColor: 'ffffff',
+      backgroundColor: '0000ff',
+      borderColor: '000000',
+      fontSizeRem: 3,
+    },
+    6: { // 64
+      textColor: '000000',
+      backgroundColor: 'ff00ff',
+      borderColor: '000000',
+      fontSizeRem: 3,
+    },
+    7: { // 128
+      textColor: 'ffffff',
+      backgroundColor: 'ff0000',
+      borderColor: '0000ff',
+      fontSizeRem: 2.5,
+    },
+    8: { // 256
+      textColor: '000000',
+      backgroundColor: 'ff8000',
+      borderColor: '0000ff',
+      fontSizeRem: 2.5,
+    },
+    9: { // 512
+      textColor: '000000',
+      backgroundColor: 'ffff00',
+      borderColor: '0000ff',
+      fontSizeRem: 2.5,
+    },
+    10: { // 1024
+      textColor: '000000',
+      backgroundColor: '00ff00',
+      borderColor: '0000ff',
+      fontSizeRem: 2,
+    },
+    11: { // 2048
+      textColor: 'ffffff',
+      backgroundColor: '0000ff',
+      borderColor: 'ffff00',
+      fontSizeRem: 2,
+    },
+    12: { // 4096
+      textColor: '000000',
+      backgroundColor: 'ff00ff',
+      borderColor: '0000ff',
+      fontSizeRem: 2,
+    },
+  }
+  return boardTileStyles[index]
+}
+
 interface BoardTileProps {
   rowIndex: number
   columnIndex: number
   value: number
-}
-
-interface BoardTileColors {
-  textColor: string
-  backgroundColor: string
 }
 
 const BoardTile = ({
@@ -82,47 +163,38 @@ const BoardTile = ({
   columnIndex,
   value,
 }: BoardTileProps): JSX.Element => {
-  type ColorIndex = 1 | 2 | 3 | 4 | 5 | 6
-  const boardTileColors: { [key in ColorIndex]: BoardTileColors } = {
-    1: {
-      textColor: 'ffffff',
-      backgroundColor: 'ff0000',
-    },
-    2: {
-      textColor: '000000',
-      backgroundColor: 'ff8000',
-    },
-    3: {
-      textColor: '000000',
-      backgroundColor: 'ffff00',
-    },
-    4: {
-      textColor: '000000',
-      backgroundColor: '00ff00',
-    },
-    5: {
-      textColor: 'ffffff',
-      backgroundColor: '0000ff',
-    },
-    6: {
-      textColor: '000000',
-      backgroundColor: 'ff00ff',
-    },
-  }
-
+  const tileStyleIndex = Math.log2(value) as TileStyleIndex
+  const boardTileStyles = getBoardTileStyles(tileStyleIndex)
   let boardTileDynamicStyle: React.CSSProperties = {
     gridArea: `${rowIndex + 1} / ${columnIndex + 1} / ${rowIndex + 2} / ${columnIndex + 2}`,
   }
 
+  const generateBoardTileCss = ({
+    backgroundColor,
+    borderColor,
+    textColor,
+    fontSizeRem,
+  }: BoardTileStyles) => ({
+    backgroundColor: `#${backgroundColor}`,
+    border: `5px solid #${borderColor}`,
+    color: `#${textColor}`,
+    fontSize: `${fontSizeRem}rem`,
+  })
+
   if (value !== null) {
-    const {
-      textColor,
-      backgroundColor,
-    } = boardTileColors[Math.log2(value) as ColorIndex]
-    boardTileDynamicStyle = Object.assign(boardTileDynamicStyle, {
-      backgroundColor: `#${backgroundColor}`,
-      color: `#${textColor}`,
-    })
+    if (boardTileStyles) {
+      boardTileDynamicStyle = Object.assign(boardTileDynamicStyle,
+        generateBoardTileCss(boardTileStyles))
+    } else {
+      // default tile style
+      boardTileDynamicStyle = Object.assign(boardTileDynamicStyle,
+        generateBoardTileCss({
+          backgroundColor: 'ffffff',
+          borderColor: '000000',
+          textColor: '000000',
+          fontSizeRem: 2,
+        }))
+    }
   }
 
   return (

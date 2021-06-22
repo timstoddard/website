@@ -17,12 +17,14 @@
 .boardTile {
   $tileSideLength: 100px; // 40px;
   align-items: center;
-  border-radius: 3px;
+  border-radius: 5px;
   display: flex;
+  font-family: 'Inconsolata', monospace;
+  font-weight: bold;
   height: $tileSideLength;
   justify-content: center;
   margin: 2px;
-  padding: 10px;
+  padding: 6px;
   width: $tileSideLength;
 
   &--hasValue {

@@ -1,45 +1,41 @@
 import { Element } from "./elements";
 
 enum Subshell {
-  s = "s",
-  p = "p",
-  d = "d",
-  f = "f",
+  S = "s",
+  P = "p",
+  D = "d",
+  F = "f",
 }
 
-const subshellMax = (subshell: Subshell): number => {
-  let ret = 0;
+const getSubshellMax = (subshell: Subshell): number => {
   switch (subshell) {
-    case Subshell.s:
-      ret = 2;
-      break;
-    case Subshell.p:
-      ret = 6;
-      break;
-    case Subshell.d:
-      ret = 10;
-      break;
-    case Subshell.f:
-      ret = 14;
-      break;
+    case Subshell.S:
+      return 2;
+    case Subshell.P:
+      return 6;
+    case Subshell.D:
+      return 10;
+    case Subshell.F:
+      return 14;
+    default:
+      return 0;
   }
-  return ret;
 };
 
 const intToSubshell = (n: number): Subshell => {
   let ret: Subshell;
   switch (n) {
     case 0:
-      ret = Subshell.s;
+      ret = Subshell.S;
       break;
     case 1:
-      ret = Subshell.p;
+      ret = Subshell.P;
       break;
     case 2:
-      ret = Subshell.d;
+      ret = Subshell.D;
       break;
     case 3:
-      ret = Subshell.f;
+      ret = Subshell.F;
       break;
     default:
       ret = intToSubshell(n % 4); // could throw error instead
@@ -57,35 +53,35 @@ class Shell {
 
   constructor(n: number) {
     this.n = n;
-    for (let i = 0; i < n && i < 4; i++) {
+    for (let i = 0; i < Math.min(n, 4); i++) {
       this.orbitals[intToSubshell(n)] = 0;
     }
   }
 
-  addElectrons(orbital: Subshell, electrons: number): number {
-    const maxInShell = subshellMax(orbital);
+  addElectrons = (orbital: Subshell, electrons: number): number => {
+    const maxInShell = getSubshellMax(orbital);
     const shellElectrons = Math.min(electrons, maxInShell);
     this.orbitals[orbital] = shellElectrons;
     return electrons - shellElectrons;
-  }
+  };
 
-  remElectrons(orbital: Subshell, electrons: number): number {
+  removeElectrons = (orbital: Subshell, electrons: number): number => {
     const shellElectrons = this.orbitals[orbital];
     const toRemove = Math.min(shellElectrons, electrons);
     this.orbitals[orbital] = shellElectrons - toRemove;
     return electrons - toRemove;
-  }
+  };
 
   hasElectrons = (orbital: Subshell) => {
     return this.orbitals[orbital] > 0;
   };
 
-  toString(orbital: Subshell) {
+  toString = (orbital: Subshell) => {
     return `${this.n}${orbital}${this.orbitals[orbital]}`;
-  }
+  };
 }
 
-const shells = [
+const SHELLS = [
   "1s",
   "2s",
   "2p",
@@ -112,52 +108,52 @@ interface ElectronShells {
 }
 
 export const getShells = (e: Element, charge = 0) => {
-  const { config, maxShell } = getInitialShells(e);
+  const { shells, maxShell } = getInitialShells(e);
 
-  checkDOrbitals(config, maxShell);
+  checkDOrbitals(shells, maxShell);
 
-  addCharge(config, maxShell, charge);
+  addCharge(shells, maxShell, charge);
 
-  const configStr = [];
-  for (const shell of shells) {
-    if (config[shell[0]].hasElectrons(shell[1] as Subshell)) {
-      configStr.push(config[shell[0]].toString(shell[1] as Subshell));
+  const shellStrings = [];
+  for (const shell of SHELLS) {
+    if (shells[shell[0]].hasElectrons(shell[1] as Subshell)) {
+      shellStrings.push(shells[shell[0]].toString(shell[1] as Subshell));
     } else {
       break;
     }
   }
 
-  return configStr;
+  return shellStrings;
 };
 
 const getInitialShells = (e: Element) => {
-  let config: ElectronShells;
+  let shells: ElectronShells;
   let electrons = e.number;
-  let maxShell = shells[0];
+  let maxShell = "";
 
-  for (const shell of shells) {
+  for (const shell of SHELLS) {
     if (electrons > 0) {
       maxShell = shell;
-      if (!config[shell[0]]) {
-        config[shell[0]] = new Shell(Number(shell[0]));
+      if (!shells[shell[0]]) {
+        shells[shell[0]] = new Shell(Number(shell[0]));
       }
-      electrons = config[shell[0]].addElectrons(
+      electrons = shells[shell[0]].addElectrons(
         shell[1] as Subshell,
         electrons
       );
     }
   }
 
-  return { config, maxShell };
+  return { shells, maxShell };
 };
 
-const checkDOrbitals = (config: ElectronShells, maxShell: string) => {
+const checkDOrbitals = (shells: ElectronShells, maxShell: string) => {
   let found = false;
   let shell = maxShell[0];
   let nextShell = "";
 
   while (!found) {
-    if (config[shell].hasElectrons(Subshell.d)) {
+    if (shells[shell].hasElectrons(Subshell.D)) {
       found = true;
     } else {
       nextShell = shell;
@@ -165,30 +161,30 @@ const checkDOrbitals = (config: ElectronShells, maxShell: string) => {
     }
   }
 
-  if (config[shell].orbitals[Subshell.d] % 5 === 4) {
-    config[shell].addElectrons(Subshell.d, 1);
-    config[nextShell].remElectrons(Subshell.s, 1);
+  if (shells[shell].orbitals[Subshell.D] % 5 === 4) {
+    shells[shell].addElectrons(Subshell.D, 1);
+    shells[nextShell].removeElectrons(Subshell.S, 1);
   }
 };
 
 const addCharge = (
-  config: ElectronShells,
+  shells: ElectronShells,
   maxShell: string,
   charge: number
 ) => {
   if (charge === 0) return;
 
-  let idx = shells.indexOf(maxShell);
+  let maxShellIndex = SHELLS.indexOf(maxShell);
   if (charge < 0) {
     charge *= -1;
-    while (charge > 0 && idx < shells.length) {
-      const shell = shells[idx++];
-      charge = config[shell[0]].addElectrons(shell[1] as Subshell, charge);
+    while (charge > 0 && maxShellIndex < SHELLS.length) {
+      const shell = SHELLS[maxShellIndex++];
+      charge = shells[shell[0]].addElectrons(shell[1] as Subshell, charge);
     }
   } else {
-    while (charge > 0 && idx >= 0) {
-      const shell = shells[idx--];
-      charge = config[shell[0]].remElectrons(shell[1] as Subshell, charge);
+    while (charge > 0 && maxShellIndex >= 0) {
+      const shell = SHELLS[maxShellIndex--];
+      charge = shells[shell[0]].removeElectrons(shell[1] as Subshell, charge);
     }
   }
 };

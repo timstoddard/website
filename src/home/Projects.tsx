@@ -29,6 +29,11 @@ const projectSections: Section[] = [
         inProgress: false,
       },
       {
+        name: 'Sudoku Helper',
+        link: '/sudoku',
+        inProgress: true,
+      },
+      {
         name: 'E85 Calculator',
         link: '/e85',
         inProgress: false,
@@ -38,11 +43,11 @@ const projectSections: Section[] = [
         link: '/heap',
         inProgress: false,
       },
-      {
-        name: 'ES6 Import Fixer',
-        link: '/imports',
-        inProgress: false,
-      },
+      // {
+      //   name: 'ES6 Import Fixer',
+      //   link: '/imports',
+      //   inProgress: false,
+      // },
       {
         name: 'Javascript Clock',
         link: '/time',

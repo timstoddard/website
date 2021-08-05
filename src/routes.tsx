@@ -111,6 +111,10 @@ const routes: LoadableRoute[] = [
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Strobe' */ './strobe/Strobe')),
   },
   {
+    path: '/sudoku',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Sudoku' */ './sudoku/Sudoku')),
+  },
+  {
     path: '/text-tools',
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'TextTools' */ './text-tools/TextTools')),
   },

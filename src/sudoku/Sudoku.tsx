@@ -222,6 +222,9 @@ const SudokuTile = ({
     tileStyle.color = SELECTED_TEXT_COLOR
   }
 
+  // set numbers equal to the selected number in bold
+  // TODO
+
   return (
     <div
       onClick={onClick}
@@ -425,6 +428,9 @@ export default class Sudoku extends React.Component<EmptyObject, State> {
 
     // update all tile notes based on notes combos
     this.updateNotesBasedOnCombos(newRows)
+
+    // TODO check for any notes that are the last remaining for that n in their
+    // row/column/mini-grid
 
     return newRows
   }

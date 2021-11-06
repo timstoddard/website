@@ -42,8 +42,16 @@ export default class LightTracksSettings extends React.Component<LightTracksSett
       updateLightIdToLightTrackMap,
       lightIdToLightTrackMap,
     } = this.props
-    const newTempLightIdToLightTrackMap = Object.assign({},
-      lightIdToLightTrackMap, { [lightId]: trackId })
+    let newTempLightIdToLightTrackMap: { [key: number]: number } = {}
+    if (lightIdToLightTrackMap[lightId] !== undefined) {
+      // remove light
+      newTempLightIdToLightTrackMap = Object.assign({}, lightIdToLightTrackMap)
+      delete newTempLightIdToLightTrackMap[lightId]
+    } else {
+      // add light
+      newTempLightIdToLightTrackMap = Object.assign({},
+        lightIdToLightTrackMap, { [lightId]: trackId })
+    }
     updateLightIdToLightTrackMap(Object.assign({}, newTempLightIdToLightTrackMap))
   }
 

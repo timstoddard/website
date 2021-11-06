@@ -327,6 +327,10 @@ $darkModeNeonAccent: $darkModeNeonAccent__orange;
   &__checkbox {
     align-items: center;
     display: flex;
+
+    :global(.form-check-label) {
+      margin-left: 8px;
+    }
   }
 
   &--highlight {
@@ -434,6 +438,12 @@ $darkModeNeonAccent: $darkModeNeonAccent__orange;
 
     & .beatLight {
       border: 1px solid var(--darkModeNeonAccent);
+    }
+
+    & .lightTracksSettings__lightsInfo {
+      & :global(.list-group-item) {
+        color: $darkModeTextWhite;
+      }
     }
 
     & :global(.dropdown-menu) {

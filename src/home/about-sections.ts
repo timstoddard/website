@@ -10,7 +10,7 @@ export interface Section {
 
 export const sections: Section[] = [
   {
-    title: 'Current Job',
+    title: 'Current Role',
     details: [
       {
         field: 'Company',
@@ -27,7 +27,7 @@ export const sections: Section[] = [
     ],
   },
   {
-    title: 'Previous Position',
+    title: 'Previous Role',
     details: [
       {
         field: 'Company',
@@ -39,12 +39,12 @@ export const sections: Section[] = [
       },
       {
         field: 'Dates',
-        value: '09/2019 - 12/2019, 02/2016 - 06/2019',
+        value: '02/2016 - 06/2019, 09/2019 - 12/2019',
       },
     ],
   },
   {
-    title: 'Previous Position',
+    title: 'Previous Role',
     details: [
       {
         field: 'Company',

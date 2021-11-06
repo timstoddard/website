@@ -74,7 +74,7 @@ const projectSections: Section[] = [
         inProgress: true,
       },
       {
-        name: 'Rice Purity Test',
+        name: 'Rice Purity Test (18+)',
         link: '/rice-purity-test',
         inProgress: false,
       },

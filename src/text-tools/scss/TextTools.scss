@@ -19,6 +19,10 @@ $rowHeight: $imageDimension * 5 / 4;
     margin-bottom: 20px;
   }
 
+  &__formGroup {
+    margin-bottom: 10px;
+  }
+
   &__partyParrot {
     &__row {
       min-height: $rowHeight;

@@ -326,7 +326,6 @@ export default class Beats extends React.Component<Props, State> {
             </ButtonGroup>
 
             <Form.Check
-              custom
               type='checkbox'
               className={styles.beats__checkbox}
               id='beats-enable-hue-checkbox'>
@@ -339,18 +338,14 @@ export default class Beats extends React.Component<Props, State> {
             </Form.Check>
 
             <InputGroup aria-disabled={!shouldUpdateHueLights}>
-              <InputGroup.Prepend>
-                <InputGroup.Text>Hue latency:</InputGroup.Text>
-              </InputGroup.Prepend>
+              <InputGroup.Text>Hue latency:</InputGroup.Text>
               <Form.Control
                 value={hueLatencyMs}
                 onChange={updateHueLatency}
                 aria-label='Hue bulbs latency'
                 disabled={!shouldUpdateHueLights}
                 className={styles.beats__hueLatencyInput} />
-              <InputGroup.Append>
-                <InputGroup.Text>ms</InputGroup.Text>
-              </InputGroup.Append>
+              <InputGroup.Text>ms</InputGroup.Text>
             </InputGroup>
 
             <Form.Group

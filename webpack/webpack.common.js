@@ -1,4 +1,5 @@
 const merge = require('webpack-merge').merge // package now in TS
+const ESLintPlugin = require('eslint-webpack-plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -41,7 +42,7 @@ module.exports = {
       './src/index.scss',
     ],
     output: {
-      path: path.join(__dirname, '../dist'),
+      path: path.resolve(__dirname, '../dist'),
       publicPath: mode === 'prod' ? '/dist/' : '/',
       filename: '[name].[fullhash:8].js',
       chunkFilename: '[name].[chunkhash:8].chunk.js',
@@ -70,6 +71,11 @@ module.exports = {
           include: /(index.scss|node_modules)/,
           use: getCssLoaders(false, mode),
         },
+        // images/etc
+        {
+          test: /\.(png|svg|jpg|jpeg|gif|ico)$/i,
+          type: 'asset/resource',
+        },
       ],
     },
     resolve: {
@@ -84,18 +90,13 @@ module.exports = {
           memoryLimit: 4096,
         }
       }
-      : {
-        eslint: {
-          files: './src/**/!(*.d).{ts,tsx,js,jsx}',
-        },
-      }
+      : {}
 
     const htmlWebpackPluginOptions = {
       template: 'src/app.html',
       filename: './index.html',
     }
     if (mode === 'prod') {
-      htmlWebpackPluginOptions.hash = true
       htmlWebpackPluginOptions.minify = {
         collapseWhitespace: true,
         keepClosingSlash: true,
@@ -117,6 +118,9 @@ module.exports = {
       new MiniCssExtractPlugin({
         filename: '[name].[fullhash:8].css',
         chunkFilename: '[name].[chunkhash:8].chunk.css',
+      }),
+      new ESLintPlugin({
+        files: './src/**/!(*.d).{ts,tsx,js,jsx}',
       }),
     ]
   },

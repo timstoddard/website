@@ -144,8 +144,7 @@ export default class Links extends React.Component<Props, EmptyObject> {
             <Form.Control
               as='select'
               onChange={handleSelectChange}
-              value={backgroundUrlType}
-              custom>
+              value={backgroundUrlType}>
               {carNamesForSelect.map((car: StartPageCar) => (
                 <option
                   key={car.type}
@@ -163,9 +162,9 @@ export default class Links extends React.Component<Props, EmptyObject> {
           to=''>
           Home
         </Link>
-        {links.map(({ name, href }: HomePageLink) => (
+        {links.map(({ name, href }: HomePageLink, i: number) => (
           <a
-            key={name}
+            key={name + i}
             href={href}
             target='_blank'
             rel='noopener noreferrer'

@@ -117,7 +117,6 @@ export default class Todo extends React.Component<Props, State> {
         <Form>
           {!isEditing &&
             <Form.Check
-              custom
               type='checkbox'
               id={`todo-checkbox-${index}`}>
               <Form.Check.Input

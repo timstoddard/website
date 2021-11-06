@@ -12,6 +12,11 @@ upload_to_s3 () {
   aws s3 cp dist $1/dist --recursive --exclude '*' --include '*.js' --content-type 'application/javascript; charset=utf-8'
   aws s3 cp dist $1/dist --recursive --exclude '*' --include '*.css' --content-type 'text/css; charset=utf-8'
 
+  # images
+  aws s3 cp dist $1/dist --recursive --exclude '*' --include '*.png' --content-type 'image/png'
+  aws s3 cp dist $1/dist --recursive --exclude '*' --include '*.svg' --content-type 'image/svg+xml'
+  aws s3 cp dist $1/dist --recursive --exclude '*' --include '*.ico' --content-type 'image/vnd.microsoft.icon'
+
   # only upload new/modified media files
-  aws s3 sync media $1/media
+  # aws s3 sync media $1/media
 }

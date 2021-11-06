@@ -14,12 +14,12 @@ const links: HomepageLink[] = [
     text: 'about',
   },
   {
-    pathname: '/projects',
-    text: 'projects',
-  },
-  {
     pathname: 'https://drive.google.com/file/d/0B9dz0Ddcl3ESV28wLVZzd2RFNkU/view?usp=sharing',
     text: 'resume',
+  },
+  {
+    pathname: '/projects',
+    text: 'more',
   },
 ]
 

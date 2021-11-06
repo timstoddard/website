@@ -33,11 +33,6 @@
     &__slider {
       align-items: center;
       display: flex;
-
-      :global(.form-group) {
-        align-items: center;
-        display: flex;
-      }
     }
   }
 
@@ -67,15 +62,6 @@
     &:hover {
       border: 1px solid red;
       color: red;
-    }
-  }
-
-  input[type="range"] {
-    padding: 0;
-
-    &:focus,
-    &:active {
-      box-shadow: none;
     }
   }
 }

@@ -12,8 +12,10 @@ module.exports = common.merge(common.config('dev'), {
     }),
   ],
   devServer: {
-    // contentBase: './dist',
     historyApiFallback: true,
-    clientLogLevel: 'error',
+    client: {
+      logging: 'error',
+      progress: true,
+    },
   },
 })

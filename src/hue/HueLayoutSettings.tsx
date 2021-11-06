@@ -58,7 +58,6 @@ export default class HueLayoutSettings extends React.Component<Props, EmptyObjec
           <Modal.Body>
             <Form>
               <Form.Check
-                custom
                 type='checkbox'
                 id='hue-dark-mode-checkbox'>
                 <Form.Check.Input

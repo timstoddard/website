@@ -30,6 +30,10 @@
 
   &__question {
     margin-bottom: 10px;
+
+    > :global(.form-check-label) {
+      margin-left: 8px;
+    }
   }
 
   &__result {

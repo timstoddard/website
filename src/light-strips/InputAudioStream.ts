@@ -54,13 +54,15 @@ export class InputAudioStream {
     this.config = Object.assign(this.config || {}, config)
   }
 
-  init = (onBeatDetected: (sources: OnBeatDetectedParams) => void) => {
+  init = async (onBeatDetected: (sources: OnBeatDetectedParams) => void) => {
     this.percussionDetector = new PercussionDetector()
     this.onBeatDetected = onBeatDetected
-    navigator.getUserMedia(
-      { audio: true },
-      this.handleStream,
-      () => alert('Error getting audio'))
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      this.handleStream(stream)
+    } catch (e) {
+      alert('Error getting audio')
+    }
   }
 
   end = () => {

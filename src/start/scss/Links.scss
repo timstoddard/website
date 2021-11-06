@@ -8,11 +8,7 @@
     color: inherit;
     padding: 5px;
 
-    :global(.form-group) {
-      margin: 0;
-    }
-
-    :global(.custom-select) {
+    :global(.form-control) {
       background: 0;
       border: 0;
       color: inherit;

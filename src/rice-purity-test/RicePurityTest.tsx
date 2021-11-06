@@ -211,7 +211,6 @@ export default class RicePurityTest extends React.Component<EmptyObject, State> 
               {questions.map((question: string, index: number) => (
                 <Form.Check
                   key={question}
-                  custom
                   type='checkbox'
                   id={`rpt-checkbox-${index}`}
                   className={styles.rpt__question}>

@@ -70,7 +70,9 @@ export default class TextTools extends React.Component<EmptyObject, State> {
         <Form
           onSubmit={handleSubmit}
           className={styles.textTools__form}>
-          <Form.Group controlId='rawValue'>
+          <Form.Group
+            controlId='rawValue'
+            className={styles.textTools__formGroup}>
             <Form.Label>Enter some text</Form.Label>
             <Form.Control
               type='text'

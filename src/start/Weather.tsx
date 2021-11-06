@@ -2,6 +2,7 @@ import classNames from 'classnames'
 import * as React from 'react'
 import { get, StartUtils, WeatherUtils } from './Utils'
 import styles from './scss/Weather.scss'
+import ReloadIcon from '../../media/icons/reload.svg'
 
 interface CurrentWeather {
   coord: {
@@ -150,7 +151,7 @@ export default class Weather extends React.Component<Props, State> {
                 {currentWeather.name}
               </div>
               <img
-                src='../../media/icons/reload.svg'
+                src={ReloadIcon}
                 alt='Reload'
                 onClick={() => this.load(false)}
                 className={styles.weather__reload} />

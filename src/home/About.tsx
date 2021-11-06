@@ -2,33 +2,38 @@ import * as React from 'react'
 import { Link } from 'react-router-dom'
 import { Detail, Section, sections } from './about-sections'
 import styles from './scss/About.scss'
+import LinkedInIcon from '../../media/logos/linkedin.png'
+import GithubIcon from '../../media/logos/github.png'
 
 interface Icon {
   name: string
+  src: string
   href: string
 }
 
 const icons: Icon[] = [
   {
     name: 'LinkedIn',
+    src: LinkedInIcon,
     href: 'https://linkedin.com/in/timstoddard200',
  },
   {
     name: 'Github',
+    src: GithubIcon,
     href: 'https://github.com/timstoddard',
  },
 ]
 
 const IconLinks: React.FunctionComponent = (): JSX.Element => (
   <div className={styles.about__icons}>
-    {icons.map(({ href, name }: Icon) => (
+    {icons.map(({ name, src, href }: Icon) => (
       <a
         href={href}
         target='_blank'
         rel='noopener noreferrer'
         key={name}>
         <img
-          src={`../../media/logos/${name.toLowerCase()}.png`}
+          src={src}
           alt={name}
           title={name}
           className={styles.about__icons__icon} />

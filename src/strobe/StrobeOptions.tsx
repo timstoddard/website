@@ -67,8 +67,6 @@ export default class StrobeOptions extends React.Component<Props, State> {
               <Form.Group controlId='strobe-ms'>
                 <span className={styles['options__form--min']}>{min}</span>
                 <Form.Control
-                  // TODO why can't use custom element here?
-                  // custom
                   type='range'
                   value={this.props.ms.toString()}
                   onChange={onRangeChange}

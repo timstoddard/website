@@ -96,6 +96,11 @@ module.exports = {
     const htmlWebpackPluginOptions = {
       template: 'src/app.html',
       filename: './index.html',
+      meta: {
+        // charset: 'utf-8',
+        viewport: 'width=device-width, initial-scale=1.0, viewport-fit=cover',
+        description: 'Tim Stoddard, Software Engineer',
+      },
     }
     if (mode === 'prod') {
       htmlWebpackPluginOptions.minify = {

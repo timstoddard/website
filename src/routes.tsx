@@ -103,6 +103,10 @@ const routes: LoadableRoute[] = [
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'RicePurityTest' */ './rice-purity-test/RicePurityTest')),
   },
   {
+    path: '/stars',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Stars' */ './stars/Stars')),
+  },
+  {
     path: '/start',
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Start' */ './start/Start')),
   },
